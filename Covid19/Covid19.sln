@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "covid19", "https://localhost/covid19", "{0419B988-1AC4-4F04-B405-D4C9CAE645C6}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		ProjectReferences = "{061de428-42b1-43cf-b15e-66c8527b24c0}|Covid19.Lib.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/covid19"
+		Debug.AspNetCompiler.PhysicalPath = "C:\Program Files\Acumatica ERP\covid19\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\covid19\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/covid19"
+		Release.AspNetCompiler.PhysicalPath = "C:\Program Files\Acumatica ERP\covid19\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\covid19\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "C:\Program Files\Acumatica ERP\covid19\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covid19.Lib", "..\Covid19.Lib\Covid19.Lib.csproj", "{061DE428-42B1-43CF-B15E-66C8527B24C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32F876BC-7F1A-486B-9579-C3E266171365}
+	EndGlobalSection
+EndGlobal

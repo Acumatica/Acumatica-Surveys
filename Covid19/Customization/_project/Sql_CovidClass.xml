@@ -1,0 +1,10 @@
+﻿<Sql TableName="CovidClass" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="CovidClass">
+  <col name="CompanyID" type="Int" default="Zero" />
+  <col name="CovidClassID" type="Int" identity="true" />
+  <index name="PK_CovidClass" clustered="true" primary="true" unique="true">
+    <col name="CompanyID" />
+    <col name="CovidClassID" />
+  </index>
+</table>]]></CDATA>
+</Sql>

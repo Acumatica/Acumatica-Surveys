@@ -1,0 +1,21 @@
+﻿<Sql TableName="CovidQuiz" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="CovidQuiz">
+  <col name="CompanyID" type="Int" default="Zero" />
+  <col name="QuizID" type="Int" identity="true" />
+  <col name="QuizCD" type="NVarChar(30)" />
+  <col name="QuizedUser" type="UniqueIdentifier" nullable="true" />
+  <col name="NoteID" type="UniqueIdentifier" />
+  <col name="tstamp" type="Timestamp" />
+  <col name="CreatedByID" type="UniqueIdentifier" />
+  <col name="CreatedByScreenID" type="Char(8)" />
+  <col name="CreatedDateTime" type="DateTime" />
+  <col name="LastModifiedByID" type="UniqueIdentifier" />
+  <col name="LastModifiedByScreenID" type="Char(8)" />
+  <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="CovidClassID" type="Int" />
+  <index name="PK_CovidQuiz_1" clustered="true" primary="true" unique="true">
+    <col name="CompanyID" />
+    <col name="QuizID" />
+  </index>
+</table>]]></CDATA>
+</Sql>
