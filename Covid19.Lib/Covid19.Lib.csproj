@@ -294,7 +294,13 @@
     <Compile Include="CovidQuizSetting.cs" />
     <Compile Include="DAC\CovidClass.cs" />
     <Compile Include="DAC\CovidQuiz.cs" />
+    <Compile Include="DAC\Survey.cs" />
+    <Compile Include="DAC\SurveyCollector.cs" />
+    <Compile Include="DAC\SurveyQuestions.cs" />
+    <Compile Include="DAC\SurveyRecipients.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SurveyCollectionMaint.cs" />
+    <Compile Include="SurveyMaint.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
