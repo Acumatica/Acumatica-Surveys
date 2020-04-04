@@ -1,0 +1,1 @@
+﻿<MobileSiteMap ScreenID="CV301010" Script="add screen CV301010 {&#xD;&#xA;  add container &quot;QuizesSummary&quot; {&#xD;&#xA;    formActionsToExpand = 1&#xD;&#xA;    add layout &quot;SurveyHeader&quot; {&#xD;&#xA;      displayName = &quot;SurveyHeader&quot;&#xD;&#xA;    }&#xD;&#xA;    add field &quot;QuizedUser&quot;&#xD;&#xA;}&#xD;&#xA;}" Type="add" />
