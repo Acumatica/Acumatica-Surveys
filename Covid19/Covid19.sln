@@ -7,7 +7,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "covid19", "https://localhos
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
-		ProjectReferences = "{061de428-42b1-43cf-b15e-66c8527b24c0}|Covid19.Lib.dll;"
+		ProjectReferences = "{9bc6d61a-5d4b-4d57-bc6b-5e3f9d04377e}|Covid19.Lib.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/covid19"
 		Debug.AspNetCompiler.PhysicalPath = "C:\Program Files\Acumatica ERP\covid19\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\covid19\"
@@ -25,8 +25,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "covid19", "https://localhos
 		SlnRelativePath = "C:\Program Files\Acumatica ERP\covid19\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covid19.Lib", "..\Covid19.Lib\Covid19.Lib.csproj", "{061DE428-42B1-43CF-B15E-66C8527B24C0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covid19", "..\Covid19.Lib\Covid19.csproj", "{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}"
 EndProject
 Global
@@ -39,10 +37,6 @@ Global
 		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{0419B988-1AC4-4F04-B405-D4C9CAE645C6}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{061DE428-42B1-43CF-B15E-66C8527B24C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Release|Any CPU.ActiveCfg = Release|Any CPU
