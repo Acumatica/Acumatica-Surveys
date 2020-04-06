@@ -1,0 +1,10 @@
+﻿<Sql TableName="SurveyClass" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="SurveyClass">
+  <col name="CompanyID" type="Int" default="Zero" />
+  <col name="SurveyClassID" type="Int" identity="true" />
+  <index name="PK_SurveyClass" clustered="true" primary="true" unique="true">
+    <col name="CompanyID" />
+    <col name="SurveyClassID" />
+  </index>
+</table>]]></CDATA>
+</Sql>

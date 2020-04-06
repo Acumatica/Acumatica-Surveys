@@ -25,8 +25,18 @@
         </layout>
         <data>
             <SiteMap>
-                <row Position="5960" Title="Individual Survey" Url="~/Pages/CV/CV301010.aspx" ScreenID="CV301010" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000" />
+                <row Position="5960" Title="Survey Response" Url="~/Pages/SV/SV301010.aspx" ScreenID="SV301010" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
+                    <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="15" SubcategoryID="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa">
+                        <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
+                    </MUIScreen>
+                </row>
             </SiteMap>
+            <MUIWorkspace>
+                <row IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="865" Title="Surveys" Icon="check_circle" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" IsSystem="0" />
+            </MUIWorkspace>
+            <MUIArea>
+                <row IsPortal="0" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" Order="30" Name="Configuration" />
+            </MUIArea>
         </data>
     </data-set>
 </SiteMapNode>

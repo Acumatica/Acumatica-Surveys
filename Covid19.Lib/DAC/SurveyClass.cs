@@ -7,14 +7,14 @@ using PX.Data;
 
 namespace Covid19.Lib
 {
-    public class CovidClass : IBqlTable
+    public class SurveyClass : IBqlTable
     {
 		#region ItemClassID
-        public abstract class covidClassID : PX.Data.BQL.BqlInt.Field<covidClassID> { }
+        public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
 
         [PXDBIdentity]
         [PXUIField(Visible = false, Visibility = PXUIVisibility.Invisible)]
-        public virtual int? CovidClassID { get; set; }
+        public virtual int? SurveyClassID { get; set; }
         #endregion
 	}
 }

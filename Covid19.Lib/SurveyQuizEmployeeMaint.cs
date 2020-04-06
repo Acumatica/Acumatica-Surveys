@@ -8,18 +8,18 @@ using PX.Objects.CR;
 
 namespace Covid19.Lib
 {
-    public class CovidQuizEmployeeMaint : PXGraph<CovidQuizEmployeeMaint, CovidQuiz>
+    public class SurveyQuizEmployeeMaint : PXGraph<SurveyQuizEmployeeMaint, SurveyQuiz>
     {
-        public PXSelect<CovidQuiz> Quizes;
-        public CRAttributeList<CovidQuiz> Answers;
+        public PXSelect<SurveyQuiz> Quizes;
+        public CRAttributeList<SurveyQuiz> Answers;
 
-        protected void _(Events.FieldDefaulting<CovidQuiz, CovidQuiz.quizCD> e)
+        protected void _(Events.FieldDefaulting<SurveyQuiz, SurveyQuiz.quizCD> e)
         {
             var row = e.Row;
             e.NewValue = PXAccess.GetUserName() + " " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
-        protected void _(Events.FieldDefaulting<CovidQuiz, CovidQuiz.quizedUser> e)
+        protected void _(Events.FieldDefaulting<SurveyQuiz, SurveyQuiz.quizedUser> e)
         {
             var row = e.Row;
             e.NewValue = PXAccess.GetUserID();

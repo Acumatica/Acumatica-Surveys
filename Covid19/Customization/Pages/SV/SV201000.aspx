@@ -1,10 +1,10 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="CV201000.aspx.cs" Inherits="Page_CV201000" Title="Untitled Page" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="SV201000.aspx.cs" Inherits="Page_SV201000" Title="Untitled Page" %>
 <%@ MasterType VirtualPath="~/MasterPages/FormDetail.master" %>
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
 	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-        TypeName="Covid19.Lib.CovidQuizSetting"
-        PrimaryView="CovidClassCurrent"
+        TypeName="Covid19.Lib.SurveyQuizSetting"
+        PrimaryView="SurveyClassCurrent"
         >
 		<CallbackCommands>
 
@@ -12,10 +12,10 @@
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="CovidClassCurrent" Width="100%" Height="100px" AllowAutoHide="false">
+	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="SurveyClassCurrent" Width="100%" Height="100px" AllowAutoHide="false">
 		<Template>
 			<px:PXLayoutRule runat="server" ID="PXLayoutRule1" StartRow="True" ></px:PXLayoutRule>
-			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit1" DataField="CovidClassID" /></Template>
+			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit1" DataField="SurveyClassID" /></Template>
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">

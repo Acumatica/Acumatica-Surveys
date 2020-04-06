@@ -25,8 +25,16 @@
         </layout>
         <data>
             <SiteMap>
-                <row Position="5959" Title="Covid quiz settings" Url="~/Pages/CV/CV201000.aspx" ScreenID="CV201000" NodeID="57013bb6-0579-4ce5-8e49-95f5069e9785" ParentID="00000000-0000-0000-0000-000000000000" />
+                <row Position="5959" Title="Covid quiz settings" Url="~/Pages/SV/SV201000.aspx" ScreenID="SV201000" NodeID="57013bb6-0579-4ce5-8e49-95f5069e9785" ParentID="00000000-0000-0000-0000-000000000000">
+                    <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="35" SubcategoryID="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" />
+                </row>
             </SiteMap>
+            <MUIWorkspace>
+                <row IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="865" Title="Surveys" Icon="check_circle" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" IsSystem="0" />
+            </MUIWorkspace>
+            <MUIArea>
+                <row IsPortal="0" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" Order="30" Name="Configuration" />
+            </MUIArea>
         </data>
     </data-set>
 </SiteMapNode>

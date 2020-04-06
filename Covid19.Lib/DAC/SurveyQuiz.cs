@@ -11,7 +11,7 @@ using PX.Web.UI.Frameset.Model.DTO;
 
 namespace Covid19.Lib
 {
-    public class CovidQuiz : IBqlTable
+    public class SurveyQuiz : IBqlTable
     {
 		#region QuizCD
         public abstract class quizCD : PX.Data.BQL.BqlString.Field<quizCD> { }
@@ -20,7 +20,7 @@ namespace Covid19.Lib
         [PXDefault()]
         [PXDBString(30, IsFixed = true, IsKey = true)]
 		[PXUIField(DisplayName = "Quiz CD")]
-		[PXSelector(typeof(CovidQuiz.quizCD))]
+		[PXSelector(typeof(SurveyQuiz.quizCD))]
         public virtual String QuizCD
         {
             get;set;
@@ -42,7 +42,7 @@ namespace Covid19.Lib
 		#region QuizedUser
         public abstract class quizedUser : PX.Data.BQL.BqlGuid.Field<quizedUser> { }
         [PXSelector(typeof(Users.pKID), SubstituteKey = typeof(Users.username))]
-		[PXUIField(DisplayName = "Quized user")]
+		[PXUIField(DisplayName = "Surveyed user")]
 		[PXDBGuid()]
         public virtual Guid? QuizedUser
 		{
@@ -72,12 +72,12 @@ namespace Covid19.Lib
         #region Attributes
         public abstract class attributes : BqlAttributes.Field<attributes> { }
 
-        [CRAttributesField(typeof(CovidQuiz.covidClassID))]
+        [CRAttributesField(typeof(SurveyQuiz.covidClassID))]
         public virtual string[] Attributes { get; set; }
 
 		#endregion
 
-		#region CovidClassID
+		#region SurveyClassID
 		public abstract class covidClassID : PX.Data.BQL.BqlInt.Field<covidClassID> { }
 
         [PXDBInt]

@@ -1,9 +1,9 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="CV301010.aspx.cs" Inherits="Page_CV301010" Title="Untitled Page" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="SV301010.aspx.cs" Inherits="Page_SV301010" Title="Untitled Page" %>
 <%@ MasterType VirtualPath="~/MasterPages/FormDetail.master" %>
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
 	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-        TypeName="Covid19.Lib.CovidQuizEmployeeMaint"
+        TypeName="Covid19.Lib.SurveyQuizEmployeeMaint"
         PrimaryView="Quizes"
         >
 		<CallbackCommands>

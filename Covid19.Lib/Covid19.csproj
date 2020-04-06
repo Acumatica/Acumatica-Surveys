@@ -63,10 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CovidQuizEmployeeMaint.cs" />
-    <Compile Include="CovidQuizSetting.cs" />
-    <Compile Include="DAC\CovidClass.cs" />
-    <Compile Include="DAC\CovidQuiz.cs" />
+    <Compile Include="SurveyQuizEmployeeMaint.cs" />
+    <Compile Include="SurveyQuizSetting.cs" />
+    <Compile Include="DAC\SurveyClass.cs" />
+    <Compile Include="DAC\SurveyQuiz.cs" />
     <Compile Include="DAC\Survey.cs" />
     <Compile Include="DAC\SurveyCollector.cs" />
     <Compile Include="DAC\SurveyQuestions.cs" />
