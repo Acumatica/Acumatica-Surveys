@@ -10,7 +10,7 @@ namespace Covid19.Lib
 {
     public class SurveyQuizSetting : PXGraph<SurveyQuizSetting, SurveyClass>
     {
-        public PXSelect<SurveyClass> CovidClassCurrent;
+        public PXSelect<SurveyClass> SurveyClassCurrent;
         public CSAttributeGroupList<SurveyClass.surveyClassID, SurveyQuiz> Mapping;
     }
 }

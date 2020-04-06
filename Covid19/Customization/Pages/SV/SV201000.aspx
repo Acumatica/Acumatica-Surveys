@@ -12,10 +12,10 @@
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView ID="form" runat="server" DataSourceID="ds" DataMember="SurveyClassCurrent" Width="100%" Height="100px" AllowAutoHide="false">
+	<px:PXFormView Caption="Survey settings" ID="form" runat="server" DataSourceID="ds" DataMember="SurveyClassCurrent" Width="100%" Height="100px" AllowAutoHide="false">
 		<Template>
 			<px:PXLayoutRule runat="server" ID="PXLayoutRule1" StartRow="True" ></px:PXLayoutRule>
-			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit1" DataField="SurveyClassID" /></Template>
+			<px:PXNumberEdit runat="server" ID="CstPXNumberEdit1" DataField="SurveyClassID" ></px:PXNumberEdit></Template>
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
