@@ -9,7 +9,7 @@ namespace Covid19.Lib
 {
     public class SurveyClass : IBqlTable
     {
-		#region ItemClassID
+		#region SurveyClassID
         public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
 
         [PXDBIdentity]

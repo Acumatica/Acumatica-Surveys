@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAC\SurveyUsers.cs" />
     <Compile Include="SurveyQuizEmployeeMaint.cs" />
     <Compile Include="SurveyQuizSetting.cs" />
     <Compile Include="DAC\SurveyClass.cs" />
