@@ -1,1 +1,15 @@
-﻿<Page path="~/pages/sv/sv201000.aspx" pageSource="tVVNcxo5ED07VfkPU7PlKxg7Tu2mgFp7MLGrwGEZYueWEqM2qKwZTSQNHz7sb0/3fDDiK2EPywlaTfd7/V5L7fO/vRGbgTdgySzDLx0/+MP3hsxY0HTQFxJj/zbriGn2lY57YJmQjTgP+95NZtXdAhL7LDRkace3OgPfe2JScGZhDD8yMLbjvzBpMB4oXlYOny4vWhcXFw1m0lUjMr73kMxBC2s6PnX7XiX43kRY+sfXxNIXnuP2vfPu+3dtZFEAnKxT8J6EthmTI2bnJ0CnAlgC+38KVGKRg/fQ6/gRfm8R0jw0kiyCeyU5aDpM573Q98ZZwpBTCHqBhbDMWTtdfRp96zHLQpXpCPJKHEnpItUUqYjQiCmRmeRjehacoCLNc//9O6/8EJdHFpMkaiF466/GQEwbYYYl1v9k4i0Ea0Uyc/4x0iJmev0kYImw8sRAMmOCTGsk4WQS2LN2wKScsug1UHHMEm7ySWC8eeAAozvkaPBNZ2zdI1O8PD7F/vEhklJExAtYaoVKKkKeKWiTU7DGC6btjbfGWM2fIkOIp6APDmZLAe8exGxu81/pCr0tpVqSwe8Fh8rCxQAnEKcS/Z3/KoEP2FpldpxJ2IVFYNxztFdombZjtayc0C2nXCe5pR8zYnDHhT1UOjDWTWkVrPsCJN8i/dCr+9TpGHHZlOeVCqdqfXVc68/Htf6sBT/EaIZxR47rXI7wVSR0WKyx2dHuoFj7hijko7xQvIF3lzBcR16pQBSYSMgszyLhaok3okgcHL7XLCoMYAHSuBoRlzy65bkhS1Pa1SLzrI2Sb3vn9+7JrRIomcVJhXPApti95D8scGsliVLH/zasUG6KhyAhskofmjXwYHxjrRbTzAJZxDHPVhzvbbw3b9c46fzYVGhommN40WDm1f2/038CK3vIvU6rHphIi3zjSzEfMyk7fr8QskDqJF3uNQnmEL3eqtUvmtBzhO8UL+pF89c6sFPs1xsHPFTaftF8p74TbeJe7YvdLnQ0283IOsWBW+zB3ERWLJA8PQi45iU//I3jvJFihn4IcOPyd3hvYs1TemwLLwxiXdPqE+Eu23w2u/ZnK78YUXB6KW7xpdhYUiTVq4Goakd9p1tks7IngdqyQtn46rq1uZL/O01HF2d2Y1rrTYfrD9TgpHK1a/4/ZcqVpgZVm55WaU8tk4EwNeyPV8fmgq95abbyTt/cUBgo7y/npLt7z/8E" />
+﻿<Page path="~/pages/sv/sv201000.aspx" ControlId="3" pageSource="tVbbbuM2EH3OAvsPgoq82nHSFO3CNprI8SaAnbqWm+zbghYnNhFKVEnKl33ot3dGF4u+aOsWqJ+k4XjmnJkzHHUvf/UmbAHeiCWLDB96fvCD742ZsaDpYCgk2v5q1xbTHiodD8AyIVtxbva9u8yqhxUk9lVoyNKeb3UGvvfCpODMwhT+zMDYnv/GpEF7oHgZOXy5vupcXV21mEk3rcj43lOyBC2s6fmU7Wvl4HszYekffySWHniO2/cu+x8/dJFFAXC2TcF7EdpmTE6YXZ4BnQJgCMz/KVCJRQ7e06DnR/jcIaS5aSJZBI9KctB0mC4Hoe9Ns4QhpxD0CgNhmItuuvk0+TJgloUq0xHkkTiS0oWrKVwRoRFzIjPLy/QqOEFFmpf+xw9e+SMuzyymlqiV4J1fWiMxb4UZhtj+nolvIVgrkoXzj4kWMdPbFwFrhJU7BpIZE2RaIwnHk8BedAMm5ZxF74GKY5Zwk1cC7e0TB2g9IEeFbztl6zdU8bq5isPmIlKniIgXsNQKlVSEPFPQJqVgjDd0OypvjbGqP1nGEM9BnyzMXge8RxCLpc3f0g1qW0q1JoE/Cg6VhIsCziBOJeo7fyuBj9hWZXaaSTiERWDcc5RXaJm2U7WulNAvq1w79evIM9jYBy7sqbiBsbXDTUF4KEDyii8pyffa/yXc9YlwAzDRfrhgCdH7vdo0hqscOnvh7iIrVjkyp4bPGbXqu+Bql84JeHl3nwZ1QWt3tLhtK88ruZ0r6ptmUX9uFvVnLfgpRgu0O7q7zXUXvouEDov7yhyI9KQqj5Vf6JT8QvENvIeE4b3DK7kRBSYSmopXkXC1xqtfJA6Oqi/dEaxAGrdHxCW37g3XmKUpXUqF50UXtb0/JP88JvlMBEpmcVLhHLE5Zi/5jwvcWkmi1PO/jHfqqYKHICGySp+qNfBgemetFvPMAknEFaNrxwWFC+J+i5XOj02Fhqo5hTcNZlktuoP8TaPlpKIB0iK/2spmPmdS9vxh0cgCqeN0fZSkaeCcJLR3cSHzIl60fK8NB8G+P3HAQ6Xtb5ofxHesbZyr42Z3iz6a/WQkneLADfZkqruANh+OeckP37Gcd1IsUA8BTlz+wXFUsfY5OfYbLwxi3dLoE+E+2/12s/ZzJ98A2HBaife4EneSFEm1HhFVraivdIvsRvYsUHtSKBPf3HZ2u+ff03T64tRuSmO9y3D7IyU4K1ytmv+vM+VIU4IqzUCrdKDWyUiYGvZPN011wc+WUmzlnb67odBQ3l/OSf/wnv8b">
+    <PXFormView ID="form" ParentId="phF_form" TypeFullName="PX.Web.UI.PXFormView">
+        <Children Key="Template">
+            <AddItem>
+                <PXSelector TypeFullName="PX.Web.UI.PXSelector">
+                    <Prop Key="Virtual:ApplyStylesheetSkin" />
+                    <Prop Key="ID" Value="CstPXTextEdit3" />
+                    <Prop Key="DataField" Value="SurveyName" />
+                </PXSelector>
+            </AddItem>
+            <PXTextEdit DataField="SurveyDesc" OriginalIndex="2" />
+            <PXTextEdit DataField="SurveyName" OriginalIndex="1" Remove="True" />
+        </Children>
+    </PXFormView>
+</Page>

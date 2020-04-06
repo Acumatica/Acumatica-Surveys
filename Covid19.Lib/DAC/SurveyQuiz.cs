@@ -72,18 +72,19 @@ namespace Covid19.Lib
         #region Attributes
         public abstract class attributes : BqlAttributes.Field<attributes> { }
 
-        [CRAttributesField(typeof(SurveyQuiz.covidClassID))]
+        [CRAttributesField(typeof(SurveyQuiz.surveyClassID))]
         public virtual string[] Attributes { get; set; }
 
 		#endregion
 
 		#region SurveyClassID
-		public abstract class covidClassID : PX.Data.BQL.BqlInt.Field<covidClassID> { }
+		public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
 
         [PXDBInt]
 		[PXDefault(1)]
-        [PXUIField(Visible = false, Visibility = PXUIVisibility.Invisible)]
-        public virtual int? CovidClassID { get; set; }
+		[PXSelector(typeof(SurveyClass.surveyClassID), DescriptionField = typeof(SurveyClass.surveyDesc))]
+        [PXUIField(DisplayName = "Survey type")]
+        public virtual int? SurveyClassID { get; set; }
         #endregion
 
 
