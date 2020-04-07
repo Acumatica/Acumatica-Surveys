@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PX.SM;
 using PX.Data;
 using PX.Data.BQL.Fluent;
+using PX.Objects.CR;
 
 namespace Covid19.Lib
 {
@@ -13,5 +14,12 @@ namespace Covid19.Lib
 
         public PXSave<Surveys> Save;
         public PXCancel<Surveys> Cancel;
+
+        public PXSetup<CRSetup> SurveySetup;
+
+        public SurveyMaint()
+        {
+            CRSetup Data = SurveySetup.Current;
+        }
     }
 }

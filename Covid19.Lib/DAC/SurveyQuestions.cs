@@ -9,15 +9,25 @@ namespace Covid19.Lib
     [Serializable]
     public class SurveyQuestions : IBqlTable
     {
-        #region SurveyID
-        /// <summary>
-        /// This identifies the Survey this Question belongs to
-        /// </summary>
-        [PXDBInt(IsKey = true)]
+        //#region SurveyID
+        ///// <summary>
+        ///// This identifies the Survey this Question belongs to
+        ///// </summary>
+        /////
+        ///// todo: we need to determine if this is going to change to an alpha numeric.
+        //[PXDBInt(IsKey = true)]
+        //[PXUIField(DisplayName = "Survey ID")]
+        //public virtual int? SurveyID { get; set; }
+        //public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
+        //#endregion
+
+        #region SurveyID_AsSrring
+        [PXDBString(40, IsKey = true)]
         [PXUIField(DisplayName = "Survey ID")]
-        public virtual int? SurveyID { get; set; }
-        public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
+        public virtual string SurveyID { get; set; }
+        public abstract class surveyID : PX.Data.BQL.BqlString.Field<surveyID> { }
         #endregion
+
         #region QuestionID
         /// <summary>
         /// Identifier for this specific Question.
@@ -78,10 +88,10 @@ namespace Covid19.Lib
         public abstract class attributeID : PX.Data.BQL.BqlString.Field<attributeID> { }
         #endregion
         #region NoteID
-        [PXDBGuid()]//todo: confirm this is the correct attribute
-        [PXUIField(DisplayName = "NoteID")]
+        public abstract class noteID : PX.Data.IBqlField { }
+
+        [PXNote]
         public virtual Guid? NoteID { get; set; }
-        public abstract class noteID : PX.Data.BQL.BqlGuid.Field<noteID> { }
         #endregion
         #region CreatedByID
         [PXDBCreatedByID()]
@@ -121,20 +131,21 @@ namespace Covid19.Lib
 }
 
 /*
-Create Table SurveyQuestions
+--DROP TABLE SurveyQuestions
+CREATE TABLE SurveyQuestions
 (
 	CompanyID  Int,
-	SurveyID   int,
+	SurveyID   nvarchar(40),
 	QuestionID int,
 	--This is the how the question should be worded to the user.
-	Question varchar(500),
+	Question nvarchar(500),
 	--alpha numeric method to order the questions
-	SortOrder varchar(20), 
+	SortOrder nvarchar(20), 
 	--Question Group will be used to group such things as 
 	--Symptoms together in one block
 	--we also have the option of defining this through another table.
 	--Keeping it simple for now
-	QuestionGroup varchar(40), 
+	QuestionGroup nvarchar(40), 
 	--I am working off of assumtions how the Attributes work.
 	--Its assumed that we need to tie the quetion to a particular
 	--Attribute as it will define the type and enumberations if 
@@ -155,4 +166,3 @@ CONSTRAINT SurveyQuestions_PK PRIMARY KEY CLUSTERED
     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
  */
-

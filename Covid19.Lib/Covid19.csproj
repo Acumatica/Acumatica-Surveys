@@ -32,29 +32,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PX.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\PX.Common.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="PX.Common">
+      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Common.dll</HintPath>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\..\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.CS.Contracts.dll</HintPath>
     </Reference>
-    <Reference Include="PX.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\PX.Data.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="PX.Data">
+      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Data.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\..\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Data.BQL.Fluent.dll</HintPath>
     </Reference>
-    <Reference Include="PX.Objects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\PX.Objects.DLL</HintPath>
-      <Private>False</Private>
+    <Reference Include="PX.Objects">
+      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Objects.dll</HintPath>
     </Reference>
     <Reference Include="PX.Web.UI.Frameset">
-      <HintPath>..\..\..\..\Bin\PX.Web.UI.Frameset.dll</HintPath>
+      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Web.UI.Frameset.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -63,12 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAC\CRSetupSurveyExt.cs" />
     <Compile Include="DAC\SurveyUsers.cs" />
     <Compile Include="SurveyQuizEmployeeMaint.cs" />
     <Compile Include="SurveyQuizSetting.cs" />
     <Compile Include="DAC\SurveyClass.cs" />
     <Compile Include="DAC\SurveyQuiz.cs" />
-    <Compile Include="DAC\Survey.cs" />
+    <Compile Include="DAC\Surveys.cs" />
     <Compile Include="DAC\SurveyCollector.cs" />
     <Compile Include="DAC\SurveyQuestions.cs" />
     <Compile Include="DAC\SurveyRecipients.cs" />

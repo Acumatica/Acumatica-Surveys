@@ -17,24 +17,31 @@ namespace Covid19.Lib
     [Serializable]
     public class SurveyCollector : IBqlTable
     {
-        #region SurveyID
-        /// <summary>
-        /// Identifies the specific Survey this collector record belongs too.
-        /// </summary>
-        [PXDBInt(IsKey = true)]
-        [PXUIField(DisplayName = "Survey ID")]
-        //todo: corrected typo from servey to survey. need to update script
-        public virtual int? SurveyID { get; set; }
-        public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
+
+        #region Selected
+        [PXBool]
+        [PXDefault(false)]
+        [PXUIField(DisplayName = "Selected")]
+        public virtual bool? Selected { get; set; }
         #endregion
-        #region QuestionID
-        //todo: purge this when the above assumption is confiremed. this was added on the assumption that we have a one to one relationship beteen this collector, Question, and CSAnswer.
-        //      this also make more sense why Harsha insisted we needed the SurveyID in this entity
+
+        //#region SurveyID
+        ///// <summary>
+        ///// Identifies the specific Survey this collector record belongs too.
+        ///// </summary>
         //[PXDBInt(IsKey = true)]
-        //[PXUIField(DisplayName = "Question ID")]
-        //public virtual int? QuestionID { get; set; }
-        //public abstract class questionID : PX.Data.BQL.BqlInt.Field<questionID> { }
+        //[PXUIField(DisplayName = "Survey ID")]
+        //public virtual int? SurveyID { get; set; }
+        //public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
+        //#endregion
+
+        #region SurveyID_AsSrring
+        [PXDBString(40, IsKey = true)]
+        [PXUIField(DisplayName = "Survey ID")]
+        public virtual string SurveyID { get; set; }
+        public abstract class surveyID : PX.Data.BQL.BqlString.Field<surveyID> { }
         #endregion
+
         #region CollectorID
         /// <summary>
         /// Uniquely Identifies this Collector record.
@@ -44,14 +51,37 @@ namespace Covid19.Lib
         public virtual int? CollectorID { get; set; }
         public abstract class collectorID : PX.Data.BQL.BqlInt.Field<collectorID> { }
         #endregion
-        #region Userid
+        #region CollectorCD
+
+        public abstract class collectorCD : PX.Data.BQL.BqlString.Field<collectorCD> { }
         /// <summary>
-        /// Identifies the user that this Collector is assigned too.
+        /// The human-readable identifier of the Collector record.
         /// </summary>
-        [PXDBGuid()]
-        [PXUIField(DisplayName = "Userid")]
-        public virtual Guid? Userid { get; set; }
-        public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
+        /// <remarks>
+        /// Todo:   confirm following assumption with Team:
+        ///         We will and to have this field for any URL links sent to any Contact
+        ///         the link will hold have this particular value in one of its query parameters.
+        ///         as to be able to direct the users directly to this specific collector.
+        ///         This is the field that zaljur was using in his Quiz page where he was
+        ///         using the Survey Name then a DateTime as string within the QuizCD feild.
+        ///         I belive the SurveyColector is the equivalent of his Quiz record.
+        /// </remarks>
+        [PXDBString(50, IsKey = true, IsUnicode = true)]//todo: confirm with team this is the right attribute
+        [PXDefault]
+        public virtual string CollectorCD { get; set; }
+        #endregion
+        #region ContactID
+        ///// <summary>
+        ///// Identifies the Contact that this Collector is assigned too.
+        ///// </summary>
+        /// <remarks>
+        /// it has been decided on 04/05/2020 that the userID field will be replaced with
+        /// Contact as it is the contact that we are most concerned regarding any Survey
+        /// </remarks>
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Contact")]
+        public virtual int? ContactID { get; set; }
+        public abstract class contactID : PX.Data.BQL.BqlInt.Field<contactID> { }
         #endregion
         #region CollectedDate
         /// <summary>
@@ -60,7 +90,7 @@ namespace Covid19.Lib
         /// <remarks>
         /// this should remain null until the survey is answered once the
         /// Survey is accepted the Graph should automatically set this date
-        /// todo: Discuss with team if we should make this updatable. I assume we should just set it once survey is accepted. 
+        /// todo: Discuss with team if we should make this updateable. I assume we should just set it once survey is accepted. 
         /// </remarks>
         [PXDBDate()]
         [PXUIField(DisplayName = "Collected Date")]
@@ -82,9 +112,15 @@ namespace Covid19.Lib
         #endregion
         #region CollectorStatus
 
+
+
         //Sent/Open/responded/expired
-        private const string CollectorSend = "S";
-        private const string CollectorOpen = "O";
+        private const string CollectorNew = "N";
+        private const string CollectorSent = "S";
+        /*
+         Per discussions on 4/05/2020, we are not certain if Open will be needed, so it is commented out until we determine if we do really need it.
+         */
+        //private const string CollectorOpen = "O";
         private const string CollectorResponded = "R";
         private const string CollectorExpired = "E";
 
@@ -101,21 +137,25 @@ namespace Covid19.Lib
         /// neglects to answer the survey we will then set this to expired once the expiration date has passed. If the user
         /// does answer the survey the state gets set to Responded. 
         /// </remarks>
+        public abstract class collectorStatus : PX.Data.BQL.BqlString.Field<collectorStatus> { }
+
         [PXDBString(1, IsUnicode = true)]
-        [PXDefault(CollectorSend)]
+        [PXDefault(CollectorNew)]
         [PXUIField(DisplayName = "Collector Status")]
         [PXStringList(
             new[]
             {
-                CollectorSend,
-                CollectorOpen,
+                CollectorNew,
+                CollectorSent,
+                //CollectorOpen,
                 CollectorResponded,
                 CollectorExpired
             },
             new[]
             {
+                "New",
                 "Send",
-                "Open",
+                //"Open",
                 "Responded",
                 "Expired"
             })]
@@ -125,12 +165,14 @@ namespace Covid19.Lib
             set => _CollectorStatus = value;
         }
 
+
+
         #endregion
-        #region Noteid
-        [PXDBGuid()] //todo: confirm this is the right type for noteID
-        [PXUIField(DisplayName = "Noteid")]
-        public virtual Guid? Noteid { get; set; }
-        public abstract class noteid : PX.Data.BQL.BqlGuid.Field<noteid> { }
+        #region NoteID
+        public abstract class noteID : PX.Data.IBqlField { }
+
+        [PXNote]
+        public virtual Guid? NoteID { get; set; }
         #endregion
         #region CreatedByID
         [PXDBCreatedByID()]
@@ -166,21 +208,49 @@ namespace Covid19.Lib
         public virtual DateTime? LastModifiedDateTime { get; set; }
         public abstract class lastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<lastModifiedDateTime> { }
         #endregion
+
+        #region DeadCode
+
+        //#region QuestionID
+        ////todo: purge this when the above assumption is confiremed. this was added on the assumption that we have a one to one relationship beteen this collector, Question, and CSAnswer.
+        ////      this also make more sense why Harsha insisted we needed the SurveyID in this entity
+        ////[PXDBInt(IsKey = true)]
+        ////[PXUIField(DisplayName = "Question ID")]
+        ////public virtual int? QuestionID { get; set; }
+        ////public abstract class questionID : PX.Data.BQL.BqlInt.Field<questionID> { }
+        //#endregion
+
+        //#region Userid_Removed
+        /*
+         it has been decided on 04/05/2020 that the userID field will be replaced with Contact as it is the contact that we are most concerned regarding any Survey
+        
+        */
+        ///// <summary>
+        ///// Identifies the user that this Collector is assigned too.
+        ///// </summary>
+        //[PXDBGuid()]
+        //[PXUIField(DisplayName = "Userid")]
+        //public virtual Guid? Userid { get; set; }
+        //public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
+        //#endregion
+
+        #endregion
     }
 }
 
 
 /*
-Create Table SurveyCollector
+--DROP TABLE SurveyCollector
+CREATE TABLE SurveyCollector
 (
 	CompanyID  Int not null,
-	SurveyID   Int not null,
-	--QuestionID int not null,
+	SurveyID   nvarchar(40) not null,
 	CollectorID   Int not null,
-	UserID	uniqueidentifier not null,   
+    CollectorCD nvarchar(50) not null,
+	ContactID Int not null,  
 	CollectedDate DateTime not null,--the date the question was answered
 	ExpirationDate datetime,
-	CollectorStatus char(1), -- Status of record - Sent/Open/responded/expired
+	CollectorStatus char(1), -- Status of record - New/Sent/responded/expired
 	NoteID uniqueidentifier NOT NULL,
 	CreatedByID uniqueidentifier NOT NULL,
 	CreatedByScreenID char(8) NOT NULL,
@@ -192,7 +262,6 @@ CONSTRAINT SurveyCollector_PK PRIMARY KEY CLUSTERED
 (
 	CompanyID   ASC,
 	SurveyID    ASC,
-	--QuestionID  ASC,
 	CollectorID ASC
     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]

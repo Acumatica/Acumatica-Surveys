@@ -5,11 +5,11 @@ namespace Covid19.Lib
 {
     /// <summary>
     /// This Entity establishes a many to many relationship between a user and
-    /// participation in a given survey.
+    /// participation in a survey.
     /// </summary>
     /// <remarks>
     /// Future iterations of this entity will allow for a relationship between
-    /// a Customer, Vendor, or other entities in the system.
+    /// a Customer, Vendor, or other enties in the system.
     /// todo: One thing that will need to be discussed with the above is that a user will
     /// need to be established in order for any given entity the ability to log in and
     /// fill out a survey. We could also consider moving the survey to the Self Service
@@ -19,29 +19,65 @@ namespace Covid19.Lib
     [Serializable]
     public class SurveyRecipients : IBqlTable
     {
-        #region SurveyID
-        /// <summary>
-        /// REferences the Survey record this Cross reference is for
-        /// </summary>
-        [PXDBInt(IsKey = true)]
+        //#region SurveyID
+        ///// <summary>
+        ///// References the Survey record this Cross reference is for
+        ///// </summary>
+        ///// <remarks>
+        ///// Todo:   refactor this field into an Auto Number field similar to how OrderNbr work on a SalesOrder DAC
+        /////         I am not sure what need to be done to make this happen. I assume we leave this as is and add a new
+        /////         SurveyNbr field that would then be auto-numbered as it does for OrderNbr. 
+        ///// </remarks>
+        //[PXDBInt(IsKey = true)]
+        //[PXUIField(DisplayName = "Survey ID")]
+        //public virtual int? SurveyID { get; set; }
+        //public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
+        //#endregion
+
+        #region SurveyID_AsSrring
+        [PXDBString(40, IsKey = true)]
         [PXUIField(DisplayName = "Survey ID")]
-        public virtual int? SurveyID { get; set; }
-        public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
+        public virtual string SurveyID { get; set; }
+        public abstract class surveyID : PX.Data.BQL.BqlString.Field<surveyID> { }
         #endregion
-        #region UserID
-        /// <summary>
-        /// This holds the User ID that is associated with this cross reference record
-        /// </summary>
+
+        #region LineNbr
+        //copied from SOLine
+        public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
+        protected Int32? _LineNbr;
+        [PXDBInt(IsKey = true)]
+        //todo: determin how the below attribute needs to be set.
+        //[PXLineNbr(typeof(SOOrder.lineCntr))]
+        [PXLineNbr(typeof(Surveys.lineCntr))]
+        [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
+        public virtual Int32? LineNbr
+        {
+            get
+            {
+                return this._LineNbr;
+            }
+            set
+            {
+                this._LineNbr = value;
+            }
+        }
+        #endregion
+
+
+        #region ContactID
+        ///// <summary>
+        ///// Identifies the Contact that this Collector is assigned too.
+        ///// </summary>
         /// <remarks>
-        /// See remarks on the class header on notes about future iterations to get
-        /// this record to work with customer, vendor, or other entities. We likely
-        /// will always need a user as they will need to log in to fill out the survey
+        /// it has been decided on 04/05/2020 that the userID field will be replaced with
+        /// Contact as it is the contact that we are most concerned regarding any Survey
         /// </remarks>
-        [PXDBGuid(IsKey = true)]
-        [PXUIField(DisplayName = "User ID")]
-        public virtual Guid? UserID { get; set; }
-        public abstract class userID : PX.Data.BQL.BqlInt.Field<userID> { }
+        [PXDBInt()]
+        [PXUIField(DisplayName = "Contact")]
+        public virtual int? ContactID { get; set; }
+        public abstract class contactID : PX.Data.BQL.BqlInt.Field<contactID> { }
         #endregion
+
         #region Active
         /// <summary>
         /// This allows for deactivation of a recipient that was previously enabled for a survey.
@@ -68,11 +104,11 @@ namespace Covid19.Lib
         //indicated being away.
         //
         #endregion
-        #region Noteid
-        [PXDBGuid()] //todo: confirm this is the correct attribute for noteID
-        [PXUIField(DisplayName = "Note ID")]
+        #region NoteID
+        public abstract class noteID : PX.Data.IBqlField { }
+
+        [PXNote]
         public virtual Guid? NoteID { get; set; }
-        public abstract class noteID : PX.Data.BQL.BqlGuid.Field<noteID> { }
         #endregion
         #region CreatedByID
         [PXDBCreatedByID()]
@@ -108,16 +144,39 @@ namespace Covid19.Lib
         public virtual DateTime? LastModifiedDateTime { get; set; }
         public abstract class lastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<lastModifiedDateTime> { }
         #endregion
+
+        #region Dead Code
+        //no longer using USER ID as it has been decided the contact is what this whole project pivots around
+        //#region UserID
+        ///// <summary>
+        ///// This holds the User ID that is associated with this cross reference record
+        ///// </summary>
+        ///// <remarks>
+        ///// See remarks on the class header on notes about future iterations to get
+        ///// this record to work with customer, vendor, or other entities. We likely
+        ///// will always need a user as they will need to log in to fill out the survey
+        ///// </remarks>
+        //[PXDBGuid(IsKey = true)]
+        //[PXUIField(DisplayName = "User ID")]
+        //public virtual int? UserID { get; set; }
+        //public abstract class userID : PX.Data.BQL.BqlInt.Field<userID> { }
+        //#endregion
+
+
+        #endregion
     }
 }
 
 /*
-Create Table SurveyRecipients
+--DROP TABLE SurveyRecipients
+CREATE TABLE SurveyRecipients
 (
 	CompanyID Int NOT NULL,
-	SurveyID Int NOT NULL,
+	SurveyID nvarchar(40) NOT NULL,
 	--EmployeeID Int NOT NULL,
-	UserID uniqueidentifier NOT NULL,
+	--UserID uniqueidentifier NOT NULL,
+	LineNbr Int NOT NULL,
+	ContactID Int NOT NULL,
 	Active bit, --default to true, employee only participates if this is true. to opt an employee out uncheck this box.
     NoteID uniqueidentifier NOT NULL,
 	CreatedByID uniqueidentifier NOT NULL,
@@ -131,8 +190,8 @@ CONSTRAINT [SurveyRecipients_PK] PRIMARY KEY CLUSTERED
 	[CompanyID] ASC,
 	[SurveyID]  ASC,
 	--[EmployeeID] ASC
-	[UserID]    ASC
+	--[UserID]    ASC
+	[LineNbr] ASC
     )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
  */
-
