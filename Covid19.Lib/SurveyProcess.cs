@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PX.SM;
 using PX.Data;
-
+using PX.Objects.CR;
 
 namespace Covid19.Lib
 {
@@ -22,7 +22,7 @@ namespace Covid19.Lib
         public PXCancel<SurveyFilter> Cancel;
         public PXFilter<SurveyFilter> Filter;
         //public PXSelect<SurveyCollector> Records;
-        public PXFilteredProcessing<SurveyCollector, SurveyFilter,
+        public PXFilteredProcessing<SurveyCollector, SurveyFilter,            
         Where<SurveyCollector.collectorStatus,Equal<SurveyProcess.newSurvey>,
         //    Where<True,Equal<True>,
                 And<SurveyCollector.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Records;
@@ -33,10 +33,10 @@ namespace Covid19.Lib
             Records.SetProcessCaption("Send");
             Records.SetProcessAllCaption("Send All");
             Records.SetProcessDelegate<SurveyCollectionMaint>(
-            delegate (SurveyCollectionMaint graph, SurveyCollector surveyCollector)
+            delegate (SurveyCollectionMaint graph, SurveyCollector collector)
             {
                 graph.Clear();
-                graph.AssignSetStatus(surveyCollector, true);
+                graph.AssignSetStatus(collector, true);
             });
         }
 
