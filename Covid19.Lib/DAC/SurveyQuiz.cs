@@ -19,7 +19,7 @@ namespace Covid19.Lib
         
         [PXDefault()]
         [PXDBString(30, IsFixed = true, IsKey = true)]
-		[PXUIField(DisplayName = "Quiz CD")]
+		[PXUIField(DisplayName = "Survey CD")]
 		[PXSelector(typeof(SurveyQuiz.quizCD))]
         public virtual String QuizCD
         {

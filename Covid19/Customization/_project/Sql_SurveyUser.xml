@@ -1,5 +1,5 @@
-﻿<Sql TableName="SurveyUsers" TableSchemaXml="#CDATA">
-    <CDATA name="TableSchemaXml"><![CDATA[<table name="SurveyUsers">
+﻿<Sql TableName="SurveyUser" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="SurveyUser">
   <col name="CompanyID" type="Int" default="Zero" />
   <col name="userid" type="UniqueIdentifier" />
   <col name="SurveyClassID" type="Int" />
