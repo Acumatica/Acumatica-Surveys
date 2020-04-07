@@ -19,7 +19,7 @@ namespace Covid19.Lib
         
         [PXDefault()]
         [PXDBString(30, IsFixed = true, IsKey = true)]
-		[PXUIField(DisplayName = "Survey CD")]
+		[PXUIField(DisplayName = "Survey ID")]
 		[PXSelector(typeof(SurveyQuiz.quizCD))]
         public virtual String QuizCD
         {
@@ -42,7 +42,7 @@ namespace Covid19.Lib
 		#region QuizedUser
         public abstract class quizedUser : PX.Data.BQL.BqlGuid.Field<quizedUser> { }
         [PXSelector(typeof(Users.pKID), SubstituteKey = typeof(Users.username))]
-		[PXUIField(DisplayName = "Surveyed user")]
+		[PXUIField(DisplayName = "Recipient User")]
 		[PXDBGuid()]
         public virtual Guid? QuizedUser
 		{
@@ -81,9 +81,9 @@ namespace Covid19.Lib
 		public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
 
         [PXDBInt]
-		[PXDefault(1)]
+		[PXDefault(1), ]
 		[PXSelector(typeof(SurveyClass.surveyClassID), DescriptionField = typeof(SurveyClass.surveyDesc))]
-        [PXUIField(DisplayName = "Survey type")]
+        [PXUIField(DisplayName = "Survey Name", Enabled = false)]
         public virtual int? SurveyClassID { get; set; }
         #endregion
 

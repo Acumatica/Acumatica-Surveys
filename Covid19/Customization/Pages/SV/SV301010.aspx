@@ -24,19 +24,19 @@
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
-	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" Height="150px" SkinID="Attributes" Width="420px" Caption="Questions" MatrixMode="True" DataSourceID="ds">
+	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" Height="150px" SkinID="Attributes" Width="100%" Caption="SurveySummary" MatrixMode="True" DataSourceID="ds">
 		<Levels>
 			<px:PXGridLevel DataMember="Answers" DataKeyNames="AttributeID,EntityType,EntityID">
 				<RowTemplate>
 					<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
-					<px:PXTextEdit runat="server" ID="edParameterID" Enabled="False" DataField="AttributeID" ></px:PXTextEdit>
+					<px:PXTextEdit runat="server" ID="edParameterID" DataField="AttributeID" ></px:PXTextEdit>
 					<px:PXTextEdit runat="server" ID="edAnswerValue" DataField="Value" ></px:PXTextEdit></RowTemplate>
 				<Columns>
 					<px:PXGridColumn DataField="AttributeID" TextAlign="Left" TextField="AttributeID_description" Width="135px" AllowShowHide="False" ></px:PXGridColumn>
 					<px:PXGridColumn DataField="isRequired" Type="CheckBox" TextAlign="Center" Width="80px" ></px:PXGridColumn>
 					<px:PXGridColumn DataField="Value" Width="185px" ></px:PXGridColumn></Columns></px:PXGridLevel></Levels>
-		<AutoSize Enabled="True" />
-		<AutoSize MinHeight="200" />
-		<Mode AllowAddNew="False" />
-		<Mode AllowDelete="False" />
-		<Mode AllowColMoving="False" /></px:PXGrid></asp:Content>
+		<AutoSize Enabled="True" ></AutoSize>
+		<AutoSize MinHeight="200" ></AutoSize>
+		<Mode AllowAddNew="False" ></Mode>
+		<Mode AllowDelete="False" ></Mode>
+		<Mode AllowColMoving="False" ></Mode></px:PXGrid></asp:Content>

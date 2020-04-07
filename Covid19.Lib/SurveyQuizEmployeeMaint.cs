@@ -19,6 +19,7 @@ namespace Covid19.Lib
             e.NewValue = PXAccess.GetUserName() + " " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
+        
         protected void _(Events.FieldDefaulting<SurveyQuiz, SurveyQuiz.quizedUser> e)
         {
             var row = e.Row;
