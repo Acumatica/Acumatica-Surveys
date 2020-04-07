@@ -45,11 +45,12 @@ namespace Covid19.Lib
                     typeof(SurveyClass.surveyCD),
                     typeof(SurveyClass.surveyName),
                     SubstituteKey = typeof(SurveyClass.surveyCD))]
+        [PXDBInt]
         public virtual int? SurveyID { get; set; }
         public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
         #endregion
 
-        #region Userid_Removed
+        #region Userid
         /// <summary>
         /// Identifies the user that this Collector is assigned too.
         /// </summary>
@@ -128,7 +129,7 @@ namespace Covid19.Lib
             new[]
             {
                 "New",
-                "Send",
+                "Sent",
                 //"Open",
                 "Responded",
                 "Expired"

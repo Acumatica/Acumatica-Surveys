@@ -4,7 +4,7 @@
   <col name="SurveyID" type="Int" />
   <col name="CollectorID" type="Int" identity="true" />
   <col name="UserID" type="UniqueIdentifier" />
-  <col name="CollectedDate" type="DateTime" />
+  <col name="CollectedDate" type="DateTime" nullable="true" />
   <col name="ExpirationDate" type="DateTime" nullable="true" />
   <col name="CollectorStatus" type="Char(1)" nullable="true" />
   <col name="NoteID" type="UniqueIdentifier" />
