@@ -1,9 +1,10 @@
 ﻿<Sql TableName="Surveys" TableSchemaXml="#CDATA">
-    <CDATA name="TableSchemaXml"><![CDATA[<table name="Surveys">
+	<CDATA name="TableSchemaXml"><![CDATA[<table name="Surveys">
   <col name="CompanyID" type="Int" default="Zero" />
-  <col name="SurveyID" type="Int" />
+  <col name="SurveyID" type="NVarChar(40)" />
   <col name="SurveyName" type="NVarChar(100)" />
   <col name="SurveyDesc" type="NVarChar(255)" nullable="true" />
+  <col name="LineCntr" type="Int" />
   <col name="Active" type="Bit" nullable="true" />
   <col name="NoteID" type="UniqueIdentifier" />
   <col name="CreatedByID" type="UniqueIdentifier" />
