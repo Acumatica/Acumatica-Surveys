@@ -20,11 +20,17 @@ namespace Covid19.Lib
 
         public SelectFrom<SurveyUser>.
             InnerJoin<EPEmployee>.On<SurveyUser.userid.IsEqual<EPEmployee.userID>>.View QuizUsers;
-        
-        public PXAction<SurveyClass> PrepopulateUsers;
 
+        public PXSetup<CRSetup> SurveySetup;
+       
+        public SurveyQuizSetting()
+        {
+            CRSetup Data = SurveySetup.Current;
+        }
+
+        public PXAction<SurveyClass> PrepopulateUsers;
         [PXButton]
-        [PXUIField(DisplayName = "Prepopulate Users")]
+        [PXUIField(DisplayName = "Prepopulate Users", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable prepopulateUsers(PXAdapter adapter)
         {
             var users = SelectFrom<Contact>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.And<Contact.isActive.IsEqual<True>>>.View

@@ -13,11 +13,12 @@ using PX.SM;
 
 namespace Covid19.Lib
 {
+    //DHIREN'S NOTE - REQUIRES CLEAN UP
     public class SurveyCollectionMaint : PXGraph<SurveyCollectionMaint, SurveyCollector>
     {
 
         public PXSelectJoin<SurveyCollector,
-            InnerJoin<CRContact,On<SurveyCollector.contactID,Equal<CRContact.contactID>>>> Collections;
+            InnerJoin<Contact,On<SurveyCollector.userid,Equal<Contact.userID>>>> Collections;
 
         
         
@@ -45,20 +46,20 @@ namespace Covid19.Lib
                 var pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
                 List<Guid> userIds = new List<Guid>();
-                Users u = PXSelect<Users, Where<Users.contactID, Equal<Required<Users.contactID>>>>.Select(this, c.ContactID);
+                //Users u = PXSelect<Users, Where<Users.contactID, Equal<Required<Users.contactID>>>>.Select(this, c.ContactID);
 
-                userIds.Add(u.PKID.Value);
+                userIds.Add(c.Userid.Value);
                 //Check if User is using Acumatica Mobile App
                 //var activeTokens = pushNotificationSender.CountActiveTokens(userIds);
 
                 MobileDevice device = PXSelect<MobileDevice,
-                    Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>>>.Select(this, c.ContactID);
+                    Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>>>.Select(this, c.Userid.Value);
                 if (device == null)
                 {
                     throw new PXException("User has no mobile device");
                 }
 
-                string surveyID = c.SurveyID;
+                //string surveyID = c.SurveyID;
                 //string sScreenID = Accessinfo.ScreenID.Replace(".", "");
                 string sScreenID = "CV301010";
                 Guid noteID = c.NoteID.Value;

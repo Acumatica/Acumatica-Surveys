@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PX.Data;
 using PX.Objects.CR;
-using PX.Objects.CS;
 using PX.SM;
-using PX.Web.UI.Frameset.Model.DTO;
 
 namespace Covid19.Lib
 {
@@ -86,9 +80,6 @@ namespace Covid19.Lib
         [PXUIField(DisplayName = "Survey Name", Enabled = false)]
         public virtual int? SurveyClassID { get; set; }
         #endregion
-
-
-
 
 		#region CreatedByID
 		public abstract class createdByID : PX.Data.BQL.BqlGuid.Field<createdByID> { }

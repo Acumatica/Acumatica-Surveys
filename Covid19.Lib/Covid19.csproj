@@ -32,94 +32,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="PX.AddressValidator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.AddressValidator.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.AddressValidator.AvalaraSoap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.AddressValidator.AvalaraSoap.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Api.ContractBased, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.Api.ContractBased.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Api.ContractBased.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.Api.ContractBased.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Api.Mobile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.Api.Mobile.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Api.Mobile.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.Api.Mobile.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Api.OData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.Api.OData.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Api.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.Api.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.BootLoader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.BootLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.BulkInsert, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.BulkInsert.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.BusinessProcess">
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.BusinessProcess.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.CarrierService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.CarrierService.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.CCProcessing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.CCProcessing.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.CCProcessing.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.CCProcessing.XmlSerializers.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.CCProcessingBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.CCProcessingBase.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.CCProcessingService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.CCProcessingService.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.CommandLine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\PX.CommandLine.exe</HintPath>
+    <Reference Include="PX.Api.Mobile">
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Api.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Common.dll</HintPath>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.CS.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Data.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Data.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Data.BQL.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Objects.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Web.UI.Frameset">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Web.UI.Frameset.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Objects.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -132,6 +64,7 @@
     <Compile Include="DAC\CSAttributeDetailSurveyExt.cs" />
     <Compile Include="DAC\CSAttributeSurveyExt.cs" />
     <Compile Include="DAC\SurveyUsers.cs" />
+    <Compile Include="SurveyProcess.cs" />
     <Compile Include="SurveyQuizEmployeeMaint.cs" />
     <Compile Include="SurveyQuizSetting.cs" />
     <Compile Include="DAC\SurveyClass.cs" />

@@ -10,13 +10,14 @@
     </px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-    <px:PXFormView Caption="Survey settings" ID="form" runat="server" DataSourceID="ds" DataMember="SurveyClassCurrent" Width="100%" Height="100px" AllowAutoHide="false">
+    <px:PXFormView Caption="Survey settings" ID="form" runat="server" DataSourceID="ds" DataMember="SurveyClassCurrent" Width="100%">
         <Template>
             <px:PXLayoutRule runat="server" ID="PXLayoutRule1" StartRow="True"></px:PXLayoutRule>
-            <px:PXSelector runat="server" ID="CstPXTextEdit3" DataField="SurveyName"/>
-            <px:PXTextEdit runat="server" ID="CstPXTextEdit2" DataField="SurveyDesc"></px:PXTextEdit>
-            <px:PXCheckBox runat="server" ID="CstPXCheckBox1" DataField="Active"></px:PXCheckBox>
-            <px:PXNumberEdit runat="server" ID="CstPXNumberEdit1" DataField="SurveyClassID"></px:PXNumberEdit>
+            <px:PXSelector runat="server" ID="edSurveyCD" DataField="SurveyCD"/>
+            <px:PXTextEdit runat="server" ID="edSurveyName" DataField="SurveyName"/>
+            <px:PXTextEdit runat="server" ID="edSurveyDesc" DataField="SurveyDesc"></px:PXTextEdit>
+            <px:PXCheckBox runat="server" ID="edActive" DataField="Active"></px:PXCheckBox>
+            <px:PXNumberEdit runat="server" ID="edSurveyClassID" DataField="SurveyClassID"></px:PXNumberEdit>
         </Template>
     </px:PXFormView>
 </asp:Content>
@@ -24,7 +25,7 @@
     <px:PXTab ID="tab" runat="server" DataSourceID="ds" Height="500px" DataMember="Mapping"
               Width="100%">
         <Items>
-            <px:PXTabItem Text="Quiz Details" RepaintOnDemand="False">
+            <px:PXTabItem Text="Details" RepaintOnDemand="False">
                 <Template>
                     <px:PXGrid runat="server" ID="grid" Height="150px" SkinID="Details" Width="100%" AllowAutoHide="false" DataSourceID="ds">
                         <AutoSize Enabled="True" Container="Window" MinHeight="150"/>
@@ -50,7 +51,7 @@
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="Employees" RepaintOnDemand="False">
+            <px:PXTabItem Text="Recipients" RepaintOnDemand="False">
                 <Template>
                     <px:PXGrid ID="syncGrid" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" SyncPosition="true">
                         <Levels>
