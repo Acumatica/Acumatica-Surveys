@@ -16,7 +16,7 @@ namespace Covid19.Lib
     public class SurveyQuizSetting : PXGraph<SurveyQuizSetting, SurveyClass>
     {
         public SelectFrom<SurveyClass>.View SurveyClassCurrent;
-        public CSAttributeGroupList<SurveyClass.surveyClassID, SurveyQuiz> Mapping;
+        public CSAttributeGroupList<SurveyClass.surveyClassID, SurveyCollector> Mapping;
 
         public SelectFrom<SurveyUser>.
             InnerJoin<EPEmployee>.On<SurveyUser.userid.IsEqual<EPEmployee.userID>>.Where<SurveyUser.surveyClassID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View QuizUsers;
@@ -58,6 +58,7 @@ namespace Covid19.Lib
             {
                 var user = activeUser.GetItem<SurveyUser>();
                 var collector = SurveyCollector.Insert(new SurveyCollector());
+                collector.CollectorName = SurveyClassCurrent.Current.SurveyName + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                 collector.SurveyID = SurveyClassCurrent.Current.SurveyClassID;
                 collector.Userid = user.Userid;
                 collector.CollectedDate = null;

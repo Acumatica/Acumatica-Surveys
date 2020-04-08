@@ -1,5 +1,6 @@
 ﻿using System;
 using PX.Data;
+using PX.Objects.CR;
 
 namespace Covid19.Lib
 {
@@ -20,7 +21,7 @@ namespace Covid19.Lib
 
         #region Selected
         [PXBool]
-        [PXDefault(false)]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Selected")]
         public virtual bool? Selected { get; set; }
         #endregion
@@ -34,6 +35,16 @@ namespace Covid19.Lib
         //todo: find out what the correct attribute i need here?
         public virtual int? CollectorID { get; set; }
         public abstract class collectorID : PX.Data.BQL.BqlInt.Field<collectorID> { }
+        #endregion
+
+        #region CollectorName
+        /// <summary>
+        /// Name of this Collector record.
+        /// </summary>
+        [PXUIField(DisplayName = "Collector ID")]
+        [PXDBString(60, IsUnicode = true)]
+        public virtual String CollectorName { get; set; }
+        public abstract class collectorName : PX.Data.BQL.BqlInt.Field<collectorName> { }
         #endregion
 
         #region SurveyID
@@ -148,6 +159,13 @@ namespace Covid19.Lib
 
         [PXNote]
         public virtual Guid? NoteID { get; set; }
+        #endregion
+        #region Attributes
+        public abstract class attributes : BqlAttributes.Field<attributes> { }
+
+        [CRAttributesField(typeof(surveyID), typeof(noteID))]
+        public virtual string[] Attributes { get; set; }
+
         #endregion
         #region CreatedByID
         [PXDBCreatedByID()]

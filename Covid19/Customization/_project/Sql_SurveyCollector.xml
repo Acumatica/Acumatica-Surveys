@@ -3,6 +3,7 @@
   <col name="CompanyID" type="Int" default="Zero" />
   <col name="SurveyID" type="Int" />
   <col name="CollectorID" type="Int" identity="true" />
+  <col name="CollectorName" type="NVarChar(60)" />
   <col name="UserID" type="UniqueIdentifier" />
   <col name="CollectedDate" type="DateTime" nullable="true" />
   <col name="ExpirationDate" type="DateTime" nullable="true" />
