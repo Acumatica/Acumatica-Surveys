@@ -32,6 +32,11 @@ namespace Covid19.Lib
             CRSetup Data = SurveySetup.Current;
         }
 
+
+        [PXUIField(DisplayName = "Collector ID")]
+        [PXDBString(60, IsUnicode = true)]
+        protected virtual void _(Events.CacheAttached<SurveyCollector.collectorName> e) { }
+
         public PXAction<SurveyClass> CreateSurvey;
         [PXButton]
         [PXUIField(DisplayName = "Create Survey", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]

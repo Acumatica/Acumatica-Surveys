@@ -12,19 +12,17 @@
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView Caption="SurveyResponse" ID="form" runat="server" DataSourceID="ds" DataMember="Quizes" Width="100%" Height="100px" AllowAutoHide="false">
+	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="Quizes" Width="100%" Height="100px" AllowAutoHide="false">
 		<Template>
 			<px:PXLayoutRule runat="server" ID="PXLayoutRule2" StartRow="True" ></px:PXLayoutRule>
 			<px:PXLayoutRule ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
-			<px:PXSelector Width="300px" runat="server" ID="CstPXSelector3" DataField="QuizCD" ></px:PXSelector>
-			<px:PXSelector AutoRefresh="True" CommitChanges="True" runat="server" ID="CstPXSelector1" DataField="SurveyClassID" >
-				<AutoCallBack Command="" Target="" ></AutoCallBack>
-				<AutoCallBack Command="Refresh" ></AutoCallBack></px:PXSelector>
-			<px:PXSelector runat="server" ID="CstPXSelector2" DataField="QuizedUser" ></px:PXSelector></Template>
+			<px:PXSelector Width="300px" runat="server" ID="CstPXSelector3" DataField="CollectorName" ></px:PXSelector>
+			<px:PXSelector AutoRefresh="True" CommitChanges="True" runat="server" ID="CstPXSelector1" DataField="SurveyID" DisplayMode="Text" ></px:PXSelector>
+			<px:PXSelector runat="server" ID="CstPXSelector2" DataField="Userid" ></px:PXSelector></Template>
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
-	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" Height="150px" SkinID="Attributes" Width="100%" Caption="SurveySummary" MatrixMode="True" DataSourceID="ds">
+	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" Height="150px" SkinID="Attributes" Width="100%" Caption="Questions" MatrixMode="True" DataSourceID="ds">
 		<Levels>
 			<px:PXGridLevel DataMember="Answers" DataKeyNames="AttributeID,EntityType,EntityID">
 				<RowTemplate>

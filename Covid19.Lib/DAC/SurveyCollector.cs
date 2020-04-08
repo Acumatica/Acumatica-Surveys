@@ -43,6 +43,7 @@ namespace Covid19.Lib
         /// </summary>
         [PXUIField(DisplayName = "Collector ID")]
         [PXDBString(60, IsUnicode = true)]
+        [PXSelector(typeof(Search<SurveyCollector.collectorName>))]
         public virtual String CollectorName { get; set; }
         public abstract class collectorName : PX.Data.BQL.BqlInt.Field<collectorName> { }
         #endregion
@@ -55,7 +56,8 @@ namespace Covid19.Lib
         [PXSelector(typeof(Search<SurveyClass.surveyClassID, Where<SurveyClass.active, Equal<True>>>),
                     typeof(SurveyClass.surveyCD),
                     typeof(SurveyClass.surveyName),
-                    SubstituteKey = typeof(SurveyClass.surveyCD))]
+                    //SubstituteKey = typeof(SurveyClass.surveyCD),
+                    DescriptionField = typeof(SurveyClass.surveyName))]
         [PXDBInt]
         public virtual int? SurveyID { get; set; }
         public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
@@ -70,7 +72,8 @@ namespace Covid19.Lib
         /// on the 4/7/2020 meeting it was then decided to instead favor UserID as we originally intended. 
         /// </remarks>
         [PXDBGuid()]
-        [PXUIField(DisplayName = "Userid")]
+        [PXUIField(DisplayName = "User")]
+        [PXSelector(typeof(Search<Contact.userID>), SubstituteKey = typeof(Contact.displayName))]
         public virtual Guid? Userid { get; set; }
         public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
         #endregion
