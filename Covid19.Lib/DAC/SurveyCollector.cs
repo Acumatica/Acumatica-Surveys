@@ -41,7 +41,7 @@ namespace Covid19.Lib
         /// <summary>
         /// Name of this Collector record.
         /// </summary>
-        [PXUIField(DisplayName = "Collector ID")]
+        [PXUIField(DisplayName = "Collector ID", Enabled = false)]
         [PXDBString(60, IsUnicode = true)]
         [PXSelector(typeof(Search<SurveyCollector.collectorName>))]
         public virtual String CollectorName { get; set; }
@@ -52,7 +52,7 @@ namespace Covid19.Lib
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
-        [PXUIField(DisplayName = "Survey ID")]
+        [PXUIField(DisplayName = "Survey ID", Enabled = false)]
         [PXSelector(typeof(Search<SurveyClass.surveyClassID, Where<SurveyClass.active, Equal<True>>>),
                     typeof(SurveyClass.surveyCD),
                     typeof(SurveyClass.surveyName),
@@ -72,7 +72,7 @@ namespace Covid19.Lib
         /// on the 4/7/2020 meeting it was then decided to instead favor UserID as we originally intended. 
         /// </remarks>
         [PXDBGuid()]
-        [PXUIField(DisplayName = "User")]
+        [PXUIField(DisplayName = "User", Enabled = false)]
         [PXSelector(typeof(Search<Contact.userID>), SubstituteKey = typeof(Contact.displayName))]
         public virtual Guid? Userid { get; set; }
         public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
@@ -87,7 +87,7 @@ namespace Covid19.Lib
         /// Survey is accepted the Graph should automatically set this date
         /// todo: Discuss with team if we should make this updateable. I assume we should just set it once survey is accepted. 
         /// </remarks>
-        [PXDBDate()]
+        [PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
         [PXUIField(DisplayName = "Collected Date")]
         public virtual DateTime? CollectedDate { get; set; }
         public abstract class collectedDate : PX.Data.BQL.BqlDateTime.Field<collectedDate> { }
@@ -181,7 +181,7 @@ namespace Covid19.Lib
         public abstract class createdByScreenID : PX.Data.BQL.BqlString.Field<createdByScreenID> { }
         #endregion
         #region CreatedDateTime
-        [PXDBCreatedDateTime]
+        [PXDBCreatedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Created Date Time")]
         public virtual DateTime? CreatedDateTime { get; set; }
         public abstract class createdDateTime : PX.Data.BQL.BqlDateTime.Field<createdDateTime> { }
@@ -197,7 +197,7 @@ namespace Covid19.Lib
         public abstract class lastModifiedByScreenID : PX.Data.BQL.BqlString.Field<lastModifiedByScreenID> { }
         #endregion
         #region LastModifiedDateTime
-        [PXDBLastModifiedDateTime]
+        [PXDBLastModifiedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Last Modified Date Time")]
         public virtual DateTime? LastModifiedDateTime { get; set; }
         public abstract class lastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<lastModifiedDateTime> { }

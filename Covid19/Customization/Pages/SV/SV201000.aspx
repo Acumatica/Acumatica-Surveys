@@ -29,17 +29,18 @@
                 <Template>
                     <px:PXGrid runat="server" ID="grid" Height="150px" SkinID="Details" Width="100%" AllowAutoHide="false" DataSourceID="ds">
                         <AutoSize Enabled="True" Container="Window" MinHeight="150"/>
+                        <Layout WrapText="True" />
                         <Levels>
                             <px:PXGridLevel DataMember="Mapping">
                                 <RowTemplate>
                                     <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM"/>
                                     <px:PXSelector runat="server" ID="edCRAttributeID1" DataField="AttributeID" FilterByAllFields="True" AutoRefresh="true"/>
-                                    <px:PXTextEdit runat="server" DataField="Description" AllowNull="False" ID="edDescription2"/>
+                                    <px:PXTextEdit runat="server" DataField="Description" AllowNull="False" ID="edDescription2" TextMode="MultiLine"/>
                                     <px:PXCheckBox runat="server" DataField="Required" ID="chkRequired"/>
                                     <px:PXNumberEdit runat="server" ID="edSortOrder" DataField="SortOrder"/>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False" CommitChanges="True"/>
+                                    <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False"/>
                                     <px:PXGridColumn DataField="AttributeID" DisplayFormat=">aaaaaaaaaa" Width="81px" AutoCallBack="True" LinkCommand="CRAttribute_ViewDetails"/>
                                     <px:PXGridColumn DataField="Description" Width="351px" AllowNull="False"/>
                                     <px:PXGridColumn DataField="SortOrder" TextAlign="Right" Width="54px"/>
@@ -57,7 +58,6 @@
                         <Levels>
                             <px:PXGridLevel DataMember="QuizUsers" DataKeyNames="Userid,SurveyClassID">
                                 <RowTemplate>
-
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" CommitChanges="true"/>

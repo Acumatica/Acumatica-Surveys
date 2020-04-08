@@ -37,35 +37,6 @@ namespace Covid19.Lib
         [PXDBString(60, IsUnicode = true)]
         protected virtual void _(Events.CacheAttached<SurveyCollector.collectorName> e) { }
 
-        public PXAction<SurveyClass> ClearSurvey;
-
-        [PXButton]
-        [PXUIField(DisplayName = "Clear Survey", MapViewRights = PXCacheRights.Select,
-            MapEnableRights = PXCacheRights.Select)]
-        public virtual IEnumerable clearSurvey(PXAdapter adapter)
-        {
-            PXLongOperation.StartOperation(this, delegate()
-            {
-                ClearSurveys();
-            });
-            return adapter.Get();
-        }
-
-        private void ClearSurveys()
-        {
-            if (SurveyClassCurrent.Ask("Delete", "Are you sure?", "Are you sure you want to delete all new Surveys?",
-                    MessageButtons.YesNo) != WebDialogResult.Yes) return;
-            var newSurveys = SurveyCollector.Select().Where(s => s.GetItem<SurveyCollector>().CollectorStatus == "N")
-                .ToList();
-
-            foreach (var newSurvey in newSurveys)
-            {
-                SurveyCollector.Delete(newSurvey);
-            }
-
-            Persist();
-        }
-
         public PXAction<SurveyClass> CreateSurvey;
         [PXButton]
         [PXUIField(DisplayName = "Create Survey", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
@@ -104,6 +75,36 @@ namespace Covid19.Lib
             this.Persist();
         }
 
+        public PXAction<SurveyClass> ClearSurvey;
+
+        [PXButton]
+        [PXUIField(DisplayName = "Clear Survey",
+                   MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
+        public virtual IEnumerable clearSurvey(PXAdapter adapter)
+        {
+            if (SurveyClassCurrent.Ask("Delete", "Are you sure?", "Are you sure you want to delete all new Surveys?",
+                    MessageButtons.YesNo) != WebDialogResult.Yes) return adapter.Get();
+
+            PXLongOperation.StartOperation(this, delegate ()
+            {
+                ClearSurveys();
+            });
+            return adapter.Get();
+        }
+
+        private void ClearSurveys()
+        {
+            var newSurveys = SurveyCollector.Select().Where(s => s.GetItem<SurveyCollector>().CollectorStatus == "N")
+                .ToList();
+
+            foreach (var newSurvey in newSurveys)
+            {
+                SurveyCollector.Delete(newSurvey);
+            }
+
+            Persist();
+        }
+
         public PXAction<SurveyClass> PrepopulateUsers;
         [PXButton]
         [PXUIField(DisplayName = "Prepopulate Users", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
@@ -126,7 +127,6 @@ namespace Covid19.Lib
 
         protected virtual void _(Events.RowSelected<SurveyClass> e)
         {
-
             var currentSurvey = e.Row;
             if (currentSurvey == null)
                 return;

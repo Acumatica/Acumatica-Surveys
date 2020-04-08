@@ -16,4 +16,14 @@ namespace Covid19.Lib.DAC
         public string Description { get; set; }
         #endregion
     }
+
+    public sealed class CSAttributeGroup : PXCacheExtension<PX.Objects.CS.CSAttributeGroup>
+    {
+        #region Description  
+        [PXMergeAttributes(Method = MergeMethod.Append)]
+        [PXRemoveBaseAttribute(typeof(PXStringAttribute))]
+        [PXString(255, IsUnicode = true)]
+        public string Description { get; set; }
+        #endregion
+    }
 }
