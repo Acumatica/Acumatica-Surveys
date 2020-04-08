@@ -15,6 +15,7 @@ namespace Covid19.Lib
         public SelectFrom<SurveyCollector>.View Quizes;
         public CRAttributeList<SurveyCollector> Answers;
 
+        
         protected void _(Events.RowSelected<SurveyCollector> e)
         {
             this.Actions["Insert"].SetVisible(false);
@@ -43,6 +44,5 @@ namespace Covid19.Lib
             Persist();
             return adapter.Get();
         }
-        
     }
 }

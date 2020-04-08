@@ -39,7 +39,7 @@
                                     <px:PXNumberEdit runat="server" ID="edSortOrder" DataField="SortOrder"/>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False"/>
+                                    <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False" CommitChanges="True"/>
                                     <px:PXGridColumn DataField="AttributeID" DisplayFormat=">aaaaaaaaaa" Width="81px" AutoCallBack="True" LinkCommand="CRAttribute_ViewDetails"/>
                                     <px:PXGridColumn DataField="Description" Width="351px" AllowNull="False"/>
                                     <px:PXGridColumn DataField="SortOrder" TextAlign="Right" Width="54px"/>
