@@ -106,55 +106,18 @@ namespace Covid19.Lib
         public abstract class expirationDate : PX.Data.BQL.BqlDateTime.Field<expirationDate> { }
         #endregion
         #region CollectorStatus
-
-
-
-        //Sent/Open/responded/expired
-        private const string CollectorNew = "N";
-        private const string CollectorSent = "S";
-        /*
-         Per discussions on 4/05/2020, we are not certain if Open will be needed, so it is commented out until we determine if we do really need it.
-         */
-        //private const string CollectorOpen = "O";
-        private const string CollectorResponded = "R";
-        private const string CollectorExpired = "E";
-
-        protected string _CollectorStatus;
         /// <summary>
         /// Reference to the state the collector record is in   
         /// </summary>
         /// <remarks>
-
         /// </remarks>
         public abstract class collectorStatus : PX.Data.BQL.BqlString.Field<collectorStatus> { }
 
-        [PXDBString(1, IsUnicode = true)]
-        [PXDefault(CollectorNew)]
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SurveyResponseStatus.CollectorNew)]
         [PXUIField(DisplayName = "Collector Status")]
-        [PXStringList(
-            new[]
-            {
-                CollectorNew,
-                CollectorSent,
-                //CollectorOpen,
-                CollectorResponded,
-                CollectorExpired
-            },
-            new[]
-            {
-                "New",
-                "Sent",
-                //"Open",
-                "Responded",
-                "Expired"
-            })]
-        public virtual string CollectorStatus
-        {
-            get => _CollectorStatus;
-            set => _CollectorStatus = value;
-        }
-
-
+        [SurveyResponseStatus.List]
+        public virtual string CollectorStatus { get; set; }
 
         #endregion
         #region NoteID

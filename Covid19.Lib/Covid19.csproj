@@ -54,9 +54,11 @@
       <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Objects.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +66,8 @@
     <Compile Include="DAC\CSAttributeDetailSurveyExt.cs" />
     <Compile Include="DAC\CSAttributeSurveyExt.cs" />
     <Compile Include="DAC\SurveyUsers.cs" />
+    <Compile Include="Descriptor\Messages.cs" />
+    <Compile Include="Descriptor\SurveyResponseStatus.cs" />
     <Compile Include="SurveyProcess.cs" />
     <Compile Include="SurveyQuizEmployeeMaint.cs" />
     <Compile Include="SurveyQuizSetting.cs" />

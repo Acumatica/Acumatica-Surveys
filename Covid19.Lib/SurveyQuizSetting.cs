@@ -24,6 +24,7 @@ namespace Covid19.Lib
         public PXSetup<CRSetup> SurveySetup;
         
         [PXHidden]
+        [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View SurveyCollector;
 
        
@@ -110,8 +111,9 @@ namespace Covid19.Lib
         [PXUIField(DisplayName = "Prepopulate Users", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable prepopulateUsers(PXAdapter adapter)
         {
-            var users = SelectFrom<Contact>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.And<Contact.isActive.IsEqual<True>>>.View
-                .Select(this);
+            var users = SelectFrom<Contact>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+                            And<Contact.isActive.IsEqual<True>>.And<Contact.userID.IsNotNull>>.View
+                        .Select(this);
 
             foreach (var user in users)
             {
