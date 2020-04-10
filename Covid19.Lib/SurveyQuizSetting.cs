@@ -16,7 +16,7 @@ namespace Covid19.Lib
     public class SurveyQuizSetting : PXGraph<SurveyQuizSetting, SurveyClass>
     {
         public SelectFrom<SurveyClass>.View SurveyClassCurrent;
-        public CSAttributeGroupList<SurveyClass.surveyClassID, SurveyQuiz> Mapping;
+        public CSAttributeGroupList<SurveyClass.surveyClassID, SurveyCollector> Mapping;
 
         public SelectFrom<SurveyUser>.
             InnerJoin<EPEmployee>.On<SurveyUser.userid.IsEqual<EPEmployee.userID>>.Where<SurveyUser.surveyClassID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View QuizUsers;
@@ -24,6 +24,7 @@ namespace Covid19.Lib
         public PXSetup<CRSetup> SurveySetup;
         
         [PXHidden]
+        [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View SurveyCollector;
 
        
@@ -31,6 +32,11 @@ namespace Covid19.Lib
         {
             CRSetup Data = SurveySetup.Current;
         }
+
+
+        [PXUIField(DisplayName = "Collector ID")]
+        [PXDBString(60, IsUnicode = true)]
+        protected virtual void _(Events.CacheAttached<SurveyCollector.collectorName> e) { }
 
         public PXAction<SurveyClass> CreateSurvey;
         [PXButton]
@@ -58,6 +64,7 @@ namespace Covid19.Lib
             {
                 var user = activeUser.GetItem<SurveyUser>();
                 var collector = SurveyCollector.Insert(new SurveyCollector());
+                collector.CollectorName = SurveyClassCurrent.Current.SurveyName + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
                 collector.SurveyID = SurveyClassCurrent.Current.SurveyClassID;
                 collector.Userid = user.Userid;
                 collector.CollectedDate = null;
@@ -69,13 +76,44 @@ namespace Covid19.Lib
             this.Persist();
         }
 
+        public PXAction<SurveyClass> ClearSurvey;
+
+        [PXButton]
+        [PXUIField(DisplayName = "Clear Survey",
+                   MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
+        public virtual IEnumerable clearSurvey(PXAdapter adapter)
+        {
+            if (SurveyClassCurrent.Ask("Delete", "Are you sure?", "Are you sure you want to delete all new Surveys?",
+                    MessageButtons.YesNo) != WebDialogResult.Yes) return adapter.Get();
+
+            PXLongOperation.StartOperation(this, delegate ()
+            {
+                ClearSurveys();
+            });
+            return adapter.Get();
+        }
+
+        private void ClearSurveys()
+        {
+            var newSurveys = SurveyCollector.Select().Where(s => s.GetItem<SurveyCollector>().CollectorStatus == "N")
+                .ToList();
+
+            foreach (var newSurvey in newSurveys)
+            {
+                SurveyCollector.Delete(newSurvey);
+            }
+
+            Persist();
+        }
+
         public PXAction<SurveyClass> PrepopulateUsers;
         [PXButton]
         [PXUIField(DisplayName = "Prepopulate Users", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable prepopulateUsers(PXAdapter adapter)
         {
-            var users = SelectFrom<Contact>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.And<Contact.isActive.IsEqual<True>>>.View
-                .Select(this);
+            var users = SelectFrom<Contact>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+                            And<Contact.isActive.IsEqual<True>>.And<Contact.userID.IsNotNull>>.View
+                        .Select(this);
 
             foreach (var user in users)
             {
@@ -86,6 +124,26 @@ namespace Covid19.Lib
             }
             
             return adapter.Get();
+        }
+
+
+        protected virtual void _(Events.RowSelected<SurveyClass> e)
+        {
+            var currentSurvey = e.Row;
+            if (currentSurvey == null)
+                return;
+
+            CreateSurvey.SetEnabled(currentSurvey.Active == true);
+
+            bool inactiveOrNull = currentSurvey.Active != true;
+
+            Mapping.AllowInsert = inactiveOrNull;
+            Mapping.AllowUpdate = inactiveOrNull;
+            Mapping.AllowDelete = inactiveOrNull;
+
+            QuizUsers.AllowInsert = inactiveOrNull;
+            QuizUsers.AllowUpdate = inactiveOrNull;
+            QuizUsers.AllowDelete = inactiveOrNull;
         }
     }
 }

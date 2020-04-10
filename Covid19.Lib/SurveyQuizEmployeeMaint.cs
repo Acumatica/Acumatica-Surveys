@@ -1,29 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
+using PX.Common;
 using PX.Data;
+using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
+using PX.Objects.CS;
 
 namespace Covid19.Lib
 {
-    public class SurveyQuizEmployeeMaint : PXGraph<SurveyQuizEmployeeMaint, SurveyQuiz>
+    public class SurveyQuizEmployeeMaint : PXGraph<SurveyQuizEmployeeMaint>
     {
-        public PXSelect<SurveyQuiz> Quizes;
-        public CRAttributeList<SurveyQuiz> Answers;
+        public SelectFrom<SurveyCollector>.View Quizes;
+        public CRAttributeList<SurveyCollector> Answers;
 
-        protected void _(Events.FieldDefaulting<SurveyQuiz, SurveyQuiz.quizCD> e)
+        public PXCancel<SurveyCollector> Cancel;
+        public PXSave<SurveyCollector> Save;
+
+        protected void _(Events.RowSelected<SurveyCollector> e)
         {
-            var row = e.Row;
-            e.NewValue = PXAccess.GetUserName() + " " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            this.Submit.SetEnabled(Quizes.Current.CollectorStatus == "S" || Quizes.Current.CollectorStatus == "N");
+            Answers.Cache.AllowUpdate = (Quizes.Current.CollectorStatus == "S" || Quizes.Current.CollectorStatus == "N");
+
+            PXUIFieldAttribute.SetDisplayName<CSAnswers.attributeID>(Answers.Cache, "Question");
+            PXUIFieldAttribute.SetDisplayName<CSAnswers.value>(Answers.Cache, "Answer");
         }
 
-        
-        protected void _(Events.FieldDefaulting<SurveyQuiz, SurveyQuiz.quizedUser> e)
+        public PXAction<SurveyCollector> Submit;
+
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Submit", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
+        public virtual IEnumerable submit(PXAdapter adapter)
         {
-            var row = e.Row;
-            e.NewValue = PXAccess.GetUserID();
-        }
+            Persist();
+            var currentQuiz = Quizes.Current;
+
+            PXLongOperation.StartOperation(this, delegate ()
+            {
+                SurveyQuizEmployeeMaint graph = PXGraph.CreateInstance<SurveyQuizEmployeeMaint>();
+                graph.Quizes.Current = graph.Quizes.Search<SurveyCollector.collectorID>(currentQuiz.CollectorID);
+                graph.Quizes.Current.CollectorStatus = "R";
+                graph.Quizes.Current.CollectedDate = PXTimeZoneInfo.Now;
+                graph.Quizes.Update(graph.Quizes.Current);
+                graph.Persist();
+            });
+
+            return adapter.Get();
+        }        
     }
 }

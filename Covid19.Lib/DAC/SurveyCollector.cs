@@ -1,5 +1,6 @@
 ﻿using System;
 using PX.Data;
+using PX.Objects.CR;
 
 namespace Covid19.Lib
 {
@@ -20,7 +21,7 @@ namespace Covid19.Lib
 
         #region Selected
         [PXBool]
-        [PXDefault(false)]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Selected")]
         public virtual bool? Selected { get; set; }
         #endregion
@@ -36,15 +37,27 @@ namespace Covid19.Lib
         public abstract class collectorID : PX.Data.BQL.BqlInt.Field<collectorID> { }
         #endregion
 
+        #region CollectorName
+        /// <summary>
+        /// Name of this Collector record.
+        /// </summary>
+        [PXUIField(DisplayName = "Collector ID", Enabled = false)]
+        [PXDBString(60, IsUnicode = true)]
+        [PXSelector(typeof(Search<SurveyCollector.collectorName>))]
+        public virtual String CollectorName { get; set; }
+        public abstract class collectorName : PX.Data.BQL.BqlInt.Field<collectorName> { }
+        #endregion
+
         #region SurveyID
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
-        [PXUIField(DisplayName = "Survey ID")]
+        [PXUIField(DisplayName = "Survey ID", Enabled = false)]
         [PXSelector(typeof(Search<SurveyClass.surveyClassID, Where<SurveyClass.active, Equal<True>>>),
                     typeof(SurveyClass.surveyCD),
                     typeof(SurveyClass.surveyName),
-                    SubstituteKey = typeof(SurveyClass.surveyCD))]
+                    //SubstituteKey = typeof(SurveyClass.surveyCD),
+                    DescriptionField = typeof(SurveyClass.surveyName))]
         [PXDBInt]
         public virtual int? SurveyID { get; set; }
         public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
@@ -59,7 +72,8 @@ namespace Covid19.Lib
         /// on the 4/7/2020 meeting it was then decided to instead favor UserID as we originally intended. 
         /// </remarks>
         [PXDBGuid()]
-        [PXUIField(DisplayName = "Userid")]
+        [PXUIField(DisplayName = "User", Enabled = false)]
+        [PXSelector(typeof(Search<Contact.userID>), SubstituteKey = typeof(Contact.displayName))]
         public virtual Guid? Userid { get; set; }
         public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
         #endregion
@@ -73,7 +87,7 @@ namespace Covid19.Lib
         /// Survey is accepted the Graph should automatically set this date
         /// todo: Discuss with team if we should make this updateable. I assume we should just set it once survey is accepted. 
         /// </remarks>
-        [PXDBDate()]
+        [PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
         [PXUIField(DisplayName = "Collected Date")]
         public virtual DateTime? CollectedDate { get; set; }
         public abstract class collectedDate : PX.Data.BQL.BqlDateTime.Field<collectedDate> { }
@@ -92,55 +106,18 @@ namespace Covid19.Lib
         public abstract class expirationDate : PX.Data.BQL.BqlDateTime.Field<expirationDate> { }
         #endregion
         #region CollectorStatus
-
-
-
-        //Sent/Open/responded/expired
-        private const string CollectorNew = "N";
-        private const string CollectorSent = "S";
-        /*
-         Per discussions on 4/05/2020, we are not certain if Open will be needed, so it is commented out until we determine if we do really need it.
-         */
-        //private const string CollectorOpen = "O";
-        private const string CollectorResponded = "R";
-        private const string CollectorExpired = "E";
-
-        protected string _CollectorStatus;
         /// <summary>
         /// Reference to the state the collector record is in   
         /// </summary>
         /// <remarks>
-
         /// </remarks>
         public abstract class collectorStatus : PX.Data.BQL.BqlString.Field<collectorStatus> { }
 
-        [PXDBString(1, IsUnicode = true)]
-        [PXDefault(CollectorNew)]
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SurveyResponseStatus.CollectorNew)]
         [PXUIField(DisplayName = "Collector Status")]
-        [PXStringList(
-            new[]
-            {
-                CollectorNew,
-                CollectorSent,
-                //CollectorOpen,
-                CollectorResponded,
-                CollectorExpired
-            },
-            new[]
-            {
-                "New",
-                "Sent",
-                //"Open",
-                "Responded",
-                "Expired"
-            })]
-        public virtual string CollectorStatus
-        {
-            get => _CollectorStatus;
-            set => _CollectorStatus = value;
-        }
-
-
+        [SurveyResponseStatus.List]
+        public virtual string CollectorStatus { get; set; }
 
         #endregion
         #region NoteID
@@ -148,6 +125,13 @@ namespace Covid19.Lib
 
         [PXNote]
         public virtual Guid? NoteID { get; set; }
+        #endregion
+        #region Attributes
+        public abstract class attributes : BqlAttributes.Field<attributes> { }
+
+        [CRAttributesField(typeof(surveyID), typeof(noteID))]
+        public virtual string[] Attributes { get; set; }
+
         #endregion
         #region CreatedByID
         [PXDBCreatedByID()]
@@ -160,7 +144,7 @@ namespace Covid19.Lib
         public abstract class createdByScreenID : PX.Data.BQL.BqlString.Field<createdByScreenID> { }
         #endregion
         #region CreatedDateTime
-        [PXDBCreatedDateTime]
+        [PXDBCreatedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Created Date Time")]
         public virtual DateTime? CreatedDateTime { get; set; }
         public abstract class createdDateTime : PX.Data.BQL.BqlDateTime.Field<createdDateTime> { }
@@ -176,7 +160,7 @@ namespace Covid19.Lib
         public abstract class lastModifiedByScreenID : PX.Data.BQL.BqlString.Field<lastModifiedByScreenID> { }
         #endregion
         #region LastModifiedDateTime
-        [PXDBLastModifiedDateTime]
+        [PXDBLastModifiedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Last Modified Date Time")]
         public virtual DateTime? LastModifiedDateTime { get; set; }
         public abstract class lastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<lastModifiedDateTime> { }
