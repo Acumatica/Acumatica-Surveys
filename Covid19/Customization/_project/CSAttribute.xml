@@ -1,0 +1,3 @@
+﻿<Table TableName="CSAttribute">
+    <Column TableName="CSAttribute" ColumnName="Description" ColumnType="string" MaxLength="255" DecimalPrecision="0" DecimalLength="0" IsUnicode="True" />
+</Table>

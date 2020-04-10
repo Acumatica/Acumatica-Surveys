@@ -2,9 +2,9 @@
     <CDATA name="TableSchemaXml"><![CDATA[<table name="SurveyCollector">
   <col name="CompanyID" type="Int" default="Zero" />
   <col name="SurveyID" type="Int" />
-  <col name="CollectorID" type="Int" />
+  <col name="CollectorID" type="Int" identity="true" />
   <col name="UserID" type="UniqueIdentifier" />
-  <col name="CollectedDate" type="DateTime" />
+  <col name="CollectedDate" type="DateTime" nullable="true" />
   <col name="ExpirationDate" type="DateTime" nullable="true" />
   <col name="CollectorStatus" type="Char(1)" nullable="true" />
   <col name="NoteID" type="UniqueIdentifier" />
@@ -14,6 +14,7 @@
   <col name="LastModifiedByID" type="UniqueIdentifier" />
   <col name="LastModifiedByScreenID" type="Char(8)" />
   <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="tstamp" type="Timestamp" />
   <index name="SurveyCollector_PK" clustered="true" primary="true" unique="true">
     <col name="CompanyID" />
     <col name="SurveyID" />

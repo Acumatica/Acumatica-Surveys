@@ -33,31 +33,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="PX.Api.Mobile">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Api.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Api.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Common.dll</HintPath>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.CS.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Data.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Data.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Data.BQL.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Objects.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Web.UI">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Web.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="PX.Web.UI.Frameset">
-      <HintPath>..\..\..\CVD19R2_208_0051\Bin\PX.Web.UI.Frameset.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\Bin\PX.Objects.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -67,7 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAC\CRSetupSurveyExt.cs" />
+    <Compile Include="DAC\CSAttributeDetailSurveyExt.cs" />
+    <Compile Include="DAC\CSAttributeSurveyExt.cs" />
     <Compile Include="DAC\SurveyUsers.cs" />
+    <Compile Include="SurveyProcess.cs" />
     <Compile Include="SurveyQuizEmployeeMaint.cs" />
     <Compile Include="SurveyQuizSetting.cs" />
     <Compile Include="DAC\SurveyClass.cs" />
@@ -79,6 +76,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurveyCollectionMaint.cs" />
     <Compile Include="SurveyMaint.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="SQLScript\SurveyBuildScript.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

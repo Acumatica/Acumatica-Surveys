@@ -1,14 +1,5 @@
-﻿<Page path="~/pages/sv/sv301010.aspx" ControlId="1" pageSource="nVbfc9o4EH5OZ/o/eNTJ2w2E0Mz0OoZpaqDJHNxwmKZ96wh7A5oIi0pygHu4v/12JRvMDze5gxd5td79vk+7K4eXn4Ixn0Mw5Nk8x0WHRe9YMOLGgqaNgZBo+6e5t5jmQOllDywXsrF0Zhbc5lb1nyGz34SGfNVhVufAggcuRcotTOBnDsZ22COXBu2RSovI8UP7qoX/BjerTSMxLLjPFqCFNR1G2X6UDiyYCktvfM0sLVKHmwWX3bdvQmThAU63KwgehLY5l2NuF6+ATgEwBOb/GKnMIofgvtdhCa5bhNSZxpIncKdkCpo2V4tezIJJnnHkFIN+xkAY5iJcbT6Ov/e45bHKdQIuUoqktHc13hURGjEjMlMn0zeREtTW1dUle/smKH7E5U++pCNRzyJt/d4YilkjzjHE9q9c/N1frqTaAoy4yGzlvbEWS663DwLWHUaOYCq7BPMijLiUM548RWq55FlqnAZob57ZQOsRLZK8WRGsW6Pfdb1+g3r56IwIvAvziA8n8u2RlPqSZQTLGegd5QNVgzsQ84V1T6sN1quUak1FeydSKMvSSzMF1BVr1j0VkIZ8q3I7ySUcQyEA1X2kHFuu7USty9PtFvrtnWpCH8dqnRA/Cv3ryDFISKzSpRBtT/0MgcjYvXvbqzkQIFMvZtTbkyi9umfykJ4TeNRgFiV3KiNhowVOFzCl8SUErQMEvuAjyY25JyCU+CKkXFSrn7FWg6JYO6zIjrOC6zlYkvOLFultZtagjWNRffF1sY5fOlbinOQvUbw+ERnSr4ZcT8KHzWpFFrtlj7y2E9v1nfilvhNJuyDeZslYGWGFyn5xgkdK7/rtxhVd/CQy8rq1VotZbiv9+f7aeUR85TNUXUYc15uRSnej8qT1fdMO4RmkqR4FoXHWg9mww0fGP2BL89VUct73fuvT/bKl4Vsssep84IsQW+9wPLw8IFzLRkrmy516Qz5DsAX9kT8ZrWSMRdBh30f1E6PMNoWN7afCnjsHSMdcIytL58uCfsbxosEaG/ibt1J1FdL7lGXo/5LQi4p3fX6YoLCchA6bpzqGXiJzmJcO0W/UAqeot1LMUd0hPFpvOHX8kYJJtHA1tr8a2je7yyBeqLW/DAqlSth7DK/BJgx96+BHUMrcBY59v4Dk6bPaHECNsBNJwALIB9cC/y9joXJJ6cNNTSi82wuJK3uuQ9BQ9E9lp3s8V/4F">
-    <PXSelector DataField="SurveyClassID" ParentId="phF_form_CstPXSelector1" TypeFullName="PX.Web.UI.PXSelector">
-        <Prop Key="AutoCallBack.Target" />
-        <Prop Key="AutoCallBack.Command" />
-    </PXSelector>
+﻿<Page path="~/pages/sv/sv301010.aspx" ControlId="1" pageSource="nVbdb9pIEH9Opf4Plk95O/ERFKmtIGpqoIkOKg7TtG/V4p3AKmsvt7sOcA/922/Ga2ODcZNr8mJmZmd+85uP3f7lR2/GVuBNWLJK8WPgB3/43pQZC5oUYyFR9rNdSkx7rHQ8BMuEbMWZ2PduU6tGz5DYb0JDuhn4Vqfgew9MCs4szOGfFIwd+I9MGpQHiueew4dep4v/LWY2u1ZkfO8+WYMW1gx8ivajMPC9hbB04mti6YNnuH3v8ubtmz5m4QAu9hvwHoS2KZMzZtevgE4O0AXG/xCoxGIO3v1w4Ef43SWkmWgmWQR3SnLQpNysh6HvzdOEYU4h6Gd0hG4u+pvdh9n3IbMsVKmOIPPEMSntTI0zRYRGLCmZRUbTN8EJarfTufTfvvHyP8rlC4upJOpZ8O771kQsW2GKLvZ/p+LfUbyRag8wZSKxlXMzLWKm9w8CtgOfDMFUtATzoh8wKZcsegpUHLOEm4wDlLfPKFB6khZR3q4QdtPA31Uzf+Nm+qhGBN4L2MYKlaBJlvMczEYl1D7k4hGtaryWEAviSTKFeAn6wMUR3d4diNXaZr82O2xkKdWWuvlOcCj61XG2ACQcmzn7lWOdsL1K7TyVcAqFAFT1yEVombZztS3KfpMTWxo1uD711a0lfuL6155DkBBZpQsiei71MwkExpbmPcfmWIDkjsxgWCZRWJ0NRITO4VGDWRfJU4MJG6xx74AphC9B6B5BcG0RSGbMPSHJIl/0KRi18SdsYy/v44GP+4PpFVj6QsxVo18fzHHXT70m8ZcSuqpxCvyrIdOa+3672oC5tpiV105kr3kiPzdP5GctuBfuk2imjHAj2VgvZ32bmC1oUxmv66zHwieRkNWttVosU1sbx5OZD9OYdhndSHhgN1X8sDRrs+6mdALPIE21GIQnkx4tgwNCEv4Fe9q0pgLsfvjniG6aPa3h/BO7rOgVnLXjffDyRshmNFAyjQ/8TdgSweYETF1ttJIhtsHA/z5tXhFFtAXs7IgLe64SwGdMY1aWKnzUZ5UkyxCFq/8TwJGIt3xRkDxALqm57rfrvPUdJeY4LhXNKRqBk9dbKVbI5gQerRPUDX9wMJEWWVuVzda7Pmz7cK22btuP3eukgF1ieA02YeiVg88f7mdXN076GqKnT2p3BDXA2SMCcyDvsrH4vYg5y0VK764bXOGtnlNc0WUTgYLKvGQLkHrPGyUMnye8clEVqhPDqUiKCb/qdM5Y0sTmlyrnX+hFUpJMulOrIa47Cy9ZYT5TfBMlq5phJcOb4434Hw==">
     <PXGrid ID="PXGridAnswers" ParentId="phG_PXGridAnswers" TypeFullName="PX.Web.UI.PXGrid">
-        <Prop Key="Caption" Value="Questions" />
-        <Prop Key="AutoSize.Enabled" Value="True" />
-        <Prop Key="AutoSize.MinHeight" Value="200" />
-        <Prop Key="Mode.AllowAddNew" Value="False" />
-        <Prop Key="Mode.AllowDelete" Value="False" />
-        <Prop Key="Mode.AllowColMoving" Value="False" />
+        <Prop Key="Caption" Value="SurveySummary" />
     </PXGrid>
 </Page>

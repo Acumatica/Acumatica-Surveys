@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PX.Data;
+using PX.Objects.CS;
 
 namespace Covid19.Lib
 {
+    [Serializable]
     public class SurveyClass : IBqlTable
     {
-		#region SurveyClassID
+        #region SurveyClassID
         public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
 
         [PXDBIdentity]
@@ -17,9 +15,20 @@ namespace Covid19.Lib
         public virtual int? SurveyClassID { get; set; }
         #endregion
 
+        #region SurveyCD
+        [PXDefault]
+        [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">CCCCCCCCCCCCCCC")]
+        [PXUIField(DisplayName = "Survey ID")]
+        [PXSelector(typeof(SurveyClass.surveyCD),
+                    typeof(SurveyClass.surveyCD),
+                    typeof(SurveyClass.surveyName))]
+        [AutoNumber(typeof(CRSetupSurveyExt.usrSurveyNumberingID), typeof(AccessInfo.businessDate))]
+        public virtual string SurveyCD { get; set; }
+        public abstract class surveyCD : PX.Data.BQL.BqlString.Field<surveyCD> { }
+        #endregion
+
         #region SurveyName
-        [PXSelector(typeof(SurveyClass.surveyName))]
-        [PXDBString(100, IsUnicode = true, InputMask = "", IsKey = true)]
+        [PXDBString(100, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Survey Name")]
         public virtual string SurveyName { get; set; }
         public abstract class surveyName : PX.Data.BQL.BqlString.Field<SurveyClass.surveyName> { }

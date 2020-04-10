@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PX.Data;
 using PX.Objects.CR;
-using PX.Objects.CS;
 using PX.SM;
-using PX.Web.UI.Frameset.Model.DTO;
 
 namespace Covid19.Lib
 {
@@ -19,7 +13,7 @@ namespace Covid19.Lib
         
         [PXDefault()]
         [PXDBString(30, IsFixed = true, IsKey = true)]
-		[PXUIField(DisplayName = "Quiz CD")]
+		[PXUIField(DisplayName = "Survey ID")]
 		[PXSelector(typeof(SurveyQuiz.quizCD))]
         public virtual String QuizCD
         {
@@ -42,7 +36,7 @@ namespace Covid19.Lib
 		#region QuizedUser
         public abstract class quizedUser : PX.Data.BQL.BqlGuid.Field<quizedUser> { }
         [PXSelector(typeof(Users.pKID), SubstituteKey = typeof(Users.username))]
-		[PXUIField(DisplayName = "Surveyed user")]
+		[PXUIField(DisplayName = "Recipient User")]
 		[PXDBGuid()]
         public virtual Guid? QuizedUser
 		{
@@ -81,14 +75,11 @@ namespace Covid19.Lib
 		public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
 
         [PXDBInt]
-		[PXDefault(1)]
+		[PXDefault(1), ]
 		[PXSelector(typeof(SurveyClass.surveyClassID), DescriptionField = typeof(SurveyClass.surveyDesc))]
-        [PXUIField(DisplayName = "Survey type")]
+        [PXUIField(DisplayName = "Survey Name", Enabled = false)]
         public virtual int? SurveyClassID { get; set; }
         #endregion
-
-
-
 
 		#region CreatedByID
 		public abstract class createdByID : PX.Data.BQL.BqlGuid.Field<createdByID> { }
