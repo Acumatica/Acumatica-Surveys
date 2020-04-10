@@ -6,6 +6,8 @@
                      TypeName="Covid19.Lib.SurveyQuizSetting" PrimaryView="SurveyClassCurrent">
         <CallbackCommands>
             <px:PXDSCallbackCommand Name="PrepopulateUsers" Visible="False" />
+            <px:PXDSCallbackCommand Name="PrepopulateEmployees" Visible="True"  CommitChanges="True" />
+            <px:PXDSCallbackCommand Name="AddUsers" Visible="False" CommitChanges="True"  />
         </CallbackCommands>
     </px:PXDataSource>
 </asp:Content>
@@ -29,18 +31,17 @@
                 <Template>
                     <px:PXGrid runat="server" ID="grid" Height="150px" SkinID="Details" Width="100%" AllowAutoHide="false" DataSourceID="ds">
                         <AutoSize Enabled="True" Container="Window" MinHeight="150"/>
-                        <Layout WrapText="True" />
                         <Levels>
                             <px:PXGridLevel DataMember="Mapping">
                                 <RowTemplate>
                                     <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM"/>
                                     <px:PXSelector runat="server" ID="edCRAttributeID1" DataField="AttributeID" FilterByAllFields="True" AutoRefresh="true"/>
-                                    <px:PXTextEdit runat="server" DataField="Description" AllowNull="False" ID="edDescription2" TextMode="MultiLine"/>
+                                    <px:PXTextEdit runat="server" DataField="Description" AllowNull="False" ID="edDescription2"/>
                                     <px:PXCheckBox runat="server" DataField="Required" ID="chkRequired"/>
                                     <px:PXNumberEdit runat="server" ID="edSortOrder" DataField="SortOrder"/>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False"/>
+                                    <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False" CommitChanges="True"/>
                                     <px:PXGridColumn DataField="AttributeID" DisplayFormat=">aaaaaaaaaa" Width="81px" AutoCallBack="True" LinkCommand="CRAttribute_ViewDetails"/>
                                     <px:PXGridColumn DataField="Description" Width="351px" AllowNull="False"/>
                                     <px:PXGridColumn DataField="SortOrder" TextAlign="Right" Width="54px"/>
@@ -58,10 +59,11 @@
                         <Levels>
                             <px:PXGridLevel DataMember="QuizUsers" DataKeyNames="Userid,SurveyClassID">
                                 <RowTemplate>
+
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" CommitChanges="true"/>
-                                    <px:PXGridColumn DataField="EPEmployee__AcctName" />
+                                    <px:PXGridColumn DataField="userid" DisplayMode="Text" />
                                 </Columns>                               
                                 <Layout FormViewHeight="" />
                             </px:PXGridLevel>
@@ -81,4 +83,35 @@
         </Items>
         <AutoSize Container="Window" Enabled="True" MinHeight="250" MinWidth="300"/>
     </px:PXTab>
+    
+        <px:PXSmartPanel ID="PanelAddEmployees" runat="server" Key="UsersForAddition" LoadOnDemand="true" Width="1100px" Height="500px"
+            Caption="Select Employees" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true">
+		<px:PXGrid ID="syncGrid" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" SyncPosition="true">
+                        <Levels>
+                            <px:PXGridLevel DataMember="UsersForAddition" DataKeyNames="Userid,SurveyClassID">
+                                <RowTemplate></RowTemplate>
+                                <Columns>
+                                    <px:PXGridColumn DataField="Add" Type="CheckBox" TextAlign="Center" CommitChanges="true"/>
+                                    <px:PXGridColumn DataField="EPEmployee__AcctName" />
+                                </Columns>                               
+                                <Layout FormViewHeight="" />
+                            </px:PXGridLevel>
+                        </Levels>
+                        <ActionBar>                        
+                            <CustomItems>
+                                <px:PXToolBarButton Key="PrepopulateUsers">
+                                    <AutoCallBack Command="PrepopulateUsers" Target="ds"/>
+                                </px:PXToolBarButton>
+                            </CustomItems>
+                        </ActionBar>
+                        <Mode InitNewRow="true" />
+                        <AutoSize Enabled="True" MinHeight="150" />
+        </px:PXGrid>
+        <px:PXPanel ID="PXPanel6" runat="server" SkinID="Buttons">
+            <px:PXButton runat="server" CommandSourceID="ds" Text="Add" CommandName="AddUsers" ID="PXButtonItemSearch1" />
+            <px:PXButton ID="PXButton4" runat="server" Text="Add & Close" DialogResult="OK" />
+            <px:PXButton ID="PXButton6" runat="server" DialogResult="Cancel" Text="Cancel" />
+        </px:PXPanel>
+    </px:PXSmartPanel>
+
 </asp:Content>
