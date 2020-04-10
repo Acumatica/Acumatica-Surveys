@@ -21,14 +21,14 @@ namespace Covid19.Lib
             this.Submit.SetEnabled(Quizes.Current.CollectorStatus == "S" || Quizes.Current.CollectorStatus == "N");
             Answers.Cache.AllowUpdate = (Quizes.Current.CollectorStatus == "S" || Quizes.Current.CollectorStatus == "N");
 
-            PXUIFieldAttribute.SetDisplayName<CSAnswers.attributeID>(Answers.Cache, "Question");
-            PXUIFieldAttribute.SetDisplayName<CSAnswers.value>(Answers.Cache, "Answer");
+            PXUIFieldAttribute.SetDisplayName<CSAnswers.attributeID>(Answers.Cache, Messages.Question);
+            PXUIFieldAttribute.SetDisplayName<CSAnswers.value>(Answers.Cache, Messages.Answer);
         }
 
         public PXAction<SurveyCollector> Submit;
 
         [PXButton(CommitChanges = true)]
-        [PXUIField(DisplayName = "Submit", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = Messages.Submit, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable submit(PXAdapter adapter)
         {
             Persist();

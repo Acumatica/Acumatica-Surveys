@@ -48,7 +48,7 @@ namespace Covid19.Lib
         /// </summary>
         [PXDBBool()]
         [PXUIField(DisplayName = "Active")]
-        //[PXDBDefault(true)]
+
         public virtual bool? Active { get; set; }
         public abstract class active : PX.Data.BQL.BqlBool.Field<SurveyClass.active> { }
         #endregion
@@ -97,7 +97,7 @@ namespace Covid19.Lib
         public abstract class lastModifiedByScreenID : PX.Data.BQL.BqlString.Field<SurveyClass.lastModifiedByScreenID> { }
         #endregion
         #region LastModifiedDateTime
-        //[PXDBDate()]
+
         [PXDBLastModifiedDateTime]
         [PXUIField(DisplayName = "Last Modified Date Time")]
         public virtual DateTime? LastModifiedDateTime { get; set; }

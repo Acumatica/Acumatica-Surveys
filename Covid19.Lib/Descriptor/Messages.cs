@@ -9,22 +9,33 @@ namespace Covid19.Lib
 
         #region Survey Response Status
 
-        public const string CollectorNew = "New";
-        public const string CollectorSent = "Sent";
+        public const string CollectorNew       = "New";
+        public const string CollectorSent      = "Sent";
         public const string CollectorResponded = "Responded";
-        public const string CollectorExpired = "Expired";
+        public const string CollectorExpired   = "Expired";
 
         #endregion
 
-        public const string Send = "Send";
+        public const string Send    = "Send";
         public const string SendAll = "Send All";
 
         public const string PushNotificationTitleSurvey = "Complete Survey";
         public const string PushNotificationMessageBodySurvey = "Tap to complete Survey";
         public const string NoDeviceError = "User has not setup Acumatica mobile app.";
 
-        public const string SurveySent = "Survey has been sent";
+        public const string SurveySent  = "Survey has been sent";
         public const string SurveyError = "At least one Survey hasn't been processed.";
-        public const string surveyInvalidForSent = "Invalid Survey Status.";
+        
+        //below is unused. purge once confirmed not needed
+        //public const string surveyInvalidForSent = "Invalid Survey Status.";
+
+        public const string Question = "Question";
+        public const string Answer   = "Answer";
+        public const string Submit   = "Submit";
+        public const string Delete   = "Delete";
+
+        public static string AreYouSure = "Are you sure?";
+        public static string AreYouSureYouWantToDeleteAllNewSurveys =
+            "Are you sure you want to delete all new Surveys?";
     }
 }

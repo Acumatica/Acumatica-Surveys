@@ -32,7 +32,6 @@ namespace Covid19.Lib
         /// </summary>
         [PXUIField(DisplayName = "Collector ID")]
         [PXDBIdentity(IsKey = true)]
-        //todo: find out what the correct attribute i need here?
         public virtual int? CollectorID { get; set; }
         public abstract class collectorID : PX.Data.BQL.BqlInt.Field<collectorID> { }
         #endregion
@@ -183,68 +182,7 @@ namespace Covid19.Lib
         }
         #endregion
 
-        #region DeadCode
-
-        // it was decided that we will not use the ContactID after all and favor use of UserID
-        // as we originally intended.
-        //#region ContactID
-        /////// <summary>
-        /////// Identifies the Contact that this Collector is assigned too.
-        /////// </summary>
-        ///// <remarks>
-        ///// it has been decided on 04/05/2020 that the userID field will be replaced with
-        ///// Contact as it is the contact that we are most concerned regarding any Survey
-        ///// </remarks>
-        //[PXDBInt()]
-        //[PXUIField(DisplayName = "Contact")]
-        //public virtual int? ContactID { get; set; }
-        //public abstract class contactID : PX.Data.BQL.BqlInt.Field<contactID> { }
-        //#endregion
-
-        //#region CollectorCD
-        ////this CollectorCD field has been discontinued and will favor use of only the CollectorID
-        ////public abstract class collectorCD : PX.Data.BQL.BqlString.Field<collectorCD> { }
-        /////// <summary>
-        /////// The human-readable identifier of the Collector record.
-        /////// </summary>
-        /////// <remarks>
-        /////// Todo:   confirm following assumption with Team:
-        ///////         We will and to have this field for any URL links sent to any Contact
-        ///////         the link will hold have this particular value in one of its query parameters.
-        ///////         as to be able to direct the users directly to this specific collector.
-        ///////         This is the field that zaljur was using in his Quiz page where he was
-        ///////         using the Survey Name then a DateTime as string within the QuizCD feild.
-        ///////         I belive the SurveyColector is the equivalent of his Quiz record.
-        /////// </remarks>
-        ////[PXDBString(50, IsKey = true, IsUnicode = true)]//todo: confirm with team this is the right attribute
-        ////[PXDefault]
-        ////public virtual string CollectorCD { get; set; }
-        //#endregion
-
-        //#region QuestionID
-        ////todo: purge this when the above assumption is confiremed. this was added on the assumption that we have a one to one relationship beteen this collector, Question, and CSAnswer.
-        ////      this also make more sense why Harsha insisted we needed the SurveyID in this entity
-        ////[PXDBInt(IsKey = true)]
-        ////[PXUIField(DisplayName = "Question ID")]
-        ////public virtual int? QuestionID { get; set; }
-        ////public abstract class questionID : PX.Data.BQL.BqlInt.Field<questionID> { }
-        //#endregion
-
-        //#region Userid_Removed
-        /*
-         it has been decided on 04/05/2020 that the userID field will be replaced with Contact as it is the contact that we are most concerned regarding any Survey
-        
-        */
-        ///// <summary>
-        ///// Identifies the user that this Collector is assigned too.
-        ///// </summary>
-        //[PXDBGuid()]
-        //[PXUIField(DisplayName = "Userid")]
-        //public virtual Guid? Userid { get; set; }
-        //public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
-        //#endregion
-
-        #endregion
+      
     }
 }
 

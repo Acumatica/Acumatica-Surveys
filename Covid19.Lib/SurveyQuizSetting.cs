@@ -83,7 +83,7 @@ namespace Covid19.Lib
                    MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable clearSurvey(PXAdapter adapter)
         {
-            if (SurveyClassCurrent.Ask("Delete", "Are you sure?", "Are you sure you want to delete all new Surveys?",
+            if (SurveyClassCurrent.Ask(Messages.Delete, Messages.AreYouSure, Messages.AreYouSureYouWantToDeleteAllNewSurveys,
                     MessageButtons.YesNo) != WebDialogResult.Yes) return adapter.Get();
 
             PXLongOperation.StartOperation(this, delegate ()
