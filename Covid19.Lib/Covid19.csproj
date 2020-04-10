@@ -77,8 +77,11 @@
     <Compile Include="DAC\SurveyCollector.cs" />
     <Compile Include="DAC\SurveyQuestions.cs" />
     <Compile Include="DAC\SurveyRecipients.cs" />
+	<Compile Include="DAC\SurveySetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurveyMaint.cs" />
+	<Compile Include="SurveyMaint.cs" />
+    <Compile Include="SurveySetupMaint.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
