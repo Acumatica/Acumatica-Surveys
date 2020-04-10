@@ -16,6 +16,9 @@
 			<px:PXSelector runat="server" ID="edCollectorName" DataField="CollectorName" Width="300px"></px:PXSelector>
 			<px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" AutoRefresh="True" CommitChanges="True" DisplayMode="Text" ></px:PXSelector>
 			<px:PXSelector runat="server" ID="edUserid" DataField="Userid"></px:PXSelector>
+            <px:PXLayoutRule runat="server" ID="PXLayoutRule3" StartColumn="True" ></px:PXLayoutRule>
+            <px:PXDateTimeEdit runat="server" ID="edCollectedDate" DataField="CollectedDate" Width="300px" Enabled="False" />
+            <px:PXDropDown runat="server" ID="edCollectedStatus" DataField="CollectorStatus" Width="300px" Enabled="False" ></px:PXDropDown>
 		</Template>
 	</px:PXFormView>
 </asp:Content>
