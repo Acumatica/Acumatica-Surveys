@@ -133,7 +133,7 @@
             <GIDesign>
                 <row DesignID="5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" Name="Survey Response" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SV301010" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
                     <GINavigationScreen ScreenID="SV301010" LineNbr="1" WindowMode="I">
-                        <GINavigationParameter LineNbr="1" FieldName="NoteID" ParameterName="SurveyCollector.noteID" IsExpression="0" />
+                        <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GITable Alias="SurveyCollector" Name="Covid19.Lib.SurveyCollector">
                         <GIResult LineNbr="7" SortOrder="7" IsActive="1" Field="collectorStatus" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="7f4bfbdc-522d-45d1-9f2a-e5d02a26e37e" />

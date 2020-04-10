@@ -3,19 +3,25 @@
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
 	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-        TypeName="Covid19.Lib.SurveyQuizEmployeeMaint"
-        PrimaryView="Quizes">
+        TypeName="Covid19.Lib.SurveyQuizEmployeeMaint" PrimaryView="Quizes">
 		<CallbackCommands>
 		</CallbackCommands>
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="Quizes" Width="100%" Height="100px" AllowAutoHide="false">
+	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="Quizes" 
+				   Width="100%" Height="100px" AllowAutoHide="False" TabIndex="100">
 		<Template>
-			<px:PXLayoutRule ID="PXLayoutRule1" runat="server" StartRow="True"></px:PXLayoutRule>
-			<px:PXSelector runat="server" ID="edCollectorName" DataField="CollectorName" Width="300px"></px:PXSelector>
+			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
+			<px:PXSelector runat="server" ID="edCollectorID" DataField="CollectorID"></px:PXSelector>
+			<px:PXTextEdit runat="server" ID="edCollectorName" DataField="CollectorName" AlreadyLocalized="False" Size="M"></px:PXTextEdit>
 			<px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" AutoRefresh="True" CommitChanges="True" DisplayMode="Text" ></px:PXSelector>
 			<px:PXSelector runat="server" ID="edUserid" DataField="Userid"></px:PXSelector>
+			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
+		    <px:PXDateTimeEdit ID="edCollectedDate" runat="server" AlreadyLocalized="False" DataField="CollectedDate" Width="150px">
+            </px:PXDateTimeEdit>
+            <px:PXDropDown ID="edCollectorStatus" runat="server" DataField="CollectorStatus">
+            </px:PXDropDown>
 		</Template>
 	</px:PXFormView>
 </asp:Content>
