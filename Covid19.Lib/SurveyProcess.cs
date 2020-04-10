@@ -107,7 +107,10 @@ namespace Covid19.Lib
         [PXSelector(typeof(Search<SurveyClass.surveyClassID>),
             typeof(SurveyClass.surveyName),
             typeof(SurveyClass.surveyDesc),
-            DescriptionField = typeof(Surveys.surveyName))]
+            //note: 20200409 the below was using the class Surveys that is intended to be purged.
+            //      So I changed it to SurveyClass. Purge note once refactoring is confirmed
+            //      working.
+            DescriptionField = typeof(SurveyClass.surveyName))] 
         public virtual int? SurveyID { get; set; }
         #endregion
     }
