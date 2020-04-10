@@ -7,6 +7,10 @@ namespace Covid19.Lib
     {
         public const string Prefix = "Acumatica Survey";
 
+        #region
+        public const string SurveyCollectorCacheName = "Survey Collector";
+        #endregion
+
         #region Survey Response Status
 
         public const string CollectorNew = "New";
