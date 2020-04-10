@@ -12,19 +12,34 @@ namespace Covid19.Lib.DAC
     [PXCacheName("SurveyUser")]
     public class SurveyUser : IBqlTable
     {
-        #region Userid
-        [PXDBGuid(IsKey = true)]
-        [PXUIField(DisplayName = "Userid")]
-        [PXSelector(typeof(EPEmployee.userID))]
-        public virtual Guid? Userid { get; set; }
-        public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
-        #endregion
-
         #region SurveyClassID
         [PXDBInt(IsKey = true)]
         [PXUIField(DisplayName = "Survey Class ID")]
+        [PXDBDefault(typeof(SurveyClass.surveyClassID))]
+        [PXParent(typeof(Select<SurveyClass, Where<SurveyClass.surveyClassID, Equal<Current<surveyClassID>>>>))]
         public virtual int? SurveyClassID { get; set; }
         public abstract class surveyClassID : PX.Data.BQL.BqlInt.Field<surveyClassID> { }
+        #endregion
+
+        #region LineNbr
+        public abstract class lineNbr : PX.Data.BQL.BqlInt.Field<lineNbr> { }
+        [PXDBInt(IsKey = true)]
+        [PXLineNbr(typeof(SurveyClass.lineCntr))]
+        [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
+        public virtual Int32? LineNbr
+        {
+            get;
+            set;
+        }
+        #endregion
+
+        #region Userid
+        [PXDBGuid()]
+        [PXUIField(DisplayName = "Employee name")]
+        [PXSelector(typeof(EPEmployee.userID), DescriptionField = typeof(EPEmployee.acctName))]
+        //[PXCheckUnique(typeof(Where<SurveyUser.surveyClassID, Equal<Current<SurveyUser.surveyClassID>>>), ClearOnDuplicate = false)]
+        public virtual Guid? Userid { get; set; }
+        public abstract class userid : PX.Data.BQL.BqlGuid.Field<userid> { }
         #endregion
 
         #region Active

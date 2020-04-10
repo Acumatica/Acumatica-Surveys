@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAC\ContactSrvExt.cs" />
     <Compile Include="DAC\CRSetupSurveyExt.cs" />
     <Compile Include="DAC\CSAttributeDetailSurveyExt.cs" />
     <Compile Include="DAC\CSAttributeSurveyExt.cs" />

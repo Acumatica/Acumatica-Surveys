@@ -69,6 +69,18 @@ namespace Covid19.Lib
         public virtual Guid? NoteID { get; set; }
         public abstract class noteID : PX.Data.BQL.BqlGuid.Field<SurveyClass.noteID> { }
         #endregion
+
+        #region LineCntr
+        public abstract class lineCntr : PX.Data.BQL.BqlInt.Field<lineCntr> { }
+        [PXDBInt()]
+        [PXDefault(0)]
+        public virtual Int32? LineCntr
+        {
+            get;
+            set;
+        }
+        #endregion
+
         #region CreatedByID
         [PXDBCreatedByID()]
         public virtual Guid? CreatedByID { get; set; }
@@ -119,6 +131,7 @@ namespace Covid19.Lib
             }
         }
         #endregion
+
 
     }
 }

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Covid19.Lib.DAC;
+using PX.Common;
 using PX.Data;
+using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.EP;
@@ -18,11 +20,17 @@ namespace Covid19.Lib
         public SelectFrom<SurveyClass>.View SurveyClassCurrent;
         public CSAttributeGroupList<SurveyClass.surveyClassID, SurveyCollector> Mapping;
 
-        public SelectFrom<SurveyUser>.
-            InnerJoin<EPEmployee>.On<SurveyUser.userid.IsEqual<EPEmployee.userID>>.Where<SurveyUser.surveyClassID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View QuizUsers;
+        public SelectFrom<SurveyUser>.Where<SurveyUser.surveyClassID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View QuizUsers;
 
+        [PXHidden]
+        [PXCopyPasteHiddenView]
         public PXSetup<CRSetup> SurveySetup;
-        
+
+        [PXHidden]
+        [PXCopyPasteHiddenView]
+        public SelectFrom<Contact>.InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+            And<Contact.isActive.IsEqual<True>>.And<Contact.userID.IsNotNull>>.View UsersForAddition;
+
         [PXHidden]
         [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<SurveyClass.surveyClassID.FromCurrent>>.View SurveyCollector;
@@ -31,6 +39,9 @@ namespace Covid19.Lib
         public SurveyQuizSetting()
         {
             CRSetup Data = SurveySetup.Current;
+
+            UsersForAddition.Cache.AllowInsert = false;
+            UsersForAddition.Cache.AllowDelete = false;
         }
 
 
@@ -43,7 +54,7 @@ namespace Covid19.Lib
         [PXUIField(DisplayName = "Create Survey", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable createSurvey(PXAdapter adapter)
         {
-            PXLongOperation.StartOperation(this, delegate()
+            PXLongOperation.StartOperation(this, delegate ()
             {
                 CreateSurveys();
             });
@@ -106,26 +117,50 @@ namespace Covid19.Lib
             Persist();
         }
 
-        public PXAction<SurveyClass> PrepopulateUsers;
+        public PXAction<SurveyClass> addUsers;
+
+        [PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton]
-        [PXUIField(DisplayName = "Prepopulate Users", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
-        public virtual IEnumerable prepopulateUsers(PXAdapter adapter)
+        public virtual IEnumerable AddUsers(PXAdapter adapter)
         {
-            var users = SelectFrom<Contact>.Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
-                            And<Contact.isActive.IsEqual<True>>.And<Contact.userID.IsNotNull>>.View
-                        .Select(this);
+            var users = UsersForAddition.Select().Where(a => a.GetItem<Contact>().GetExtension<ContactSrvExt>().Add == true).ToList();
+            var usersAlreadyInList = QuizUsers.Select().Select(a => a.GetItem<SurveyUser>().Userid).ToList();
+            usersAlreadyInList.AddRange(QuizUsers.Cache.Inserted.ToArray<SurveyUser>().Select(a => a.Userid));
+            
+
+            //TODO @Dhiren replace with [PXCheckUnique(typeof(Where<SurveyUser.surveyClassID,
+            //Equal<Current<SurveyUser.surveyClassID>>>), ClearOnDuplicate = false)]
+            users = users.Where(u => !usersAlreadyInList.Contains(u.GetItem<Contact>().UserID)).ToList();
 
             foreach (var user in users)
             {
                 var quizUser = new SurveyUser();
+                quizUser.Active = true;
                 quizUser.SurveyClassID = SurveyClassCurrent.Current.SurveyClassID;
                 quizUser.Userid = user.GetItem<Contact>().UserID;
                 quizUser = QuizUsers.Insert(quizUser);
             }
-            
+
             return adapter.Get();
         }
 
+        public PXAction<SurveyClass> PrepopulateUsers;
+
+        [PXButton]
+        [PXUIField(DisplayName = "Prepopulate Users", MapViewRights = PXCacheRights.Select,
+            MapEnableRights = PXCacheRights.Select)]
+        public virtual IEnumerable prepopulateUsers(PXAdapter adapter)
+        {
+            if (UsersForAddition.AskExt((graph, viewName) =>
+            {
+                graph.Views[UsersForAddition.View.Name].Cache.Clear();
+                graph.Views[viewName].Cache.Clear();
+                graph.Views[viewName].Cache.ClearQueryCache();
+                graph.Views[viewName].ClearDialog();
+            }, true) != WebDialogResult.OK) return adapter.Get();
+
+            return AddUsers(adapter);
+        }
 
         protected virtual void _(Events.RowSelected<SurveyClass> e)
         {
