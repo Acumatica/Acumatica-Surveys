@@ -1,3 +1,0 @@
-﻿<Table TableName="CRSetup">
-    <Column TableName="CRSetup" ColumnName="UsrSurveyNumberingID" ColumnType="string" AllowNull="True" MaxLength="15" DecimalPrecision="0" DecimalLength="0" IsNewColumn="True" IsUnicode="True" />
-</Table>

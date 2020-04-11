@@ -1,0 +1,23 @@
+﻿<Sql TableName="Survey" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="Survey">
+  <col name="CompanyID" type="Int" default="Zero" />
+  <col name="SurveyID" type="Int" identity="true" />
+  <col name="SurveyCD" type="NVarChar(15)" />
+  <col name="SurveyName" type="NVarChar(100)" nullable="true" />
+  <col name="SurveyDesc" type="NVarChar(255)" nullable="true" />
+  <col name="Active" type="Bit" nullable="true" />
+  <col name="NoteID" type="UniqueIdentifier" nullable="true" />
+  <col name="LineCntr" type="Int" />
+  <col name="CreatedByID" type="UniqueIdentifier" />
+  <col name="CreatedByScreenID" type="Char(8)" />
+  <col name="CreatedDateTime" type="DateTime" />
+  <col name="LastModifiedByID" type="UniqueIdentifier" />
+  <col name="LastModifiedByScreenID" type="Char(8)" />
+  <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="tstamp" type="Timestamp" />
+  <index name="PK_Survey" clustered="true" primary="true" unique="true">
+    <col name="CompanyID" />
+    <col name="SurveyID" />
+  </index>
+</table>]]></CDATA>
+</Sql>
