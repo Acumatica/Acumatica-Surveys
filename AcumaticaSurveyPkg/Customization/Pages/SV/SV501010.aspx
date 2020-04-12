@@ -21,16 +21,6 @@
 		<Levels>
 			<px:PXGridLevel DataMember="Records" DataKeyNames="ContactID">
 			    <Columns>
-                    <%-- todo: purge this when confirmed working
-                        <px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="SurveyID" TextAlign="Left" DisplayMode="Text" Width="100px"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="Userid" TextAlign="Left" DisplayMode="Text" Width="200px"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="CollectorID" TextAlign="Left" AllowMove="False" AllowResize="False" AllowShowHide="False" Width="0px"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="CollectorName" Width="250px"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="CollectedDate" Width="120px"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="ExpirationDate" Width="120px"></px:PXGridColumn>
-                    <px:PXGridColumn DataField="CollectorStatus" Width="150px"></px:PXGridColumn>--%>
-                    
                     <px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true"></px:PXGridColumn>
 					<px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" />
                     <px:PXGridColumn DataField="ContactID" DisplayMode="Text"  TextAlign="Left" Width="250px" />
@@ -38,7 +28,6 @@
                     <px:PXGridColumn DataField="RecipientPhone" Width="180px" />
                     <px:PXGridColumn DataField="RecipientEmail" Width="280px" />
                     <px:PXGridColumn DataField="UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
-
                 </Columns>
 			</px:PXGridLevel>
 		</Levels>
