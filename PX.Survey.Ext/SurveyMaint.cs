@@ -41,43 +41,45 @@ namespace PX.Survey.Ext
             UsersForAddition.Cache.AllowDelete = false;
         }
 
-        public PXAction<Survey> CreateSurvey;
-        [PXButton]
-        [PXUIField(DisplayName = "Create Survey", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
-        public virtual IEnumerable createSurvey(PXAdapter adapter)
-        {
-            PXLongOperation.StartOperation(this, delegate ()
-            {
-                CreateSurveys();
-            });
 
-            return adapter.Get();
-        }
+        //public PXAction<Survey> CreateSurvey;
+        //[PXButton]
+        //[PXUIField(DisplayName = "Create Survey", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
+        //public virtual IEnumerable createSurvey(PXAdapter adapter)
+        //{
+        //    PXLongOperation.StartOperation(this, delegate ()
+        //    {
+        //        CreateSurveys();
+        //    });
 
-        private void CreateSurveys()
-        {
-            var activeUsers = SurveyUsers.Select().Where(a => a.GetItem<SurveyUser>().Active == true).ToList();
-            var alreadyInserted = SurveyCollector.Select().ToList().Select(a => a.GetItem<SurveyCollector>().UserID).ToList();
-            var allUsers = activeUsers.Select(a => a.GetItem<SurveyUser>().UserID).ToList();
-            var idsForInsertion = allUsers.Except(alreadyInserted);
+        //    return adapter.Get();
+        //}
 
-            activeUsers = activeUsers.Where(u => idsForInsertion.Contains(u.GetItem<SurveyUser>().UserID)).ToList();
+        //private void CreateSurveys()
+        //{
+        //    var activeUsers = SurveyUsers.Select().Where(a => a.GetItem<SurveyUser>().Active == true).ToList();
+        //    var alreadyInserted = SurveyCollector.Select().ToList().Select(a => a.GetItem<SurveyCollector>().UserID).ToList();
+        //    var allUsers = activeUsers.Select(a => a.GetItem<SurveyUser>().UserID).ToList();
+        //    var idsForInsertion = allUsers.Except(alreadyInserted);
 
-            foreach (PXResult<SurveyUser> activeUser in activeUsers)
-            {
-                var user = activeUser.GetItem<SurveyUser>();
-                var collector = SurveyCollector.Insert(new SurveyCollector());
-                collector.CollectorName = String.Format("{0} {1}", SurveyCurrent.Current.SurveyName, PXTimeZoneInfo.Now.ToString("yyyy-MM-dd hh:mm:ss"));
-                collector.SurveyID = SurveyCurrent.Current.SurveyID;
-                collector.UserID = user.UserID;
-                collector.CollectedDate = null;
-                collector.ExpirationDate = null;
-                collector.CollectorStatus = "N";
-                collector = SurveyCollector.Update(collector);
-            }
+        //    activeUsers = activeUsers.Where(u => idsForInsertion.Contains(u.GetItem<SurveyUser>().UserID)).ToList();
 
-            this.Persist();
-        }
+        //    foreach (PXResult<SurveyUser> activeUser in activeUsers)
+        //    {
+        //        var user = activeUser.GetItem<SurveyUser>();
+        //        var collector = SurveyCollector.Insert(new SurveyCollector());
+        //        collector.CollectorName = String.Format("{0} {1}", SurveyCurrent.Current.SurveyName, PXTimeZoneInfo.Now.ToString("yyyy-MM-dd hh:mm:ss"));
+        //        collector.SurveyID = SurveyCurrent.Current.SurveyID;
+        //        collector.UserID = user.UserID;
+        //        collector.CollectedDate = null;
+        //        collector.ExpirationDate = null;
+        //        collector.CollectorStatus = "N";
+        //        collector = SurveyCollector.Update(collector);
+        //    }
+
+        //    this.Persist();
+        //}
+
 
         public PXAction<Survey> ClearSurvey;
 
@@ -153,7 +155,7 @@ namespace PX.Survey.Ext
             if (currentSurvey == null)
                 return;
 
-            CreateSurvey.SetEnabled(currentSurvey.Active == true);
+            //CreateSurvey.SetEnabled(currentSurvey.Active == true);
 
             bool inactiveOrNull = currentSurvey.Active != true;
 
