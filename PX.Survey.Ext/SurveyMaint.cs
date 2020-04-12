@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using PX.Common;
 using PX.Data;
+using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
@@ -147,23 +148,47 @@ namespace PX.Survey.Ext
             return addUsers(adapter);
         }
 
-        protected virtual void _(Events.RowSelected<Survey> e)
+        protected virtual void _(Events.RowSelecting<Survey> e)
         {
-            var currentSurvey = e.Row;
-            if (currentSurvey == null)
+            var row = e.Row;
+            if (row == null)
                 return;
 
-            CreateSurvey.SetEnabled(currentSurvey.Active == true);
+            using (new PXConnectionScope())
+            {
+                var firstCollector =
+                    SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>.
+                        And<SurveyCollector.collectorStatus.
+                            IsNotEqual<SurveyResponseStatus.CollectorNewStatus>>>.View.SelectWindowed(this, 0, 1,
+                        row.SurveyID).TopFirst;
+                if (firstCollector != null && firstCollector.CollectorStatus != SurveyResponseStatus.CollectorNew)
+                {
+                    row.NotNew = true;
+                }
+                else
+                {
+                    row.NotNew = false;
+                }
+            }
+        }
 
-            bool inactiveOrNull = currentSurvey.Active != true;
+        protected virtual void _(Events.RowSelected<Survey> e)
+        {
+            var selectedSurvey = e.Row;
+            if (selectedSurvey == null)
+                return;
 
-            Mapping.AllowInsert = inactiveOrNull;
-            Mapping.AllowUpdate = inactiveOrNull;
-            Mapping.AllowDelete = inactiveOrNull;
+            var status = !selectedSurvey.NotNew == true;
 
-            SurveyUsers.AllowInsert = inactiveOrNull;
-            SurveyUsers.AllowUpdate = inactiveOrNull;
-            SurveyUsers.AllowDelete = inactiveOrNull;
+            Mapping.Cache.AllowUpdate = status;
+            Mapping.Cache.AllowInsert = status;
+            Mapping.Cache.AllowDelete = status;
+            PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, selectedSurvey, status);
+            PXUIFieldAttribute.SetEnabled<Survey.surveyDesc>(e.Cache, selectedSurvey, status);
+
+            
+            CreateSurvey.SetEnabled(selectedSurvey.Active != false);
+
         }
 
         [PXMergeAttributes(Method = MergeMethod.Merge)]

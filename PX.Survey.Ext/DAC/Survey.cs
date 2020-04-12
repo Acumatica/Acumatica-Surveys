@@ -110,5 +110,16 @@ namespace PX.Survey.Ext
         [PXUIField(Visible = false, Visibility = PXUIVisibility.Invisible)]
         public virtual string SurveyIDStringID => this.SurveyID.ToString();
         #endregion
+
+        #region NotNew
+        /// <summary>
+        /// Field which says that SurveyCollector's column CollectorStatus is not equal to N or CollectorNew
+        /// </summary>
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXBool()]
+        [PXUIField(DisplayName = "NotNew")]
+        public virtual bool? NotNew { get; set; }
+        public abstract class notNew : PX.Data.BQL.BqlBool.Field<Survey.notNew> { }
+        #endregion
     }
 }
