@@ -29,8 +29,8 @@ namespace PX.Survey.Ext
         */
         
         public PXFilteredProcessing<SurveyUser, SurveyFilterV2,
-            Where<SurveyUser.active, Equal<SurveyResponseStatus.CollectorNewStatus>,
-                And<SurveyCollector.surveyID, Equal<Current<SurveyFilterV2.surveyID>>>>> Records;
+            Where<SurveyUser.active, Equal<True>,
+                And<SurveyUser.surveyID, Equal<Current<SurveyFilterV2.surveyID>>>>> Records;
 
 
         public SurveyProcessV2()
@@ -110,23 +110,45 @@ namespace PX.Survey.Ext
         private static List<SurveyCollector> CreateCollectorRecords(List<SurveyUser> surveyUserList)
         {
             List<SurveyCollector> collectorRecords = new List<SurveyCollector>();
-            var surveyMaint = PXGraph.CreateInstance<SurveyMaint>(); 
+            var surveyMaint = PXGraph.CreateInstance<SurveyMaint>();
+
+            Survey surveyCurrent = null;
 
             foreach (var user in surveyUserList)
             {
-                //todo: find a more efficient way to do the below. 
-                var surveyCurrent = PXSelect<Survey>.Select(surveyMaint).ToList()
-                    .FirstOrDefault(x => x.Record.SurveyID == user.SurveyID);
+                
 
-                var collector = surveyMaint.SurveyCollector.Insert(new SurveyCollector());
+                //no need to search for the survey again if it was picked up on the previous round
+                if (surveyCurrent == null || surveyCurrent.SurveyID != user.SurveyID)
+                {
+                    ////todo: find a better way to do the below. 
+                    ////      get this into a single line BQL using Where and Requires
+                    ////      for now it does the job. circle back once everything works
+                    //var list = PXSelect<Survey>.Select(surveyMaint).ToList();
+                    //surveyCurrent = (Survey)list.FirstOrDefault(x => ((Survey)x).SurveyID == user.SurveyID);
+
+                    surveyCurrent =
+                        (Survey)PXSelect<Survey,
+                                Where<Survey.surveyID, Equal<Required<Survey.surveyID>>>>
+                                .Select(surveyMaint, user.SurveyID).ToList().First();
+
+                }
+
+                //var collector = surveyMaint.SurveyCollector.Insert(new SurveyCollector());
+                var collector = new SurveyCollector();
+                
+                
                 collector.CollectorName =
-                    $"{surveyCurrent.Record.SurveyName} {PXTimeZoneInfo.Now.ToString("yyyy-MM-dd hh:mm:ss")}";
+                    $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now.ToString("yyyy-MM-dd hh:mm:ss")}";
                 collector.SurveyID = user.SurveyID;
                 collector.UserID = user.UserID;
                 collector.CollectedDate = null;
                 collector.ExpirationDate = null;
                 collector.CollectorStatus = "N";
-                collector = surveyMaint.SurveyCollector.Update(collector);
+                //either of these below lines yields the error:
+                //Error: An error occurred during processing of the field Survey ID value 1 Error: Survey ID '1' cannot be found in the system.
+                //collector = surveyMaint.SurveyCollector.Update(collector);
+                collector = surveyMaint.SurveyCollector.Insert(collector);
                 collectorRecords.Add(collector);
             }
 
