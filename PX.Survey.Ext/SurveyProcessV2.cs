@@ -85,26 +85,32 @@ namespace PX.Survey.Ext
                     graph.SurveyQuestions.Update(graph.SurveyQuestions.Current);
                     graph.Persist();
 
-                    //todo: test and determine if the bellow is correct.
-                    PXProcessing<SurveyUser>.SetInfo(collectorRecords.IndexOf(rec), Messages.SurveySent);
+                    //todo: confirm with team if the bellow is correct.
+                    var userRecord = GetSurveyUserFromList(surveyUserList, rec);
+                    PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(userRecord), Messages.SurveySent);
                 }
                 catch (AggregateException ex)
                 {
                     var message = string.Join(";", ex.InnerExceptions.Select(e => e.Message));
-                    //todo: test and determine if the bellow is correct.
-                    PXProcessing<SurveyUser>.SetError(collectorRecords.IndexOf(rec), message);
-                    //Original: PXProcessing<SurveyCollector>.SetError(surveyList.IndexOf(rec), message);
+                    //todo: confirm with team if the bellow is correct.
+                    SurveyUser userRecord = GetSurveyUserFromList(surveyUserList, rec);
+                    PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(userRecord), message);
                 }
                 catch (Exception e)
                 {
                     erroroccurred = true;
-                    //todo: test and determine if the bellow is correct.
-                    PXProcessing<SurveyCollector>.SetError(collectorRecords.IndexOf(rec), e);
-                    //Original: PXProcessing<SurveyCollector>.SetError(surveyList.IndexOf(rec), e);
+                    //todo: confirm with team if the bellow is correct.
+                    var userRecord = GetSurveyUserFromList(surveyUserList,rec);
+                    PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(userRecord), e);
                 }
             }
             if (erroroccurred)
                 throw new PXException(Messages.SurveyError);
+        }
+
+        private static SurveyUser GetSurveyUserFromList(List<SurveyUser> surveyUserList, SurveyCollector rec)
+        {
+            return surveyUserList.FirstOrDefault(x => x.UserID == rec.UserID);
         }
 
         private static List<SurveyCollector> CreateCollectorRecords(List<SurveyUser> surveyUserList)
@@ -116,38 +122,25 @@ namespace PX.Survey.Ext
 
             foreach (var user in surveyUserList)
             {
-                
-
                 //no need to search for the survey again if it was picked up on the previous round
                 if (surveyCurrent == null || surveyCurrent.SurveyID != user.SurveyID)
                 {
-                    ////todo: find a better way to do the below. 
-                    ////      get this into a single line BQL using Where and Requires
-                    ////      for now it does the job. circle back once everything works
-                    //var list = PXSelect<Survey>.Select(surveyMaint).ToList();
-                    //surveyCurrent = (Survey)list.FirstOrDefault(x => ((Survey)x).SurveyID == user.SurveyID);
-
                     surveyCurrent =
                         (Survey)PXSelect<Survey,
                                 Where<Survey.surveyID, Equal<Required<Survey.surveyID>>>>
                                 .Select(surveyMaint, user.SurveyID).ToList().First();
-
                 }
 
-                //var collector = surveyMaint.SurveyCollector.Insert(new SurveyCollector());
-                var collector = new SurveyCollector();
-                
-                
-                collector.CollectorName =
-                    $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now.ToString("yyyy-MM-dd hh:mm:ss")}";
-                collector.SurveyID = user.SurveyID;
-                collector.UserID = user.UserID;
-                collector.CollectedDate = null;
-                collector.ExpirationDate = null;
-                collector.CollectorStatus = "N";
-                //either of these below lines yields the error:
-                //Error: An error occurred during processing of the field Survey ID value 1 Error: Survey ID '1' cannot be found in the system.
-                //collector = surveyMaint.SurveyCollector.Update(collector);
+                var collector = new SurveyCollector
+                {
+                    CollectorName =
+                        $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now.ToString("yyyy-MM-dd hh:mm:ss")}",
+                    SurveyID = user.SurveyID,
+                    UserID = user.UserID,
+                    CollectedDate = null,
+                    ExpirationDate = null,
+                    CollectorStatus = "N"
+                };
                 collector = surveyMaint.SurveyCollector.Insert(collector);
                 collectorRecords.Add(collector);
             }
