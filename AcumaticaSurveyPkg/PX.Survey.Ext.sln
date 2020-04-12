@@ -9,6 +9,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CVD19R2_208_0051", "http://
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		ProjectReferences = "{9bc6d61a-5d4b-4d57-bc6b-5e3f9d04377e}|PX.Survey.Ext.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/CVD19R2_208_0051"
 		Debug.AspNetCompiler.PhysicalPath = "..\..\..\CVD19R2_208_0051\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\CVD19R2_208_0051\"

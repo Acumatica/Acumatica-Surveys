@@ -12,7 +12,7 @@ using PX.Objects.CR;
 
 namespace PX.Survey.Ext
 {
-    public class SurveyProcessV2 : PXGraph<SurveyProcess>
+    public class SurveyProcessV2 : PXGraph<SurveyProcessV2>
     {
         public PXCancel<SurveyFilterV2> Cancel;
         public PXFilter<SurveyFilterV2> Filter;
@@ -28,9 +28,9 @@ namespace PX.Survey.Ext
                 And<SurveyCollector.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Records;
         */
         
-        public PXFilteredProcessing<SurveyUser, SurveyFilter,
+        public PXFilteredProcessing<SurveyUser, SurveyFilterV2,
             Where<SurveyUser.active, Equal<SurveyResponseStatus.CollectorNewStatus>,
-                And<SurveyCollector.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Records;
+                And<SurveyCollector.surveyID, Equal<Current<SurveyFilterV2.surveyID>>>>> Records;
 
 
         public SurveyProcessV2()
