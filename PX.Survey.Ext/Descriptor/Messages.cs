@@ -12,6 +12,7 @@ namespace PX.Survey.Ext
         public const string SurveySetupCacheName = "Survey Setup";
         public const string SurveyCacheName = "Survey";
         public const string SurveyUserCacheName = "Survey User";
+        public const string SurveyFilterCacheName = "Survey Filter";
         #endregion
 
         #region Survey Response Status
@@ -32,14 +33,9 @@ namespace PX.Survey.Ext
 
         public const string SurveySent = "Survey has been sent";
         public const string SurveyError = "At least one Survey hasn't been processed.";
-        public const string surveyInvalidForSent = "Invalid Survey Status.";
 
         public const string Question = "Question";
         public const string Answer = "Answer";
         public const string Submit = "Submit";
-        public const string Delete = "Delete";
-
-        public static string AreYouSure = "Are you sure?";
-        public static string AreYouSureYouWantToDeleteAllNewSurveys = "Are you sure you want to delete all new Surveys?";
     }
 }

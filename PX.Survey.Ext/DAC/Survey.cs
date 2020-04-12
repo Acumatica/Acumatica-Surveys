@@ -39,13 +39,6 @@ namespace PX.Survey.Ext
         public virtual string SurveyName { get; set; }
         #endregion
 
-        #region SurveyDesc
-        public abstract class surveyDesc : PX.Data.BQL.BqlString.Field<Survey.surveyDesc> { }
-        [PXDBString(255, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Survey Description")]
-        public virtual string SurveyDesc { get; set; }
-        #endregion
-
         #region Active
         public abstract class active : PX.Data.BQL.BqlBool.Field<Survey.active> { }
         
@@ -111,15 +104,14 @@ namespace PX.Survey.Ext
         public virtual string SurveyIDStringID => this.SurveyID.ToString();
         #endregion
 
-        #region NotNew
+        #region IsSurveyInUse
+        public abstract class isSurveyInUse : PX.Data.BQL.BqlBool.Field<Survey.isSurveyInUse> { }
         /// <summary>
-        /// Field which says that SurveyCollector's column CollectorStatus is not equal to N or CollectorNew
+        /// Field to identify if Survey is in use
         /// </summary>
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXBool()]
-        [PXUIField(DisplayName = "NotNew")]
-        public virtual bool? NotNew { get; set; }
-        public abstract class notNew : PX.Data.BQL.BqlBool.Field<Survey.notNew> { }
+        public virtual bool? IsSurveyInUse { get; set; }
         #endregion
     }
 }

@@ -41,8 +41,7 @@ namespace PX.Survey.Ext
         [PXDBInt]
         [PXUIField(DisplayName = "Recipient Name")]
         [PXSelector(typeof(Search<Contact.contactID,
-                                    Where2<Where<Contact.contactType, Equal<ContactTypesAttribute.employee>,
-                                                    Or<Contact.contactType, Equal<ContactTypesAttribute.person>>>,
+                                    Where<Contact.contactType, Equal<ContactTypesAttribute.employee>,
                                            And<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>>),
                     DescriptionField = typeof(Contact.displayName))]
         [PXCheckUnique(Where = typeof(Where<SurveyUser.surveyID, Equal<Current<SurveyUser.surveyID>>>),

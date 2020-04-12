@@ -30,7 +30,7 @@ namespace PX.Survey.Ext
         public PXAction<SurveyCollector> Submit;
 
         [PXButton(CommitChanges = true)]
-        [PXUIField(DisplayName = "Submit", MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = Messages.Submit, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable submit(PXAdapter adapter)
         {
             Persist();

@@ -69,8 +69,11 @@ namespace PX.Survey.Ext
         /// Identifies the user that this Collector is assigned too.
         /// </summary>
         [PXDBGuid()]
-        [PXUIField(DisplayName = "User", Enabled = false)]
-        [PXSelector(typeof(Search<Contact.userID>), SubstituteKey = typeof(Contact.displayName))]
+        [PXUIField(DisplayName = "Recipient", Enabled = false)]
+        [PXSelector(typeof(Search<Contact.userID, Where<Contact.userID, IsNotNull,
+                                And<Contact.isActive, Equal<True>,
+                                And<Contact.contactType, Equal<ContactTypesAttribute.employee>>>>>),
+                    SubstituteKey = typeof(Contact.displayName))]
         public virtual Guid? UserID { get; set; }
         #endregion
 
