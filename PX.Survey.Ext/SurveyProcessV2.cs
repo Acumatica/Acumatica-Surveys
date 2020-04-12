@@ -21,6 +21,7 @@ namespace PX.Survey.Ext
         //public PXSelect<SurveyCollector> Records;
 
         //todo: purge this view based on Collector records and replace with Recipients.
+        //      remove this dead code once the processing page is confirmed working.
         /*
         public PXFilteredProcessing<SurveyCollector, SurveyFilter,
         Where<SurveyCollector.collectorStatus, Equal<SurveyResponseStatus.CollectorNewStatus>,
@@ -160,7 +161,8 @@ namespace PX.Survey.Ext
     #endregion
 }
 
-/* Temp area for aspx definition
+/* Temp area for aspx definition for reference only during development
+    todo: purge this once everything is confirmed working
 
 <%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="SV501010.aspx.cs" Inherits="Page_SV501000" Title="Untitled Page" %>
 <%@ MasterType VirtualPath="~/MasterPages/FormDetail.master" %>
@@ -183,9 +185,10 @@ namespace PX.Survey.Ext
     <px:PXGrid ID="grid" runat="server" DataSourceID="ds" Style="z-index: 100" 
 		Width="100%" Height="150px" SkinID="Details" TabIndex="7400">
 		<Levels>
-			<px:PXGridLevel DataMember="Records" DataKeyNames="CollectorID">
+			<px:PXGridLevel DataMember="Records" DataKeyNames="ContactID">
 			    <Columns>
-                    <%--<px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true"></px:PXGridColumn>
+                    <%-- todo: purge this when confirmed working
+                        <px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true"></px:PXGridColumn>
                     <px:PXGridColumn DataField="SurveyID" TextAlign="Left" DisplayMode="Text" Width="100px"></px:PXGridColumn>
                     <px:PXGridColumn DataField="Userid" TextAlign="Left" DisplayMode="Text" Width="200px"></px:PXGridColumn>
                     <px:PXGridColumn DataField="CollectorID" TextAlign="Left" AllowMove="False" AllowResize="False" AllowShowHide="False" Width="0px"></px:PXGridColumn>
@@ -193,9 +196,10 @@ namespace PX.Survey.Ext
                     <px:PXGridColumn DataField="CollectedDate" Width="120px"></px:PXGridColumn>
                     <px:PXGridColumn DataField="ExpirationDate" Width="120px"></px:PXGridColumn>
                     <px:PXGridColumn DataField="CollectorStatus" Width="150px"></px:PXGridColumn>--%>
-
-					<px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" CommitChanges="true"/>
-                    <px:PXGridColumn DataField="ContactID" DisplayMode="Text" CommitChanges="True" TextAlign="Left" Width="250px" />
+                    
+                    <px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true"></px:PXGridColumn>
+					<px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" />
+                    <px:PXGridColumn DataField="ContactID" DisplayMode="Text"  TextAlign="Left" Width="250px" />
                     <px:PXGridColumn DataField="RecipientType" />
                     <px:PXGridColumn DataField="RecipientPhone" Width="180px" />
                     <px:PXGridColumn DataField="RecipientEmail" Width="280px" />
