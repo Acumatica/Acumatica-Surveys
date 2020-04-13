@@ -106,10 +106,11 @@ namespace PX.Survey.Ext
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
 
-        [PXMergeAttributes(Method = MergeMethod.Merge)]
+        [PXMergeAttributes(Method = MergeMethod.Append)]
         [PXFormula(typeof(MobileAppEnabled<Contact.userID>))]
+        [PXDependsOnFields(typeof(Contact.contactID), typeof(Contact.userID))]
         [PXCustomizeBaseAttribute(typeof(PXUIFieldAttribute), "Visibility", PXUIVisibility.SelectorVisible)]
-        protected virtual void _(Events.CacheAttached<ContactSurveyExt.usrUsingMobileApp> e) { }
+        protected virtual void Contact_UsrUsingMobileApp_CacheAttached(PXCache sender) { }
 
         [PXMergeAttributes]
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<CSAttributeGroup.entityClassID>>>>), LeaveChildren = true)]
