@@ -18,8 +18,8 @@
 			<px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" AutoRefresh="True" CommitChanges="True" DisplayMode="Text" ></px:PXSelector>
 			<px:PXSelector runat="server" ID="edUserid" DataField="Userid"></px:PXSelector>
 			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
-		    <px:PXDateTimeEdit ID="edCollectedDate" runat="server" AlreadyLocalized="False" DataField="CollectedDate" Width="150px">
-            </px:PXDateTimeEdit>
+		    <px:PXDateTimeEdit ID="edCollectedDate" runat="server" AlreadyLocalized="False" DataField="CollectedDate" Width="150px" />
+		    <px:PXTextEdit ID="edCollectedDatePart" runat="server" DataField="CollectedDatePart" Width="150px" Visible="false" />
             <px:PXDropDown ID="edCollectorStatus" runat="server" DataField="CollectorStatus">
             </px:PXDropDown>
 		</Template>

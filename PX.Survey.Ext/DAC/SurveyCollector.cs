@@ -125,6 +125,18 @@ namespace PX.Survey.Ext
         public virtual string[] Attributes { get; set; }
 
         #endregion
+
+        #region CollectedDatePart
+        public abstract class collectedDatePart : PX.Data.BQL.BqlString.Field<collectedDatePart> { }
+        /// <summary>
+        /// Specifies the date part that the Survey was collected
+        /// </summary>
+        [PXString()]
+        [PXUIField(DisplayName = "Collected Date Mobile", Enabled = false)]
+        [PXFormula(typeof(CollectedDateAsString<SurveyCollector.collectedDate>))]
+        public virtual String CollectedDatePart { get; set; }
+        #endregion
+
         #region CreatedByID
         public abstract class createdByID : PX.Data.BQL.BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID()]
