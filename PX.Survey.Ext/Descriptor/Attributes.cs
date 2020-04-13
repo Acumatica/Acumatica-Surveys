@@ -1,32 +1,29 @@
 ﻿using System;
 using PX.Data;
 using PX.Api.Mobile.PushNotifications.DAC;
+using System.Collections.Generic;
 
 namespace PX.Survey.Ext
 {
-    public class MobileAppEnabledAttribute : PXEventSubscriberAttribute, IPXFieldSelectingSubscriber
+    public class MobileAppEnabled<UserID> : BqlFormulaEvaluator<UserID>
+                where UserID : IBqlOperand
     {
-        protected string _UserID = null;
-
-        public MobileAppEnabledAttribute(Type userID)
+        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars)
         {
-            _UserID = userID.Name;
-        }
+            Guid? userID = (Guid?)pars[typeof(UserID)];
 
-        public virtual void FieldSelecting(PXCache cache, PXFieldSelectingEventArgs e)
-        {
-            Guid? userID = (Guid?)cache.GetValue(e.Row, _UserID);
             bool isMobileAppEnabled = false;
 
             if (userID.HasValue)
             {
-                MobileDevice device = PXSelect<MobileDevice, Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>,
-                                                                And<MobileDevice.enabled, Equal<True>,
-                                                                And<MobileDevice.expiredToken, NotEqual<True>>>>>
-                                                                .SelectWindowed(cache.Graph, 0, 1, userID);
+                MobileDevice device = PXSelectReadonly<MobileDevice, Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>,
+                                                                        And<MobileDevice.enabled, Equal<True>,
+                                                                        And<MobileDevice.expiredToken, NotEqual<True>>>>>
+                                                                        .SelectWindowed(cache.Graph, 0, 1, userID);
                 isMobileAppEnabled = (device != null);
             }
-            e.ReturnValue = isMobileAppEnabled;
+
+            return isMobileAppEnabled;
         }
     }
 }

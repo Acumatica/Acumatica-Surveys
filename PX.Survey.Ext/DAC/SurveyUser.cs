@@ -116,8 +116,8 @@ namespace PX.Survey.Ext
         public abstract class usingMobileApp : PX.Data.BQL.BqlBool.Field<usingMobileApp> { }
 
         [PXBool()]
-        [PXDependsOnFields(typeof(SurveyUser.userID))]
-        [MobileAppEnabled(typeof(SurveyUser.userID))]
+        [PXDependsOnFields(typeof(SurveyUser.contactID), typeof(SurveyUser.userID))]
+        [PXFormula(typeof(MobileAppEnabled<SurveyUser.userID>))]
         [PXUIField(DisplayName = "Mobile App Notifications", Enabled = false)]
         public virtual bool? UsingMobileApp { get; set; }
         #endregion

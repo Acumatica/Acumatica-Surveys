@@ -48,13 +48,8 @@ namespace PX.Survey.Ext
             {
                 try
                 {
-                    MobileDevice device = PXSelectReadonly<MobileDevice,
-                                                                Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>>>.
-                                                                Select(graph, surveyUser.UserID.Value);
-                    if (device == null)
-                    {
-                        throw new PXException(Messages.NoDeviceError);
-                    }
+                    string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
+                                               SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
 
                     graph.Clear();
 
@@ -66,7 +61,7 @@ namespace PX.Survey.Ext
                         UserID = surveyUser.UserID,
                         CollectedDate = null,
                         ExpirationDate = null,
-                        CollectorStatus = SurveyResponseStatus.CollectorSent
+                        CollectorStatus = sCollectorStatus
                     };
 
                     surveyCollector = graph.SurveyQuestions.Insert(surveyCollector);
@@ -90,7 +85,14 @@ namespace PX.Survey.Ext
                                         link: (sScreenID, noteID),
                                         cancellation: CancellationToken.None);
 
-                    PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
+                    if (sCollectorStatus == SurveyResponseStatus.CollectorSent)
+                    {
+                        PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
+                    }
+                    else
+                    {
+                        PXProcessing<SurveyUser>.SetWarning(surveyUserList.IndexOf(surveyUser), Messages.NoDeviceError);
+                    }
                 }
                 catch (AggregateException ex)
                 {

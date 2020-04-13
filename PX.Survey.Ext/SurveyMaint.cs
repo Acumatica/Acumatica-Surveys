@@ -86,8 +86,7 @@ namespace PX.Survey.Ext
 
             using (new PXConnectionScope())
             {
-                var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>.
-                                        And<SurveyCollector.collectorStatus.IsNotEqual<SurveyResponseStatus.CollectorNewStatus>>>.
+                var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
                                         View.SelectWindowed(this, 0, 1, row.SurveyID).TopFirst;
                 row.IsSurveyInUse = (collectorData != null); 
             }
@@ -108,7 +107,7 @@ namespace PX.Survey.Ext
         }
 
         [PXMergeAttributes(Method = MergeMethod.Merge)]
-        [MobileAppEnabled(typeof(Contact.userID))]
+        [PXFormula(typeof(MobileAppEnabled<Contact.userID>))]
         [PXCustomizeBaseAttribute(typeof(PXUIFieldAttribute), "Visibility", PXUIVisibility.SelectorVisible)]
         protected virtual void _(Events.CacheAttached<ContactSurveyExt.usrUsingMobileApp> e) { }
 

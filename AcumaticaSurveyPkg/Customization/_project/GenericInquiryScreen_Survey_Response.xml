@@ -136,10 +136,11 @@
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GITable Alias="SurveyCollector" Name="PX.Survey.Ext.SurveyCollector">
+                        <GIResult LineNbr="8" SortOrder="8" IsActive="1" Field="noteID" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="0adb62a9-4af0-4497-92c4-2de6a2d5517e" />
                         <GIResult LineNbr="7" SortOrder="7" IsActive="1" Field="collectorStatus" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="7f4bfbdc-522d-45d1-9f2a-e5d02a26e37e" />
                         <GIResult LineNbr="6" SortOrder="6" IsActive="1" Field="collectedDate" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="ce6d1bed-798f-41cd-bdb3-340f8cc68396" />
                         <GIResult LineNbr="5" SortOrder="5" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="9d66c86a-effe-450d-afe4-b83c9124829a" />
-                        <GIResult LineNbr="4" SortOrder="4" IsActive="1" Field="userid" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="6996ceff-0cc7-4792-992b-998d7b6da3e1" />
+                        <GIResult LineNbr="4" SortOrder="4" IsActive="1" Field="userID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="6996ceff-0cc7-4792-992b-998d7b6da3e1" />
                         <GIResult LineNbr="3" SortOrder="3" IsActive="1" Field="surveyID_description" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="be5dc7e5-d6af-4bb3-b972-0eb30810abeb" />
                         <GIResult LineNbr="2" SortOrder="2" IsActive="1" Field="collectorName" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="83a25182-2640-4499-9538-11777db59a50" />
                         <GIResult LineNbr="1" SortOrder="1" IsActive="1" Field="collectorID" IsVisible="0" DefaultNav="0" NavigationNbr="1" QuickFilter="0" FastFilter="1" RowID="5358f5d1-7932-4bf6-a148-b12f53d391d6" />
