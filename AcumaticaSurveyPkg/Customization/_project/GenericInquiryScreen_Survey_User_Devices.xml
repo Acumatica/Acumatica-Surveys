@@ -131,32 +131,39 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" Name="Survey Response" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SV301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
-                    <GINavigationScreen ScreenID="SV301000" LineNbr="1" WindowMode="I">
-                        <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
-                    </GINavigationScreen>
-                    <GITable Alias="SurveyCollector" Name="PX.Survey.Ext.SurveyCollector">
-                        <GIResult LineNbr="9" SortOrder="9" IsActive="1" Field="surveyID" IsVisible="0" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="58762ef0-98e1-4a2b-a86e-aaa54bc2c334" />
-                        <GIResult LineNbr="8" SortOrder="8" IsActive="1" Field="noteID" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="0adb62a9-4af0-4497-92c4-2de6a2d5517e" />
-                        <GIResult LineNbr="7" SortOrder="7" IsActive="1" Field="collectorStatus" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="7f4bfbdc-522d-45d1-9f2a-e5d02a26e37e" />
-                        <GIResult LineNbr="6" SortOrder="6" IsActive="1" Field="collectedDate" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="ce6d1bed-798f-41cd-bdb3-340f8cc68396" />
-                        <GIResult LineNbr="5" SortOrder="5" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="9d66c86a-effe-450d-afe4-b83c9124829a" />
-                        <GIResult LineNbr="4" SortOrder="4" IsActive="1" Field="userID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="6996ceff-0cc7-4792-992b-998d7b6da3e1" />
-                        <GIResult LineNbr="3" SortOrder="3" IsActive="1" Field="surveyID_description" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="be5dc7e5-d6af-4bb3-b972-0eb30810abeb" />
-                        <GIResult LineNbr="2" SortOrder="2" IsActive="1" Field="collectorName" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="83a25182-2640-4499-9538-11777db59a50" />
-                        <GIResult LineNbr="1" SortOrder="1" IsActive="1" Field="collectorID" IsVisible="0" DefaultNav="0" NavigationNbr="1" QuickFilter="0" FastFilter="1" RowID="5358f5d1-7932-4bf6-a148-b12f53d391d6" />
+                <row DesignID="c9a9780e-7051-43e9-a59f-0319b5592140" Name="Survey User Devices" FilterColCount="3" PageSize="0" ExportTop="0" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
+                    <GIFilter LineNbr="1" IsActive="1" Name="SurveyID" FieldName="SurveyCollector.surveyID" DataType="string" DisplayName="Survey ID" IsExpression="0" ColSpan="1" Required="0" />
+                    <GITable Alias="Users" Name="PX.SM.Users">
+                        <GIResult LineNbr="12" SortOrder="10" IsActive="1" Field="email" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="7579e2c6-2798-48fd-8f44-63e49c96dfdf" />
+                        <GIResult LineNbr="11" SortOrder="5" IsActive="1" Field="displayName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="55984c87-39b4-4ff5-8190-955ab7324f57" />
                     </GITable>
-                    <GIWhere LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.userID" Condition="E " IsExpression="0" Value1="@me" Operation="A" />
+                    <GITable Alias="SurveyCollector" Name="PX.Survey.Ext.SurveyCollector">
+                        <GIRelation LineNbr="2" ChildTable="Users" IsActive="1" JoinType="I">
+                            <GIOn LineNbr="2" ParentField="userID" Condition="E " ChildField="pKID" Operation="A" />
+                        </GIRelation>
+                        <GIRelation LineNbr="1" ChildTable="MobileDevice" IsActive="1" JoinType="L">
+                            <GIOn LineNbr="1" ParentField="userID" Condition="E " ChildField="userID" Operation="A" />
+                        </GIRelation>
+                        <GIResult LineNbr="10" SortOrder="4" IsActive="1" Field="surveyID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5fb4b152-c374-475d-9e11-a4b85ef125ea" />
+                        <GIResult LineNbr="9" SortOrder="12" IsActive="1" Field="collectedDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="419802ca-aaff-46bf-9493-ceef02133a36" />
+                        <GIResult LineNbr="8" SortOrder="11" IsActive="1" Field="collectorStatus" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="10961f8d-c9cf-49ee-b29a-7d2ba641b61a" />
+                        <GIResult LineNbr="2" SortOrder="2" IsActive="1" Field="surveyID" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="c67d7c6a-6f4d-48de-8750-1b2faf8d8bfe" />
+                        <GIResult LineNbr="1" SortOrder="1" IsActive="1" Field="collectorName" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="3dd50832-66df-4ca0-b75c-ff3337b69a60" />
+                    </GITable>
+                    <GITable Alias="MobileDevice" Name="PX.Api.Mobile.PushNotifications.DAC.MobileDevice">
+                        <GIResult LineNbr="7" SortOrder="9" IsActive="1" Field="isConfirmation" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="738ceb81-728b-488c-8f86-b1d09ccd9ee4" />
+                        <GIResult LineNbr="6" SortOrder="8" IsActive="1" Field="deviceOS" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="26fa6c53-e728-4658-8255-3c255f02ae0e" />
+                        <GIResult LineNbr="5" SortOrder="7" IsActive="1" Field="deviceName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="0467bac4-4daf-40b1-8354-b7f1b9153c40" />
+                        <GIResult LineNbr="4" SortOrder="6" IsActive="1" Field="deviceModel" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="ad261160-f23b-43e2-87d4-16859001c8e0" />
+                        <GIResult LineNbr="3" SortOrder="3" IsActive="1" Field="userID" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="837fb210-4f9a-4814-82c8-5900a7d2fc3d" />
+                    </GITable>
+                    <GIWhere LineNbr="2" IsActive="1" DataFieldName="[SurveyID]" Condition="NU" IsExpression="0" CloseBrackets=")        " Operation="A" />
+                    <GIWhere LineNbr="1" IsActive="1" OpenBrackets="(        " DataFieldName="SurveyCollector.surveyID" Condition="E " IsExpression="0" Value1="[SurveyID]" Operation="O" />
                     <SiteMap linkname="toDesignById">
-                        <row Title="Survey Response" Url="~/GenericInquiry/GenericInquiry.aspx?id=5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" ScreenID="SV3010PL" NodeID="919c7f9d-1b38-402c-ab12-410873432a5a" ParentID="00000000-0000-0000-0000-000000000000">
-                            <ListEntryPoint EntryScreenID="SV301010" IsActive="1" />
-                            <ListEntryPoint EntryScreenID="SV301000" IsActive="1" />
-                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="10" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" />
-                        </row>
-                    </SiteMap>
-                    <SiteMap linkname="to1Screen">
-                        <row Position="5960" Title="Survey Response" Url="~/Pages/SV/SV301000.aspx" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
-                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6" />
+                        <row Title="Survey User Devices" Url="~/GenericInquiry/GenericInquiry.aspx?id=c9a9780e-7051-43e9-a59f-0319b5592140" ScreenID="SV401020" NodeID="2a36eb1a-87d1-406f-b4c7-8f29a0c82755" ParentID="00000000-0000-0000-0000-000000000000">
+                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="30" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
+                                <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
+                            </MUIScreen>
                         </row>
                     </SiteMap>
                 </row>
@@ -167,7 +174,6 @@
             <MUISubcategory>
                 <row IsPortal="1" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
                 <row IsPortal="0" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
-                <row IsPortal="0" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6" Order="64" Name="Transactions" Icon="" IsSystem="0" />
             </MUISubcategory>
             <MUIArea>
                 <row IsPortal="0" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" Order="30" Name="Configuration" />
