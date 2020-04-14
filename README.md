@@ -9,7 +9,7 @@ Select and publish the package on your instance.
 ### Create Survey
 Once the package is installed you should see a new workspace called *“Surveys”*
 Click on the *Survey Preferences menu* option
-![Code Map](images/CodeMap.png)
+
 **Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number*. Example: **SV10001**
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
 Surveys utilizes common *attributes* to create questions and answers, please setup new question/answers as *attributes*
