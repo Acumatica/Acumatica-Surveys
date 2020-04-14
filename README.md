@@ -1,25 +1,26 @@
 # Acumatica Surveys README
 
 ## Setup Instructions
-Upload the Acumatica Survey Wellness package to your 2019 R2 instance 
-Select and publish the package on your instance 
+Upload the Acumatica Survey Wellness package to your **Acumatica 2019R2** instance 
+Select and publish the package on your instance.
 
-## Wellness Package Instructions
+### Wellness Package Instructions
 
 ### Create Survey
-Once the package is installed you should see a new workspace called “Surveys”
-Click on the Survey Preferences menu option
-Survey preferences - Surveys do require a numbering sequence, so please set up a new number sequence called “Survey ID” and auto generating number. Example: SV10001
-Select the numbering sequence you created in the Survey Preferences “Survey Numbering ID:”
-Surveys utilizes Common attributes to create questions and answers, please setup new question/answers as attributes
-Once you have setup required attributes now we are ready to create our first survey
-Click on Surveys workspace and click Survey under Transactions 
-The survey primary list screen (SV2010PL) loads with empty records, click on + to create a new survey which opens the new screen SV201000
-Specify the survey name and click save it generates a new auto sequence number
-From the details tab click + and add the new attributes as questions to this survey
-Specify the sort order sequence and if the question is required/mandatory for recipients to answer 
-From the recipients tab click on the “Add Recipients” and select the employees who will participate for this survey
-You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile app.
+Once the package is installed you should see a new workspace called *“Surveys”*
+Click on the *Survey Preferences menu* option
+**Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number*. Example: **SV10001**
+Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
+Surveys utilizes common *attributes* to create questions and answers, please setup new question/answers as *attributes*
+After you have setup required attributes, you are now we are ready to create our first survey!
+Click on Surveys workspace and click *Survey* under **Transactions** 
+The survey primary list screen **(SV2010PL)** loads with empty records, click on **+** to create a new survey which opens the new screen **SV201000**
+Specify the survey name and click *save* to generates a new auto sequence number.
+From the details tab click **+** and add the new *attributes* as questions to this survey
+Specify the sort order sequence and if the question is required/mandatory for recipients to answer. 
+From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
+
+**Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application**
 
 ### Process Survey
 From the workspace “Surveys” click “Process Survey” to process/activate the survey and send the push notification to mobile phones 
