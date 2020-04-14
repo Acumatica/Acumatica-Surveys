@@ -4,6 +4,8 @@
 Upload the Acumatica Survey Wellness package to your **Acumatica 2019R2** instance 
 Select and publish the package on your instance.
 
+![Code Map](docs/images/Process-Survey1.PNG
+
 ### Wellness Package Instructions
 
 ### Create Survey
