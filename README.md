@@ -88,23 +88,25 @@ Then Send your Survey and wait for your responses.
 
 Those records will be activated for survey responses with status as “New” and those who receive the push notification will have records with a status of “Sent.”
 
-Users can select specific recipients from the list or click **SEND ALL**, selected records could be also sent with “SEND” option.
+Users can select specific recipients from the list or click **SEND ALL.** Selected records could be also be sent with the “SEND” option.
 
 
 
 ## Survey Response
-All recipients will receive notifications and can click on login to Acumatica mobile app on Android or iPhone/iOS and complete the survey 
-Upon clicking the survey you will have to click “QUESTIONS” and review all the survey questions and answer them
-Upon answering click back button ← and on the survey page on mobile you will have to click [.] three dots to access the menu option and click “SUBMIT” to submit the survey 
-By submitting the survey the status changes from “Sent” to “Responded” 
+All recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android or iPhone/iOS and complete the survey. However, there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in the next section of this README.
+
+Upon clicking the survey, you will need to click on **“QUESTIONS”** and review all the survey questions and answer them. After answering, click The back button **←**. Then on the survey page in the mobile application, you will have to click on the ellipse **[...]** - the *three dots* to access the menu option and click **“SUBMIT”** to send the survey responses back to the system. By submitting the survey responses, the status changes from *“Sent”* to *“Responded”.* 
 
 ## Known Limitations and Constraints
-Ability to delete the Survey when it’s still active but not processed/published
-Survey when published or user has responded can’t be deleted.
+The ability to delete the survey when it’s still active, but has not been processed/published.
 
-The ability to copy the survey from an old survey.  What gets copied? Survey questions, recipients? Thus far, we have tested only employees list.
+A published survey that a user has responded cannot be deleted.
 
-Please note that there is an issue with iOS devices with respect to attributes.  We are working on resolving the problem and will update our notes to reflect this in the next several days.  iOS users can use the web to participate in any survey they are selected as recipients.
+The ability to clone or copy a survey from an existing survey in the system.  
+
+What gets copied? Survey questions, recipients? Thus far, we have only tested the employees list.
+
+Please note that there is an issue with iOS devices with respect to attributes.  We are working on resolving the problem and will updating our notes to reflect this in the next several days.  For now, iOS users can use the web to participate in any survey they are selected as recipients.
 
 ## More Information
-To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE
+To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE.
