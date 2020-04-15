@@ -10,7 +10,7 @@
 
 ![Screenshot](/docs/images/SS0-CustomizationProjects.PNG)
 
-**Step Three:** Upload & import the package you downloadedto your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
+**Step Three:** Upload & import the package you downloaded to your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
 
 ![Screenshot](/docs/images/SS1-ImportCustPackage.PNG)
 
@@ -22,7 +22,7 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 ![Screenshot](/docs/images/SS2-UploadPackage.PNG)
 
-**Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish you package.  Once its published, you are ready to create your fist Survey!
+**Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish your package.  Once it's published, you are ready to create your fist Survey!
 
 ![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
@@ -30,48 +30,49 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 ## Number Sequence Setup for your Surveys
 
-Once the package is installed you should see a new workspace called *“Surveys”* as shown here below.
+Once the package is installed, you should see a new workspace called *“Surveys”* as shown here below.
 
 ![Screenshot](/docs/images/Survey-Workspace.PNG)
 
-Click on the *Survey Preferences menu* option
+Click on the *Survey Preferences menu* option.
 
-**Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number*. Example: **SV10001**
+**Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number,* such as: **SV10001**
 
 ![Screenshot](/docs/images/SS4-SurveyPreferencesNumberingID.PNG)
 
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
-Surveys utilizes common *attributes* to create questions and answers, please setup new question/answers as *attributes*
-After you have setup required attributes, you are now we are ready to create our first survey!
+Surveys utilizes common *attributes* to create questions and answers. Therefore, please setup any new questions/answers as *attributes.*
+
+After you have setup required attributes, you are now ready to create your first survey!
 
 
 
 ## Create a Survey
 
-Click on Surveys workspace and click *Survey* under **Transactions** 
+Click on Surveys in the workspace and click *Survey* under **Transactions.** 
 
 ![Screenshot](/docs/images/SS4SurveyTransacationsSurvey.PNG)
 
-The survey primary list screen **(SV2010PL)** loads with empty records, click on **+** to create a new survey which opens the new screen **SV201000**
+The survey primary list screen **(SV2010PL)** loads with empty records. Click on the **+** to create a new survey which opens the new screen **SV201000**
 
 ![Screenshot](/docs/images/SS4SurveyTransacationsSurvey2.PNG)
 
-Specify the survey name and click *save* to generates a new auto sequence number.
-From the details tab click **+** and add the new *attributes* as questions to this survey
+Specify the survey name and click *save* to generates a new auto sequence number. From the details tab, click **+** and add the new *attributes* as questions to this survey
 
 ![Screenshot](/docs/images/SS5-CreateAttributesQuestions.PNG)
 
-Specify the sort order sequence and if the question is required/mandatory for recipients to answer. 
+Next, specify the sort order sequence, if a question is required or mandatory for recipients to answer. 
+
 From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
 
 ![Screenshot](/docs/images/SS5-RecipentsSelect.PNG)
 
-***Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application***
+***Note: You need to ensure all employees are linked to the User profile and their user accounts are Sync’d with their mobile phones and that they are able to use the Acumatica Mobile application***
 
 
 
 ## Send Survey
-From the workspace “Surveys” click “Send Survey” to process/activate the survey and send the push notification to mobile phones.
+From the “Surveys” workspace, click “Send Survey” to process and activate the survey and send *Push Notifications* to mobile phones.
 
 ![Screenshot](/docs/images/SS5-ProcessSendSurvey.PNG)
 
@@ -83,11 +84,11 @@ Then Send your Survey and wait for your responses.
 
 ![Screenshot](/docs/images/SS5-SendSurveySend.PNG)
 
-***Please note you have to sync your device by connecting before sending surveys, only registered mobile phones will receive the push notification others will error out.***
+***Please note: you have to sync your device by connecting before sending surveys. Only registered mobile phones will receive the push notification, others will error out.***
 
-Those records will be activated for survey response with status as “New” and those who receive the push notification those records will have status of “Sent”
+Those records will be activated for survey responses with status as “New” and those who receive the push notification will have records with a status of “Sent.”
 
-Users can select specific recipients from the list or click SEND ALL, selected records could be also sent with “SEND” option.
+Users can select specific recipients from the list or click **SEND ALL**, selected records could be also sent with “SEND” option.
 
 
 
