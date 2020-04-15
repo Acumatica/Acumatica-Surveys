@@ -95,13 +95,29 @@ Users can select specific recipients from the list or click **SEND ALL.** Select
 ## Survey Response
 All recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android or iPhone/iOS and complete the survey. However, there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in the next section of this README.
 
-Upon clicking the survey, you will need to click on **“QUESTIONS”** and review all the survey questions and answer them. After answering, click The back button **←**. Then on the survey page in the mobile application, you will have to click on the ellipse **[...]** - the *three dots* to access the menu option and click **“SUBMIT”** to send the survey responses back to the system. By submitting the survey responses, the status changes from *“Sent”* to *“Responded”.* 
+Upon clicking the survey, you will need to click on **“QUESTIONS”** and review all the survey questions and answer them. After answering, click The back button **←**. 
+
+For user recipients of the survey that you create, they should have a **Surveys** icon as shown in the screenshot below.
+
+![Screenshot](/docs/images/MobileSS-1.jpeg)
+
+The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked linesto access the menu option and click **“SUBMIT”** to send the survey responses back to the system. By submitting the sur as you can see in the next screenshot.
+
+![Screenshot](/docs/images/MobileSS-2.jpeg)
+
+After clicking on Surveys, the user will see a screen similar to this one below will a list of the surveys they have to respond to or have had already responded.
+
+Once they complete the survey and send it, the status will change from *“Sent”* to *“Responded”.* 
+
+![Screenshot](/docs/images/MobileSS-3.jpeg)
+
+Once the user clicks on a particular survey, they can view the questions and respond accordly.
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
 
 A published survey that a user has responded cannot be deleted.
-
+or
 The ability to clone or copy a survey from an existing survey in the system.  
 
 What gets copied? Survey questions, recipients? Thus far, we have only tested the employees list.
