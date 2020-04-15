@@ -66,9 +66,19 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 
 ***Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application***
 
-## Process Survey
-From the workspace “Surveys” click “Process Survey” to process/activate the survey and send the push notification to mobile phones 
+## Send Survey
+From the workspace “Surveys” click “Send Survey” to process/activate the survey and send the push notification to mobile phones.
+
+![Screenshot](/docs/images/SS5-SendSurveySelectID.PNG)
+
+Next, click on the magnifying glass icon to search for your survey and select it.
+
+![Screenshot](/docs/images/SS5-SendSurveySend.PNG)
+
+
+
 Please note you have to sync your device by connecting before sending surveys, only registered mobile phones will receive the push notification others will error out.
+
 Those records will be activated for survey response with status as “New” and those who receive the push notification those records will have status of “Sent”
 Users can select specific recipients from the list or click SEND ALL, selected records could be also sent with “SEND” option
 
