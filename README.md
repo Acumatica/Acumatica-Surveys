@@ -63,4 +63,4 @@ We have tested only employees list
 Testing to be done on iOS device
 
 ## More Information
-To see a demonstration of *Acumatica Surveys*, click on the following link:  [Placeholder]
+To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE
