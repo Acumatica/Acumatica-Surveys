@@ -26,11 +26,6 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 ![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
-Select and publish the package on your instance.
-
-![Screenshot](/docs/images/Process-Survey1.PNG)
-
-
 ## Create a Survey
 Once the package is installed you should see a new workspace called *“Surveys”*
 Click on the *Survey Preferences menu* option
