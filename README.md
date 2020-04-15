@@ -61,3 +61,6 @@ Survey when published or user has responded can’t be deleted
 Ability to copy the survey from an old survey, what gets copied? Survey questions, recipients?
 We have tested only employees list
 Testing to be done on iOS device
+
+##More Information
+To see a demonstration of *Acumatica Surveys*, click on the following link:  [Placeholder]
