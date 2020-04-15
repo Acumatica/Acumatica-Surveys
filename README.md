@@ -55,12 +55,12 @@ The survey primary list screen **(SV2010PL)** loads with empty records, click on
 Specify the survey name and click *save* to generates a new auto sequence number.
 From the details tab click **+** and add the new *attributes* as questions to this survey
 
-![Screenshot](/docs/images/SSS5-CreateAttributesQuestions.PNG)
+![Screenshot](/docs/images/SS5-CreateAttributesQuestions.PNG)
 
 Specify the sort order sequence and if the question is required/mandatory for recipients to answer. 
 From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
 
-![Screenshot](/docs/images/SSS5-RecientsSelect.PNG)
+![Screenshot](/docs/images/SS5-RecientsSelect.PNG)
 
 **Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application**
 
