@@ -26,6 +26,7 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 ![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
+
 ## Number Sequence Setup for your Surveys
 
 Once the package is installed you should see a new workspace called *“Surveys”* as shown here below.
@@ -41,6 +42,7 @@ Click on the *Survey Preferences menu* option
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
 Surveys utilizes common *attributes* to create questions and answers, please setup new question/answers as *attributes*
 After you have setup required attributes, you are now we are ready to create our first survey!
+
 
 ## Create a Survey
 
@@ -60,7 +62,7 @@ From the details tab click **+** and add the new *attributes* as questions to th
 Specify the sort order sequence and if the question is required/mandatory for recipients to answer. 
 From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
 
-![Screenshot](/docs/images/SS5-RecientsSelect.PNG)
+![Screenshot](/docs/images/SS5-RecipentsSelect.PNG)
 
 **Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application**
 
