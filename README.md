@@ -115,6 +115,19 @@ Once the user clicks on a particular survey, they can view the questions and res
 
 ![Screenshot](/docs/images/MobileSS-4.png)
 
+## Suvey Dashboards ##
+What's survey without metrics to meaure?  So yes, we built a beautiful dashboard which you can of course customize yourself to suit you needs.
+
+In Acumatica on the web, we have a default dashboard as shown below.
+
+![Screenshot](/docs/images/DashboardSS-1.PNG)
+
+and in the mobile application as follows.
+
+![Screenshot](/docs/images/MobileDashboardSS-1.jpg)
+
+So yes, some eye-candy for you visual and analytical folks out there.
+
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
 
