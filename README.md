@@ -26,7 +26,8 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 ![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
-## Create a Survey
+## Number Sequence Setup for your Surveys
+
 Once the package is installed you should see a new workspace called *“Surveys”* as shown here below.
 
 ![Screenshot](/docs/images/Survey-Workspace.PNG)
@@ -34,15 +35,32 @@ Once the package is installed you should see a new workspace called *“Surveys�
 Click on the *Survey Preferences menu* option
 
 **Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number*. Example: **SV10001**
+
+![Screenshot](/docs/images/SS4-SurveyPreferencesNumberingID.PNG)
+
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
 Surveys utilizes common *attributes* to create questions and answers, please setup new question/answers as *attributes*
 After you have setup required attributes, you are now we are ready to create our first survey!
+
+## Create a Survey
+
 Click on Surveys workspace and click *Survey* under **Transactions** 
+
+![Screenshot](/docs/images/SS4SurveyTransacationsSurvey.PNG)
+
 The survey primary list screen **(SV2010PL)** loads with empty records, click on **+** to create a new survey which opens the new screen **SV201000**
+
+![Screenshot](/docs/images/SS4SurveyTransacationsSurvey2.PNG)
+
 Specify the survey name and click *save* to generates a new auto sequence number.
 From the details tab click **+** and add the new *attributes* as questions to this survey
+
+![Screenshot](/docs/images/SSS5-CreateAttributesQuestions.PNG)
+
 Specify the sort order sequence and if the question is required/mandatory for recipients to answer. 
 From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
+
+![Screenshot](/docs/images/SSS5-RecientsSelect.PNG)
 
 **Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application**
 
