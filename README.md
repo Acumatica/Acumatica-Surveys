@@ -99,10 +99,11 @@ By submitting the survey the status changes from “Sent” to “Responded”
 
 ## Known Limitations and Constraints
 Ability to delete the Survey when it’s still active but not processed/published
-Survey when published or user has responded can’t be deleted 
-Ability to copy the survey from an old survey, what gets copied? Survey questions, recipients?
-We have tested only employees list
-Testing to be done on iOS device
+Survey when published or user has responded can’t be deleted.
+
+The ability to copy the survey from an old survey.  What gets copied? Survey questions, recipients? Thus far, we have tested only employees list.
+
+Please note that there is an issue with iOS devices with respect to attributes.  We are working on resolving the problem and will update our notes to reflect this in the next several days.  iOS users can use the web to participate in any survey they are selected as recipients.
 
 ## More Information
 To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE
