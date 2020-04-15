@@ -27,7 +27,10 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 ![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
 ## Create a Survey
-Once the package is installed you should see a new workspace called *“Surveys”*
+Once the package is installed you should see a new workspace called *“Surveys”* as shown here below.
+
+![Screenshot](/docs/images/Survey-Workspace.PNG)
+
 Click on the *Survey Preferences menu* option
 
 **Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number*. Example: **SV10001**
