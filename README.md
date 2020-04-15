@@ -2,18 +2,25 @@
 
 ## Setup Instructions
 
-First, download the customization package (AcumaticaSurveyPkg.zip) as is shown below in the screenshot below.
+**Step One**, download the customization package (AcumaticaSurveyPkg.zip) as is shown below in the screenshot below.
 
 ![Screenshot](/docs/images/SS1-DownloadPackage.PNG)
 
-Second, go to your Project Customization Screen. You may just do a quick searach by typing *"Customization"* then selecting it as follows.
+**Step Two**, go to your Project Customization Screen. You may just do a quick searach by typing *"Customization"* then selecting it as follows.
 
 ![Screenshot](/docs/images/SS0-CustomizationProjects.PNG)
 
-Third, upload the package you downloadedto your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
+**Step Three**, upload & import the package you downloadedto your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
+
 ![Screenshot](/docs/images/SS1-ImportCustPackage.PNG)
 
-Forth, 
+Next, click on the **Import** tab and select *"Import New Project"* from the dropdown list as shown below.
+
+![Screenshot](/docs/images/SS2-ImportNewProject.PNG)
+
+**Step Four**, 
+
+
 
 Select and publish the package on your instance.
 
