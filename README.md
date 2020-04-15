@@ -115,6 +115,10 @@ Once the user clicks on a particular survey, they can view the questions and res
 
 ![Screenshot](/docs/images/MobileSS-4.png)
 
+And here you can see a question as a "multiple-choice" response via radio buttons on screen.
+
+![Screenshot](/docs/images/MobileSS-5.png)
+
 ## Suvey Dashboards ##
 What's the point of a survey without metrics to meaure?  So yes, we built a beautiful dashboard which you can of course customize yourself to suit you needs.
 
