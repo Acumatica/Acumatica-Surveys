@@ -27,6 +27,7 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 ![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
 
+
 ## Number Sequence Setup for your Surveys
 
 Once the package is installed you should see a new workspace called *“Surveys”* as shown here below.
@@ -42,6 +43,7 @@ Click on the *Survey Preferences menu* option
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
 Surveys utilizes common *attributes* to create questions and answers, please setup new question/answers as *attributes*
 After you have setup required attributes, you are now we are ready to create our first survey!
+
 
 
 ## Create a Survey
@@ -66,6 +68,8 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 
 ***Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application***
 
+
+
 ## Send Survey
 From the workspace “Surveys” click “Send Survey” to process/activate the survey and send the push notification to mobile phones.
 
@@ -75,16 +79,17 @@ Next, click on the magnifying glass icon to search for your survey and select it
 
 ![Screenshot](/docs/images/SS5-SendSurveySelectID.PNG)
 
-Then...
+Then Send your Survey and wait for your responses.
 
 ![Screenshot](/docs/images/SS5-SendSurveySend.PNG)
 
-
-
-Please note you have to sync your device by connecting before sending surveys, only registered mobile phones will receive the push notification others will error out.
+***Please note you have to sync your device by connecting before sending surveys, only registered mobile phones will receive the push notification others will error out.***
 
 Those records will be activated for survey response with status as “New” and those who receive the push notification those records will have status of “Sent”
-Users can select specific recipients from the list or click SEND ALL, selected records could be also sent with “SEND” option
+
+Users can select specific recipients from the list or click SEND ALL, selected records could be also sent with “SEND” option.
+
+
 
 ## Survey Response
 All recipients will receive notifications and can click on login to Acumatica mobile app on Android or iPhone/iOS and complete the survey 
