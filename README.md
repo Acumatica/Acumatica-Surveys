@@ -62,5 +62,5 @@ Ability to copy the survey from an old survey, what gets copied? Survey question
 We have tested only employees list
 Testing to be done on iOS device
 
-##More Information
+## More Information
 To see a demonstration of *Acumatica Surveys*, click on the following link:  [Placeholder]
