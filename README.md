@@ -1,6 +1,6 @@
 # Acumatica Surveys README
 
-## Setup Instructions
+## Setup Instructions for Installing the Acumatica Surveys package
 
 **Step One:** Download the customization package (AcumaticaSurveyPkg.zip) as is shown below in the screenshot below.
 
@@ -18,15 +18,18 @@ Next, click on the **Import** tab and select *"Import New Project"* from the dro
 
 ![Screenshot](/docs/images/SS2-ImportNewProject.PNG)
 
-**Step Four:** 
+Then click on Choose File to open up the *File Manager* to select the **Acumatic Surveys** package.
 
+![Screenshot](/docs/images/SS2-UploadPackage.PNG)
 
+**Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated checkbox to the left and then click on the Publish tab to publish you package.  Once its published, you are ready to create your fist Survey!
+
+![Screenshot](/docs/images/SS3-PublishPackage.PNG)
 
 Select and publish the package on your instance.
 
 ![Screenshot](/docs/images/Process-Survey1.PNG)
 
-### Wellness Package Instructions
 
 ### Create Survey
 Once the package is installed you should see a new workspace called *“Surveys”*
