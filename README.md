@@ -64,7 +64,7 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 
 ![Screenshot](/docs/images/SS5-RecipentsSelect.PNG)
 
-**Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application**
+***Note: You need to ensure all employees are linked to the User profile and their user account is Sync’d with their mobile phones and they are able to use the mobile application***
 
 ## Process Survey
 From the workspace “Surveys” click “Process Survey” to process/activate the survey and send the push notification to mobile phones 
