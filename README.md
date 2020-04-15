@@ -111,7 +111,9 @@ Once they complete the survey and send it, the status will change from *“Sent�
 
 ![Screenshot](/docs/images/MobileSS-3.jpeg)
 
-Once the user clicks on a particular survey, they can view the questions and respond accordly.
+Once the user clicks on a particular survey, they can view the questions and respond accordingly.
+
+![Screenshot](/docs/images/MobileSS-4.png)
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
