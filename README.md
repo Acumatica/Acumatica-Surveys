@@ -69,9 +69,13 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 ## Send Survey
 From the workspace “Surveys” click “Send Survey” to process/activate the survey and send the push notification to mobile phones.
 
-![Screenshot](/docs/images/SS5-SendSurveySelectID.PNG)
+![Screenshot](/docs/images/SS5-ProcessSendSurvey.PNG)
 
 Next, click on the magnifying glass icon to search for your survey and select it.
+
+![Screenshot](/docs/images/SS5-SendSurveySelectID.PNG)
+
+Then...
 
 ![Screenshot](/docs/images/SS5-SendSurveySend.PNG)
 
