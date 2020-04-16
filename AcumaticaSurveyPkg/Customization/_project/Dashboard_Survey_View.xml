@@ -38,7 +38,7 @@
         </layout>
         <data>
             <Dashboard>
-                <row DashboardID="1000021" Name="Survey View" DefaultOwnerRole="Administrator" ScreenID="DB000035" AllowCopy="1" Workspace1Size="0" Workspace2Size="0" IsPortal="0" ExposeViaMobile="1">
+                <row DashboardID="1000021" Name="Survey View" DefaultOwnerRole="Administrator" ScreenID="DBSV1035" AllowCopy="1" Workspace1Size="0" Workspace2Size="0" IsPortal="0" ExposeViaMobile="1">
                     <DashboardParameter LineNbr="1" Name="SurveyID" IsActive="1" Required="0" ObjectName="PX.Survey.Ext.SurveyCollector" FieldName="SurveyID" DisplayName="Survey ID" IsExpression="0" ColSpan="1" NoteID="3ef0c424-2c7d-ea11-9286-002590bde2bf" />
                     <Widget WidgetID="1000205" Caption="Survey Recipient Devices" Column="1" Row="1" Workspace="0" Width="6" Height="124" Type="PX.Dashboards.Widgets.PXTableWidget" NoteID="211bd20c-ac7d-ea11-9286-002590bde2bf">
                         <column name="Settings"><![CDATA[<?xml version="1.0" encoding="utf-16"?>
