@@ -135,11 +135,7 @@ So yes, some eye-candy for you visual and analytical folks out there.
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
 
-A published survey that a user has responded cannot be deleted.
-or
-The ability to clone or copy a survey from an existing survey in the system.  
-
-What gets copied? Survey questions, recipients? Thus far, we have only tested the employees list.
+A published survey that a user has responded to cannot be deleted.
 
 Please note that there is an issue with iOS devices with respect to attributes.  We are working on resolving the problem and will updating our notes to reflect this in the next several days.  For now, iOS users can use the web to participate in any survey they are selected as recipients.
 
