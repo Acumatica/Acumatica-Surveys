@@ -99,7 +99,7 @@ Upon clicking the survey, you will need to click on **“QUESTIONS”** and revi
 
 For user recipients of the survey that you create, they should have a **Surveys** icon as shown in the screenshot below.
 
-<img src="/docs/images/MobileSS-1.jpeg" height="50%" width="50%">
+<img src="/docs/images/MobileSS-1.jpeg" height="50%" width="50%"> 
 
 The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked linesto access the menu option and click **“SUBMIT”** to send the survey responses back to the system. By submitting the sur as you can see in the next screenshot.
 
