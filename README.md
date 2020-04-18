@@ -161,11 +161,23 @@ So yes, some eye-candy for you visual and analytical folks out there.
 
 ## Using Business Events (draft section)
 
-To configure the Acumatica to monitor a *business process*, navigate to the **Business Events** form by typing Business Events in the search field.  
+A business event is a data change or a set of conditions checked for on a schedule. 
+
+It may include the following information:
+
+- The general information about the business event (such as its name and type)
+- The trigger conditions of the business event
+- The schedule of the business event (if the conditions of the business event are checked for on a schedule)
+- The generic inquiry parameters (if any parameter values have been specified for the business event)
+- The email notification templates (if the business event has email notification templates as subscribers)
+
+For our example scenario, we are interested in creating an email notification to recipients of surveys that get sent out to them to remind them to complete before they are due.
+
+To configure the Acumatica to use a *business event process* to trigger an email notification, navigate to the **Business Events** form by typing Business Events in the search field.  
 
 ![Screenshot](/docs/images/SS1-BusinessEventsSearch.PNG)
 
-You can define a business event that relates to this business process - in our case, Acumtica Surveys related processes - that instructs system to perform an action or multiple actions in Acumatica itself. 
+You can define a business event that relates to this business event process - in our case, Acumtica Surveys related processes - that instructs system to perform an action or multiple actions in Acumatica itself. 
 
 After navigating to the **Business Events**, form, click the "+" sign to create a new business event.
 
@@ -179,15 +191,7 @@ blah, blah...
 
 ![Screenshot](/docs/images/SS2-BusinessEventsNew3.PNG)
 
-The business event is a data change or a set of conditions checked for on a schedule. For details on the business events, see Business Events Related to Data Changes and Business Events Monitored on a Schedule.
-
-The item includes the following information:
-
-The general information about the business event (such as its name and type)
-The trigger conditions of the business event
-The schedule of the business event (if the conditions of the business event are checked for on a schedule)
-The generic inquiry parameters (if any parameter values have been specified for the business event)
-The email notification templates (if the business event has email notification templates as subscribers)
+blah, blah...
 
 For more information on *Business Events*, search for **Business Events** and click on the *help tab* in the results screen.
 
