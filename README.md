@@ -91,6 +91,31 @@ Those records will be activated for survey responses with status as “New” an
 Users can select specific recipients from the list or click **SEND ALL.** Selected records could be also be sent with the “SEND” option.
 
 
+## Using Automation Schedules in Acumatica to Set the Schedule Frequency & Duration ##
+The ability to schedule surveys are an important feature to automate when surveys are sent out and the frequency that occur. You can easily levarage the built-in Acumatica Automation Schedule engine.
+
+To create a scheudule for a survey, enter **Schedule** in the *Search* field and select **Automation Schedules** as depicted in the screenshot below.
+
+![Screenshot](/docs/images/SS1-AutomationSchedules.PNG)
+
+Then enter the text for the description field for the new schedule and choose the start date.
+
+![Screenshot](/docs/images/SS3-AutomationSchedulesStartDate.PNG)
+
+Afterwards, click on the **Schedule tab** and choose the time you would like the survey to be sent as shown below.
+
+![Screenshot](/docs/images/SS4-AutomationSchedulesStartTime.PNG)
+
+In the Schedule tab, you can also the frequencey - hourly, daily, and monthly. You can set other parameters as well, such as whether your schedule expires and when.  No need to go into any detail here, since the interface is standard & intuitive.
+
+Once you have set up the schedule for a particular survey and saved it, you can view and montitor your schedules and adjust as needed.
+
+To view the statuses of any of your automated schedules, type in Automation in the search field and select Automation Schedule Statuses as shown in the sreenshot.
+
+![Screenshot](/docs/images/SS5-AutomationSchedulesStatus.PNG)
+
+After clicking on the item, you will see all the Automation Schedues. Note the example schedules at end of the tabulated list.  You can see the surveys that have executed and the one created in the example that is pending to go out on 4/20/2020 at 8am.
+
 
 ## Survey Response
 All recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android or iPhone/iOS and complete the survey. However, there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in the next section of this README.
@@ -131,6 +156,7 @@ and in the mobile application it renders as follows.
 <img src="/docs/images/MobileDashboardSS-1.jpg" height="50%" width="50%">
 
 So yes, some eye-candy for you visual and analytical folks out there.
+
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
