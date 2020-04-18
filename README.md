@@ -106,15 +106,17 @@ Afterwards, click on the **Schedule tab** and choose the time you would like the
 
 ![Screenshot](/docs/images/SS4-AutomationSchedulesStartTime.PNG)
 
-In the Schedule tab, you can also the frequencey - hourly, daily, and monthly. You can set other parameters as well, such as whether your schedule expires and when.  No need to go into any detail here, since the interface is standard & intuitive.
+In the Schedule tab shown above, you can also set the frequency: *hourly, daily, and monthly.* You can set other parameters as well, such as whether your schedule expires and when.  No need to go into any detail here, since the interface is standard & intuitive.
 
-Once you have set up the schedule for a particular survey and saved it, you can view and montitor your schedules and adjust as needed.
+Once you have set up the schedule for a particular survey and saved it, you can view and montitor your schedules and adjust as necessary.
 
-To view the statuses of any of your automated schedules, type in Automation in the search field and select Automation Schedule Statuses as shown in the sreenshot.
+To view the statuses of any of the automated schedules, type in *Automation* in the search field and select **Automation Schedule Statuses* as shown in the sreenshot.
 
 ![Screenshot](/docs/images/SS5-AutomationSchedulesStatus.PNG)
 
-After clicking on the item, you will see all the Automation Schedues. Note the example schedules at end of the tabulated list.  You can see the surveys that have executed and the one created in the example that is pending to go out on 4/20/2020 at 8am.
+After clicking on the menu item, you will see all the *Automation Schedules.* Notice the example schedules at end of the tabulated list above.  You can see the surveys that have executed and the one created in our example that is pending to go out on 4/20/2020 at 8am.
+
+Use the scheduling engine as it will save you time and energy in automating sending out schedules that are sent on a periodic basis.
 
 
 ## Survey Response
@@ -157,6 +159,37 @@ and in the mobile application it renders as follows.
 
 So yes, some eye-candy for you visual and analytical folks out there.
 
+## Using Business Events (draft section)
+
+To configure the Acumatica to monitor a *business process*, navigate to the **Business Events** form by typing Business Events in the search field.  
+
+![Screenshot](/docs/images/SS1-BusinessEventsSearch.PNG)
+
+You can define a business event that relates to this business process - in our case, Acumtica Surveys related processes - that instructs system to perform an action or multiple actions in Acumatica itself. 
+
+After navigating to the **Business Events**, form, click the "+" sign to create a new business event.
+
+![Screenshot](/docs/images/SS2-BusinessEventsNew.PNG)
+
+You can create an business event that is triggered by a change to a *record change* for *survey responses* for example that notify users that they have a survey to complete after a given survey is sent out to employees.
+
+![Screenshot](/docs/images/SS2-BusinessEventsNew2.PNG)
+
+blah, blah...
+
+![Screenshot](/docs/images/SS2-BusinessEventsNew3.PNG)
+
+The business event is a data change or a set of conditions checked for on a schedule. For details on the business events, see Business Events Related to Data Changes and Business Events Monitored on a Schedule.
+
+The item includes the following information:
+
+The general information about the business event (such as its name and type)
+The trigger conditions of the business event
+The schedule of the business event (if the conditions of the business event are checked for on a schedule)
+The generic inquiry parameters (if any parameter values have been specified for the business event)
+The email notification templates (if the business event has email notification templates as subscribers)
+
+For more information on *Business Events*, search for **Business Events** and click on the *help tab* in the results screen.
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
