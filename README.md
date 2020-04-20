@@ -195,7 +195,9 @@ First you select the appropriate **Screen ID** then add a **Trigger Condition** 
 
 [provide more detail of the scenario here]
 
-For more information on *Business Events*, search for **Business Events** and click on the *help tab* in the results screen.
+For more information on *Business Events*, search for **Business Events** and click on the following link:
+
+https://help-2019r2.acumatica.com/(W(1))/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
