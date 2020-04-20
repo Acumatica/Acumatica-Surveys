@@ -126,25 +126,25 @@ Upon clicking the survey, you will need to click on **“QUESTIONS”** and revi
 
 For user recipients of the survey that you create, they should have a **Surveys** icon as shown in the screenshot below.
 
-<img src="/docs/images/MobileSS-1.jpeg" height="50%" width="50%"> 
+<img src="/docs/images/MobileSS-1.jpeg" height="25%" width="25%"> 
 
 The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked linesto access the menu option and click **“SUBMIT”** to send the survey responses back to the system. By submitting the sur as you can see in the next screenshot.
 
-<img src="/docs/images/MobileSS-2.jpeg" height="50%" width="50%">
+<img src="/docs/images/MobileSS-2.jpeg" height="25%" width="25%">
 
 After clicking on Surveys, the user will see a screen similar to this one below will a list of the surveys they have to respond to or have had already responded.
 
 Once they complete the survey and send it, the status will change from *“Sent”* to *“Responded”.* 
 
-<img src="/docs/images/MobileSS-3.jpeg" height="50%" width="50%">
+<img src="/docs/images/MobileSS-3.jpeg" height="25%" width="25%">
 
 Once the user clicks on a particular survey, they can view the questions and respond accordingly.
 
-<img src="/docs/images/MobileSS-4.png" height="50%" width="50%">
+<img src="/docs/images/MobileSS-4.png" height="25%" width="25%">
 
 And here you can see a question as a "multiple-choice" response via radio buttons on screen.
 
-<img src="/docs/images/MobileSS-5.png" height="50%" width="50%">
+<img src="/docs/images/MobileSS-5.png" height="25%" width="25%">
 
 ## Suvey Dashboards ##
 What's the point of a survey without metrics to meaure?  So yes, we built a beautiful dashboard which you can of course customize yourself to suit you needs.
@@ -155,7 +155,7 @@ In Acumatica on the web, we have a default dashboard as shown below.
 
 and in the mobile application it renders as follows.
 
-<img src="/docs/images/MobileDashboardSS-1.jpg" height="50%" width="50%">
+<img src="/docs/images/MobileDashboardSS-1.jpg" height="25%" width="25%">
 
 So yes, some eye-candy for you visual and analytical folks out there.
 
