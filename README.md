@@ -4,27 +4,27 @@
 
 **Step One:** Download the customization package (AcumaticaSurveyPkg.zip) as is shown below in the screenshot below.
 
-![Screenshot](/docs/images/SS1-DownloadPackage.PNG)
+<img src="/docs/images/SS1-DownloadPackage.PNG" height="50%" width="50%">
 
 **Step Two:** Go to your Project Customization Screen. You may just do a quick searach by typing *"Customization"* then selecting it as follows.
 
-![Screenshot](/docs/images/SS0-CustomizationProjects.PNG)
+<img src="/docs/images/SS0-CustomizationProjects.PNG" height="50%" width="50%">
 
 **Step Three:** Upload & import the package you downloaded to your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
 
-![Screenshot](/docs/images/SS1-ImportCustPackage.PNG)
+<img src="/docs/images/SS1-ImportCustPackage.PNG" height="50%" width="50%">
 
 Next, click on the **Import** tab and select *"Import New Project"* from the dropdown list as shown below.
 
-![Screenshot](/docs/images/SS2-ImportNewProject.PNG)
+<img src="/docs/images/SS2-ImportNewProject.PNG" height="50%" width="50%">
 
 Then click on **Choose File** to open up the *File Manager* to select the **Acumatic Surveys** package.
 
-![Screenshot](/docs/images/SS2-UploadPackage.PNG)
+<img src="/docs/images/SS2-UploadPackage.PNG" height="50%" width="50%">
 
 **Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish your package.  Once it's published, you are ready to create your fist Survey!
 
-![Screenshot](/docs/images/SS3-PublishPackage.PNG)
+<img src="/docs/images/SS3-PublishPackage.PNG" height="50%" width="50%">
 
 
 
@@ -32,13 +32,13 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 Once the package is installed, you should see a new workspace called *“Surveys”* as shown here below.
 
-![Screenshot](/docs/images/Survey-Workspace.PNG)
+<img src="/docs/images/Survey-Workspace.PNG" height="50%" width="50%">
 
 Click on the *Survey Preferences menu* option.
 
 **Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number,* such as: **SV10001**
 
-![Screenshot](/docs/images/SS4-SurveyPreferencesNumberingID.PNG)
+<img src="/docs/images/SS4-SurveyPreferencesNumberingID.PNG" height="50%" width="50%">
 
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
 Surveys utilizes common *attributes* to create questions and answers. Therefore, please setup any new questions/answers as *attributes.*
@@ -51,21 +51,21 @@ After you have setup required attributes, you are now ready to create your first
 
 Click on Surveys in the workspace and click *Survey* under **Transactions.** 
 
-![Screenshot](/docs/images/SS4SurveyTransacationsSurvey.PNG)
+<img src="/docs/images/SS4SurveyTransacationsSurvey.PNG" height="50%" width="50%">
 
 The survey primary list screen **(SV2010PL)** loads with empty records. Click on the **+** to create a new survey which opens the new screen **SV201000**
 
-![Screenshot](/docs/images/SS4SurveyTransacationsSurvey2.PNG)
+<img src="/docs/images/SS4SurveyTransacationsSurvey2.PNG" height="50%" width="50%">
 
 Specify the survey name and click *save* to generates a new auto sequence number. From the details tab, click **+** and add the new *attributes* as questions to this survey
 
-![Screenshot](/docs/images/SS5-CreateAttributesQuestions.PNG)
+<img src="/docs/images/SS5-CreateAttributesQuestions.PNG" height="50%" width="50%">
 
 Next, specify the sort order sequence, if a question is required or mandatory for recipients to answer. 
 
 From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
 
-![Screenshot](/docs/images/SS5-RecipentsSelect.PNG)
+<img src="/docs/images/SS5-RecipentsSelect.PNG" height="50%" width="50%">
 
 ***Note: You need to ensure all employees are linked to the User profile and their user accounts are Sync’d with their mobile phones and that they are able to use the Acumatica Mobile application***
 
@@ -74,15 +74,15 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 ## Send Survey
 From the “Surveys” workspace, click “Send Survey” to process and activate the survey and send *Push Notifications* to mobile phones.
 
-![Screenshot](/docs/images/SS5-ProcessSendSurvey.PNG)
+<img src="/docs/images/SS5-ProcessSendSurvey.PNG" height="50%" width="50%">
 
 Next, click on the magnifying glass icon to search for your survey and select it.
 
-![Screenshot](/docs/images/SS5-SendSurveySelectID.PNG)
+<img src="/docs/images/SS5-SendSurveySelectID.PNG" height="50%" width="50%">
 
 Then Send your Survey and wait for your responses.
 
-![Screenshot](/docs/images/SS5-SendSurveySend.PNG)
+<img src="/docs/images/SS5-SendSurveySend.PNG" height="50%" width="50%">
 
 ***Please note: you have to sync your device by connecting before sending surveys. Only registered mobile phones will receive the push notification, others will error out.***
 
@@ -96,15 +96,15 @@ The ability to schedule surveys are an important feature to automate when survey
 
 To create a scheudule for a survey, enter **Schedule** in the *Search* field and select **Automation Schedules** as depicted in the screenshot below.
 
-![Screenshot](/docs/images/SS1-AutomationSchedules.PNG)
+<img src="/docs/images/SS1-AutomationSchedules.PNG" height="50%" width="50%">
 
 Then enter the text for the description field for the new schedule and choose the start date.
 
-![Screenshot](/docs/images/SS3-AutomationSchedulesStartDate.PNG)
+<img src="/docs/images/SS3-AutomationSchedulesStartDate.PNG" height="50%" width="50%">
 
 Afterwards, click on the **Schedule tab** and choose the time you would like the survey to be sent as shown below.
 
-![Screenshot](/docs/images/SS4-AutomationSchedulesStartTime.PNG)
+<img src="/docs/images/SS4-AutomationSchedulesStartTime.PNG" height="50%" width="50%">
 
 In the Schedule tab shown above, you can also set the frequency: *hourly, daily, and monthly.* You can set other parameters as well, such as whether your schedule expires and when.  No need to go into any detail here, since the interface is standard & intuitive.
 
@@ -112,7 +112,7 @@ Once you have set up the schedule for a particular survey and saved it, you can 
 
 To view the statuses of any of the automated schedules, type in *Automation* in the search field and select **Automation Schedule Statuses* as shown in the sreenshot.
 
-![Screenshot](/docs/images/SS5-AutomationSchedulesStatus.PNG)
+<img src="/docs/images/SS5-AutomationSchedulesStatus.PNG" height="50%" width="50%">
 
 After clicking on the menu item, you will see all the *Automation Schedules.* Notice the example schedules at end of the tabulated list above.  You can see the surveys that have executed and the one created in our example that is pending to go out on 4/20/2020 at 8am.
 
@@ -151,7 +151,7 @@ What's the point of a survey without metrics to meaure?  So yes, we built a beau
 
 In Acumatica on the web, we have a default dashboard as shown below.
 
-![Screenshot](/docs/images/DashboardSS-1.PNG)
+<img src="/docs/images/DashboardSS-1.PNG" height="50%" width="50%">
 
 and in the mobile application it renders as follows.
 
@@ -175,21 +175,21 @@ For our example scenario, we are interested in creating an email notification to
 
 To configure the Acumatica to use a *business event process* to trigger an email notification, navigate to the **Business Events** form by typing Business Events in the search field.  
 
-![Screenshot](/docs/images/SS1-BusinessEventsSearch.PNG)
+<img src="/docs/images/SS1-BusinessEventsSearch.PNG" height="50%" width="50%">
 
 You can define a business event that relates to this business event process - in our case, Acumtica Surveys related processes - that instructs system to perform an action or multiple actions in Acumatica itself. 
 
 After navigating to the **Business Events**, form, click the "+" sign to create a new business event.
 
-![Screenshot](/docs/images/SS2-BusinessEventsNew.PNG)
+<img src="/docs/images/SS2-BusinessEventsNew.PNG" height="50%" width="50%">
 
 You can create an business event that is triggered by a change to a *record change* for *survey responses* for example that notify users that they have a survey to complete after a given survey is sent out to employees.
 
-![Screenshot](/docs/images/SS2-BusinessEventsNew2.PNG)
+<img src="/docs/images/SS2-BusinessEventsNew2.PNG" height="50%" width="50%">
 
 blah, blah...
 
-![Screenshot](/docs/images/SS2-BusinessEventsNew3.PNG)
+<img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
 
 blah, blah...
 
