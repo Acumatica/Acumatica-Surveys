@@ -183,15 +183,17 @@ After navigating to the **Business Events**, form, click the "+" sign to create 
 
 <img src="/docs/images/SS2-BusinessEventsNew.PNG" height="50%" width="50%">
 
-You can create an business event that is triggered by a change to a specific *record change* for *survey responses* as an example that notify the the company that one of thier employees has symptoms, such as a high temperature.
+You can create a business event that is triggered by a change to a specific *record change* for *survey responses* as an example. One that notifies the the company that one of thier employees has specific symptoms, such as a high temperature.
 
 <img src="/docs/images/SS2-BusinessEventsNew2.PNG" height="50%" width="50%">
 
-The next step is to add a trigger that fires off the business event, where the temperature is "not normal" for example.
+The next step is to add a trigger that fires off the business event.  In this case, we want to be notified when the temperature for a respondent is "not normal".
 
 <img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
 
-First you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing the Operation:  *Field Change*, *table name*, *field name*, etc.
+To do this, you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing the Operation:  *Field Change*, *table name*, *field name*, *condition*, etc. to build your trigger logic.
+
+<img src="/docs/images/SS3-BusinessEventsAddTriggers.PNG" height="50%" width="50%">
 
 [provide more detail of the scenario here]
 
