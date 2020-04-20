@@ -191,11 +191,9 @@ The next step is to add a trigger that fires off the business event.  In this ca
 
 <img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
 
-To do this, you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing the Operation:  *Field Change*, *table name*, *field name*, *condition*, etc. to build your trigger logic.
+To do this, you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing *Operation*, *Table Name*, *Field Name*, *Condition*, and so on to build your trigger logic.
 
 <img src="/docs/images/SS3-BusinessEventsAddTriggers.PNG" height="50%" width="50%">
-
-[provide more detail of the scenario here]
 
 For more information on *Business Events*, search for **Business Events** and click on the following link:
 
