@@ -177,21 +177,23 @@ To configure the Acumatica to use a *business event process* to trigger an email
 
 <img src="/docs/images/SS1-BusinessEventsSearch.PNG" height="50%" width="50%">
 
-You can define a business event that relates to this business event process - in our case, Acumtica Surveys related processes - that instructs system to perform an action or multiple actions in Acumatica itself. 
+You can define a business event that relates to this business event process - in our case, Acumtica Surveys related processes - that instructs the system to perform an action or multiple actions in Acumatica itself. 
 
 After navigating to the **Business Events**, form, click the "+" sign to create a new business event.
 
 <img src="/docs/images/SS2-BusinessEventsNew.PNG" height="50%" width="50%">
 
-You can create an business event that is triggered by a change to a *record change* for *survey responses* for example that notify users that they have a survey to complete after a given survey is sent out to employees.
+You can create an business event that is triggered by a change to a specific *record change* for *survey responses* as an example that notify the the company that one of thier employees has symptoms, such as a high temperature.
 
 <img src="/docs/images/SS2-BusinessEventsNew2.PNG" height="50%" width="50%">
 
-blah, blah...
+The next step is to add a trigger that fires off the business event, where the temperature is "not normal" for example.
 
 <img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
 
-blah, blah...
+First you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing the Operation:  *Field Change*, *table name*, *field name*, etc.
+
+[provide more detail of the scenario here]
 
 For more information on *Business Events*, search for **Business Events** and click on the *help tab* in the results screen.
 
