@@ -231,7 +231,7 @@ You can now add a notification to the Business Event, such as an eMail Notificat
 
 <img src="/docs/images/SS2-BusinessEventsNewSubscriber.PNG" height="50%" width="50%">
 
-For more information on *Business Events*, lick on the following links:
+For more information on *Business Events*, click on the following links:
 
 **[Business Events Help Topic](https://help-2019r2.acumatica.com/(W(1))/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98)**
 
