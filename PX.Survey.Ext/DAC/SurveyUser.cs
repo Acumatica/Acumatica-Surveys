@@ -112,12 +112,22 @@ namespace PX.Survey.Ext
         public virtual String RecipientEmail { get; set; }
         #endregion
 
+        #region MobileAppDeviceOS
+        public abstract class mobileAppDeviceOS : PX.Data.BQL.BqlString.Field<mobileAppDeviceOS> { }
+
+        [PXString()]
+        [PXDependsOnFields(typeof(SurveyUser.contactID), typeof(SurveyUser.userID))]
+        [PXFormula(typeof(MobileAppDeviceOS<SurveyUser.userID>))]
+        [PXUIField(DisplayName = "Mobile App Device OS", Enabled = false)]
+        public virtual String MobileAppDeviceOS { get; set; }
+        #endregion
+
         #region UsingMobileApp
         public abstract class usingMobileApp : PX.Data.BQL.BqlBool.Field<usingMobileApp> { }
 
         [PXBool()]
-        [PXDependsOnFields(typeof(SurveyUser.contactID), typeof(SurveyUser.userID))]
-        [PXFormula(typeof(MobileAppEnabled<SurveyUser.userID>))]
+        [PXDependsOnFields(typeof(SurveyUser.mobileAppDeviceOS))]
+        [PXFormula(typeof(IIf<Where<SurveyUser.mobileAppDeviceOS, IsNull>, False, True>))]
         [PXUIField(DisplayName = "Mobile App Notifications", Enabled = false)]
         public virtual bool? UsingMobileApp { get; set; }
         #endregion

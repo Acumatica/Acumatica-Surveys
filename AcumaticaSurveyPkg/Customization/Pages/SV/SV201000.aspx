@@ -66,6 +66,7 @@
                                     <px:PXGridColumn DataField="RecipientType" />
                                     <px:PXGridColumn DataField="RecipientPhone" Width="180px" />
                                     <px:PXGridColumn DataField="RecipientEmail" Width="280px" />
+                                    <px:PXGridColumn DataField="MobileAppDeviceOS" Width="200px" />
                                     <px:PXGridColumn DataField="UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
                                 </Columns>
                             </px:PXGridLevel>
@@ -97,6 +98,7 @@
                         <px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" />
                         <px:PXGridColumn DataField="DisplayName" Width="280px" />
                         <px:PXGridColumn DataField="ContactType" />
+                        <px:PXGridColumn DataField="UsrMobileAppDeviceOS" Width="200px" />
                         <px:PXGridColumn DataField="UsrUsingMobileApp" Width="180px" TextAlign="Center" Type="CheckBox" />
                         <px:PXGridColumn DataField="FirstName" Width="180px" />
                         <px:PXGridColumn DataField="LastName" Width="220px" />

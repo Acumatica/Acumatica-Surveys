@@ -18,7 +18,7 @@ namespace PX.Survey.Ext
         #region Survey Response Status
 
         public const string CollectorNew = "New";
-        public const string CollectorSent = "Sent";
+        public const string CollectorSent = "Awaiting Response";
         public const string CollectorResponded = "Responded";
         public const string CollectorExpired = "Expired";
 
@@ -37,5 +37,11 @@ namespace PX.Survey.Ext
         public const string Question = "Question";
         public const string Answer = "Answer";
         public const string Submit = "Submit";
+        public const string ReOpen = "Re-open";
+
+        public const string AnswerReqiredQuestions = "Answers should be specified for all required questions.";
+
+        //Until issue is resolved with ios app
+        public const string PushNotificationMessageBodySurveyIOS = "You have new Survey # {0} to complete";
     }
 }

@@ -28,6 +28,7 @@
                     <px:PXGridColumn DataField="RecipientType" />
                     <px:PXGridColumn DataField="RecipientPhone" Width="180px" />
                     <px:PXGridColumn DataField="RecipientEmail" Width="280px" />
+					<px:PXGridColumn DataField="MobileAppDeviceOS" Width="200px" />					
                     <px:PXGridColumn DataField="UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
                 </Columns>
 			</px:PXGridLevel>
