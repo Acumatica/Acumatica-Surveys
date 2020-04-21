@@ -220,9 +220,13 @@ You can see that the Screen Name & Screen ID were filled in for you and we are r
 
 <img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
 
+Now...
+
+<img src="/docs/images/SS2-BusinessEventsNew4.PNG" height="50%" width="50%">
+
 In this case, we want to be notified when the temperature for a respondent is "not normal".
 
-<img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
+
 
 To do this, you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing *Operation*, *Table Name*, *Field Name*, *Condition*, and so on to build your trigger logic.
 
