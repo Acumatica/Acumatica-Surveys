@@ -212,13 +212,21 @@ You can create a business event that is triggered by a change to a specific *rec
 
 <img src="/docs/images/SS2-BusinessEventsNew2.PNG" height="50%" width="50%">
 
-The next step is to add a trigger that fires off the business event.  In this case, we want to be notified when the temperature for a respondent is "not normal".
+We will use our Generic Inquiry we created earlier for our *Event ID*. Just type in the the first part of the name of the GI in *Event ID* field search, *"Temp"* and select it.
+
+<img src="/docs/images/SS2-BusinessEventsNew0.PNG" height="50%" width="50%">
+
+You can see that the Screen Name & Screen ID were filled in for you and we are ready to add our trigger that fires our business event.  
+
+<img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
+
+In this case, we want to be notified when the temperature for a respondent is "not normal".
 
 <img src="/docs/images/SS2-BusinessEventsNew3.PNG" height="50%" width="50%">
 
 To do this, you select the appropriate **Screen ID** then add a **Trigger Condition** by clicking on the "+" icon and choosing *Operation*, *Table Name*, *Field Name*, *Condition*, and so on to build your trigger logic.
 
-<img src="/docs/images/SS3-BusinessEventsAddTriggers.PNG" height="50%" width="50%">
+
 
 For more information on *Business Events*, search for **Business Events** and click on the following links:
 
