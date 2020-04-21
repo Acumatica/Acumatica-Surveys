@@ -171,7 +171,32 @@ It may include the following information:
 - The generic inquiry parameters (if any parameter values have been specified for the business event)
 - The email notification templates (if the business event has email notification templates as subscribers)
 
-For our example scenario, we are interested in creating an email notification to recipients of surveys that get sent out to them to remind them to complete before they are due.
+For our example scenario, we are interested in creating a *Business Event* & *email Notification* that is sent to the survey respondent's manager when they their employee reports symptoms such as a temperature that is not normal.
+
+First, before creating the *Business Event*, we need to create a **Generic Inquiry** which returns a *Results Grid* with the survey data records with the "COVTEMP_Attributes" field/attribute that subsequently is used to "trigger" the business event when the condition we set is met.
+
+To navigate to the *Generic Inquiry* screen, just type in *Generic* in **Search** and click on *Generic Inquiry* under Customization **Profiles** as illustrated below.
+
+<img src="/docs/images/SS1-GITempMonitor0.PNG" height="50%" width="50%">
+
+Next type in the name of your generic inquiry (TempMonitor) and click on the *checkbox* below the name you just entered to make it visible to the UI.
+
+<img src="/docs/images/SS1-GITempMonitor1.PNG" height="50%" width="50%">
+
+Then add the SurveyCollector Table.  You can search for it by typing "Survey" and then select it to include it in your generic inquiry.
+
+
+<img src="/docs/images/SS1-GITempMonitor2.PNG" height="50%" width="50%">
+
+After selecting the table, it will display as follows.
+
+<img src="/docs/images/SS1-GITempMonitor3.PNG" height="50%" width="50%">
+
+Next save your GI and then select the Results Grid tab to make sure it returns the data you will be needing.  As you can see from the screenshot below that the Temperature field we need is present, **COVTEMP_Attributes** which will be used to trigger our Business Event.
+
+<img src="/docs/images/SS1-GITempMonitor4.PNG" height="50%" width="50%">
+
+Now it's time to create our Business Event.
 
 To configure the Acumatica to use a *business event process* to trigger an email notification, navigate to the **Business Events** form by typing Business Events in the search field.  
 
@@ -195,9 +220,11 @@ To do this, you select the appropriate **Screen ID** then add a **Trigger Condit
 
 <img src="/docs/images/SS3-BusinessEventsAddTriggers.PNG" height="50%" width="50%">
 
-For more information on *Business Events*, search for **Business Events** and click on the following link:
+For more information on *Business Events*, search for **Business Events** and click on the following links:
 
-https://help-2019r2.acumatica.com/(W(1))/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98
+**[Business Events Help Topic](https://help-2019r2.acumatica.com/(W(1)/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98)**
+
+**[Mobile Notifications and Business Events Video](https://youtu.be/lCQhZwcOays)**
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
