@@ -231,15 +231,15 @@ You can now add a notification to the Business Event, such as an eMail Notificat
 
 <img src="/docs/images/SS2-BusinessEventsNewSubscriber.PNG" height="50%" width="50%">
 
-This README hopefully provided you the necessary guidance and help to successfully deploy and implement Acumatica Surveys.
-
-If you have any questions or need assistance, you can post your questions in our [Stackoverflow forum](https://stackoverflow.com/questions/tagged/acumatica).
-
 For more information on *Business Events*, lick on the following links:
 
 **[Business Events Help Topic](https://help-2019r2.acumatica.com/(W(1))/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98)**
 
 **[Mobile Notifications and Business Events Video](https://youtu.be/lCQhZwcOays)**
+
+This README hopefully provided you the necessary guidance and help to successfully deploy and implement Acumatica Surveys.
+
+If you have any questions or need assistance, you can post your questions in our [Stackoverflow forum](https://stackoverflow.com/questions/tagged/acumatica).
 
 ## Known Limitations and Constraints
 The ability to delete the survey when it’s still active, but has not been processed/published.
