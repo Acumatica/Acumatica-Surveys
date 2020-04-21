@@ -235,9 +235,9 @@ This README hopefully provided you the necessary guidence and help to sucessfull
 
 If you have any questions or need assistence, you can post your questions in our [Stackoverflow forum](https://stackoverflow.com/questions/tagged/acumatica).
 
-For more information on *Business Events*, search for **Business Events** and click on the following links:
+For more information on *Business Events*, lick on the following links:
 
-**[Business Events Help Topic](https://help-2019r2.acumatica.com/(W(1)/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98)**
+**[Business Events Help Topic](https://help-2019r2.acumatica.com/(W(1))/Help?ScreenId=ShowWiki&pageid=920e13d8-387c-404f-8b33-c200ac66df98)**
 
 **[Mobile Notifications and Business Events Video](https://youtu.be/lCQhZwcOays)**
 
