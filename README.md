@@ -134,7 +134,7 @@ The user may need to scroll down to find the icon or they can simply click the e
 
 After clicking on the **Surveys** application icon, the user will see a screen similar to this one below which lists their surveys they need to complete & send back.
 
-<img src="/docs/images/MobileSS-6.png" height="25%" width="25%">
+<img src="/docs/images/MobileSS-3.png" height="25%" width="25%">
 
 The status of of any surveys they have completed and have sent will change from *“Awaiting Response”* to *“Responded”.* 
 
