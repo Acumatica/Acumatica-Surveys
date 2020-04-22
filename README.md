@@ -65,7 +65,7 @@ Next, specify the sort order sequence, if a question is required or mandatory fo
 
 From the **Recipients tab** click on the *“Add Recipients”* and select the employees who will participate in the survey.
 
-<img src="/docs/images/SS5-RecipentsSelect.PNG" height="50%" width="50%">
+<img src="/docs/images/SS5-RecipentsSelect2.PNG" height="50%" width="50%">
 
 ***Note: You need to ensure all employees are linked to the User profile and their user accounts are Sync’d with their mobile phones and that they are able to use the Acumatica Mobile application***
 
