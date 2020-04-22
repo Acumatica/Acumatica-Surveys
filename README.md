@@ -122,21 +122,21 @@ Use the scheduling engine as it will save you time and energy in automating send
 ## Survey Response
 Recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android. iOS users will have to wait for an update since there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in this README.
 
-Upon clicking the survey, you will need to click on **“QUESTIONS”** and review all the survey questions and answer them. After answering, click The back button **←**. 
+Upon clicking the survey, the user will need to click on **View Questions** and review all their survey questions and answer them. After answering, will select the back button **←**. 
 
-For user recipients of the survey that you create, they should have a **Surveys** icon as shown in the screenshot below.
+For each employee user of the survey that you created, they should have a **Surveys** icon as shown in the screenshot below.
 
 <img src="/docs/images/MobileSS-1.jpeg" height="25%" width="25%"> 
 
-The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked lines to access the menu option. 
+The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked lines to access the menu option depending on the mobile operating system. 
 
 <img src="/docs/images/MobileSS-2.jpeg" height="25%" width="25%">
 
-After clicking on the **Surveys** application icon, the user will see a screen similar to this one below.
+After the user selects the **Surveys** application icon, they will see a screen similar to this one below.
 
 <img src="/docs/images/MobileSS-3.png" height="25%" width="25%">
 
-Each survey has a status, indicating any action required.  When a user has completed a survey in thier list, the status will change from *“Awaiting Response”* to *“Responded”.*  In the screenshot above, you can see the user has *responded* to all his surveys except one at the bottom of the screen.
+Each survey has a status, indicating a surveys current status and whether any action is required of the user.  When a user has completed a specific survey in thier list, the status will change from *“Awaiting Response”* to *“Responded”.*  In the screenshot above, you can see the user has *responded* to all of his surveys, except the one at the bottom of the screen.
 
 For the user to start answering questions, they will need to select the survey with the status, *Awaiting Response*. Then subsequently select, *View Questions*.
 
@@ -146,11 +146,11 @@ The survey questions they need to answer & complete in our example are listed as
 
 <img src="/docs/images/MobileSS-4.png" height="25%" width="25%"> **May need to update this one**
 
-In the case of selecting the question asking them about temperature, we present constrained choices using radio buttons in our example.
+In the case of selecting the question asking them about temperature, we constrain the choices using radio buttons in our example. Of course, you can choice a drop-down list or allow them to enter the value freely.
 
 <img src="/docs/images/MobileSS-5.png" height="25%" width="25%"> **May need to update this one**
 
-After answering all the required questions of the survey, the user will need to send it.  They do this by simply clicking on the **"paper airplane" icon** as shown below.
+After answering all the required questions of the survey, the user will need to send it. Simply completing each of the questions does not send the survey. They complete the process by, simply clicking on the **"paper airplane" icon** as shown below.
 
 <img src="/docs/images/MobileSS-6.png" height="25%" width="25%">
 
