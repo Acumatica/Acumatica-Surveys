@@ -120,7 +120,7 @@ Use the scheduling engine as it will save you time and energy in automating send
 
 
 ## Survey Response
-All recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android or iPhone/iOS and complete the survey. However, there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in the next section of this README.
+Recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android. iOS users will have to wait for an update since there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in this README.
 
 Upon clicking the survey, you will need to click on **“QUESTIONS”** and review all the survey questions and answer them. After answering, click The back button **←**. 
 
@@ -128,23 +128,27 @@ For user recipients of the survey that you create, they should have a **Surveys*
 
 <img src="/docs/images/MobileSS-1.jpeg" height="25%" width="25%"> 
 
-The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked linesto access the menu option and click **“SUBMIT”** to send the survey responses back to the system. By submitting the sur as you can see in the next screenshot.
+The user may need to scroll down to find the icon or they can simply click the ellipse **[...]** - the *three dots* or the three stacked lines to access the menu option. 
 
 <img src="/docs/images/MobileSS-2.jpeg" height="25%" width="25%">
 
-After clicking on Surveys, the user will see a screen similar to this one below will a list of the surveys they have to respond to or have had already responded.
+After clicking on the **Surveys** application icon, the user will see a screen similar to this one below which lists their surveys they need to complete & send back.
 
-Once they complete the survey and send it, the status will change from *“Sent”* to *“Responded”.* 
+<img src="/docs/images/MobileSS-6.jpeg" height="25%" width="25%">
 
-<img src="/docs/images/MobileSS-3.jpeg" height="25%" width="25%">
+The status of of any surveys they have completed and have sent will change from *“Awaiting Response”* to *“Responded”.* 
 
-Once the user clicks on a particular survey, they can view the questions and respond accordingly.
+When a user clicks on a particular survey, they can view the questions and respond accordingly.
 
-<img src="/docs/images/MobileSS-4.png" height="25%" width="25%">
+<img src="/docs/images/MobileSS-4.png" height="25%" width="25%"> **May need to update this one**
 
-And here you can see a question as a "multiple-choice" response via radio buttons on screen.
+In the question on temperature below, we present choices using radio buttons for our example in this case.
 
-<img src="/docs/images/MobileSS-5.png" height="25%" width="25%">
+<img src="/docs/images/MobileSS-5.png" height="25%" width="25%"> **May need to update this one**
+
+After answering all the required questions of the survey, the user will need to send it.  They do this by simply clicking on the **"paper airplane" icon** as shown below.
+
+<img src="/docs/images/MobileSS-6.png" height="25%" width="25%">
 
 ## Suvey Dashboards ##
 What's the point of a survey without metrics to meaure?  So yes, we built a beautiful dashboard which you can of course customize yourself to suit you needs.
