@@ -144,13 +144,13 @@ For the user to start answering questions, they will need to select the survey w
 
 The survey questions they need to answer & complete in our example are listed as follows.
 
-<img src="/docs/images/MobileSS-4.png" height="25%" width="25%"> **May need to update this one**
+<img src="/docs/images/MobileSS-4.png" height="25%" width="25%"> 
 
 In the case of selecting the question asking them about temperature, we constrain the choices using radio buttons in our example. Of course, you can choice a drop-down list or allow them to enter the value freely.
 
-<img src="/docs/images/MobileSS-5.png" height="25%" width="25%"> **May need to update this one**
+<img src="/docs/images/MobileSS-5.png" height="25%" width="25%"> 
 
-After answering all the required questions of the survey, the user will need to send it. Simply completing each of the questions does not send the survey. They complete the process by, simply clicking on the **"paper airplane" icon** as shown below.
+After answering all the required questions of the survey, the user will need to send it. Simply completing each of the questions does not send the survey. They complete the process by simply clicking on the **"paper airplane" icon** as shown below.
 
 <img src="/docs/images/MobileSS-6.png" height="25%" width="25%">
 
