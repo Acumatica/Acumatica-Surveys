@@ -78,7 +78,7 @@ From the “Surveys” workspace, click “Send Survey” to process and activat
 
 Next, click on the magnifying glass icon to search for your survey and select it.
 
-<img src="/docs/images/SS5-SendSurveySelectID.PNG" height="50%" width="50%">
+<img src="/docs/images/SS5-SendSurveySelectID2.PNG" height="50%" width="50%">
 
 Then Send your Survey and wait for your responses.
 
