@@ -132,23 +132,29 @@ The user may need to scroll down to find the icon or they can simply click the e
 
 <img src="/docs/images/MobileSS-2.jpeg" height="25%" width="25%">
 
-After clicking on the **Surveys** application icon, the user will see a screen similar to this one below which lists their surveys they need to complete & send back.
+After clicking on the **Surveys** application icon, the user will see a screen similar to this one below.
 
 <img src="/docs/images/MobileSS-3.png" height="25%" width="25%">
 
-The status of of any surveys they have completed and have sent will change from *“Awaiting Response”* to *“Responded”.* 
+Each survey has a status, indicating any action required.  When a user has completed a survey in thier list, the status will change from *“Awaiting Response”* to *“Responded”.*  In the screenshot above, you can see the user has *responded* to all his surveys except one at the bottom of the screen.
 
-When a user clicks on a particular survey, they can view the questions and respond accordingly.
+For the user to start answering questions, they will need to select the survey with the status, *Awaiting Response*. Then subsequently select, *View Questions*.
+
+<img src="/docs/images/MobileSS-0.jpeg" height="25%" width="25%">
+
+The survey questions they need to answer & complete in our example are listed as follows.
 
 <img src="/docs/images/MobileSS-4.png" height="25%" width="25%"> **May need to update this one**
 
-In the question on temperature below, we present choices using radio buttons for our example in this case.
+In the case of selecting the question asking them about temperature, we present constrained choices using radio buttons in our example.
 
 <img src="/docs/images/MobileSS-5.png" height="25%" width="25%"> **May need to update this one**
 
 After answering all the required questions of the survey, the user will need to send it.  They do this by simply clicking on the **"paper airplane" icon** as shown below.
 
 <img src="/docs/images/MobileSS-6.png" height="25%" width="25%">
+
+Once sent, they are done until the next survey arrives.
 
 ## Suvey Dashboards ##
 What's the point of a survey without metrics to meaure?  So yes, we built a beautiful dashboard which you can of course customize yourself to suit you needs.
