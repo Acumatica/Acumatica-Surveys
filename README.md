@@ -82,7 +82,7 @@ Next, click on the magnifying glass icon to search for your survey and select it
 
 Then Send your Survey and wait for your responses.
 
-<img src="/docs/images/SS5-SendSurveySend.PNG" height="50%" width="50%">
+<img src="/docs/images/SS5-SendSurveySend2.PNG" height="50%" width="50%">
 
 ***Please note: you have to sync your device by connecting before sending surveys. Only registered mobile phones will receive the push notification, others will error out.***
 
