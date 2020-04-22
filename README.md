@@ -246,7 +246,7 @@ The ability to delete the survey when it’s still active, but has not been proc
 
 A published survey that a user has responded to cannot be deleted.
 
-Please note that there is an issue with iOS devices with respect to attributes.  We are working on resolving the problem and will updating our notes to reflect this in the next several days.  For now, iOS users can use the web to participate in any survey they are selected as recipients.
+Please note that there are issues with iOS devices with respect to attributes and notifications.  We are working on resolving these and will be updating our notes to reflect this in the next several days.  For now, iOS users can use their web browser to view & respond to thier surveys, where they are selected as recipients.
 
 ## More Information
 To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE.
