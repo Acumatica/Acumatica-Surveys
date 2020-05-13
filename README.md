@@ -120,7 +120,7 @@ Use the scheduling engine as it will save you time and energy in automating send
 
 
 ## Survey Response
-Recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android. iOS users will have to wait for an update since there are limitations with iOS at this time.  See the section below on **Known Limitations and Contraints** in this README.
+Recipients will receive notifications and can click on a link to login to the Acumatica mobile application on Android. Make sure that user install the latest version of the iOS mobile client as there was a problem wrapping survey question text that has since been resolved. The current version as of 13 May 2020 is 18.200.35 (1266) corrected the problem.
 
 Upon clicking the survey, the user will need to click on **View Questions** and review all their survey questions and answer them. After answering, will select the back button **←**. 
 
@@ -255,8 +255,6 @@ If you have any questions or need assistance, you can post your questions in our
 The ability to delete the survey when it’s still active, but has not been processed/published.
 
 A published survey that a user has responded to cannot be deleted.
-
-Please note that there are issues with iOS devices with respect to attributes and notifications.  We are working on resolving these and will be updating our notes to reflect this in the next several days. 
 
 Mobile Push Notifications will be sent only for android devices. For now, iOS users can use their web browser to view & respond to thier surveys, where they are selected as recipients.
 
