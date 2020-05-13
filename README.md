@@ -1,6 +1,9 @@
 # Acumatica Surveys README
 
-**Important Note:**  Make sure you have **Acumatica 2020R1 (Build 20.100.0095)** deployed.  We will support this version & build onward.
+### Prerequisites | Supported Versions & Builds ###
+
+**Acumatica 2019R2 (Build 19.208.0051 onward)
+**Acumatica 2020R1 (Build 20.100.0095 onward)
 
 ## Setup Instructions for Installing the Acumatica Surveys package
 
