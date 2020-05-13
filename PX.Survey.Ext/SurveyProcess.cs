@@ -47,6 +47,8 @@ namespace PX.Survey.Ext
             foreach (var surveyUser in dataToProceed)
             {
 
+                //note: 20200512 this was added in to allow for the processing page to set
+                //      an expiration onto collectors that have passed the expiration date.
                 SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache);
 
                 try
@@ -65,6 +67,7 @@ namespace PX.Survey.Ext
                         SurveyID = surveyUser.SurveyID,
                         UserID = surveyUser.UserID,
                         CollectedDate = null,
+                        //note: 20200512 added a mechanism to calculated and set the expiration date onto the collector.
                         ExpirationDate = CalculateExpirationDate(filter.Duration,filter.DurationUnit),
                         CollectorStatus = sCollectorStatus
                     };
@@ -114,11 +117,19 @@ namespace PX.Survey.Ext
                 throw new PXException(Messages.SurveyError);
         }
 
+        /// <summary>
+        /// This method allows the duration value to be expressed in one of 4 units and performs the work to
+        /// calculated the expiration date. 
+        /// </summary>
+        /// <param name="filterDuration"></param>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         private static DateTime? CalculateExpirationDate(decimal? filterDuration, string unit)
         {
             if (!filterDuration.HasValue || filterDuration.GetValueOrDefault() == 0.0M) return null; //when nothing is set then we expect no expiration date to be set 
             switch (unit)
             {
+                //todo: confirm with team that using DateTime.Now will be satisfactory or if the AccessInfo business date would be better.
                 case "H": return DateTime.Now.AddHours((double)filterDuration.GetValueOrDefault());
                 case "D": return DateTime.Now.AddDays( (double)filterDuration.GetValueOrDefault());
                 case "W": return DateTime.Now.AddDays( (double)filterDuration.GetValueOrDefault() * 7);
@@ -134,7 +145,8 @@ namespace PX.Survey.Ext
         {
             bool isPastExpiration(SurveyCollector collector)
             {
-               return collector.ExpirationDate < DateTime.Now;
+                if (!collector.ExpirationDate.HasValue) return false;
+                return collector.ExpirationDate < DateTime.Now;
             }
 
             List<SurveyCollector> usersActiveCollectors = GetActiveCollectors(surveyUser,graph,surveyCurrent);
@@ -152,24 +164,44 @@ namespace PX.Survey.Ext
         }
 
         
-
+        /// <summary>
+        /// This retrieves a list of active Survey Collectors for a given user and survey 
+        /// </summary>
+        /// <param name="surveyUser"></param>
+        /// <param name="graph"></param>
+        /// <param name="surveyCurrent"></param>
+        /// <returns>
+        ///     This is intended to be used by both the expiration mechanism as well as the
+        ///     the mechanism to resend the notification.
+        /// </returns>
         private static List<SurveyCollector> GetActiveCollectors(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent)
         {
-            var activeCollectorsResultSet =
-                PXSelect<SurveyCollector, 
-                        Where<SurveyCollector.userID, Equal<Required<SurveyCollector.userID>>>>
-                    .Select(graph, surveyUser.UserID);
+            
+            PXResultset<SurveyCollector> activeCollectorsResultSet =
+                PXSelect<SurveyCollector,
+                        Where<SurveyCollector.userID, Equal<Required<SurveyCollector.userID>>,
+                                And<SurveyCollector.surveyID, Equal<Required<SurveyCollector.surveyID>>>>>
+                                //the below is not picking up on the new statuses if we want to get this into the BQL
+                                //we will need to configure an OR clause. for now ive added it into the foreach below
+                                //for simplicity and will circle back to refactor into this BQL statement
+                                //,And<SurveyCollector.collectorStatus, Equal<Required<SurveyCollector.collectorStatus>>>>>>
+                    .Select(
+                        graph, 
+                        surveyUser.UserID, 
+                        surveyCurrent.SurveyID, 
+                        SurveyResponseStatus.CollectorSent); //todo: need to confirm Collector sent is the correct status we are after
 
-            //todo: add , And<SurveyCollector.surveyID,Equal<Required<SurveyCollector.surveyID>>>
-            //todo: add , And<SurveyCollector.surveyStatus,Equal<Required<SurveyCollector.surveyStatus>> 
-
+          
             List<SurveyCollector> activeCollectors = new List<SurveyCollector>();
-
-            foreach (var collector in activeCollectorsResultSet)
+            foreach (var rCollector in activeCollectorsResultSet)
             {
-                activeCollectors.Add((SurveyCollector)collector);
+                var collector = (SurveyCollector) rCollector;
+                if (collector.CollectorStatus == SurveyResponseStatus.CollectorNew ||
+                    collector.CollectorStatus == SurveyResponseStatus.CollectorSent)
+                {
+                    activeCollectors.Add(collector);
+                }
             }
-
             return activeCollectors;
         }
     }
@@ -195,13 +227,9 @@ namespace PX.Survey.Ext
         #endregion
 
         public abstract class duration : PX.Data.IBqlField { }
-        //todo: not yet certain of the size that we need. need to find out. for now we will use 6
-        //      We also want to make sure we have a couple decimal points.
+        //todo: not yet certain of the size that we need. need to find out. for now we will use 2
         [PXDecimal(2)]
         [PXUIField(DisplayName = "Duration")]
-        //todo: if nothing is set we don't want to set an expiration
-        //      make sure the expiration gets set as a null in the event
-        //      no duration is set
         [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)] 
         public virtual decimal? Duration { get; set; }
 
@@ -212,7 +240,7 @@ namespace PX.Survey.Ext
             new[] { "H", "D", "W", "M" },
             new[] { "Hours", "Days", "Weeks", "Months" }
         )]
-        [PXDefault("N", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDefault("N")]
         [PXUIField(DisplayName = "Units")]
         public virtual string DurationUnit { get; set; }
 
