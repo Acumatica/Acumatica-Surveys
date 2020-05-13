@@ -36,7 +36,7 @@ namespace PX.Survey.Ext
 
         public static void ProcessSurvey(PXCache cache, SurveyFilter filter, List<SurveyUser> surveyUserList)
         {
-            bool erroroccurred = false;
+            bool errorOccurred = false;
 
             SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
 
@@ -46,12 +46,17 @@ namespace PX.Survey.Ext
 
             foreach (var surveyUser in dataToProceed)
             {
+
+                SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache);
+
                 try
                 {
                     string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
                                                SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
 
                     graph.Clear();
+
+                    
 
                     SurveyCollector surveyCollector = new SurveyCollector
                     {
@@ -60,7 +65,7 @@ namespace PX.Survey.Ext
                         SurveyID = surveyUser.SurveyID,
                         UserID = surveyUser.UserID,
                         CollectedDate = null,
-                        ExpirationDate = null,
+                        ExpirationDate = CalculateExpirationDate(filter.Duration,filter.DurationUnit),
                         CollectorStatus = sCollectorStatus
                     };
 
@@ -101,12 +106,71 @@ namespace PX.Survey.Ext
                 }
                 catch (Exception e)
                 {
-                    erroroccurred = true;
+                    errorOccurred = true;
                     PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), e);
                 }
             }
-            if (erroroccurred)
+            if (errorOccurred)
                 throw new PXException(Messages.SurveyError);
+        }
+
+        private static DateTime? CalculateExpirationDate(decimal? filterDuration, string unit)
+        {
+            if (!filterDuration.HasValue || filterDuration.GetValueOrDefault() == 0.0M) return null; //when nothing is set then we expect no expiration date to be set 
+            switch (unit)
+            {
+                case "H": return DateTime.Now.AddHours((double)filterDuration.GetValueOrDefault());
+                case "D": return DateTime.Now.AddDays( (double)filterDuration.GetValueOrDefault());
+                case "W": return DateTime.Now.AddDays( (double)filterDuration.GetValueOrDefault() * 7);
+                case "M": return DateTime.Now.AddMonths(  (int)filterDuration.GetValueOrDefault());
+                default: return null;
+            }
+        }
+
+        private static void SetExpiredSurveys(SurveyUser surveyUser, 
+            SurveyCollectorMaint graph, 
+            Survey surveyCurrent,
+            PXCache cache)
+        {
+            bool isPastExpiration(SurveyCollector collector)
+            {
+               return collector.ExpirationDate < DateTime.Now;
+            }
+
+            List<SurveyCollector> usersActiveCollectors = GetActiveCollectors(surveyUser,graph,surveyCurrent);
+            foreach (var surveyCollector in usersActiveCollectors.Where(isPastExpiration))
+            {
+                surveyCollector.CollectorStatus = SurveyResponseStatus.CollectorExpired;
+                cache.Update(surveyCollector);
+            }
+
+            //not sure if this is needed here.
+            //Im assuming that the persist will happen further down the pipe
+            //todo: purge this once assumption is confirmed
+            //graph.Persist(); 
+
+        }
+
+        
+
+        private static List<SurveyCollector> GetActiveCollectors(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent)
+        {
+            var activeCollectorsResultSet =
+                PXSelect<SurveyCollector, 
+                        Where<SurveyCollector.userID, Equal<Required<SurveyCollector.userID>>>>
+                    .Select(graph, surveyUser.UserID);
+
+            //todo: add , And<SurveyCollector.surveyID,Equal<Required<SurveyCollector.surveyID>>>
+            //todo: add , And<SurveyCollector.surveyStatus,Equal<Required<SurveyCollector.surveyStatus>> 
+
+            List<SurveyCollector> activeCollectors = new List<SurveyCollector>();
+
+            foreach (var collector in activeCollectorsResultSet)
+            {
+                activeCollectors.Add((SurveyCollector)collector);
+            }
+
+            return activeCollectors;
         }
     }
 
@@ -129,6 +193,29 @@ namespace PX.Survey.Ext
                     DescriptionField = typeof(Survey.surveyName))]
         public virtual int? SurveyID { get; set; }
         #endregion
+
+        public abstract class duration : PX.Data.IBqlField { }
+        //todo: not yet certain of the size that we need. need to find out. for now we will use 6
+        //      We also want to make sure we have a couple decimal points.
+        [PXDecimal(2)]
+        [PXUIField(DisplayName = "Duration")]
+        //todo: if nothing is set we don't want to set an expiration
+        //      make sure the expiration gets set as a null in the event
+        //      no duration is set
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)] 
+        public virtual decimal? Duration { get; set; }
+
+        public abstract class durationUnit : PX.Data.IBqlField { }
+        // Acuminator is trying to get me to set this to a PXString when I need it to be a PXStringList
+        // Acuminator disable once PX1002 IncorrectTypeAttributeForListAttribute [Justification] 
+        [PXStringList(
+            new[] { "H", "D", "W", "M" },
+            new[] { "Hours", "Days", "Weeks", "Months" }
+        )]
+        [PXDefault("N", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Units")]
+        public virtual string DurationUnit { get; set; }
+
     }
     #endregion
 }

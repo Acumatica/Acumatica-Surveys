@@ -1,9 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29920.165
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ACMSurvey", "http://localhost/ACMSurvey", "{7EA09B2C-504C-450F-B0A9-F0CF4FAEA9A3}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		ProjectReferences = "{9bc6d61a-5d4b-4d57-bc6b-5e3f9d04377e}|Covid19.Lib.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/ACMSurvey"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\ACMSurvey\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/ACMSurvey"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\ACMSurvey\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\..\..\..\Program Files (x86)\Acumatica ERP\ACMSurvey\"
+	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
@@ -27,6 +47,28 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ACMSurvey", "http://localho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PX.Survey.Ext", "..\PX.Survey.Ext\PX.Survey.Ext.csproj", "{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "APS19_209_0038", "http://localhost/APS19_209_0038", "{20D19119-20C1-43A3-B7A0-86DE91EFBE84}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		ProjectReferences = "{9bc6d61a-5d4b-4d57-bc6b-5e3f9d04377e}|PX.Survey.Ext.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/APS19_209_0038"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\Acumatica2019R2\APS19_209_0038\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\APS19_209_0038\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/APS19_209_0038"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\Acumatica2019R2\APS19_209_0038\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\APS19_209_0038\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\..\..\..\Acumatica2019R2\APS19_209_0038\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +83,10 @@ Global
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D19119-20C1-43A3-B7A0-86DE91EFBE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D19119-20C1-43A3-B7A0-86DE91EFBE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D19119-20C1-43A3-B7A0-86DE91EFBE84}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D19119-20C1-43A3-B7A0-86DE91EFBE84}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
