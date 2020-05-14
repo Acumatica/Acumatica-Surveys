@@ -9,9 +9,9 @@ The changes will enhance the readibility and utility of the documentation itself
 
 **Step One:** Download the customization package (AcumaticaSurveyPkg.zip) appropriate for your version of Acumatica.  Curently we support versions:
 
-**Acumatica 2019R2 (Build 19.208.0051 onward)
+**Acumatica 2019R2 (Build 19.208.0051 onward)**
 
-**Acumatica 2020R1 (Build 20.100.0095 onward)
+**Acumatica 2020R1 (Build 20.100.0095 onward)**
 
 To download the customization package for 2019R2, click [here](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2).  For 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1).
 
