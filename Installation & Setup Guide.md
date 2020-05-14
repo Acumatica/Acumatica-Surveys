@@ -1,7 +1,7 @@
 # Acumatica Surveys 
 ## Installation & Setup Guide (Draft)
 
-This is an extensive step-by-step guide for customers to successfully install & setup the customization package. We have recently improved structure of our documentation by separating documenation on information such as release notes, [README](https://github.com/acumatica/acumatica-surveys/readme.md), and documentation guides.  The [README](https://github.com/acumatica/acumatica-surveys/readme.md) will serve as an introduction and table of content hyper-linked to easily navigate the information the reader needs at any particular time.
+This is an extensive step-by-step guide for customers to successfully install & setup the customization package. We have recently improved structure of our documentation by separating documenation on information such as release notes, [README](https://github.com/Acumatica/Acumatica-Surveys/blob/master/README.md), and documentation guides.  The [README](https://github.com/Acumatica/Acumatica-Surveys/blob/master/README.md) will serve as an introduction and table of content hyper-linked to easily navigate the information the reader needs at any particular time.
 
 The planned changes will enhance the readibility and utility of the documentation itself.
 
