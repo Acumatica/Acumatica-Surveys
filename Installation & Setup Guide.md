@@ -7,7 +7,7 @@ The changes will enhance the readibility and utility of the documentation itself
 
 ## Setup Instructions for Installing the Acumatica Surveys package
 
-**Step One:** Download the customization package (AcumaticaSurveyPkg.zip) appropriate for your version of Acumatica.  Curently we support versions:
+**Step One:** Download the customization package (AcumaticaSurveyPkg.zip) appropriate for your version of Acumatica.  Curently, we support the following versions:
 
 **Acumatica 2019R2 (Build 19.208.0051 onward)**
 
