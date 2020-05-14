@@ -9,7 +9,9 @@
 
 [Acumatica Surveys for Version 2019R2](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2)
 
-[Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)
+[Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)[\
+
+[Known Issues](https://github.com/Acumatica/Acumatica-Surveys/issues)
 
 
 ## Prerequisites | Supported Versions & Builds ##
@@ -18,11 +20,6 @@
 
 ***Acumatica 2020R1 (Build 20.100.0095 onward)***
 
-
-## Currently Known Limitations & Constraints ##
-The ability to delete the survey when it’s still active, but has not been processed/published.
-
-A published survey that a user has responded to cannot be deleted.
 
 ## Support ##
 
