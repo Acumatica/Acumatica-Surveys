@@ -11,8 +11,11 @@
 # Content Index #
 
 [Installation & Setup Guide](https://github.com/Acumatica/Acumatica-Surveys/blob/master/Installation%20&%20Setup%20Guide.md)
+
 [Acumatica Surveys for Version 2019R2](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2)
+
 [Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)
+
 
 If you have any questions or need assistance, you can post your questions in our [Stackoverflow forum](https://stackoverflow.com/questions/tagged/acumatica).
 
