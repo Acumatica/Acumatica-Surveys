@@ -11,11 +11,13 @@
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
 	<px:PXFormView ID="form" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%" DataMember="surveySetup" TabIndex="3600"
-                   FilesIndicator="true" NoteIndicator="true" DefaultControlID="edSurveyNumberingID">
+                   FilesIndicator="True" NoteIndicator="True" DefaultControlID="edSurveyNumberingID">
 		<Template>
 			<px:PXLayoutRule runat="server" StartRow="True" LabelsWidth="SM" ControlSize="M"/>
             <px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Numbering Settings" />
-		    <px:PXSelector ID="edSurveyNumberingID" runat="server" DataField="SurveyNumberingID" CommitChanges="true" AllowEdit="true"></px:PXSelector>
+		    <px:PXSelector ID="edSurveyNumberingID" runat="server" DataField="SurveyNumberingID" CommitChanges="True" AllowEdit="True" edit="1"></px:PXSelector>
+		    <px:PXCheckBox ID="edDemoSurvey" runat="server" AlreadyLocalized="False" DataField="DemoSurvey" Text="Created Demo Survey">
+            </px:PXCheckBox>
 		</Template>
 		<AutoSize Container="Window" Enabled="True" MinHeight="200" />
 	</px:PXFormView>

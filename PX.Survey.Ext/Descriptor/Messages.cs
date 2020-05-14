@@ -43,5 +43,13 @@ namespace PX.Survey.Ext
 
         //Until issue is resolved with ios app
         public const string PushNotificationMessageBodySurveyIOS = "You have new Survey # {0} to complete";
+
+        #region Demo Survey
+        public const string COVSYMPTOM = "Are you experiencing any of these symptoms? (fever, cough, shortness of breath, sore throat or diarrhea)";
+        public const string COVCONTACT = "Contact with individuals diagnosed with COVID-19?";
+        public const string COVTEMP = "Self Temperature";
+        public const string COVTRAVEL = "Travel Locations";
+        public const string DEMOCOVID = "COVID-19 Wellness Survey";
+        #endregion
     }
 }
