@@ -138,6 +138,14 @@ namespace PX.Survey.Ext
             }
         }
 
+        /// <summary>
+        /// This methos will search for active collectors then set the status to expired for any record that has
+        /// passed the expiration date.
+        /// </summary>
+        /// <param name="surveyUser"></param>
+        /// <param name="graph"></param>
+        /// <param name="surveyCurrent"></param>
+        /// <param name="cache"></param>
         private static void SetExpiredSurveys(SurveyUser surveyUser, 
             SurveyCollectorMaint graph, 
             Survey surveyCurrent,
@@ -145,6 +153,9 @@ namespace PX.Survey.Ext
         {
             bool isPastExpiration(SurveyCollector collector)
             {
+                //We consider collectors with a null ExpirationDate as a record that never expires
+                //This can be explicitly controlled by setting the duration to 0 which will in turn 
+                //set a null value into the table.
                 if (!collector.ExpirationDate.HasValue) return false;
                 return collector.ExpirationDate < DateTime.Now;
             }
@@ -153,14 +164,9 @@ namespace PX.Survey.Ext
             foreach (var surveyCollector in usersActiveCollectors.Where(isPastExpiration))
             {
                 surveyCollector.CollectorStatus = SurveyResponseStatus.CollectorExpired;
-                cache.Update(surveyCollector);
+                graph.Caches["SurveyCollector"].Update(surveyCollector);
             }
-
-            //not sure if this is needed here.
-            //Im assuming that the persist will happen further down the pipe
-            //todo: purge this once assumption is confirmed
-            //graph.Persist(); 
-
+            graph.Persist();
         }
 
         
@@ -176,8 +182,9 @@ namespace PX.Survey.Ext
         /// </returns>
         private static List<SurveyCollector> GetActiveCollectors(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent)
         {
-            
-            PXResultset<SurveyCollector> activeCollectorsResultSet =
+
+            /* original
+              PXResultset<SurveyCollector> activeCollectorsResultSet =
                 PXSelect<SurveyCollector,
                         Where<SurveyCollector.userID, Equal<Required<SurveyCollector.userID>>,
                                 And<SurveyCollector.surveyID, Equal<Required<SurveyCollector.surveyID>>>>>
@@ -190,6 +197,20 @@ namespace PX.Survey.Ext
                         surveyUser.UserID, 
                         surveyCurrent.SurveyID, 
                         SurveyResponseStatus.CollectorSent); //todo: need to confirm Collector sent is the correct status we are after
+             */
+
+            PXResultset<SurveyCollector> activeCollectorsResultSet =
+                PXSelect<SurveyCollector,
+                        Where<SurveyCollector.userID, Equal<Required<SurveyCollector.userID>>,
+                                And<SurveyCollector.surveyID, Equal<Required<SurveyCollector.surveyID>>
+                                ,And<SurveyCollector.collectorStatus, NotEqual<Required<SurveyCollector.collectorStatus>>
+                                ,And<SurveyCollector.collectorStatus, NotEqual<Required<SurveyCollector.collectorStatus>>>>>>>
+                    .Select(
+                        graph, 
+                        surveyUser.UserID, 
+                        surveyCurrent.SurveyID, 
+                        SurveyResponseStatus.CollectorResponded,
+                        SurveyResponseStatus.CollectorExpired); 
 
           
             List<SurveyCollector> activeCollectors = new List<SurveyCollector>();
@@ -240,7 +261,7 @@ namespace PX.Survey.Ext
             new[] { "H", "D", "W", "M" },
             new[] { "Hours", "Days", "Weeks", "Months" }
         )]
-        [PXDefault("N")]
+        [PXDefault("D", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Units")]
         public virtual string DurationUnit { get; set; }
 

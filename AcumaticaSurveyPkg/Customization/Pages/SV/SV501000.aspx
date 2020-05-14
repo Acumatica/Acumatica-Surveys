@@ -10,8 +10,9 @@
 		Width="100%" TabIndex="4500">
 		<Template>
 			<px:PXLayoutRule runat="server" StartRow="True" ControlSize="M" LabelsWidth="S"/>
-		    <px:PXSelector ID="edSurveyID" runat="server" CommitChanges="True" DataField="SurveyID" DisplayMode="Hint">
-            </px:PXSelector>
+		    <px:PXSelector   ID="edSurveyID"      runat="server" CommitChanges="True"   DataField="SurveyID" DisplayMode="Hint"></px:PXSelector>
+            <px:PXNumberEdit ID="edDuration"      runat="server" CommitChanges="False"  DataField="Duration"></px:PXNumberEdit>
+            <px:PXDropDown   ID="edDurationUnit"  runat="server" CommitChanges="False"  DataField="DurationUnit"></px:PXDropDown>
 		</Template>
 	</px:PXFormView>
 </asp:Content>
