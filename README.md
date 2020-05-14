@@ -2,11 +2,6 @@
 
 *This README document will serve as an index or table of contents for the reader to more easily navigate the various documenation that has been created as well as point to the versions of the customization package built for different versions of Acumatica to download - which at present is versions 2019R2 and 2020R1.  Future versions will be listed as well as they become available.*
 
-#### Prerequisites | Supported Versions & Builds ####
-
-***Acumatica 2019R2 (Build 19.208.0051 onward)***
-
-***Acumatica 2020R1 (Build 20.100.0095 onward)***
 
 ## Content Index ##
 
@@ -15,6 +10,13 @@
 [Acumatica Surveys for Version 2019R2](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2)
 
 [Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)
+
+
+### Prerequisites | Supported Versions & Builds ###
+
+***Acumatica 2019R2 (Build 19.208.0051 onward)***
+
+***Acumatica 2020R1 (Build 20.100.0095 onward)***
 
 
 ## Known Limitations and Constraints ##
