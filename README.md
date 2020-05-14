@@ -32,3 +32,6 @@ If you have any questions or need assistance, you can post your questions in our
 
 ## More Information
 To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE.
+Learn more about how Acumatica Surveys was concieved, read Ali Jani's blog post:
+
+[Acumatica Surveys: A COVID-19 Wellness Tracker of Employees](https://www.acumatica.com/blog/acumatica-surveys-covid-19-wellness-tracker/)
