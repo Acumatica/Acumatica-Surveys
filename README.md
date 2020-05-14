@@ -12,7 +12,7 @@
 [Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)
 
 
-### Prerequisites | Supported Versions & Builds ###
+## Prerequisites | Supported Versions & Builds ##
 
 ***Acumatica 2019R2 (Build 19.208.0051 onward)***
 
