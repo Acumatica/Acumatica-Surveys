@@ -24,8 +24,6 @@ The ability to delete the survey when it’s still active, but has not been proc
 
 A published survey that a user has responded to cannot be deleted.
 
-Mobile Push Notifications will be sent only for android devices. For now, iOS users can use their web browser to view & respond to thier surveys, where they are selected as recipients.
-
 ## Support ##
 
 If you have any questions or need assistance, you can post your questions in our [Stackoverflow forum](https://stackoverflow.com/questions/tagged/acumatica).
