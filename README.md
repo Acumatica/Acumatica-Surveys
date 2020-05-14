@@ -19,7 +19,7 @@
 ***Acumatica 2020R1 (Build 20.100.0095 onward)***
 
 
-## Known Limitations and Constraints ##
+## Currently Known Limitations & Constraints ##
 The ability to delete the survey when it’s still active, but has not been processed/published.
 
 A published survey that a user has responded to cannot be deleted.
