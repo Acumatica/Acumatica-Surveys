@@ -1,13 +1,13 @@
 # Acumatica Surveys 
 ## Installation & Setup Guide (Draft)
 
-This is an extensive step-by-step guide for customers to successfully install & setup the customization package. We have recently improved structure of our documentation by separating documenation on information such as release notes, [README](https://github.com/Acumatica/Acumatica-Surveys/blob/master/README.md), and documentation guides.  The [README](https://github.com/Acumatica/Acumatica-Surveys/blob/master/README.md) will serve as an introduction and table of content hyper-linked to easily navigate the information the reader needs at any particular time.
+This is an extensive step-by-step guide for customers to successfully install & setup the customization package. We have recently improved structure of our documentation by separating documenation of information such as release notes, [README](https://github.com/Acumatica/Acumatica-Surveys/blob/master/README.md), and documentation guides.  The [README](https://github.com/Acumatica/Acumatica-Surveys/blob/master/README.md) will serve as an introduction and table of content hyper-linked to easily navigate the information the reader needs at any particular time.
 
 The planned changes will enhance the readibility and utility of the documentation itself.
 
 ## Setup Instructions for Installing the Acumatica Surveys package
 
-**Step One:** Download the customization package (AcumaticaSurveyPkg.zip) as is shown below in the screenshot below.
+**Step One:** Download the customization package (AcumaticaSurveyPkg.zip) appropriate for your version of Acumatica.  Curently we support versions 2019R2 & 2020R2, respectively.
 
 <img src="/docs/images/SS1-DownloadPackage.PNG" height="50%" width="50%">
 
