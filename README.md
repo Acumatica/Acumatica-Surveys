@@ -9,7 +9,7 @@
 
 [Acumatica Surveys for Version 2019R2](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2)
 
-[Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)[\
+[Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)
 
 [Known Issues](https://github.com/Acumatica/Acumatica-Surveys/issues)
 
