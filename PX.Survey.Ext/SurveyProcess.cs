@@ -46,75 +46,124 @@ namespace PX.Survey.Ext
 
             foreach (var surveyUser in dataToProceed)
             {
-
-                //note: 20200512 this was added in to allow for the processing page to set
-                //      an expiration onto collectors that have passed the expiration date.
-                SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache);
-
-                try
+                //note: 20200515 This is the original Phase 1 implementation that will create a new collector 
+                //      and send the notification. This was refactored into this local method to keep its implementation as 
+                //      is and allow for the SurveyAction mechanisms to invoke it as applicable.
+                //todo: refactor into a static method as to be consistent with the other routines
+                void SendNew()
                 {
-                    string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
-                                               SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
-
-                    graph.Clear();
-
-                    
-
-                    SurveyCollector surveyCollector = new SurveyCollector
+                    try
                     {
-                        CollectorName =
-                            $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
-                        SurveyID = surveyUser.SurveyID,
-                        UserID = surveyUser.UserID,
-                        CollectedDate = null,
-                        //note: 20200512 added a mechanism to calculated and set the expiration date onto the collector.
-                        ExpirationDate = CalculateExpirationDate(filter.Duration,filter.DurationUnit),
-                        CollectorStatus = sCollectorStatus
-                    };
+                        string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
+                                                   SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
 
-                    surveyCollector = graph.SurveyQuestions.Insert(surveyCollector);
-                    graph.Persist();
+                        graph.Clear();
 
-                    string sScreenID = PXSiteMap.Provider.FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
-                    Guid noteID = surveyCollector.NoteID.Value;
 
-                    PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                    PXTrace.WriteInformation("noteID " + noteID.ToString());
-                    PXTrace.WriteInformation("ScreenID " + sScreenID);
 
-                    var pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
-                    List<Guid> userIds = new List<Guid>();
-                    userIds.Add(surveyUser.UserID.Value);
+                        SurveyCollector surveyCollector = new SurveyCollector
+                        {
+                            CollectorName =
+                                $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
+                            SurveyID = surveyUser.SurveyID,
+                            UserID = surveyUser.UserID,
+                            CollectedDate = null,
+                            //note: 20200512 added a mechanism to calculated and set the expiration date onto the collector.
+                            ExpirationDate = CalculateExpirationDate(filter.Duration, filter.DurationUnit),
+                            CollectorStatus = sCollectorStatus
+                        };
 
-                    pushNotificationSender.SendNotificationAsync(
-                                        userIds: userIds,
-                                        title: Messages.PushNotificationTitleSurvey,
-                                        text: $"{ Messages.PushNotificationMessageBodySurvey } # { surveyCollector.CollectorName }.",
-                                        link: (sScreenID, noteID),
-                                        cancellation: CancellationToken.None);
+                        surveyCollector = graph.SurveyQuestions.Insert(surveyCollector);
+                        graph.Persist();
 
-                    if (sCollectorStatus == SurveyResponseStatus.CollectorSent)
+                        string sScreenID = PXSiteMap.Provider.FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
+                        Guid noteID = surveyCollector.NoteID.Value;
+
+                        PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
+                        PXTrace.WriteInformation("noteID " + noteID.ToString());
+                        PXTrace.WriteInformation("ScreenID " + sScreenID);
+
+                        var pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
+                        List<Guid> userIds = new List<Guid>();
+                        userIds.Add(surveyUser.UserID.Value);
+
+                        pushNotificationSender.SendNotificationAsync(
+                                            userIds: userIds,
+                                            title: Messages.PushNotificationTitleSurvey,
+                                            text: $"{ Messages.PushNotificationMessageBodySurvey } # { surveyCollector.CollectorName }.",
+                                            link: (sScreenID, noteID),
+                                            cancellation: CancellationToken.None);
+
+                        if (sCollectorStatus == SurveyResponseStatus.CollectorSent)
+                        {
+                            PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
+                        }
+                        else
+                        {
+                            PXProcessing<SurveyUser>.SetWarning(surveyUserList.IndexOf(surveyUser), Messages.NoDeviceError);
+                        }
+                    }
+                    catch (AggregateException ex)
                     {
-                        PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
+                        var message = string.Join(";", ex.InnerExceptions.Select(e => e.Message));
+                        PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), message);
+                    }
+                    catch (Exception e)
+                    {
+                        errorOccurred = true;
+                        PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), e);
+                    }
+                }
+
+
+
+                void DefaultRoutine()
+                {
+                    //note: 20200512 this was added in to allow for the processing page to set
+                    //      an expiration onto collectors that have passed the expiration date.
+                    SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache);
+                    if (GetActiveCollectors(surveyUser, graph, surveyCurrent).Count > 0)
+                    {
+                        SendReminders(surveyUser, graph, surveyCurrent, cache);
                     }
                     else
                     {
-                        PXProcessing<SurveyUser>.SetWarning(surveyUserList.IndexOf(surveyUser), Messages.NoDeviceError);
+                        SendNew();
                     }
                 }
-                catch (AggregateException ex)
+
+                //todo: refactor so that constants instead of Magic strings are used
+                //"D", "N", "R", "E" },
+                //"Default", "New Only", "Remind Only", "Expire Only" }
+                //)]
+                switch (filter.SurveyAction)
                 {
-                    var message = string.Join(";", ex.InnerExceptions.Select(e => e.Message));
-                    PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), message);
+                    case "N":
+                        SendNew();
+                        break;
+                    case "R":
+                        SendReminders(surveyUser, graph, surveyCurrent, cache);
+                        break;
+                    case "E":
+                        SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache);
+                        break;
+                    case "D":
+                        DefaultRoutine();
+                        break;
+                    default:
+                        throw new PXException(Messages.SurveyActionNotRecognised);
                 }
-                catch (Exception e)
-                {
-                    errorOccurred = true;
-                    PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), e);
-                }
+
+                
+               
             }
             if (errorOccurred)
                 throw new PXException(Messages.SurveyError);
+        }
+
+        private static void SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent, PXCache cache)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -130,6 +179,7 @@ namespace PX.Survey.Ext
             switch (unit)
             {
                 //todo: confirm with team that using DateTime.Now will be satisfactory or if the AccessInfo business date would be better.
+                //todo: change this over to use UTC
                 case "H": return DateTime.Now.AddHours((double)filterDuration.GetValueOrDefault());
                 case "D": return DateTime.Now.AddDays( (double)filterDuration.GetValueOrDefault());
                 case "W": return DateTime.Now.AddDays( (double)filterDuration.GetValueOrDefault() * 7);
@@ -246,13 +296,17 @@ namespace PX.Survey.Ext
                     DescriptionField = typeof(Survey.surveyName))]
         public virtual int? SurveyID { get; set; }
         #endregion
+        #region Duration
 
-        public abstract class duration : PX.Data.IBqlField { }
+         public abstract class duration : PX.Data.IBqlField { }
         //todo: not yet certain of the size that we need. need to find out. for now we will use 2
         [PXDecimal(2)]
         [PXUIField(DisplayName = "Duration")]
         [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)] 
         public virtual decimal? Duration { get; set; }
+
+        #endregion
+        #region DurationUnit
 
         public abstract class durationUnit : PX.Data.IBqlField { }
         // Acuminator is trying to get me to set this to a PXString when I need it to be a PXStringList
@@ -265,6 +319,21 @@ namespace PX.Survey.Ext
         [PXUIField(DisplayName = "Units")]
         public virtual string DurationUnit { get; set; }
 
+        #endregion
+        #region SurveyAction
+
+        public abstract class surveyAction : PX.Data.IBqlField { }
+        // Acuminator is trying to get me to set this to a PXString when I need it to be a PXStringList
+        // Acuminator disable once PX1002 IncorrectTypeAttributeForListAttribute [Justification] 
+        [PXStringList(
+            new[] { "D", "N", "R", "E" },
+            new[] { "Default", "New Only", "Remind Only", "Expire Only" }
+        )]
+        [PXDefault("D", PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Action")]
+        public virtual string SurveyAction { get; set; }
+
+        #endregion
     }
     #endregion
 }
