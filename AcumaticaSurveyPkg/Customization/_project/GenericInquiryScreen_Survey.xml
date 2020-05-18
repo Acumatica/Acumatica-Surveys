@@ -131,8 +131,8 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="4a0944e9-3ccb-4048-ae6a-6f3070f96baa" Name="Survey" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SV201000" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
-                    <GINavigationScreen ScreenID="SV201000" LineNbr="1" WindowMode="I">
+                <row DesignID="4a0944e9-3ccb-4048-ae6a-6f3070f96baa" Name="Survey" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU201000" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
+                    <GINavigationScreen ScreenID="SU201000" LineNbr="1" WindowMode="I">
                         <GINavigationParameter LineNbr="1" FieldName="SurveyCD" ParameterName="Survey.surveyCD" IsExpression="0" />
                     </GINavigationScreen>
                     <GITable Alias="Survey" Name="PX.Survey.Ext.Survey">
@@ -143,13 +143,13 @@
                         <GIResult LineNbr="2" SortOrder="2" IsActive="1" Field="surveyCD" IsVisible="1" DefaultNav="0" NavigationNbr="1" QuickFilter="0" FastFilter="1" RowID="8695ce44-c872-44be-b402-b6062b78d966" />
                     </GITable>
                     <SiteMap linkname="toDesignById">
-                        <row Title="Survey" Url="~/GenericInquiry/GenericInquiry.aspx?id=4a0944e9-3ccb-4048-ae6a-6f3070f96baa" ScreenID="SV2010PL" NodeID="36f8b229-e837-4339-8bca-0cf6bd644773" ParentID="00000000-0000-0000-0000-000000000000">
-                            <ListEntryPoint EntryScreenID="SV201000" IsActive="1" />
+                        <row Title="Survey" Url="~/GenericInquiry/GenericInquiry.aspx?id=4a0944e9-3ccb-4048-ae6a-6f3070f96baa" ScreenID="SU2010PL" NodeID="36f8b229-e837-4339-8bca-0cf6bd644773" ParentID="00000000-0000-0000-0000-000000000000">
+                            <ListEntryPoint EntryScreenID="SU201000" IsActive="1" />
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" />
                         </row>
                     </SiteMap>
                     <SiteMap linkname="to1Screen">
-                        <row Title="Survey" Url="~/Pages/SV/SV201000.aspx" NodeID="aee72d24-5284-49ec-a463-5c58e4efdf70" ParentID="00000000-0000-0000-0000-000000000000">
+                        <row Title="Survey" Url="~/Pages/SU/SU201000.aspx" NodeID="aee72d24-5284-49ec-a463-5c58e4efdf70" ParentID="00000000-0000-0000-0000-000000000000">
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="10" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6" />
                         </row>
                     </SiteMap>

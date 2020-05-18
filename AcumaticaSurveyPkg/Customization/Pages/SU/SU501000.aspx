@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="SV501000.aspx.cs" Inherits="Page_SV501000" Title="Untitled Page" %>
+<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormDetail.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="SU501000.aspx.cs" Inherits="Page_SU501000" Title="Untitled Page" %>
 <%@ MasterType VirtualPath="~/MasterPages/FormDetail.master" %>
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">

@@ -7,9 +7,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
-public partial class Page_SV101000 : PX.Web.UI.PXPage
+public partial class  Page_SU201000 : PX.Web.UI.PXPage
 {
-    protected void Page_Load(object sender, EventArgs e)
-    {
-    }
+	protected void Page_Load(object sender, EventArgs e)
+	{
+	}
 }
