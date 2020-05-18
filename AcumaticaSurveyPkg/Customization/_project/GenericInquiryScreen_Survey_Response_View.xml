@@ -131,15 +131,15 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SV301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
+                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
                     <GIFilter LineNbr="1" IsActive="1" Name="SurveyID" FieldName="SurveyCollector.surveyID" DataType="string" DisplayName="Survey ID" IsExpression="0" ColSpan="1" Required="0" />
-                    <GINavigationScreen ScreenID="SV301000" LineNbr="3" WindowMode="L" Icon="arrow_forward">
+                    <GINavigationScreen ScreenID="SU301000" LineNbr="3" WindowMode="L" Icon="arrow_forward">
                         <GINavigationParameter LineNbr="3" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen ScreenID="SV301000" LineNbr="2" WindowMode="S">
+                    <GINavigationScreen ScreenID="SU301000" LineNbr="2" WindowMode="S">
                         <GINavigationParameter LineNbr="2" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen ScreenID="SV301000" LineNbr="1" WindowMode="S">
+                    <GINavigationScreen ScreenID="SU301000" LineNbr="1" WindowMode="S">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.CollectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GISort LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.createdDateTime" SortOrder="D" />
@@ -156,14 +156,14 @@
                     <GIWhere LineNbr="2" IsActive="1" DataFieldName="[SurveyID]" Condition="NU" IsExpression="0" CloseBrackets=")        " Operation="A" />
                     <GIWhere LineNbr="1" IsActive="1" OpenBrackets="(        " DataFieldName="SurveyCollector.surveyID" Condition="E " IsExpression="0" Value1="[SurveyID]" Operation="O" />
                     <SiteMap linkname="toDesignById">
-                        <row Title="Survey Response View" Url="~/genericinquiry/genericinquiry.aspx?id=55b448c0-adb5-4fb1-ac6d-bcf195f04721" ScreenID="SV401000" NodeID="068daf48-426d-4283-93f9-c7cbf0486c3c" ParentID="00000000-0000-0000-0000-000000000000">
+                        <row Title="Survey Response View" Url="~/genericinquiry/genericinquiry.aspx?id=55b448c0-adb5-4fb1-ac6d-bcf195f04721" ScreenID="SU401000" NodeID="068daf48-426d-4283-93f9-c7cbf0486c3c" ParentID="00000000-0000-0000-0000-000000000000">
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="40" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
                                 <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                             </MUIScreen>
                         </row>
                     </SiteMap>
                     <SiteMap linkname="to1Screen">
-                        <row Position="5960" Title="Survey Response" Url="~/Pages/SV/SV301000.aspx" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
+                        <row Position="5960" Title="Survey Response" Url="~/Pages/SU/SU301000.aspx" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6">
                                 <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                             </MUIScreen>

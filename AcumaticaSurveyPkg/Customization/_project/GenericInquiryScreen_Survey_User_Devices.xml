@@ -160,7 +160,7 @@
                     <GIWhere LineNbr="2" IsActive="1" DataFieldName="[SurveyID]" Condition="NU" IsExpression="0" CloseBrackets=")        " Operation="A" />
                     <GIWhere LineNbr="1" IsActive="1" OpenBrackets="(        " DataFieldName="SurveyCollector.surveyID" Condition="E " IsExpression="0" Value1="[SurveyID]" Operation="O" />
                     <SiteMap linkname="toDesignById">
-                        <row Title="Survey User Devices" Url="~/GenericInquiry/GenericInquiry.aspx?id=c9a9780e-7051-43e9-a59f-0319b5592140" ScreenID="SV401020" NodeID="2a36eb1a-87d1-406f-b4c7-8f29a0c82755" ParentID="00000000-0000-0000-0000-000000000000">
+                        <row Title="Survey User Devices" Url="~/GenericInquiry/GenericInquiry.aspx?id=c9a9780e-7051-43e9-a59f-0319b5592140" ScreenID="SU401020" NodeID="2a36eb1a-87d1-406f-b4c7-8f29a0c82755" ParentID="00000000-0000-0000-0000-000000000000">
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="30" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
                                 <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                             </MUIScreen>
