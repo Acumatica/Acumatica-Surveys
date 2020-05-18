@@ -131,8 +131,8 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" Name="Survey Response" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SV301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
-                    <GINavigationScreen ScreenID="SV301000" LineNbr="1" WindowMode="I">
+                <row DesignID="5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" Name="Survey Response" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
+                    <GINavigationScreen ScreenID="SU301000" LineNbr="1" WindowMode="I">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GITable Alias="SurveyCollector" Name="PX.Survey.Ext.SurveyCollector">
@@ -148,14 +148,14 @@
                     </GITable>
                     <GIWhere LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.userID" Condition="E " IsExpression="0" Value1="@me" Operation="A" />
                     <SiteMap linkname="toDesignById">
-                        <row Title="Survey Response" Url="~/GenericInquiry/GenericInquiry.aspx?id=5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" ScreenID="SV3010PL" NodeID="919c7f9d-1b38-402c-ab12-410873432a5a" ParentID="00000000-0000-0000-0000-000000000000">
-                            <ListEntryPoint EntryScreenID="SV301010" IsActive="1" />
-                            <ListEntryPoint EntryScreenID="SV301000" IsActive="1" />
+                        <row Title="Survey Response" Url="~/GenericInquiry/GenericInquiry.aspx?id=5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" ScreenID="SU3010PL" NodeID="919c7f9d-1b38-402c-ab12-410873432a5a" ParentID="00000000-0000-0000-0000-000000000000">
+                            <ListEntryPoint EntryScreenID="SU301010" IsActive="1" />
+                            <ListEntryPoint EntryScreenID="SU301000" IsActive="1" />
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="10" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" />
                         </row>
                     </SiteMap>
                     <SiteMap linkname="to1Screen">
-                        <row Position="5960" Title="Survey Response" Url="~/Pages/SV/SV301000.aspx" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
+                        <row Position="5960" Title="Survey Response" Url="~/Pages/SU/SU301000.aspx" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
                             <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6" />
                         </row>
                     </SiteMap>

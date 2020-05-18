@@ -25,7 +25,7 @@
         </layout>
         <data>
             <SiteMap>
-                <row Title="Send Survey" Url="~/Pages/SV/SV501000.aspx" ScreenID="SV501000" NodeID="e55c08d4-cd47-4104-9ebe-88592bf435b1" ParentID="00000000-0000-0000-0000-000000000000">
+                <row Title="Send Survey" Url="~/Pages/SU/SU501000.aspx" ScreenID="SU501000" NodeID="e55c08d4-cd47-4104-9ebe-88592bf435b1" ParentID="00000000-0000-0000-0000-000000000000">
                     <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="10" SubcategoryID="32130442-2305-4394-9389-cf915b191d2a" />
                 </row>
             </SiteMap>
