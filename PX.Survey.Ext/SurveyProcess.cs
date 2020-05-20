@@ -38,138 +38,28 @@ namespace PX.Survey.Ext
         public static void ProcessSurvey(PXCache cache, SurveyFilter filter, List<SurveyUser> surveyUserList)
         {
             bool errorOccurred = false;
-
             SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-
             Survey surveyCurrent = (Survey)PXSelectorAttribute.Select<SurveyFilter.surveyID>(cache, filter);
-
             List<SurveyUser> dataToProceed = new List<SurveyUser>(surveyUserList);
-
             foreach (var surveyUser in dataToProceed)
             {
-                //note: 20200515 This is the original Phase 1 implementation that will create a new collector 
-                //      and send the notification. This was refactored into this local method to keep its implementation as 
-                //      is and allow for the SurveyAction mechanisms to invoke it as applicable.
-                //todo: refactor into a static method as to be consistent with the other routines
-                void sendNew()
-                {
-                    try
-                    {
-                        string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
-                                                   SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
-
-                        graph.Clear();
-
-                        SurveyCollector surveyCollector = new SurveyCollector
-                        {
-                            CollectorName =
-                                $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
-                            SurveyID = surveyUser.SurveyID,
-                            UserID = surveyUser.UserID,
-                            CollectedDate = null,
-                            //note: 20200512 added a mechanism to calculate and set the expiration date onto the collector.
-                            ExpirationDate = CalculateExpirationDate(filter.Duration, filter.DurationUnit),
-                            CollectorStatus = sCollectorStatus
-                        };
-
-                        surveyCollector = graph.SurveyQuestions.Insert(surveyCollector);
-                        graph.Persist();
-
-                        string sScreenID = PXSiteMap.Provider.FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
-                        Guid noteID = surveyCollector.NoteID.Value;
-
-                        PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                        PXTrace.WriteInformation("noteID " + noteID.ToString());
-                        PXTrace.WriteInformation("ScreenID " + sScreenID);
-
-                        var pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
-                        List<Guid> userIds = new List<Guid>();
-                        userIds.Add(surveyUser.UserID.Value);
-
-                        pushNotificationSender.SendNotificationAsync(
-                                            userIds: userIds,
-                                            title: Messages.PushNotificationTitleSurvey,
-                                            text: $"{ Messages.PushNotificationMessageBodySurvey } # { surveyCollector.CollectorName }.",
-                                            link: (sScreenID, noteID),
-                                            cancellation: CancellationToken.None);
-
-                        if (sCollectorStatus == SurveyResponseStatus.CollectorSent)
-                        {
-                            PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
-                        }
-                        else
-                        {
-                            PXProcessing<SurveyUser>.SetWarning(surveyUserList.IndexOf(surveyUser), Messages.NoDeviceError);
-                        }
-                    }
-                    catch (AggregateException ex)
-                    {
-                        var message = string.Join(";", ex.InnerExceptions.Select(e => e.Message));
-                        PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), message);
-                    }
-                    catch (Exception e)
-                    {
-                        errorOccurred = true;
-                        PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), e);
-                    }
-                }
-
-                void sendReminder()
-                {
-                    if (SendReminders(surveyUser, graph, surveyCurrent, cache))
-                    {
-                        PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser),Messages.SurveyReminderSent);
-                    }
-                    else
-                    {
-                        PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), Messages.SurveyReminderFailed);
-                    }
-                }
-
-                void setExpiredSurveys()
-                {
-                    if (SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache))
-                    {
-                        PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser),Messages.SetExpirationSuccess);
-                    }
-                    else
-                    {
-                        PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), Messages.SetExpirationFailed);
-                    }
-                }
-
-
-                //this local method concisely defines the primary method that is used within the scheduler
-                void defaultRoutine()
-                {
-                    SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache);
-                    if (GetActiveCollectors(surveyUser, graph, surveyCurrent).Count > 0)
-                    {
-                        sendReminder();
-                    }
-                    else
-                    {
-                        sendNew();
-                    }
-                }
-
-                
-
-                //todo: refactor so that we use constants instead of Magic strings are used
+                //todo: refactor so that constants instead of Magic strings are used
                 //      we will model after what was done for the SurveyCollector.CollectorStatus
                 switch (filter.SurveyAction)
                 {
+                    //note: the or clauses below are intended to preserve a previous error indicator and not let 
+                    //      successive iterations override a previous error detection.
                     case "N":
-                        sendNew();
+                        errorOccurred = SendNew(surveyUser, graph, surveyCurrent, cache, surveyUserList, filter) || errorOccurred;
                         break;
                     case "R":
-                        sendReminder();
+                        errorOccurred = SendReminders(surveyUser, graph, surveyCurrent, cache, surveyUserList) || errorOccurred;
                         break;
                     case "E":
-                        setExpiredSurveys();
+                        errorOccurred = SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache, surveyUserList) || errorOccurred;
                         break;
                     case "D":
-                        defaultRoutine();
+                        errorOccurred = DefaultRoutine(surveyUser, graph, surveyCurrent, cache, surveyUserList, filter) || errorOccurred;
                         break;
                     default:
                         throw new PXException(Messages.SurveyActionNotRecognised);
@@ -179,6 +69,131 @@ namespace PX.Survey.Ext
                 throw new PXException(Messages.SurveyError);
         }
 
+
+        /// <summary>
+        /// This is intended to be the primary action that this process is run that will flow through a logical sequence that will hit any of the three
+        /// process flows.
+        /// 1) the set expiration logic will be run every time
+        /// 2) a determination is made whether the user has any active open surveys after the expiration routine has run.
+        /// 3) if any active surveys are found then a Reminder is sent. A new reminder does not get sent
+        /// 4) if no active surveys are found a new one is sent. This is refereed to as a Re-Send
+        /// </summary>
+        /// <param name="surveyUser"></param>
+        /// <param name="graph"></param>
+        /// <param name="surveyCurrent"></param>
+        /// <param name="cache"></param>
+        /// <param name="surveyUserList"></param>
+        /// <param name="filter"></param>
+        /// <returns>Whether of not any of the processes within have an error</returns>
+        private static bool DefaultRoutine(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent,
+            PXCache cache, List<SurveyUser> surveyUserList, SurveyFilter filter)
+        {
+            bool errorOccurred = false;
+
+            errorOccurred = SetExpiredSurveys(surveyUser, graph, surveyCurrent, cache, surveyUserList);
+            if (GetActiveCollectors(surveyUser, graph, surveyCurrent).Count > 0)
+            {
+                errorOccurred = SendReminders(surveyUser, graph, surveyCurrent, cache, surveyUserList) 
+                                || errorOccurred; //if an error occurs in the SetExpiredSurveys we want to make sure we get it passed down to the calling method
+            }
+            else
+            {
+                errorOccurred = SendNew(surveyUser, graph, surveyCurrent, cache, surveyUserList, filter) 
+                                || errorOccurred; //if an error occurs in the SetExpiredSurveys we want to make sure we get it passed down to the calling method
+            }
+
+            return errorOccurred;
+        }
+
+
+
+        /// <summary>
+        /// This method will create a new collector record and invoke a notification on it.
+
+        /// </summary>
+        /// <param name="surveyUser"></param>
+        /// <param name="graph"></param>
+        /// <param name="surveyCurrent"></param>
+        /// <param name="cache"></param>
+        /// <param name="surveyUserList"></param>
+        /// <param name="filter"></param>
+        /// <remarks>
+        /// note: 20200515 This is the original Phase 1 implementation that will create a new collector 
+        ///       and send the notification. This was refactored into this static method to keep its implementation as 
+        ///       is it was.
+        /// When the first collector is sent any secondary collector notifications are referred to as a Re-Send
+        /// </remarks>
+        /// <returns>
+        ///     Whether or not an error has occured within the process which is used by the main calling process to throw a final exception at the end of the process
+        /// </returns>
+        private static bool SendNew(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent,
+            PXCache cache, List<SurveyUser> surveyUserList, SurveyFilter filter)
+        {
+            bool errorOccurred = false;
+            try
+            {
+                string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
+                                           SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
+
+                graph.Clear();
+
+                SurveyCollector surveyCollector = new SurveyCollector
+                {
+                    CollectorName =
+                        $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
+                    SurveyID = surveyUser.SurveyID,
+                    UserID = surveyUser.UserID,
+                    CollectedDate = null,
+                    //note: 20200512 added a mechanism to calculate and set the expiration date onto the collector.
+                    ExpirationDate = CalculateExpirationDate(filter.Duration, filter.DurationUnit),
+                    CollectorStatus = sCollectorStatus
+                };
+
+                surveyCollector = graph.SurveyQuestions.Insert(surveyCollector);
+                graph.Persist();
+
+                string sScreenID = PXSiteMap.Provider.FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
+                Guid noteID = surveyCollector.NoteID.Value;
+
+                PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
+                PXTrace.WriteInformation("noteID " + noteID.ToString());
+                PXTrace.WriteInformation("ScreenID " + sScreenID);
+
+                var pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
+                List<Guid> userIds = new List<Guid>();
+                userIds.Add(surveyUser.UserID.Value);
+
+                pushNotificationSender.SendNotificationAsync(
+                                    userIds: userIds,
+                                    title: Messages.PushNotificationTitleSurvey,
+                                    text: $"{ Messages.PushNotificationMessageBodySurvey } # { surveyCollector.CollectorName }.",
+                                    link: (sScreenID, noteID),
+                                    cancellation: CancellationToken.None);
+
+                if (sCollectorStatus == SurveyResponseStatus.CollectorSent)
+                {
+                    PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
+                }
+                else
+                {
+                    PXProcessing<SurveyUser>.SetWarning(surveyUserList.IndexOf(surveyUser), Messages.NoDeviceError);
+                }
+            }
+            catch (AggregateException ex)
+            {
+                var message = string.Join(";", ex.InnerExceptions.Select(e => e.Message));
+                PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), message);
+            }
+            catch (Exception e)
+            {
+                errorOccurred = true;
+                PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), e);
+            }
+
+            return errorOccurred;
+        }
+
+
         /// <summary>
         /// This method sends a reminder notification for any active Collector for a given user.
         /// </summary>
@@ -186,6 +201,7 @@ namespace PX.Survey.Ext
         /// <param name="graph"></param>
         /// <param name="surveyCurrent"></param>
         /// <param name="cache"></param>
+        /// <param name="surveyUserList"></param>
         /// <remarks>
         /// todo:   get clarification on what is meant regarding the term to "Re-Send" and "Reminder"
         ///         By this term it is assumed that in a resend we are creating a new Collector record sometime after the first has been
@@ -193,10 +209,12 @@ namespace PX.Survey.Ext
         ///         record.
         /// todo:   test and confirm this method works.
         /// Note:   20200518 the change to return a boolean value is intended to drive the messaging logic.
+        /// note:   moved the setInfo logic into these methods as to clean up the main processing method
         /// </remarks>
-        private static bool SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent, PXCache cache)
+        private static bool SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent,
+            PXCache cache, List<SurveyUser> surveyUserList)
         {
-            bool isSuccessfulExecution = true; //assume a successful result until we detect the first specific failure in the loop below; 
+            bool errorOccurred = false; //assume a successful result until we detect the first specific failure in the loop below; 
             var activeCollectors = GetActiveCollectors(surveyUser, graph, surveyCurrent);
 
             foreach (var surveyCollector in activeCollectors)
@@ -218,34 +236,26 @@ namespace PX.Survey.Ext
                 }
                 catch(Exception e)
                 {
-                    isSuccessfulExecution = false;
+                    errorOccurred = true;
                     PXTrace.WriteError(e);
                     //todo: refactor into localizable messages.
                     PXTrace.WriteInformation("An Error Occured Trying to resend a notification for UserID:{0}",surveyUser.UserID);
                 }
             }
-            return isSuccessfulExecution;
+            
+            if (!errorOccurred)
+            {
+                PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveyReminderSent);
+            }
+            else
+            {
+                PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), Messages.SurveyReminderFailed);
+            }
+
+            return errorOccurred;
         }
 
-        /// <summary>
-        /// This method allows the duration value to be expressed in one of 4 units and performs the work to
-        /// calculated the expiration date. 
-        /// </summary>
-        /// <param name="filterDuration"></param>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        private static DateTime? CalculateExpirationDate(decimal? filterDuration, string unit)
-        {
-            if (!filterDuration.HasValue || filterDuration.GetValueOrDefault() == 0.0M) return null; //when nothing is set then we expect no expiration date to be set 
-            switch (unit)
-            {
-                case "H": return DateTime.UtcNow.AddHours((double)filterDuration.GetValueOrDefault());
-                case "D": return DateTime.UtcNow.AddDays( (double)filterDuration.GetValueOrDefault());
-                case "W": return DateTime.UtcNow.AddDays( (double)filterDuration.GetValueOrDefault() * 7);
-                case "M": return DateTime.UtcNow.AddMonths(  (int)filterDuration.GetValueOrDefault());
-                default: return null;
-            }
-        }
+       
 
         /// <summary>
         /// This method will search for active collectors then set the status to expired for any record that has
@@ -255,16 +265,18 @@ namespace PX.Survey.Ext
         /// <param name="graph"></param>
         /// <param name="surveyCurrent"></param>
         /// <param name="cache"></param>
+        /// <param name="surveyUserList"></param>
         /// <remarks>
         ///      note:  20200512 this was added in to allow for the processing page to set
         ///             an expiration onto collectors that have passed the expiration date.
+        ///     note:   moved the setInfo logic into these methods as to clean up the main processing method
         /// </remarks>
-        private static bool SetExpiredSurveys(SurveyUser surveyUser, 
-            SurveyCollectorMaint graph, 
+        private static bool SetExpiredSurveys(SurveyUser surveyUser,
+            SurveyCollectorMaint graph,
             Survey surveyCurrent,
-            PXCache cache)
+            PXCache cache, List<SurveyUser> surveyUserList)
         {
-            bool isSuccessfulExecution = true;
+            bool errorOccurred = false;
 
             bool isPastExpiration(SurveyCollector collector)
             {
@@ -288,15 +300,43 @@ namespace PX.Survey.Ext
             }
             catch (Exception e)
             {
-                isSuccessfulExecution = false;
+                errorOccurred = true;
                 PXTrace.WriteError(e);
                 PXTrace.WriteInformation(Messages.SettingTheExpirationForUserID_0_Failed, surveyUser.UserID);
             }
 
-            return isSuccessfulExecution;
+            if (!errorOccurred)
+            {
+                PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SetExpirationSuccess);
+            }
+            else
+            {
+                PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), Messages.SetExpirationFailed);
+            }
+
+            return errorOccurred;
         }
 
-        
+        /// <summary>
+        /// This method allows the duration value to be expressed in one of 4 units and performs the work to
+        /// calculated the expiration date. 
+        /// </summary>
+        /// <param name="filterDuration"></param>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        private static DateTime? CalculateExpirationDate(decimal? filterDuration, string unit)
+        {
+            if (!filterDuration.HasValue || filterDuration.GetValueOrDefault() == 0.0M) return null; //when nothing is set then we expect no expiration date to be set 
+            switch (unit)
+            {
+                case "H": return DateTime.UtcNow.AddHours((double)filterDuration.GetValueOrDefault());
+                case "D": return DateTime.UtcNow.AddDays((double)filterDuration.GetValueOrDefault());
+                case "W": return DateTime.UtcNow.AddDays((double)filterDuration.GetValueOrDefault() * 7);
+                case "M": return DateTime.UtcNow.AddMonths((int)filterDuration.GetValueOrDefault());
+                default: return null;
+            }
+        }
+
         /// <summary>
         /// This retrieves a list of active Survey Collectors for a given user and survey 
         /// </summary>
