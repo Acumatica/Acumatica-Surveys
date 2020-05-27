@@ -5,7 +5,9 @@ namespace PX.Survey.Ext
     [PXLocalizable(Prefix)]
     public static class Messages
     {
-        
+        public const string AnErrorOccuredTryingToResendANotificationForUserID_0 =
+            "An Error Occured Trying to resend a notification for UserID:{0}";
+
         public const string Prefix = "Acumatica Survey";
 
         #region CacheNames
@@ -50,5 +52,17 @@ namespace PX.Survey.Ext
         public const string SettingTheExpirationForUserID_0_Failed = "Setting the expiration for userID:{0} failed";
         public const string SetExpirationSuccess                   = "Set Expiration Success";
         public const string SetExpirationFailed                    = "Set Expiration Failed";
+
+
+        #region Survey Action
+
+        public const string SurveyActionDefault      = "Default";
+        public const string SurveyActionNewOnly      = "New Only";
+        public const string SurveyActionRemindOnly   = "Remind Only";
+        public const string SurveyActionExpireOnly   = "Expire Only";
+
+        #endregion
+
+
     }
 }
