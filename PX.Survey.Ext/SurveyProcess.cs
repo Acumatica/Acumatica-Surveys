@@ -387,7 +387,7 @@ namespace PX.Survey.Ext
         protected Int32? _DurationTimeSpan;
         [PXDBTimeSpanLong(Format = TimeSpanFormatType.DaysHoursMinites)]
         [PXDefault(0)]
-        [PXUIField(DisplayName = "Duration Time Span")]
+        [PXUIField(DisplayName = "Duration")]
         public virtual Int32? DurationTimeSpan
         {
             get

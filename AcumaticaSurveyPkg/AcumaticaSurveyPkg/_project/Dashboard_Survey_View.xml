@@ -1,0 +1,357 @@
+﻿<Dashboard>
+    <data-set>
+        <relations format-version="3" relations-version="20190630" main-table="Dashboard">
+            <link from="DashboardParameter (DashboardID)" to="Dashboard (DashboardID)" />
+            <link from="DashboardParameter (NoteID)" to="DashboardParameterKvExt (RecordID)" type="RowKvExt" />
+            <link from="Widget (DashboardID)" to="Dashboard (DashboardID)" type="WeakIfEmpty" isEmpty="OwnerName" />
+            <link from="Widget (NoteID)" to="WidgetKvExt (RecordID)" type="RowKvExt" />
+            <link from="SiteMap (ScreenID)" to="Dashboard (ScreenID)" />
+            <link from="MUIScreen (NodeID)" to="SiteMap (NodeID)" />
+            <link from="MUIWorkspace (WorkspaceID)" to="MUIScreen (WorkspaceID)" type="FromMaster" linkname="workspaceToScreen" split-location="yes" updateable="True" />
+            <link from="MUISubcategory (SubcategoryID)" to="MUIScreen (SubcategoryID)" type="FromMaster" updateable="True" />
+            <link from="MUITile (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="MUIWorkspace (WorkspaceID)" to="MUITile (WorkspaceID)" type="FromMaster" linkname="workspaceToTile" split-location="yes" updateable="True" />
+            <link from="MUIArea (AreaID)" to="MUIWorkspace (AreaID)" type="FromMaster" updateable="True" />
+            <link from="MUIPinnedScreen (NodeID, WorkspaceID)" to="MUIScreen (NodeID, WorkspaceID)" type="WeakIfEmpty" isEmpty="Username" />
+            <link from="MUIFavoriteWorkspace (WorkspaceID)" to="MUIWorkspace (WorkspaceID)" type="WeakIfEmpty" isEmpty="Username" />
+        </relations>
+        <layout>
+            <table name="Dashboard">
+                <table name="DashboardParameter" uplink="(DashboardID) = (DashboardID)">
+                    <table name="DashboardParameterKvExt" uplink="(NoteID) = (RecordID)" />
+                </table>
+                <table name="Widget" uplink="(DashboardID) = (DashboardID)">
+                    <table name="WidgetKvExt" uplink="(NoteID) = (RecordID)" />
+                </table>
+                <table name="SiteMap" uplink="(ScreenID) = (ScreenID)">
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+            </table>
+            <table name="MUIWorkspace">
+                <table name="MUIFavoriteWorkspace" uplink="(WorkspaceID) = (WorkspaceID)" />
+            </table>
+            <table name="MUISubcategory" />
+            <table name="MUIArea" />
+        </layout>
+        <data>
+            <Dashboard>
+                <row DashboardID="1000021" Name="Survey View" DefaultOwnerRole="Administrator" ScreenID="DBSV1035" AllowCopy="1" Workspace1Size="0" Workspace2Size="0" IsPortal="0" ExposeViaMobile="1">
+                    <DashboardParameter LineNbr="1" Name="SurveyID" IsActive="1" Required="0" ObjectName="PX.Survey.Ext.SurveyCollector" FieldName="SurveyID" DisplayName="Survey ID" IsExpression="0" ColSpan="1" NoteID="3ef0c424-2c7d-ea11-9286-002590bde2bf" />
+                    <Widget WidgetID="1000205" Caption="Survey Recipient Devices" Column="1" Row="1" Workspace="0" Width="6" Height="124" Type="PX.Dashboards.Widgets.PXTableWidget" NoteID="211bd20c-ac7d-ea11-9286-002590bde2bf">
+                        <column name="Settings"><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<TableSettings>
+  <InquiryScreenID>SV401020</InquiryScreenID>
+  <AutoHeight>true</AutoHeight>
+  <RecordsLimit>30</RecordsLimit>
+  <InquiryParameters>
+    <InqFieldWithValue>
+      <Name>SurveyID</Name>
+      <UseDefault>false</UseDefault>
+    </InqFieldWithValue>
+  </InquiryParameters>
+  <FilterRows>
+    <WidgetFilterRow>
+      <LineNbr>1</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Condition>0</Condition>
+      <IsParameter>true</IsParameter>
+      <Value1>SurveyID</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+  </FilterRows>
+  <Columns>
+    <TableColumn>
+      <DataField>SurveyCollector_surveyID_description</DataField>
+      <Visible>true</Visible>
+      <Position>0</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>Users_displayName</DataField>
+      <Visible>true</Visible>
+      <Position>1</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>MobileDevice_deviceModel</DataField>
+      <Visible>true</Visible>
+      <Position>2</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>MobileDevice_deviceName</DataField>
+      <Visible>true</Visible>
+      <Position>3</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>MobileDevice_deviceOS</DataField>
+      <Visible>true</Visible>
+      <Position>4</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>MobileDevice_isConfirmation</DataField>
+      <Visible>true</Visible>
+      <Position>5</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_collectorStatus</DataField>
+      <Visible>true</Visible>
+      <Position>6</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_collectedDate</DataField>
+      <Visible>true</Visible>
+      <Position>7</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>MobileDevice_userID</DataField>
+      <Visible>false</Visible>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_collectorName</DataField>
+      <Visible>false</Visible>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Visible>false</Visible>
+    </TableColumn>
+    <TableColumn>
+      <DataField>Users_email</DataField>
+      <Visible>false</Visible>
+    </TableColumn>
+  </Columns>
+</TableSettings>]]></column>
+                    </Widget>
+                    <Widget WidgetID="1000203" Caption="Survey Recipient Status" Column="0" Row="1" Workspace="0" Width="6" Height="124" Type="PX.Dashboards.Widgets.PXTableWidget" NoteID="69e3231b-317d-ea11-9286-002590bde2bf">
+                        <column name="Settings"><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<TableSettings>
+  <InquiryScreenID>SV401000</InquiryScreenID>
+  <AutoHeight>true</AutoHeight>
+  <RecordsLimit>30</RecordsLimit>
+  <InquiryParameters>
+    <InqFieldWithValue>
+      <Name>SurveyID</Name>
+      <UseDefault>false</UseDefault>
+    </InqFieldWithValue>
+  </InquiryParameters>
+  <FilterRows>
+    <WidgetFilterRow>
+      <LineNbr>1</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Condition>0</Condition>
+      <IsParameter>true</IsParameter>
+      <Value1>SurveyID</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+  </FilterRows>
+  <Columns>
+    <TableColumn>
+      <DataField>SurveyCollector_collectorName</DataField>
+      <Visible>true</Visible>
+      <Position>0</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_surveyID_description</DataField>
+      <Visible>true</Visible>
+      <Position>1</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_userid</DataField>
+      <Visible>true</Visible>
+      <Position>2</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_createdDateTime</DataField>
+      <Visible>true</Visible>
+      <Position>3</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_collectedDate</DataField>
+      <Visible>true</Visible>
+      <Position>4</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_collectorStatus</DataField>
+      <Visible>true</Visible>
+      <Position>5</Position>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_CollectorID</DataField>
+      <Visible>false</Visible>
+    </TableColumn>
+    <TableColumn>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Visible>false</Visible>
+    </TableColumn>
+  </Columns>
+</TableSettings>]]></column>
+                    </Widget>
+                    <Widget WidgetID="1000202" Caption="Survey Pending" Column="3" Row="0" Workspace="0" Width="3" Height="114" Type="PX.Dashboards.Widgets.PXScorecardWidget" NoteID="640d1912-2d7d-ea11-9286-002590bde2bf">
+                        <column name="Settings"><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<ScorecardSettings>
+  <InquiryScreenID>SV401000</InquiryScreenID>
+  <AggregateField>SurveyCollector_CollectorID</AggregateField>
+  <AggregateFunction>COUNT</AggregateFunction>
+  <NormalColor>#20c997</NormalColor>
+  <WarningColor>#ffc109</WarningColor>
+  <ErrorColor>#e83e8c</ErrorColor>
+  <NormalLevel>1</NormalLevel>
+  <ErrorLevel>10</ErrorLevel>
+  <Icon>arrow_drop_down_circle_filled</Icon>
+  <InquiryParameters>
+    <InqFieldWithValue>
+      <Name>SurveyID</Name>
+      <UseDefault>false</UseDefault>
+    </InqFieldWithValue>
+  </InquiryParameters>
+  <FilterRows>
+    <WidgetFilterRow>
+      <LineNbr>1</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_collectorStatus</DataField>
+      <Condition>0</Condition>
+      <IsParameter>false</IsParameter>
+      <Value1>S</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+    <WidgetFilterRow>
+      <LineNbr>2</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Condition>0</Condition>
+      <IsParameter>true</IsParameter>
+      <Value1>SurveyID</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+  </FilterRows>
+</ScorecardSettings>]]></column>
+                    </Widget>
+                    <Widget WidgetID="1000201" Caption="Survey Responded" Column="2" Row="0" Workspace="0" Width="3" Height="114" Type="PX.Dashboards.Widgets.PXScorecardWidget" NoteID="212753d0-2c7d-ea11-9286-002590bde2bf">
+                        <column name="Settings"><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<ScorecardSettings>
+  <InquiryScreenID>SV401000</InquiryScreenID>
+  <AggregateField>SurveyCollector_CollectorID</AggregateField>
+  <AggregateFunction>COUNT</AggregateFunction>
+  <NormalColor>#20c997</NormalColor>
+  <WarningColor>#ffc109</WarningColor>
+  <ErrorColor>#e83e8c</ErrorColor>
+  <NormalLevel>1</NormalLevel>
+  <ErrorLevel>10</ErrorLevel>
+  <Icon>check_circle_filled</Icon>
+  <InquiryParameters>
+    <InqFieldWithValue>
+      <Name>SurveyID</Name>
+      <UseDefault>false</UseDefault>
+    </InqFieldWithValue>
+  </InquiryParameters>
+  <FilterRows>
+    <WidgetFilterRow>
+      <LineNbr>1</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_collectorStatus</DataField>
+      <Condition>0</Condition>
+      <IsParameter>false</IsParameter>
+      <Value1>R</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+    <WidgetFilterRow>
+      <LineNbr>2</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Condition>0</Condition>
+      <IsParameter>true</IsParameter>
+      <Value1>SurveyID</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+  </FilterRows>
+</ScorecardSettings>]]></column>
+                    </Widget>
+                    <Widget WidgetID="1000200" Caption="Survey Recipients" Column="1" Row="0" Workspace="0" Width="3" Height="114" Type="PX.Dashboards.Widgets.PXScorecardWidget" NoteID="e6c73a88-2c7d-ea11-9286-002590bde2bf">
+                        <column name="Settings"><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<ScorecardSettings>
+  <InquiryScreenID>SV401000</InquiryScreenID>
+  <AggregateField>SurveyCollector_CollectorID</AggregateField>
+  <AggregateFunction>COUNT</AggregateFunction>
+  <NormalColor>#20c997</NormalColor>
+  <WarningColor>#ffc109</WarningColor>
+  <ErrorColor>#e83e8c</ErrorColor>
+  <NormalLevel>1</NormalLevel>
+  <ErrorLevel>10</ErrorLevel>
+  <InquiryParameters>
+    <InqFieldWithValue>
+      <Name>SurveyID</Name>
+      <UseDefault>false</UseDefault>
+    </InqFieldWithValue>
+  </InquiryParameters>
+  <FilterRows>
+    <WidgetFilterRow>
+      <LineNbr>1</LineNbr>
+      <IsActive>false</IsActive>
+      <OpenBrackets>1</OpenBrackets>
+      <DataField>SurveyCollector_collectorStatus</DataField>
+      <Condition>0</Condition>
+      <IsParameter>false</IsParameter>
+      <Value1>S</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>O</Operation>
+    </WidgetFilterRow>
+    <WidgetFilterRow>
+      <LineNbr>2</LineNbr>
+      <IsActive>false</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_collectorStatus</DataField>
+      <Condition>0</Condition>
+      <IsParameter>false</IsParameter>
+      <Value1>N</Value1>
+      <CloseBrackets>1</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+    <WidgetFilterRow>
+      <LineNbr>3</LineNbr>
+      <IsActive>true</IsActive>
+      <OpenBrackets>0</OpenBrackets>
+      <DataField>SurveyCollector_surveyID</DataField>
+      <Condition>0</Condition>
+      <IsParameter>true</IsParameter>
+      <Value1>SurveyID</Value1>
+      <CloseBrackets>0</CloseBrackets>
+      <Operation>A</Operation>
+    </WidgetFilterRow>
+  </FilterRows>
+</ScorecardSettings>]]></column>
+                    </Widget>
+                    <Widget WidgetID="1000199" Caption="Active Surveys" Column="0" Row="0" Workspace="0" Width="3" Height="114" Type="PX.Dashboards.Widgets.PXScorecardWidget" Settings="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&#xD;&#xA;&lt;ScorecardSettings&gt;&#xD;&#xA;  &lt;InquiryScreenID&gt;SV2010PL&lt;/InquiryScreenID&gt;&#xD;&#xA;  &lt;AggregateField&gt;Survey_SurveyCD&lt;/AggregateField&gt;&#xD;&#xA;  &lt;AggregateFunction&gt;COUNT&lt;/AggregateFunction&gt;&#xD;&#xA;  &lt;NormalColor&gt;#20c997&lt;/NormalColor&gt;&#xD;&#xA;  &lt;WarningColor&gt;#ffc109&lt;/WarningColor&gt;&#xD;&#xA;  &lt;ErrorColor&gt;#e83e8c&lt;/ErrorColor&gt;&#xD;&#xA;  &lt;NormalLevel&gt;1&lt;/NormalLevel&gt;&#xD;&#xA;  &lt;ErrorLevel&gt;5&lt;/ErrorLevel&gt;&#xD;&#xA;  &lt;Icon&gt;pen_frame&lt;/Icon&gt;&#xD;&#xA;  &lt;FilterRows&gt;&#xD;&#xA;    &lt;WidgetFilterRow&gt;&#xD;&#xA;      &lt;LineNbr&gt;1&lt;/LineNbr&gt;&#xD;&#xA;      &lt;IsActive&gt;true&lt;/IsActive&gt;&#xD;&#xA;      &lt;OpenBrackets&gt;0&lt;/OpenBrackets&gt;&#xD;&#xA;      &lt;DataField&gt;Survey_active&lt;/DataField&gt;&#xD;&#xA;      &lt;Condition&gt;0&lt;/Condition&gt;&#xD;&#xA;      &lt;IsParameter&gt;false&lt;/IsParameter&gt;&#xD;&#xA;      &lt;Value1&gt;True&lt;/Value1&gt;&#xD;&#xA;      &lt;CloseBrackets&gt;0&lt;/CloseBrackets&gt;&#xD;&#xA;      &lt;Operation&gt;A&lt;/Operation&gt;&#xD;&#xA;    &lt;/WidgetFilterRow&gt;&#xD;&#xA;  &lt;/FilterRows&gt;&#xD;&#xA;&lt;/ScorecardSettings&gt;" NoteID="feb61140-2c7d-ea11-9286-002590bde2bf" />
+                    <SiteMap Title="Survey View" Url="~/Frames/Default.aspx" NodeID="40edbd00-853c-46a9-a92c-fe76a8b0a106" ParentID="00000000-0000-0000-0000-000000000000">
+                        <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="10" SubcategoryID="29d8e453-ee74-405d-abe1-930728d1f9ba">
+                            <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
+                        </MUIScreen>
+                    </SiteMap>
+                </row>
+            </Dashboard>
+            <MUIWorkspace>
+                <row IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="865" Title="Surveys" Icon="check_circle" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" IsSystem="0" />
+            </MUIWorkspace>
+            <MUISubcategory>
+                <row IsPortal="1" SubcategoryID="29d8e453-ee74-405d-abe1-930728d1f9ba" Order="1478" Name="Dashboards" Icon="" IsSystem="1" />
+                <row IsPortal="0" SubcategoryID="29d8e453-ee74-405d-abe1-930728d1f9ba" Order="1478" Name="Dashboards" Icon="" IsSystem="1" />
+            </MUISubcategory>
+            <MUIArea>
+                <row IsPortal="0" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" Order="30" Name="Configuration" />
+            </MUIArea>
+        </data>
+    </data-set>
+</Dashboard>

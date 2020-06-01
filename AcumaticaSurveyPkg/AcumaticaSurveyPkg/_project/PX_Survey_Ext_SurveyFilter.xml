@@ -1,0 +1,7 @@
+﻿<DAC type="PX.Survey.Ext.SurveyFilter">
+    <Field FieldName="UsrDuration" TypeName="decimal" MapDbTable="SurveyFilter" TextAttributes="#CDATA" StorageName="AddColumn">
+        <CDATA name="TextAttributes"><![CDATA[[PXDBDecimal]
+[PXUIField(DisplayName="Duration")]
+]]></CDATA>
+    </Field>
+</DAC>
