@@ -16,6 +16,8 @@
 			<px:PXLayoutRule runat="server" StartRow="True" LabelsWidth="SM" ControlSize="M"/>
             <px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Numbering Settings" />
 		    <px:PXSelector ID="edSurveyNumberingID" runat="server" DataField="SurveyNumberingID" CommitChanges="true" AllowEdit="true"></px:PXSelector>
+			<px:PXCheckBox ID="edDemoSurvey" runat="server" AlreadyLocalized="False" DataField="DemoSurvey" Text="Created Demo Survey">
+            </px:PXCheckBox>
 		</Template>
 		<AutoSize Container="Window" Enabled="True" MinHeight="200" />
 	</px:PXFormView>
