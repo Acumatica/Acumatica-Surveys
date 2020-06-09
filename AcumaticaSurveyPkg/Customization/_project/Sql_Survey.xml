@@ -18,9 +18,5 @@
     <col name="CompanyID" />
     <col name="SurveyID" />
   </index>
-  <index name="Survey_NoteID" unique="true">
-    <col name="NoteID" />
-    <col name="CompanyID" />
-  </index>
 </table>]]></CDATA>
 </Sql>
