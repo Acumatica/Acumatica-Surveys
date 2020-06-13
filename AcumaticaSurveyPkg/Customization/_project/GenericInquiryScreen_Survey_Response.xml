@@ -156,7 +156,9 @@
                     </SiteMap>
                     <SiteMap linkname="to1Screen">
                         <row Position="5960" Title="Survey Response" Url="~/Pages/SU/SU301000.aspx" NodeID="5bdbd293-bbc8-47e1-b4ea-949c5f5b94a1" ParentID="00000000-0000-0000-0000-000000000000">
-                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6" />
+                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6">
+                                <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
+                            </MUIScreen>
                         </row>
                     </SiteMap>
                 </row>

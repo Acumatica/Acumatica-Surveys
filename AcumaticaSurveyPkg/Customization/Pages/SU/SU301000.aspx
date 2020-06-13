@@ -22,6 +22,7 @@
 		    <px:PXTextEdit ID="edCollectedDatePart" runat="server" DataField="CollectedDatePart" Width="150px" Visible="false" />
             <px:PXDropDown ID="edCollectorStatus" runat="server" DataField="CollectorStatus">
             </px:PXDropDown>
+			<px:PXDateTimeEdit ID="edExpirationDate" runat="server" AlreadyLocalized="False" DataField="ExpirationDate" Width="150px" />
 		</Template>
 	</px:PXFormView>
 </asp:Content>
