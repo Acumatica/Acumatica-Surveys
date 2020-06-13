@@ -24,8 +24,8 @@ namespace PX.Survey.Ext
 
         #endregion
 
-        public const string Send = "Send";
-        public const string SendAll = "Send All";
+        public const string Send = "Process Survey";
+        public const string SendAll = "Process All Surveys";
 
         public const string PushNotificationTitleSurvey = "Complete Survey";
         public const string PushNotificationMessageBodySurvey = "Tap to complete Survey";
@@ -53,10 +53,10 @@ namespace PX.Survey.Ext
 
         #region Survey Action
 
-        public const string SurveyActionDefault = "Default";
-        public const string SurveyActionNewOnly = "New Only";
-        public const string SurveyActionRemindOnly = "Remind Only";
-        public const string SurveyActionExpireOnly = "Expire Only";
+        public const string SurveyActionDefault = "All (New, Remind, Expire)";
+        public const string SurveyActionNewOnly = "Send New";
+        public const string SurveyActionRemindOnly = "Remind Un-Answered";
+        public const string SurveyActionExpireOnly = "Expire Un-Answered";
         public const string AnErrorOccuredTryingToResendANotificationForUserID_0 =
             "An Error Occured Trying to resend a notification for UserID:{0}";
 

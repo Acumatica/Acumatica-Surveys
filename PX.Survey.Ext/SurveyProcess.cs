@@ -46,7 +46,7 @@ namespace PX.Survey.Ext
                         errorOccurred = SendNew(surveyUser, graph, surveyCurrent, surveyUserList, filter) || errorOccurred;
                         break;
                     case SurveyAction.RemindOnly:
-                        errorOccurred = SendReminders(surveyUser, graph, surveyCurrent, surveyUserList) || errorOccurred;
+                        errorOccurred = SendReminders(surveyUser, graph, surveyCurrent, surveyUserList, filter) || errorOccurred;
                         break;
                     case SurveyAction.ExpireOnly:
                         errorOccurred = SetExpiredSurveys(surveyUser, graph, surveyCurrent, surveyUserList) || errorOccurred;
@@ -82,7 +82,7 @@ namespace PX.Survey.Ext
             var errorOccurred = SetExpiredSurveys(surveyUser, graph, surveyCurrent, surveyUserList);
             if (GetActiveCollectors(surveyUser, graph, surveyCurrent).Count > 0)
             {
-                errorOccurred = SendReminders(surveyUser, graph, surveyCurrent, surveyUserList)
+                errorOccurred = SendReminders(surveyUser, graph, surveyCurrent, surveyUserList, filter)
                                 || errorOccurred; //if an error occurs in the SetExpiredSurveys we want to make sure we get it passed down to the calling method
             }
             else
@@ -186,16 +186,17 @@ namespace PX.Survey.Ext
         /// <param name="graph"></param>
         /// <param name="surveyCurrent"></param>
         /// <param name="surveyUserList"></param>
+        /// <param name="filter"></param>
         /// <remarks>
-        /// todo:   get clarification on what is meant regarding the term to "Re-Send" and "Reminder"
-        ///         By this term it is assumed that in a resend we are creating a new Collector record sometime after the first has been
+        /// Note:   clarification on what is meant regarding the term to "Re-Send" and "Reminder"
+        ///         By this term resend we are creating a new Collector record sometime after the first has been
         ///         sent. the term "Re-Send" is not the same as a reminder where a reminder is a second notification for the same collector
         ///         record.
-        /// todo:   test and confirm this method works.
         /// Note:   20200518 the change to return a boolean value is intended to drive the messaging logic.
         /// note:   moved the setInfo logic into these methods as to clean up the main processing method
         /// </remarks>
-        private static bool SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent, List<SurveyUser> surveyUserList)
+        private static bool SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent,
+            List<SurveyUser> surveyUserList, SurveyFilter filter)
         {
             bool errorOccurred = false; //assume a successful result until we detect the first specific failure in the loop below; 
             var activeCollectors = GetActiveCollectors(surveyUser, graph, surveyCurrent);
@@ -205,6 +206,15 @@ namespace PX.Survey.Ext
                 try
                 {
                     SendNotification(surveyUser, surveyCollector);
+                    //note: 20200612 Per discussions in the MVP meeting, it was decided that if a collector has a null
+                    //      expiration date and the duration was set for this round, the expiration will be set. if,
+                    //      however, the expiration was already previously, the expiration will never be overridden. 
+                    if (surveyCollector.ExpirationDate == null && filter.DurationTimeSpan > 0)
+                    {
+                        surveyCollector.ExpirationDate = DateTime.UtcNow.AddMinutes(filter.DurationTimeSpan.GetValueOrDefault());
+                        graph.Caches["SurveyCollector"].Update(surveyCollector);
+                        graph.Persist();
+                    }
                 }
                 catch (Exception e)
                 {
@@ -387,7 +397,7 @@ namespace PX.Survey.Ext
         protected Int32? _DurationTimeSpan;
         [PXDBTimeSpanLong(Format = TimeSpanFormatType.DaysHoursMinites)]
         [PXDefault(0)]
-        [PXUIField(DisplayName = "Duration")]
+        [PXUIField(DisplayName = "Expire After")]
         public virtual Int32? DurationTimeSpan
         {
             get
@@ -425,141 +435,3 @@ namespace PX.Survey.Ext
         public class SurveyActionExpireOnly : PX.Data.BQL.BqlString.Constant<SurveyActionExpireOnly> { public SurveyActionExpireOnly() : base(ExpireOnly) { } }
     }
 }
-
-
-/* todo: purge this dead code once merger of new Processing Logic is in place. This is the old code as it was prior to 20200603 before merging these changes.
-using System;
-using System.Collections.Generic;
-using PX.Data;
-using Microsoft.Practices.ServiceLocation;
-using PX.Api.Mobile.PushNotifications;
-using System.Threading;
-using System.Linq;
-using PX.Common;
-using PX.Api.Mobile.PushNotifications.DAC;
-
-namespace PX.Survey.Ext
-{
-    public class SurveyProcess : PXGraph<SurveyProcess>
-    {
-        public PXCancel<SurveyFilter> Cancel;
-        public PXFilter<SurveyFilter> Filter;
-
-        //Fake for Design
-        //public PXSelect<SurveyUser> Records;
-
-        public PXFilteredProcessing<SurveyUser, SurveyFilter,
-            Where<SurveyUser.active, Equal<True>,
-                And<SurveyUser.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Records;
-
-        public SurveyProcess()
-        {
-            Records.SetProcessCaption(Messages.Send);
-            Records.SetProcessAllCaption(Messages.SendAll);
-        }
-
-        protected virtual void _(Events.RowSelected<SurveyFilter> e)
-        {
-            SurveyFilter filter = Filter.Current;
-            Records.SetProcessDelegate(list => ProcessSurvey(e.Cache, filter, list));
-        }
-
-        public static void ProcessSurvey(PXCache cache, SurveyFilter filter, List<SurveyUser> surveyUserList)
-        {
-            bool erroroccurred = false;
-
-            SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-
-            Survey surveyCurrent = (Survey)PXSelectorAttribute.Select<SurveyFilter.surveyID>(cache, filter);
-
-            List<SurveyUser> dataToProceed = new List<SurveyUser>(surveyUserList);
-
-            foreach (var surveyUser in dataToProceed)
-            {
-                try
-                {
-                    string sCollectorStatus = (surveyUser.UsingMobileApp.GetValueOrDefault(false)) ?
-                                               SurveyResponseStatus.CollectorSent : SurveyResponseStatus.CollectorNew;
-
-                    graph.Clear();
-
-                    SurveyCollector surveyCollector = new SurveyCollector
-                    {
-                        CollectorName =
-                            $"{surveyCurrent.SurveyName} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
-                        SurveyID = surveyUser.SurveyID,
-                        UserID = surveyUser.UserID,
-                        CollectedDate = null,
-                        ExpirationDate = null,
-                        CollectorStatus = sCollectorStatus
-                    };
-
-                    surveyCollector = graph.SurveyQuestions.Insert(surveyCollector);
-                    graph.Persist();
-
-                    string sScreenID = PXSiteMap.Provider.FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
-                    Guid noteID = surveyCollector.NoteID.Value;
-
-                    PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                    PXTrace.WriteInformation("noteID " + noteID.ToString());
-                    PXTrace.WriteInformation("ScreenID " + sScreenID);
-
-                    var pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
-                    List<Guid> userIds = new List<Guid>();
-                    userIds.Add(surveyUser.UserID.Value);
-
-                    pushNotificationSender.SendNotificationAsync(
-                                        userIds: userIds,
-                                        title: Messages.PushNotificationTitleSurvey,
-                                        text: $"{ Messages.PushNotificationMessageBodySurvey } # { surveyCollector.CollectorName }.",
-                                        link: (sScreenID, noteID),
-                                        cancellation: CancellationToken.None);
-
-                    if (sCollectorStatus == SurveyResponseStatus.CollectorSent)
-                    {
-                        PXProcessing<SurveyUser>.SetInfo(surveyUserList.IndexOf(surveyUser), Messages.SurveySent);
-                    }
-                    else
-                    {
-                        PXProcessing<SurveyUser>.SetWarning(surveyUserList.IndexOf(surveyUser), Messages.NoDeviceError);
-                    }
-                }
-                catch (AggregateException ex)
-                {
-                    var message = string.Join(";", ex.InnerExceptions.Select(e => e.Message));
-                    PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), message);
-                }
-                catch (Exception e)
-                {
-                    erroroccurred = true;
-                    PXProcessing<SurveyUser>.SetError(surveyUserList.IndexOf(surveyUser), e);
-                }
-            }
-            if (erroroccurred)
-                throw new PXException(Messages.SurveyError);
-        }
-    }
-
-    #region SurveyFilter
-
-    [Serializable]
-    [PXCacheName(Messages.SurveyFilterCacheName)]
-    public class SurveyFilter : IBqlTable
-    {
-        #region SurveyID
-        public abstract class surveyID : PX.Data.IBqlField { }
-
-        [PXDBInt()]
-        [PXDefault()]
-        [PXUIField(DisplayName = "Survey ID")]
-        [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
-                    typeof(Survey.surveyCD),
-                    typeof(Survey.surveyName),
-                    SubstituteKey = typeof(Survey.surveyCD),
-                    DescriptionField = typeof(Survey.surveyName))]
-        public virtual int? SurveyID { get; set; }
-        #endregion
-    }
-    #endregion
-}
-*/

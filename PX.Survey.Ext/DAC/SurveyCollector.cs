@@ -92,7 +92,8 @@ namespace PX.Survey.Ext
         /// <summary>
         /// Specifies the date that this Collector expires. The user has up until this date to finish the survey.
         /// </summary>        
-        [PXDBDate()]
+        //[PXDBDate(InputMask = "g", DisplayMask = "g")]
+        [PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
         [PXUIField(DisplayName = "Expiration Date", Enabled = false)]
         public virtual DateTime? ExpirationDate { get; set; }
         #endregion
