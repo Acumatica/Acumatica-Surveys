@@ -70,6 +70,7 @@
     <Compile Include="Descriptor\Attributes.cs" />
     <Compile Include="Descriptor\Messages.cs" />
     <Compile Include="Descriptor\SurveyResponseStatus.cs" />
+    <Compile Include="PXDBTimeSpanLongExtAttribute.cs" />
     <Compile Include="SurveyProcess.cs" />
     <Compile Include="SurveyCollectorMaint.cs" />
     <Compile Include="SurveyMaint.cs" />

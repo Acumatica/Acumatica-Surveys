@@ -395,7 +395,7 @@ namespace PX.Survey.Ext
 
         public abstract class durationTimeSpan : Data.BQL.BqlInt.Field<durationTimeSpan> { }
         protected Int32? _DurationTimeSpan;
-        [PXDBTimeSpanLong(Format = TimeSpanFormatType.DaysHoursMinites)]
+        [PXDBTimeSpanLongExtAttribute(Format = TimeSpanFormatType.DaysHoursMinites)]
         [PXDefault(0)]
         [PXUIField(DisplayName = "Expire After")]
         public virtual Int32? DurationTimeSpan
