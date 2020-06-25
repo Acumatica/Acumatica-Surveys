@@ -24,8 +24,8 @@ namespace PX.Survey.Ext
 
         #endregion
 
-        public const string Send = "Process Survey";
-        public const string SendAll = "Process All Surveys";
+        public const string Send = "Process";
+        public const string SendAll = "Process All";
 
         public const string PushNotificationTitleSurvey = "Complete Survey";
         public const string PushNotificationMessageBodySurvey = "Tap to complete Survey";
