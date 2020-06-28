@@ -10,20 +10,7 @@ namespace PX.Survey.Ext
 {
     public class PXDBTimeSpanLongExtAttribute : PXDBTimeSpanLongAttribute
     {
-        //public override void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
-        //{
-        //    try
-
-        //    {
-        //        if (string.IsNullOrEmpty(InputMask)) InputMask = "### d\\ays ## hrs ## mins";
-        //        base.FieldSelecting(sender, e);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        PXTrace.WriteError(ex);
-        //        throw;
-        //    }
-        //}
+        
 
         public override void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
         {
@@ -48,7 +35,6 @@ namespace PX.Survey.Ext
             {
                 int mins = 0;
                 int.TryParse(e.ReturnValue.ToString(), out mins);
-                //var test = (int) e.ReturnValue;
                 TimeSpan span = new TimeSpan(0, 0, mins, 0);
                 int hours = (this._Format == TimeSpanFormatType.LongHoursMinutes) ? span.Days * 24 + span.Hours : span.Hours;
                 var returnValue = string.Format(_outputFormats[(int)this._Format], span.Days, hours, span.Minutes);

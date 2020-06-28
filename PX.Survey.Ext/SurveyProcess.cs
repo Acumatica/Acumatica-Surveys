@@ -104,10 +104,6 @@ namespace PX.Survey.Ext
         /// <param name="surveyUserList"></param>
         /// <param name="filter"></param>
         /// <remarks>
-        /// note: 20200515 This is the original Phase 1 implementation that will create a new collector 
-        ///       and send the notification. This was refactored into this static method to keep its implementation as 
-        ///       is it was.
-        /// When the first collector is sent any secondary collector notifications are referred to as a Re-Send
         /// </remarks>
         /// <returns>
         ///     Whether or not an error has occured within the process which is used by the main calling process to throw a final exception at the end of the process
@@ -129,7 +125,6 @@ namespace PX.Survey.Ext
                     SurveyID = surveyUser.SurveyID,
                     UserID = surveyUser.UserID,
                     CollectedDate = null,
-                    //note: 20200512 added a mechanism to calculate and set the expiration date onto the collector.
                     ExpirationDate = CalculateExpirationDate(filter.DurationTimeSpan),
                     CollectorStatus = sCollectorStatus
                 };
@@ -188,12 +183,13 @@ namespace PX.Survey.Ext
         /// <param name="surveyUserList"></param>
         /// <param name="filter"></param>
         /// <remarks>
-        /// Note:   clarification on what is meant regarding the term to "Re-Send" and "Reminder"
+        /// Note:   Clarification on what is meant regarding the term to "Re-Send" and "Reminder"
         ///         By this term resend we are creating a new Collector record sometime after the first has been
         ///         sent. the term "Re-Send" is not the same as a reminder where a reminder is a second notification for the same collector
         ///         record.
-        /// Note:   20200518 the change to return a boolean value is intended to drive the messaging logic.
-        /// note:   moved the setInfo logic into these methods as to clean up the main processing method
+        /// note:   20200612 Per discussions in the MVP meeting, it was decided that if a collector has a null
+        ///         expiration date and the duration was set for this round, the expiration will be set. if,
+        ///         however, the expiration was already previously set, the expiration will never be overridden. 
         /// </remarks>
         private static bool SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent,
             List<SurveyUser> surveyUserList, SurveyFilter filter)
@@ -206,9 +202,6 @@ namespace PX.Survey.Ext
                 try
                 {
                     SendNotification(surveyUser, surveyCollector);
-                    //note: 20200612 Per discussions in the MVP meeting, it was decided that if a collector has a null
-                    //      expiration date and the duration was set for this round, the expiration will be set. if,
-                    //      however, the expiration was already previously, the expiration will never be overridden. 
                     if (surveyCollector.ExpirationDate == null && filter.DurationTimeSpan > 0)
                     {
                         surveyCollector.ExpirationDate = DateTime.UtcNow.AddMinutes(filter.DurationTimeSpan.GetValueOrDefault());
@@ -269,11 +262,6 @@ namespace PX.Survey.Ext
         /// <param name="graph"></param>
         /// <param name="surveyCurrent"></param>
         /// <param name="surveyUserList"></param>
-        /// <remarks>
-        ///      note:  20200512 this was added in to allow for the processing page to set
-        ///             an expiration onto collectors that have passed the expiration date.
-        ///     note:   moved the setInfo logic into these methods as to clean up the main processing method
-        /// </remarks>
         private static bool SetExpiredSurveys(SurveyUser surveyUser,
             SurveyCollectorMaint graph,
             Survey surveyCurrent, List<SurveyUser> surveyUserList)

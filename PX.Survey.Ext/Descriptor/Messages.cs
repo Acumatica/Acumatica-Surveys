@@ -41,7 +41,7 @@ namespace PX.Survey.Ext
 
         public const string AnswerReqiredQuestions = "Answers should be specified for all required questions.";
 
-        //Until issue is resolved with ios app
+
         public const string PushNotificationMessageBodySurveyIOS = "You have new Survey # {0} to complete";
         public const string SurveyActionNotRecognised = "Survey Action Not Recognised";
         public const string SurveyReminderSent = "Survey Reminder Sent";

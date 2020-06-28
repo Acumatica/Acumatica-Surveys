@@ -12,12 +12,8 @@
 			<px:PXLayoutRule runat="server" StartRow="True" ControlSize="M" LabelsWidth="S"/>
 		    <px:PXSelector ID="edSurveyID" runat="server" CommitChanges="True" DataField="SurveyID" DisplayMode="Hint">
             </px:PXSelector>
-            <px:PXDropDown ID="edSurveyAction"     runat="server" CommitChanges="False" DataField="SurveyAction" 
-                           ToolTip="This Action DropDown allows you to either run one particular type of action at a time or run the default routine, which will determine what actions are needed based on the state of active collectors. If the default is used, the Expiration routine will run on every run. Next, the routine will determine if any active collectors are present for the user. If collectors are found, the default routine will send a reminder notification on that routine. If no active collectors are found, a new collector is created, and a notification is sent. The Expire only, New only, and Reminder only allows you to execute those specific actions alone. ">
-            </px:PXDropDown>
-            <px:PXMaskEdit ID="edDurationTimeSpan" runat="server" DataField="DurationTimeSpan" InputMask="### d\ays ## hrs ## mins" EmptyChar="0" Text="0" 
-                           ToolTip="This Duration TimeSpan is used to specify how long a user has to answer a survey from the time the initial notification is sent. This Duration is used to set the expiration date when the collector is first created.">
-            </px:PXMaskEdit>
+            <px:PXDropDown ID="edSurveyAction"     runat="server" CommitChanges="False" DataField="SurveyAction" </px:PXDropDown>
+            <px:PXMaskEdit ID="edDurationTimeSpan" runat="server" DataField="DurationTimeSpan" InputMask="### d\ays ## hrs ## mins" EmptyChar="0" Text="0" </px:PXMaskEdit>
 		</Template>
 	</px:PXFormView>
 </asp:Content>
