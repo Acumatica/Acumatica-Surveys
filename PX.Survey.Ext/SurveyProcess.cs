@@ -183,12 +183,11 @@ namespace PX.Survey.Ext
         /// <param name="surveyUserList"></param>
         /// <param name="filter"></param>
         /// <remarks>
-        /// Note:   Clarification on what is meant regarding the term to "Re-Send" and "Reminder"
+        /// Note:   Regarding the term to "Re-Send" and "Reminder"
         ///         By this term resend we are creating a new Collector record sometime after the first has been
         ///         sent. the term "Re-Send" is not the same as a reminder where a reminder is a second notification for the same collector
         ///         record.
-        /// note:   20200612 Per discussions in the MVP meeting, it was decided that if a collector has a null
-        ///         expiration date and the duration was set for this round, the expiration will be set. if,
+        /// note:   If a collector has a null expiration date and the duration was set for this round, the expiration will be set. if,
         ///         however, the expiration was already previously set, the expiration will never be overridden. 
         /// </remarks>
         private static bool SendReminders(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent,
