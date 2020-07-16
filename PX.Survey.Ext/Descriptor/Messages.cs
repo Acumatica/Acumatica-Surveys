@@ -24,8 +24,8 @@ namespace PX.Survey.Ext
 
         #endregion
 
-        public const string Send = "Send";
-        public const string SendAll = "Send All";
+        public const string Send = "Process";
+        public const string SendAll = "Process All";
 
         public const string PushNotificationTitleSurvey = "Complete Survey";
         public const string PushNotificationMessageBodySurvey = "Tap to complete Survey";
@@ -41,7 +41,26 @@ namespace PX.Survey.Ext
 
         public const string AnswerReqiredQuestions = "Answers should be specified for all required questions.";
 
-        //Until issue is resolved with ios app
+
         public const string PushNotificationMessageBodySurveyIOS = "You have new Survey # {0} to complete";
+        public const string SurveyActionNotRecognised = "Survey Action Not Recognised";
+        public const string SurveyReminderSent = "Survey Reminder Sent";
+        public const string SurveyReminderFailed = "Survey Reminder Failed";
+        public const string SettingTheExpirationForUserID_0_Failed = "Setting the expiration for userID:{0} failed";
+        public const string SetExpirationSuccess = "Set Expiration Success";
+        public const string SetExpirationFailed = "Set Expiration Failed";
+
+
+        #region Survey Action
+
+        public const string SurveyActionDefault = "All (New, Remind, Expire)";
+        public const string SurveyActionNewOnly = "Send New";
+        public const string SurveyActionRemindOnly = "Remind Un-Answered";
+        public const string SurveyActionExpireOnly = "Expire Un-Answered";
+        public const string AnErrorOccuredTryingToResendANotificationForUserID_0 =
+            "An Error Occured Trying to resend a notification for UserID:{0}";
+
+        #endregion
+
     }
 }
