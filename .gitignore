@@ -336,3 +336,9 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+# Acumatica project utilities
+*.sln
+*.lnk
+binding.txt
+Solution.bat
