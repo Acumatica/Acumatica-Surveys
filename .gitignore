@@ -338,6 +338,8 @@ ASALocalRun/
 .localhistory/
 
 # Acumatica project utilities
+!AcumaticaSurveyPkg/Customization/[Bb]in/
+!AcumaticaSurveyPkg/Customization/[Bb]in/*.pdb
 *.sln
 *.lnk
 binding.txt
