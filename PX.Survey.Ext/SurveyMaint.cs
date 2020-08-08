@@ -88,7 +88,7 @@ namespace PX.Survey.Ext
             {
                 var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
                                         View.SelectWindowed(this, 0, 1, row.SurveyID).TopFirst;
-                row.IsSurveyInUse = (collectorData != null); 
+                row.IsSurveyInUse = (collectorData != null);
             }
         }
 
@@ -102,7 +102,7 @@ namespace PX.Survey.Ext
             e.Cache.AllowDelete = unlockSurvey;
             Mapping.Cache.AllowUpdate = unlockSurvey;
             Mapping.Cache.AllowInsert = unlockSurvey;
-            Mapping.Cache.AllowDelete = unlockSurvey;            
+            Mapping.Cache.AllowDelete = unlockSurvey;
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
 
