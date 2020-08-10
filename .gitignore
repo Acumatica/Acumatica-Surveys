@@ -336,3 +336,11 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+# Acumatica project utilities
+!AcumaticaSurveyPkg/Customization/[Bb]in/
+!AcumaticaSurveyPkg/Customization/[Bb]in/*.pdb
+*.sln
+*.lnk
+binding.txt
+Solution.bat

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PX.Data;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using PX.Api.Mobile.PushNotifications;
 using System.Threading;
 using System.Linq;
