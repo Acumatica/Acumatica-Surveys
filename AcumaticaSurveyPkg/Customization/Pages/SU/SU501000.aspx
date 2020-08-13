@@ -12,6 +12,10 @@
 			<px:PXLayoutRule runat="server" StartRow="True" ControlSize="M" LabelsWidth="S"/>
 		    <px:PXSelector ID="edSurveyID" runat="server" CommitChanges="True" DataField="SurveyID" DisplayMode="Hint">
             </px:PXSelector>
+            <px:PXDropDown ID="edSurveyAction"     runat="server" CommitChanges="True" DataField="SurveyAction" >
+            </px:PXDropDown>
+            <px:PXMaskEdit ID="edDurationTimeSpan" runat="server" CommitChanges="True" DataField="DurationTimeSpan" InputMask="### d\ays ## hrs ## mins" EmptyChar="0" Text="0" >
+            </px:PXMaskEdit>
 		</Template>
 	</px:PXFormView>
 </asp:Content>

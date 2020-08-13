@@ -144,6 +144,7 @@
                     </GINavigationScreen>
                     <GISort LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.createdDateTime" SortOrder="D" />
                     <GITable Alias="SurveyCollector" Name="PX.Survey.Ext.SurveyCollector">
+                        <GIResult LineNbr="9" SortOrder="9" IsActive="1" Field="expirationDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="cae3aff8-218d-4c26-8757-26ac10d09433" />
                         <GIResult LineNbr="8" SortOrder="8" IsActive="1" Field="surveyID" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="901a3b20-199a-453a-bd7b-de53ee4e1e7c" />
                         <GIResult LineNbr="7" SortOrder="7" IsActive="1" Field="collectorStatus" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="782d1d9a-7aaa-4c7f-9613-45e6eec64681" />
                         <GIResult LineNbr="6" SortOrder="6" IsActive="1" Field="collectedDate" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="2f6a97c8-f4be-41fa-8336-9957569dcc4a" />
