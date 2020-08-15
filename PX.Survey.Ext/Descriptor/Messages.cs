@@ -50,6 +50,14 @@ namespace PX.Survey.Ext
         public const string SetExpirationSuccess = "Set Expiration Success";
         public const string SetExpirationFailed = "Set Expiration Failed";
 
+        #region Demo Survey
+        public const string COVSYMPTOM = "Are you experiencing any of these symptoms? (fever, cough, shortness of breath, sore throat or diarrhea)";
+        public const string COVCONTACT = "Contact with individuals diagnosed with COVID-19?";
+        public const string COVTEMP = "Self Temperature";
+        public const string COVTRAVEL = "Travel Locations";
+        public const string DEMOCOVID = "COVID-19 Wellness Survey";
+        #endregion
+
 
         #region Survey Action
 
