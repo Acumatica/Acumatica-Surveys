@@ -25,6 +25,14 @@ namespace PX.Survey.Ext
         public virtual Guid? NoteID { get; set; }
         #endregion
 
+        #region DemoSurvey
+        public abstract class demoSurvey : PX.Data.BQL.BqlBool.Field<demoSurvey> { }
+
+        [PXDBBool()]
+        [PXUIField(DisplayName = "Created Demo Survey", Enabled = false)]
+        public virtual bool? DemoSurvey { get; set; }
+        #endregion
+
         #region CreatedByID
         public abstract class createdByID : PX.Data.BQL.BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID()]
