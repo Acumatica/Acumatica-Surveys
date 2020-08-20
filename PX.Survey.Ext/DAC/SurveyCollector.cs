@@ -73,7 +73,7 @@ namespace PX.Survey.Ext
         [PXSelector(typeof(Search<Contact.userID, Where<Contact.userID, IsNotNull,
                                 And<Contact.isActive, Equal<True>,
                                 And<Contact.contactType, Equal<ContactTypesAttribute.employee>>>>>),
-                    SubstituteKey = typeof(Contact.displayName))]
+                    DescriptionField = typeof(Contact.displayName))]
         public virtual Guid? UserID { get; set; }
         #endregion
 

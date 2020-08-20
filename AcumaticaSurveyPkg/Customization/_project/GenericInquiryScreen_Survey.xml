@@ -1,6 +1,6 @@
 ﻿<GenericInquiryScreen>
     <data-set>
-        <relations format-version="3" relations-version="20190630" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+        <relations format-version="3" relations-version="20190730" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
             <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
@@ -131,7 +131,7 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="4a0944e9-3ccb-4048-ae6a-6f3070f96baa" Name="Survey" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU201000" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
+                <row DesignID="4a0944e9-3ccb-4048-ae6a-6f3070f96baa" Name="Survey" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU201000" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
                     <GINavigationScreen ScreenID="SU201000" LineNbr="1" WindowMode="I">
                         <GINavigationParameter LineNbr="1" FieldName="SurveyCD" ParameterName="Survey.surveyCD" IsExpression="0" />
                     </GINavigationScreen>
