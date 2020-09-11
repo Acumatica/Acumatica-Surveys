@@ -100,6 +100,19 @@ Those records will be activated for survey responses with status as “New” an
 
 Users can select specific recipients from the list or click **SEND ALL.** Selected records could be also be sent with the “SEND” option.
 
+## Adminstration/Maintenence of Surveys (Process Survey Menu)
+Now that you have created a survey and sent it out, we added addtional functionality to manage and maintain your surveys.  You may now have addtional *options* available in the **Actions** dropdown box under the Processing Survey page ( including *Send New, Remind Un-Answered, Expire Un-Answered, and ALL (New, Remind, Expire).
+
+<img src="/docs/images/SS5-SendSurveySend2.PNG" height="50%" width="50%">
+
+These new actions are defined as follows:
+
+**Send New:** Process the selected Survey as a "new" survey for your recipients - even if it has been sent out previously or has been expired.
+**Remind Un-Answered:** Send out a reminder to all the recipients who have not responded to a selected survey.
+**Expired Un-Answered:** Expire all the "unswered" or unresponsive surveys that recipients have failed to complete for a particular survey.
+**All (New, Remind, Expire):** Process all actions listed.
+
+Note, you may expired a given survey automatically at a given time by setting the **Expire After** option which you will find below the **Actions** option. You can do this down to the minute.
 
 ## Using Automation Schedules in Acumatica to Set the Schedule Frequency & Duration ##
 The ability to schedule surveys are an important feature to automate when surveys are sent out and the frequency that occur. You can easily levarage the built-in Acumatica Automation Schedule engine.
