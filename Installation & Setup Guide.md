@@ -103,9 +103,9 @@ Users can select specific recipients from the list or click **SEND ALL.** Select
 
 ## Adminstration/Maintenence of Surveys (Process Survey Menu)
 
-Now that you have created a survey and sent it out, you have additional functionality to manage & maintain your surveys.  This new functionality provides addtional *options* which we added in phase 2 our our community development efforts. You will find these new options in the **Actions** dropdown box under the Processing Survey page ( including *Send New, Remind Un-Answered, Expire Un-Answered, and ALL (New, Remind, Expire).
+Now that you have created a survey and sent it out, you have additional functionality to manage & maintain your surveys.  This new functionality provides more *options* which we added in phase 2 our our community development efforts. You will find these new options in the **Actions** dropdown box under the Processing Survey page ( including *Send New, Remind Un-Answered, Expire Un-Answered, and ALL (New, Remind, Expire).
 
-<img src="/docs/images/SS5-SendSurveySend2.PNG" height="50%" width="50%">
+<img src="/docs/images/ProcessSurveyActionDropDown-SS02.PNG" height="50%" width="50%">
 
 The new actions are defined as follows:
 
