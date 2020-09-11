@@ -82,6 +82,7 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 
 
 ## Send Survey
+
 From the “Surveys” workspace, click “Send Survey” to process and activate the survey and send *Push Notifications* to mobile phones.
 
 <img src="/docs/images/SS5-ProcessSendSurvey.PNG" height="50%" width="50%">
@@ -101,7 +102,8 @@ Those records will be activated for survey responses with status as “New” an
 Users can select specific recipients from the list or click **SEND ALL.** Selected records could be also be sent with the “SEND” option.
 
 ## Adminstration/Maintenence of Surveys (Process Survey Menu)
-Now that you have created a survey and sent it out, you have addtional functionality to manage & maintain your surveys.  This new functionality provides addtional *options* which we added in phase 2 our our community development efforts. You will find these new options in the **Actions** dropdown box under the Processing Survey page ( including *Send New, Remind Un-Answered, Expire Un-Answered, and ALL (New, Remind, Expire).
+
+Now that you have created a survey and sent it out, you have additional functionality to manage & maintain your surveys.  This new functionality provides addtional *options* which we added in phase 2 our our community development efforts. You will find these new options in the **Actions** dropdown box under the Processing Survey page ( including *Send New, Remind Un-Answered, Expire Un-Answered, and ALL (New, Remind, Expire).
 
 <img src="/docs/images/SS5-SendSurveySend2.PNG" height="50%" width="50%">
 
