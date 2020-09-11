@@ -112,7 +112,9 @@ The new actions are defined as follows:
 **Send New:** Process the selected Survey as a "new" survey for your recipients - even if it has been sent out previously or has been expired.
 **Remind Un-Answered:** Send out a reminder to all the recipients who have not responded to a selected survey.
 **Expired Un-Answered:** Expire all the "unswered" or unresponsive surveys that recipients have failed to complete for a particular survey.
-**All (New, Remind, Expire):** Process all actions listed.
+**All (New, Remind, Expire):** This action will first check to see if any surveys in the collector have been set (in thefuture) to be expired and expire/cancel them.  Next, it will check to see if there are any active collectors, if so, it will send a reminder.  And if none are found it will send a new collector.
+
+*It is important to understand the concept of Collectors vs Surveys:  A Survey defines the questions that are going to be asked.  A Collector is the entity that answers are attached or instances of survey answers.*
 
 Note, you may *expire* a given survey automatically at a specific time by setting the **Expire After** option which you will find below the **Actions** option. You can do this down to the minute.
 
