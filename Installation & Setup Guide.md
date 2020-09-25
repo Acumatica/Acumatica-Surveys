@@ -81,7 +81,7 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 
 ## Demo Survey
 
-A new feature we added recently (September 2020) is you will be able to create a "Demo Survey" or sample which you can modify as necessary, giving you a starting point, rather than starting from scratch.
+A new feature we added recently (September 2020) will allow you to create a "Demo Survey" or sample which you can modify as necessary.  This new feature provides you a starting point, rather than starting from scratch.
 
 Under Survey Preferences, you will now see a Create Demo Suvey Tab.
 
