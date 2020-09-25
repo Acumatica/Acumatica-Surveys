@@ -85,7 +85,7 @@ A new feature we added recently (September 2020) is you will be able to create a
 
 Under Survey Preferences, you will now see a Create Demo Tab.
 
-<img src="/docs/images/SS5-CreateAttributesQuestions.PNG" height="50%" width="50%">
+<img src="/docs/images/DemoSurveyCreate-S01.PNG" height="50%" width="50%">
 
 ## Send Survey
 
