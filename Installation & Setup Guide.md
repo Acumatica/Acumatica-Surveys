@@ -79,7 +79,13 @@ From the **Recipients tab** click on the *“Add Recipients”* and select the e
 
 ***Note: You need to ensure all employees are linked to the User profile and their user accounts are Sync’d with their mobile phones and that they are able to use the Acumatica Mobile application***
 
+## Demo Survey
 
+A new feature we added recently (September 2020) is you will be able to create a "Demo Survey" or sample which you can modify as necessary, giving you a starting point, rather than starting from scratch.
+
+Under Survey Preferences, you will now see a Create Demo Tab.
+
+<img src="/docs/images/SS5-CreateAttributesQuestions.PNG" height="50%" width="50%">
 
 ## Send Survey
 
