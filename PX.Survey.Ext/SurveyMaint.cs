@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using PX.Common;
 using PX.Data;
+using PX.Data.Access.ActiveDirectory;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.SM;
+using PX.Survey.Ext;
 
-namespace PX.Survey.Ext
+namespace AcumaticaSurveysLibr
 {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey>
     {
+        public PXFilter<Roles> FilterRoles;
+        public PXSelectJoin<UsersInRoles, InnerJoin<Roles, On<Roles.rolename, Equal<UsersInRoles.rolename>>>> CurrRolesDetails;
+        public PXSelect<UsersInRoles, Where<UsersInRoles.applicationName, Equal<Current<PX.SM.Roles.applicationName>>,
+            And<UsersInRoles.rolename, Equal<Current<PX.SM.Roles.rolename>>>>> UsersByRole;
         public SelectFrom<Survey>.View SurveyCurrent;
 
         [PXViewName(PX.Objects.CR.Messages.Attributes)]
@@ -28,6 +36,12 @@ namespace PX.Survey.Ext
                     Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
                         And<Contact.isActive.IsEqual<True>>.
                         And<Contact.userID.IsNotNull>>.OrderBy<Asc<Contact.displayName>>.View UsersForAddition;
+        [PXCopyPasteHiddenView]
+        public SelectFrom<Contact>.
+            Where<Brackets<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+                And<Contact.isActive.IsEqual<True>>.
+                And<Contact.userID.IsNotNull>.And<RolesExt.allEmployee.IsEqual<True>>
+            >>.OrderBy<Asc<Contact.displayName>>.View UsersForAddition1;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
@@ -106,6 +120,23 @@ namespace PX.Survey.Ext
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
 
+        protected void Roles_RowSelected(PXCache cache, PXRowSelectedEventArgs e, PXRowSelected del)
+        {
+            if (del != null)
+                del(cache, e);
+            Roles row = (Roles)e.Row;
+            if (row == null) return;
+            var rowExt = row.GetExtension<RolesExt>();
+            if (rowExt.AllEmployee == true)
+            {
+                PXUIFieldAttribute.SetEnabled<Roles.rolename>(cache, row, false);
+            }
+            if (rowExt.AllEmployee == false)
+            {
+                PXUIFieldAttribute.SetEnabled<Roles.rolename>(cache, row, true);
+            }
+        }
+
         [PXMergeAttributes(Method = MergeMethod.Append)]
         [PXFormula(typeof(MobileAppDeviceOS<Contact.userID>))]
         [PXDependsOnFields(typeof(Contact.contactID), typeof(Contact.userID))]
@@ -122,5 +153,5 @@ namespace PX.Survey.Ext
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<CSAttributeGroup.entityClassID>>>>), LeaveChildren = true)]
         [PXDBLiteDefault(typeof(Survey.surveyIDStringID))]
         protected virtual void _(Events.CacheAttached<CSAttributeGroup.entityClassID> e) { }
-    }
+	}
 }

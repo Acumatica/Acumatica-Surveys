@@ -3,11 +3,12 @@
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
     <px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-                     TypeName="PX.Survey.Ext.SurveyMaint" PrimaryView="SurveyCurrent">
+                     TypeName="AcumaticaSurveysLibr.SurveyMaint" PrimaryView="SurveyCurrent">
         <CallbackCommands>
 			<px:PXDSCallbackCommand Name="Insert" PostData="Self" />
 			<px:PXDSCallbackCommand Name="Save" CommitChanges="True" />
             <px:PXDSCallbackCommand Name="AddRecipients" Visible="False" />
+            <px:PXDSCallbackCommand Name="AddRecipients1" Visible="False" />
         </CallbackCommands>
     </px:PXDataSource>
 </asp:Content>
@@ -76,6 +77,9 @@
                                 <px:PXToolBarButton Key="AddRecipients">
                                     <AutoCallBack Command="AddRecipients" Target="ds"/>
                                 </px:PXToolBarButton>
+                                <px:PXToolBarButton Key="AddRecipients1">
+                                    <AutoCallBack Command="AddRecipients1" Target="ds"/>
+                                </px:PXToolBarButton>
                             </CustomItems>
                         </ActionBar>
                         <Mode InitNewRow="true"/>
@@ -88,6 +92,17 @@
     </px:PXTab>
     <px:PXSmartPanel ID="PanelAddRecipients" runat="server" Key="UsersForAddition" LoadOnDemand="true" Width="1100px" Height="500px"
                      Caption="Select Recipients" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true">
+        <px:PXFormView ID="PXFormView1" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%"
+                       DataMember="FilterRoles" Caption="Role Information" TemplateContainer="" DefaultControlID="edRolename">
+            <Template>
+                <px:PXLayoutRule runat="server" StartColumn="True" ControlSize="XM" LabelsWidth="SM" />
+                <px:PXCheckBox CommitChanges="True" ID="chkGuest" runat="server" Checked="True" DataField="AllEmployee" />
+                <px:PXLayoutRule runat="server" StartColumn="True" ControlSize="XM" LabelsWidth="SM" />
+                <px:PXSelector ID="edRolename" runat="server" DataField="Rolename" AutoRefresh="True"
+                               DataSourceID="ds" />
+                
+            </Template>
+        </px:PXFormView>
 	    <px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
                    SyncPosition="True" NoteIndicator="False" FilesIndicator="False" TabIndex="4900" AllowPaging="true">       
             <Levels>
@@ -107,6 +122,7 @@
                         <px:PXGridColumn DataField="Phone1" Width="180px" />
                     </Columns>
                 </px:PXGridLevel>
+             
             </Levels>
             <AutoSize Enabled="True" MinHeight="150" />
         </px:PXGrid>
@@ -116,4 +132,5 @@
             <px:PXButton ID="btnCancel" runat="server" DialogResult="Cancel" Text="Cancel" />
         </px:PXPanel>
     </px:PXSmartPanel>
+      
 </asp:Content>
