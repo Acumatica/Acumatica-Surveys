@@ -89,11 +89,11 @@ Under Survey Preferences, you will now see a Create Demo Suvey Tab.
 
 Clicking on the Tab will create a sample wellness survey, called "COVID-19 Wellness Survey" as shown below:
 
-<img src="/docs/images/DemoSurveyCreate-S02.PNG" height="50%" width="50%">
+<img src="/docs/images/DemoSurveyCreate-S002.PNG" height="50%" width="50%">
 
 The sample questions are reflected in the attributes you can see here:
 
-<img src="/docs/images/DemoSurveyCreate-S03.PNG" height="50%" width="50%">
+<img src="/docs/images/DemoSurveyCreate-S003.PNG" height="50%" width="50%">
 
 ## Send 
 
