@@ -87,9 +87,16 @@ Under Survey Preferences, you will now see a Create Demo Suvey Tab.
 
 <img src="/docs/images/DemoSurveyCreate-S01.PNG" height="50%" width="50%">
 
-Clicking on the Tab...
+Clicking on the Tab will create a sample wellness survey, called "COVID-19 Wellness Survey" as shown below:
 
-## Send Survey
+<img src="/docs/images/DemoSurveyCreate-S02.PNG" height="50%" width="50%">
+
+The sample questions are reflected in the attributes you can see here:
+
+<img src="/docs/images/DemoSurveyCreate-S03.PNG" height="50%" width="50%">
+
+## Send 
+
 
 From the “Surveys” workspace, click “Send Survey” to process and activate the survey and send *Push Notifications* to mobile phones.
 
