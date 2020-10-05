@@ -96,11 +96,9 @@
                        DataMember="FilterRoles" Caption="Role Information" TemplateContainer="" DefaultControlID="edRolename">
             <Template>
                 <px:PXLayoutRule runat="server" StartColumn="True" ControlSize="XM" LabelsWidth="SM" />
-                <px:PXCheckBox CommitChanges="True" ID="chkGuest" runat="server" Checked="True" DataField="AllEmployee" />
+                <px:PXCheckBox CommitChanges="True" ID="chkGuest" runat="server" Checked="True" DataField="SelectAll"  />
                 <px:PXLayoutRule runat="server" StartColumn="True" ControlSize="XM" LabelsWidth="SM" />
-                <px:PXSelector ID="edRolename" runat="server" DataField="Rolename" AutoRefresh="True"
-                               DataSourceID="ds" />
-                
+                <px:PXSelector CommitChanges="True" ID="edRolename" runat="server" DataField="SelectedRole" AutoRefresh="True" DataSourceID="ds" />
             </Template>
         </px:PXFormView>
 	    <px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
@@ -110,7 +108,7 @@
                     <RowTemplate>
                     </RowTemplate>
                     <Columns>
-                        <px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" />
+                        <px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" />
                         <px:PXGridColumn DataField="DisplayName" Width="280px" />
                         <px:PXGridColumn DataField="ContactType" />
                         <px:PXGridColumn DataField="UsrMobileAppDeviceOS" Width="200px" />

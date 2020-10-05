@@ -62,10 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DACExt\RolesExt.cs" />
     <Compile Include="DAC\ContactSurveyExt.cs" />
     <Compile Include="DAC\CSAttributeDetailSurveyExt.cs" />
     <Compile Include="DAC\CSAttributeSurveyExt.cs" />
+    <Compile Include="DAC\FilterUserRoles.cs" />
     <Compile Include="DAC\SurveySetup.cs" />
     <Compile Include="DAC\SurveyUser.cs" />
     <Compile Include="Descriptor\Attributes.cs" />
