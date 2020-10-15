@@ -7,12 +7,15 @@ using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.SM;
 
 namespace PX.Survey.Ext
 {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey>
     {
         public SelectFrom<Survey>.View SurveyCurrent;
+
+        public PXFilter<FilterUserRoles> FilterRoles;
 
         [PXViewName(PX.Objects.CR.Messages.Attributes)]
         public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Mapping;
@@ -88,7 +91,7 @@ namespace PX.Survey.Ext
             {
                 var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
                                         View.SelectWindowed(this, 0, 1, row.SurveyID).TopFirst;
-                row.IsSurveyInUse = (collectorData != null); 
+                row.IsSurveyInUse = (collectorData != null);
             }
         }
 
@@ -102,7 +105,7 @@ namespace PX.Survey.Ext
             e.Cache.AllowDelete = unlockSurvey;
             Mapping.Cache.AllowUpdate = unlockSurvey;
             Mapping.Cache.AllowInsert = unlockSurvey;
-            Mapping.Cache.AllowDelete = unlockSurvey;            
+            Mapping.Cache.AllowDelete = unlockSurvey;
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
 
@@ -122,5 +125,37 @@ namespace PX.Survey.Ext
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<CSAttributeGroup.entityClassID>>>>), LeaveChildren = true)]
         [PXDBLiteDefault(typeof(Survey.surveyIDStringID))]
         protected virtual void _(Events.CacheAttached<CSAttributeGroup.entityClassID> e) { }
+
+        protected virtual void _(Events.RowSelected<FilterUserRoles> e)
+        {
+            var row = e.Row;
+            if (row == null)
+            {
+                return;
+            }
+            var enable = row.SelectAll == false;
+            PXUIFieldAttribute.SetEnabled<FilterUserRoles.selectedRole>(e.Cache, row, enable);
+        }
+
+        protected virtual IEnumerable usersForAddition()
+        {
+            var recepientsStartQuery =
+                new PXSelectJoin<Contact, InnerJoin<Users, On<Users.pKID, Equal<Contact.userID>>>>(this);
+
+            recepientsStartQuery.Join<InnerJoin<UsersInRoles, On<UsersInRoles.username, Equal<Users.username>>>>();
+            recepientsStartQuery.Join<InnerJoin<Roles, On<Roles.rolename, Equal<UsersInRoles.rolename>>>>();
+
+            var summaryCurrent = FilterRoles.Current;
+            if (summaryCurrent.SelectedRole != null)
+            {
+                recepientsStartQuery.WhereAnd<Where<Contact.userID, Equal<Users.pKID>>>();
+                recepientsStartQuery.WhereAnd<Where<Users.username, Equal<UsersInRoles.username>>>();
+                recepientsStartQuery.WhereAnd<Where<UsersInRoles.rolename, Equal<Current<FilterUserRoles.selectedRole>>>>();
+            }
+
+            var users = recepientsStartQuery.Select().ToList().Select(a => a.GetItem<Contact>()).ToList().Distinct();
+            return users;
+        }
     }
+
 }
