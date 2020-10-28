@@ -3,11 +3,12 @@
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
     <px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-                     TypeName="PX.Survey.Ext.SurveyMaint" PrimaryView="SurveyCurrent">
+                     TypeName="AcumaticaSurveysLibr.SurveyMaint" PrimaryView="SurveyCurrent">
         <CallbackCommands>
 			<px:PXDSCallbackCommand Name="Insert" PostData="Self" />
 			<px:PXDSCallbackCommand Name="Save" CommitChanges="True" />
             <px:PXDSCallbackCommand Name="AddRecipients" Visible="False" />
+            <px:PXDSCallbackCommand Name="AddRecipients1" Visible="False" />
         </CallbackCommands>
     </px:PXDataSource>
 </asp:Content>
@@ -94,10 +95,12 @@
         <px:PXFormView ID="PXFormView1" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%"
                        DataMember="FilterRoles" Caption="Role Information" TemplateContainer="" DefaultControlID="edRolename">
             <Template>
-                <px:PXLayoutRule runat="server" StartColumn="True" ControlSize="XM" LabelsWidth="SM" />
-                <px:PXCheckBox CommitChanges="True" ID="chkGuest" runat="server" Checked="True" DataField="SelectAll"  />
-                <px:PXLayoutRule runat="server" StartColumn="True" ControlSize="XM" LabelsWidth="SM" />
-                <px:PXSelector CommitChanges="True" ID="edRolename" runat="server" DataField="SelectedRole" AutoRefresh="True" DataSourceID="ds" />
+                <px:PXLayoutRule runat="server" StartColumn="True" StartRow="True" ControlSize="XM" LabelsWidth="SM" />
+                <px:PXSelector CommitChanges="True" ID="edVendorClassID" runat="server" DataField="VendorClassID" AllowEdit="True" />
+                <px:PXLayoutRule runat="server" StartColumn="True" StartRow="False" ControlSize="XM" LabelsWidth="SM" />
+                <px:PXSegmentMask CommitChanges="True" ID="edParentBAccountID" runat="server" DataField="ParentBAccountID" AllowEdit="True" />
+                <px:PXLayoutRule runat="server" StartColumn="True" StartRow="False" ControlSize="XM" LabelsWidth="SM" />
+                <px:PXSelector CommitChanges="True" ID="edDepartmentID" runat="server" DataField="DepartmentID" AutoRefresh="True" DataSourceID="ds" />
             </Template>
         </px:PXFormView>
 	    <px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
