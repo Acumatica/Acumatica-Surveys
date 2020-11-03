@@ -2,6 +2,7 @@
 using PX.Data.BQL.Fluent;
 using PX.Objects.CS;
 using System.Collections.Generic;
+using PX.Survey.Ext;
 
 namespace PX.Survey.Ext
 {
