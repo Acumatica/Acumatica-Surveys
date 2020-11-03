@@ -1,91 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9BC6D61A-5D4B-4D57-BC6B-5E3F9D04377E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PX.Survey.Ext</RootNamespace>
-    <AssemblyName>PX.Survey.Ext</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net48</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="CommonServiceLocator">
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="PX.Api.Mobile">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\PX.Api.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Api.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\PX.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Common.dll</HintPath>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.CS.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\PX.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Data.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Data.BQL.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\..\..\..\..\Acumatica2019R2\APS19_209_0038\Bin\PX.Objects.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Objects.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAC\ContactSurveyExt.cs" />
-    <Compile Include="DAC\CSAttributeDetailSurveyExt.cs" />
-    <Compile Include="DAC\CSAttributeSurveyExt.cs" />
-    <Compile Include="DAC\SurveySetup.cs" />
-    <Compile Include="DAC\SurveyUser.cs" />
-    <Compile Include="Descriptor\Attributes.cs" />
-    <Compile Include="Descriptor\Messages.cs" />
-    <Compile Include="Descriptor\SurveyResponseStatus.cs" />
-    <Compile Include="PXDBTimeSpanLongExtAttribute.cs" />
-    <Compile Include="SurveyProcess.cs" />
-    <Compile Include="SurveyCollectorMaint.cs" />
-    <Compile Include="SurveyMaint.cs" />
-    <Compile Include="DAC\Survey.cs" />
-    <Compile Include="DAC\SurveyCollector.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SurveySetupMaint.cs" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
