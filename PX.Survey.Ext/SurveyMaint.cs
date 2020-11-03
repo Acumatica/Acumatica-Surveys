@@ -8,12 +8,14 @@ using PX.Data;
 using PX.Data.Access.ActiveDirectory;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
+using PX.Objects.AP;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.Objects.EP;
 using PX.SM;
-using PX.Survey.Ext;
 
-namespace AcumaticaSurveysLibr
+
+namespace PX.Survey.Ext
 {
     [PXCacheName("Filter users roles")]
 
@@ -22,6 +24,7 @@ namespace AcumaticaSurveysLibr
         public SelectFrom<Survey>.View SurveyCurrent;
 
         public PXFilter<FilterUserRoles> FilterRoles;
+        public PXSelect<EPEmployee, Where<EPEmployee.bAccountID, Equal<Current<EPEmployee.bAccountID>>>> CurrentEmployee;
 
         public PXSelect<UsersInRoles, Where<UsersInRoles.applicationName, Equal<Current<PX.SM.Roles.applicationName>>,
             And<UsersInRoles.rolename, Equal<Current<PX.SM.Roles.rolename>>>>> UsersByRole;
@@ -31,10 +34,13 @@ namespace AcumaticaSurveysLibr
 
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyUsers;
 
-        [PXHidden] [PXCopyPasteHiddenView] public PXSetup<SurveySetup> SurveySetup;
+        [PXHidden] 
+        [PXCopyPasteHiddenView] 
+        public PXSetup<SurveySetup> SurveySetup;
 
         [PXCopyPasteHiddenView]
         public SelectFrom<Contact>.
+            InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>. 
             Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
                 And<Contact.isActive.IsEqual<True>>.
                 And<Contact.userID.IsNotNull>>.OrderBy<Asc<Contact.displayName>>.View UsersForAddition;
@@ -123,7 +129,6 @@ namespace AcumaticaSurveysLibr
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
 
-       
         [PXMergeAttributes(Method = MergeMethod.Append)]
         [PXFormula(typeof(MobileAppDeviceOS<Contact.userID>))]
         [PXDependsOnFields(typeof(Contact.contactID), typeof(Contact.userID))]
@@ -148,36 +153,70 @@ namespace AcumaticaSurveysLibr
         {
         }
 
-        protected virtual void _(Events.RowSelected<FilterUserRoles> e)
+        public class SelectorCustomerContractAttribute : PXCustomSelectorAttribute
         {
-            var row = e.Row;
-            if (row == null)
+            private Type selectorField;
+            private Type contractFld;
+
+            public SelectorCustomerContractAttribute(Type selectorField, Type contractField)
+                : base(typeof(Roles.rolename))
             {
-                return;
+                if (selectorField == null)
+                    throw new ArgumentNullException("selectorField");
+
+                if (contractField == null)
+                    throw new ArgumentNullException("contractField");
+
+
+                if (BqlCommand.GetItemType(selectorField).Name != BqlCommand.GetItemType(selectorField).Name)
+                {
+                    throw new ArgumentException(string.Format(
+                        "moduleField and docTypeField must be of the same declaring type. {0} vs {1}",
+                        BqlCommand.GetItemType(selectorField).Name, BqlCommand.GetItemType(selectorField).Name));
+                }
+
+                this.selectorField = selectorField;
+                contractFld = contractField;
             }
-            var enable = row.SelectAll == false;
-            PXUIFieldAttribute.SetEnabled<FilterUserRoles.selectedRole>(e.Cache, row, enable);
+
+            public override void FieldVerifying(PXCache sender, PXFieldVerifyingEventArgs e)
+            {
+            }
+
+            protected virtual IEnumerable GetRecords()
+            {
+                var cache = this._Graph.Caches[BqlCommand.GetItemType(selectorField)];
+                var cbs = (Contact)cache.Current;
+                cache = this._Graph.Caches[BqlCommand.GetItemType(contractFld)];
+                var contract = (Roles)cache.Current;
+                var result = new List<int>();
+                return result;
+            }
         }
 
         protected virtual IEnumerable usersForAddition()
         {
-            var recepientsStartQuery =
-                new PXSelectJoin<Contact, InnerJoin<Users, On<Users.pKID, Equal<Contact.userID>>>>(this);
+            var greedLineStartQuery = new SelectFrom<Contact>.
+                    InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>.
+                    Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+                        And<Contact.isActive.IsEqual<True>>.
+                        And<Contact.userID.IsNotNull>>.OrderBy<Asc<Contact.displayName>>.View(this);
 
-            recepientsStartQuery.Join<InnerJoin<UsersInRoles, On<UsersInRoles.username, Equal<Users.username>>>>();
-            recepientsStartQuery.Join<InnerJoin<Roles, On<Roles.rolename, Equal<UsersInRoles.rolename>>>>();
 
             var summaryCurrent = FilterRoles.Current;
-            if (summaryCurrent.SelectedRole != null)
+            if (summaryCurrent.DepartmentID != null)
             {
-                recepientsStartQuery.WhereAnd<Where<Contact.userID, Equal<Users.pKID>>>();
-                recepientsStartQuery.WhereAnd<Where<Users.username, Equal<UsersInRoles.username>>>();
-                recepientsStartQuery.WhereAnd<Where<UsersInRoles.rolename, Equal<Current<FilterUserRoles.selectedRole>>>>();
+                greedLineStartQuery.WhereAnd<Where<EPEmployee.departmentID, Equal<Current<FilterUserRoles.departmentID>>>>();
             }
-
-            var users = recepientsStartQuery.Select().ToList().Select(a => a.GetItem<Contact>()).ToList().Distinct();
-            
-            return users;
+            if (summaryCurrent.VendorClassID != null)
+            {
+                greedLineStartQuery.WhereAnd<Where<EPEmployee.vendorClassID, Equal<Current<FilterUserRoles.vendorClassID>>>>();
+            }
+            if (summaryCurrent.ParentBAccountID != null)
+            {
+                greedLineStartQuery.WhereAnd<Where<EPEmployee.parentBAccountID, Equal<Current<FilterUserRoles.parentBAccountID>>>>();
+            }
+            return greedLineStartQuery.Select();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace PX.Survey.Ext
         {
             return true;
         }
-
         #region Description  
         [PXMergeAttributes(Method = MergeMethod.Append)]
         [PXRemoveBaseAttribute(typeof(PXStringAttribute))]
