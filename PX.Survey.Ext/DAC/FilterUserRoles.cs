@@ -4,9 +4,10 @@ using System;
 using PX.Objects.EP;
 using PX.Objects.GL;
 
-namespace AcumaticaSurveysLibr
+namespace PX.Survey.Ext
 {
     [Serializable]
+    [PXCacheName("Filter user roles")]
     public class FilterUserRoles : IBqlTable
     {
         #region DepartmentID
@@ -18,7 +19,7 @@ namespace AcumaticaSurveysLibr
         public virtual String DepartmentID { get; set; }
         #endregion
         #region VendorClassID
-        public new abstract class vendorClassID : PX.Data.BQL.BqlString.Field<vendorClassID> { }
+        public abstract class vendorClassID : PX.Data.BQL.BqlString.Field<vendorClassID> { }
         [PXDBString(10, InputMask = ">aaaaaaaaaa")]
         [PXUIField(DisplayName = "Employee Class", Visibility = PXUIVisibility.SelectorVisible)]
         [PXSelector(typeof(EPEmployeeClass.vendorClassID), DescriptionField = typeof(EPEmployeeClass.descr))]

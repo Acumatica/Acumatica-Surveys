@@ -8,13 +8,14 @@ using PX.Data;
 using PX.Data.Access.ActiveDirectory;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
+using PX.Objects.AP;
 using PX.Objects.CR;
 using PX.Objects.CS;
 using PX.Objects.EP;
 using PX.SM;
-using PX.Survey.Ext;
 
-namespace AcumaticaSurveysLibr
+
+namespace PX.Survey.Ext
 {
     [PXCacheName("Filter users roles")]
 
@@ -33,10 +34,13 @@ namespace AcumaticaSurveysLibr
 
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyUsers;
 
-        [PXHidden] [PXCopyPasteHiddenView] public PXSetup<SurveySetup> SurveySetup;
+        [PXHidden] 
+        [PXCopyPasteHiddenView] 
+        public PXSetup<SurveySetup> SurveySetup;
 
         [PXCopyPasteHiddenView]
         public SelectFrom<Contact>.
+            InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>. 
             Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
                 And<Contact.isActive.IsEqual<True>>.
                 And<Contact.userID.IsNotNull>>.OrderBy<Asc<Contact.displayName>>.View UsersForAddition;
@@ -192,8 +196,12 @@ namespace AcumaticaSurveysLibr
 
         protected virtual IEnumerable usersForAddition()
         {
-            var greedLineStartQuery =
-                new PXSelectJoin<Contact, InnerJoin<EPEmployee, On<EPEmployee.userID, Equal<Contact.userID>>>>(this);
+            var greedLineStartQuery = new SelectFrom<Contact>.
+                    InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>.
+                    Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+                        And<Contact.isActive.IsEqual<True>>.
+                        And<Contact.userID.IsNotNull>>.OrderBy<Asc<Contact.displayName>>.View(this);
+
 
             var summaryCurrent = FilterRoles.Current;
             if (summaryCurrent.DepartmentID != null)
@@ -208,9 +216,7 @@ namespace AcumaticaSurveysLibr
             {
                 greedLineStartQuery.WhereAnd<Where<EPEmployee.parentBAccountID, Equal<Current<FilterUserRoles.parentBAccountID>>>>();
             }
-
-            var lines = greedLineStartQuery.Select().ToList().Select(a => a.GetItem<Contact>()).ToList().Distinct();
-            return lines;
+            return greedLineStartQuery.Select();
         }
     }
 }
