@@ -4,9 +4,8 @@ using PX.Data;
 using PX.Api.Mobile.PushNotifications;
 using System.Threading;
 using System.Linq;
+using Microsoft.Practices.ServiceLocation;
 using PX.Common;
-
-using CommonServiceLocator;
 
 namespace PX.Survey.Ext
 {

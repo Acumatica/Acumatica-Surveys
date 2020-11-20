@@ -4,26 +4,26 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\CommonServiceLocator.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>C:\Program Files\Acumatica ERP\covid19\Bin\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="PX.Api.Mobile">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Api.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\19.205.0023\Files\Bin\PX.Api.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\19.205.0023\Files\Bin\PX.Common.dll</HintPath>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\19.205.0023\Files\Bin\PX.CS.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\19.205.0023\Files\Bin\PX.Data.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\19.205.0023\Files\Bin\PX.Data.BQL.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\..\..\..\..\AcumaticaInstances\20.100.0095\Survey2020\Bin\PX.Objects.dll</HintPath>
+      <HintPath>..\..\..\..\..\AcumaticaInstances\19.205.0023\Files\Bin\PX.Objects.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
