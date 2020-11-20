@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Linq;
-using System.Reflection;
-using PX.Common;
 using PX.Data;
-using PX.Data.Access.ActiveDirectory;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
-using PX.Objects.AP;
 using PX.Objects.CR;
 using PX.Objects.CS;
 using PX.Objects.EP;
@@ -153,50 +147,9 @@ namespace PX.Survey.Ext
         {
         }
 
-        public class SelectorCustomerContractAttribute : PXCustomSelectorAttribute
-        {
-            private Type selectorField;
-            private Type contractFld;
-
-            public SelectorCustomerContractAttribute(Type selectorField, Type contractField)
-                : base(typeof(Roles.rolename))
-            {
-                if (selectorField == null)
-                    throw new ArgumentNullException("selectorField");
-
-                if (contractField == null)
-                    throw new ArgumentNullException("contractField");
-
-
-                if (BqlCommand.GetItemType(selectorField).Name != BqlCommand.GetItemType(selectorField).Name)
-                {
-                    throw new ArgumentException(string.Format(
-                        "moduleField and docTypeField must be of the same declaring type. {0} vs {1}",
-                        BqlCommand.GetItemType(selectorField).Name, BqlCommand.GetItemType(selectorField).Name));
-                }
-
-                this.selectorField = selectorField;
-                contractFld = contractField;
-            }
-
-            public override void FieldVerifying(PXCache sender, PXFieldVerifyingEventArgs e)
-            {
-            }
-
-            protected virtual IEnumerable GetRecords()
-            {
-                var cache = this._Graph.Caches[BqlCommand.GetItemType(selectorField)];
-                var cbs = (Contact)cache.Current;
-                cache = this._Graph.Caches[BqlCommand.GetItemType(contractFld)];
-                var contract = (Roles)cache.Current;
-                var result = new List<int>();
-                return result;
-            }
-        }
-
         protected virtual IEnumerable usersForAddition()
         {
-            var greedLineStartQuery = new SelectFrom<Contact>.
+            var contactStartQuery = new SelectFrom<Contact>.
                     InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>.
                     Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
                         And<Contact.isActive.IsEqual<True>>.
@@ -206,17 +159,17 @@ namespace PX.Survey.Ext
             var summaryCurrent = FilterRoles.Current;
             if (summaryCurrent.DepartmentID != null)
             {
-                greedLineStartQuery.WhereAnd<Where<EPEmployee.departmentID, Equal<Current<FilterUserRoles.departmentID>>>>();
+                contactStartQuery.WhereAnd<Where<EPEmployee.departmentID, Equal<Current<FilterUserRoles.departmentID>>>>();
             }
             if (summaryCurrent.VendorClassID != null)
             {
-                greedLineStartQuery.WhereAnd<Where<EPEmployee.vendorClassID, Equal<Current<FilterUserRoles.vendorClassID>>>>();
+                contactStartQuery.WhereAnd<Where<EPEmployee.vendorClassID, Equal<Current<FilterUserRoles.vendorClassID>>>>();
             }
             if (summaryCurrent.ParentBAccountID != null)
             {
-                greedLineStartQuery.WhereAnd<Where<EPEmployee.parentBAccountID, Equal<Current<FilterUserRoles.parentBAccountID>>>>();
+                contactStartQuery.WhereAnd<Where<EPEmployee.parentBAccountID, Equal<Current<FilterUserRoles.parentBAccountID>>>>();
             }
-            return greedLineStartQuery.Select();
+            return contactStartQuery.Select();
         }
     }
 }

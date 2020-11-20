@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using PX.Data;
-using CommonServiceLocator;
 using PX.Api.Mobile.PushNotifications;
 using System.Threading;
 using System.Linq;
+using CommonServiceLocator;
 using PX.Common;
 
 namespace PX.Survey.Ext

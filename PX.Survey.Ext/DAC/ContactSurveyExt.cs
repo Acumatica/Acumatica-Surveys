@@ -6,6 +6,10 @@ namespace PX.Survey.Ext
 {
     public sealed class ContactSurveyExt : PXCacheExtension<Contact>
     {
+        public static bool IsActive()
+        {
+            return true;
+        }
         #region UsrMobileAppDeviceOS
         public abstract class usrMobileAppDeviceOS : PX.Data.BQL.BqlString.Field<usrMobileAppDeviceOS> { }
 
