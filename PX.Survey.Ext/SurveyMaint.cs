@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
-using PX.Common;
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.Objects.EP;
+using PX.SM;
 
 namespace PX.Survey.Ext
 {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey>
     {
         public SelectFrom<Survey>.View SurveyCurrent;
+        public PXFilter<FilterUserRoles> FilterRoles;
 
         [PXViewName(PX.Objects.CR.Messages.Attributes)]
         public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Mapping;
@@ -122,5 +123,30 @@ namespace PX.Survey.Ext
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<CSAttributeGroup.entityClassID>>>>), LeaveChildren = true)]
         [PXDBLiteDefault(typeof(Survey.surveyIDStringID))]
         protected virtual void _(Events.CacheAttached<CSAttributeGroup.entityClassID> e) { }
+
+        protected virtual IEnumerable usersForAddition()
+        {
+            var contactStartQuery = new SelectFrom<Contact>.
+                InnerJoin<EPEmployee>.On<Contact.userID.IsEqual<EPEmployee.userID>>.
+                Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
+                    And<Contact.isActive.IsEqual<True>>.
+                    And<Contact.userID.IsNotNull>>.OrderBy<Asc<Contact.displayName>>.View(this);
+
+
+            var summaryCurrent = FilterRoles.Current;
+            if (summaryCurrent.DepartmentID != null)
+            {
+                contactStartQuery.WhereAnd<Where<EPEmployee.departmentID, Equal<Current<FilterUserRoles.departmentID>>>>();
+            }
+            if (summaryCurrent.VendorClassID != null)
+            {
+                contactStartQuery.WhereAnd<Where<EPEmployee.vendorClassID, Equal<Current<FilterUserRoles.vendorClassID>>>>();
+            }
+            if (summaryCurrent.ParentBAccountID != null)
+            {
+                contactStartQuery.WhereAnd<Where<EPEmployee.parentBAccountID, Equal<Current<FilterUserRoles.parentBAccountID>>>>();
+            }
+            return contactStartQuery.Select();
+        }
     }
 }

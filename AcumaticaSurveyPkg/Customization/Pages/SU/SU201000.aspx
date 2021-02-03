@@ -86,34 +86,49 @@
         </Items>
         <AutoSize Container="Window" Enabled="True" MinHeight="250"/>
     </px:PXTab>
-    <px:PXSmartPanel ID="PanelAddRecipients" runat="server" Key="UsersForAddition" LoadOnDemand="true" Width="1100px" Height="500px"
-                     Caption="Select Recipients" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true">
-	    <px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
-                   SyncPosition="True" NoteIndicator="False" FilesIndicator="False" TabIndex="4900" AllowPaging="true">       
-            <Levels>
-                <px:PXGridLevel DataMember="UsersForAddition">
-                    <RowTemplate>
-                    </RowTemplate>
-                    <Columns>
-                        <px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" />
-                        <px:PXGridColumn DataField="DisplayName" Width="280px" />
-                        <px:PXGridColumn DataField="ContactType" />
-                        <px:PXGridColumn DataField="UsrMobileAppDeviceOS" Width="200px" />
-                        <px:PXGridColumn DataField="UsrUsingMobileApp" Width="180px" TextAlign="Center" Type="CheckBox" />
-                        <px:PXGridColumn DataField="FirstName" Width="180px" />
-                        <px:PXGridColumn DataField="LastName" Width="220px" />
-                        <px:PXGridColumn DataField="BAccountID_BAccount_acctName" Width="280px" />
-                        <px:PXGridColumn DataField="EMail" Width="280px" />
-                        <px:PXGridColumn DataField="Phone1" Width="180px" />
-                    </Columns>
-                </px:PXGridLevel>
-            </Levels>
-            <AutoSize Enabled="True" MinHeight="150" />
-        </px:PXGrid>
-        <px:PXPanel ID="pnlButtons" runat="server" SkinID="Buttons">
-            <px:PXButton ID="btnAdd" runat="server" CommandSourceID="ds" Text="Add" CommandName="AddUsers" />
-            <px:PXButton ID="btnAddAndClose" runat="server" Text="Add & Close" DialogResult="OK" />
-            <px:PXButton ID="btnCancel" runat="server" DialogResult="Cancel" Text="Cancel" />
-        </px:PXPanel>
-    </px:PXSmartPanel>
+   	<px:PXSmartPanel ID="PanelAddRecipients" runat="server" Key="UsersForAddition" LoadOnDemand="true" Width="1400px" Height="500px"
+					 Caption="Select Recipients" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true">
+		<px:PXFormView ID="PXFormView1" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%"
+					   DataMember="FilterRoles" Caption="Role Information" TemplateContainer="" DefaultControlID="edRolename">
+			<Template>
+				<px:PXLayoutRule runat="server" StartColumn="True" StartRow="True" ControlSize="XM" LabelsWidth="S" />
+				<px:PXSelector CommitChanges="True" ID="edVendorClassID" runat="server" DataField="VendorClassID" AllowEdit="True" />
+				<px:PXLayoutRule runat="server" StartColumn="True" StartRow="False" ControlSize="XM" LabelsWidth="S" />
+				<px:PXSegmentMask CommitChanges="True" ID="edParentBAccountID" runat="server" DataField="ParentBAccountID" AllowEdit="True" />
+				<px:PXLayoutRule runat="server" StartColumn="True" StartRow="False" ControlSize="XM" LabelsWidth="S" />
+				<px:PXSelector CommitChanges="True" ID="edDepartmentID" runat="server" DataField="DepartmentID" AutoRefresh="True" DataSourceID="ds" />
+			</Template>
+		</px:PXFormView>
+		<px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
+				   SyncPosition="True" NoteIndicator="False" FilesIndicator="False" TabIndex="4900" AllowPaging="true">       
+			<Levels>
+				<px:PXGridLevel DataMember="UsersForAddition">
+					<RowTemplate>
+					</RowTemplate>
+					<Columns>
+						<px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" />
+						<px:PXGridColumn DataField="DisplayName" Width="280px" />
+						<px:PXGridColumn DataField="ContactType" />
+						<px:PXGridColumn DataField="UsrMobileAppDeviceOS" Width="200px" />
+						<px:PXGridColumn DataField="UsrUsingMobileApp" Width="180px" TextAlign="Center" Type="CheckBox" />
+						<px:PXGridColumn DataField="FirstName" Width="180px" />
+						<px:PXGridColumn DataField="LastName" Width="220px" />
+						<px:PXGridColumn DataField="BAccountID_BAccount_acctName" Width="280px" />
+						<px:PXGridColumn DataField="EMail" Width="280px" />
+						<px:PXGridColumn DataField="Phone1" Width="180px" />
+                        <px:PXGridColumn DataField="EPEmployee__VendorClassID" Width="180px" />
+                        <px:PXGridColumn DataField="EPEmployee__ParentBAccountID" Width="180px" />
+                        <px:PXGridColumn DataField="EPEmployee__DepartmentID" Width="180px" />
+					</Columns>
+				</px:PXGridLevel>
+			 
+			</Levels>
+			<AutoSize Enabled="True" MinHeight="150" />
+		</px:PXGrid>
+		<px:PXPanel ID="pnlButtons" runat="server" SkinID="Buttons">
+			<px:PXButton ID="btnAdd" runat="server" CommandSourceID="ds" Text="Add" CommandName="AddUsers" />
+			<px:PXButton ID="btnAddAndClose" runat="server" Text="Add & Close" DialogResult="OK" />
+			<px:PXButton ID="btnCancel" runat="server" DialogResult="Cancel" Text="Cancel" />
+		</px:PXPanel>
+	</px:PXSmartPanel>
 </asp:Content>
