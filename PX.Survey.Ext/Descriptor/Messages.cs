@@ -9,6 +9,7 @@ namespace PX.Survey.Ext
 
         #region CacheNames
         public const string SurveyCollectorCacheName = "Survey Collector";
+        public const string SurveyCollectorDataCacheName = "Survey Collector Data";
         public const string SurveySetupCacheName = "Survey Setup";
         public const string SurveyCacheName = "Survey";
         public const string SurveyUserCacheName = "Survey User";
@@ -70,5 +71,6 @@ namespace PX.Survey.Ext
 
         #endregion
 
+       
     }
 }

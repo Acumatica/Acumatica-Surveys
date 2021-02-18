@@ -4,28 +4,41 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator">
-      <HintPath>..\..\..\..\Bin\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PX.Api.Mobile">
-      <HintPath>..\..\..\..\Bin\PX.Api.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.Api.Mobile.dll</HintPath>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\..\..\..\Bin\PX.Common.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.Common.dll</HintPath>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\..\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.CS.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\..\..\..\Bin\PX.Data.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.Data.dll</HintPath>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\..\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.Data.BQL.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\..\..\..\Bin\PX.Objects.dll</HintPath>
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Web.Customization">
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\PX.Web.Customization.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\..\..\Acumatica2020R1\SUV20_104_0012\Bin\System.Web.Http.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

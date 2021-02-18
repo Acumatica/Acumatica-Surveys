@@ -21,16 +21,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using PX.Objects.Common;
-
+using PX.Survey.Ext.DAC;
 
 namespace PX.Survey.Ext.WebHook
 {
     public class SurveyWebhookServerHandler : IWebhookHandler
     {
         private NameValueCollection _queryParameters;
-
-
-        private const string cCollectorID = "CollectorID";
+        private const string cCollectorToken = "CollectorToken";
         private const string cMode = "Mode";
         private const string cGetSurveyMode = "GetSurvey";
         private const string cSubmitSurveyMode = "SubmitSurvey";
@@ -43,33 +41,23 @@ namespace PX.Survey.Ext.WebHook
 
 
                 //when we get into anonymous surveys we will likely point to a get a Survey ID for those as the collector will not yet exist 
-                if (!_queryParameters.AllKeys.Contains(cCollectorID))
-                    throw new Exception($"The {cCollectorID} Parameter was not specified in the Query String");
-                var collectorID = _queryParameters[cCollectorID];
+                if (!_queryParameters.AllKeys.Contains(cCollectorToken))
+                    throw new Exception($"The {cCollectorToken} Parameter was not specified in the Query String");
+                var collectorToken = _queryParameters[cCollectorToken];
 
-                
-                string sMode;
 
-               
-
-                if (!_queryParameters.AllKeys.Contains(cMode))
-                {
-                    //if nothing is specified for a mode Parameter we will assume GetSurvey
-                    sMode = "GetSurvey"; 
-                }
-                else
-                {
-                    sMode = _queryParameters[cMode];
-                }
+                var sMode = !_queryParameters.AllKeys.Contains(cMode) 
+                    ? "GetSurvey" 
+                    : _queryParameters[cMode];
 
                 string htmlResponse;
                 switch (sMode)
                 {
                     case cGetSurveyMode:
-                        htmlResponse = GetSurvey(collectorID);
+                        htmlResponse = GetSurvey(collectorToken);
                         break;
                     case cSubmitSurveyMode:
-                        htmlResponse = SubmitSurvey(collectorID, request);
+                        htmlResponse = SubmitSurvey(collectorToken, request);
                         break;
                     default: 
                         htmlResponse = ReturnModeNotRecognized(sMode);
@@ -105,11 +93,18 @@ namespace PX.Survey.Ext.WebHook
             return String.Format(view,sMode);
         }
 
-        private string SubmitSurvey(string collectorId, HttpRequestMessage request)
+        private string SubmitSurvey(string collectorToken, HttpRequestMessage request)
         {
-            //todo: do something to show the awnsers store to a collector.
+            //todo: do something to show the answers store to a collector.
 
             var body = request.Content.ReadAsStringAsync().Result;
+            var queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
+            //todo: need to fish out the IP address and send it along.
+
+            SaveSurveySubmissionToDb(
+                collectorToken, 
+                body, 
+                queryParameters.ToString()); //todo: I doubt ToString is going to work. need to confirm
 
 
             //todo: Theoretically this html template below would be stored on and configurable on the 
@@ -120,20 +115,36 @@ namespace PX.Survey.Ext.WebHook
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Survey Collector ID {0}</h1>
+<h1>Survey {2} {0}</h1>
 Thank You Your Submitted your answer was {1}
 </body>
 </html>
 ";
 
-            return String.Format(view, collectorId, body);
+            return string.Format(view, collectorToken, body, cCollectorToken);
         }
 
-        private string GetSurvey(string collectorId)
+        private void SaveSurveySubmissionToDb(string collectorToken, string payload, string queryParameters)
+        {
+            var graph = PXGraph.CreateInstance<SurveyCollectorDataMaint>();
+
+            var data = new SurveyCollectorData
+            {
+                CollectorToken = collectorToken,
+                Payload = payload,
+                QueryParameters = queryParameters
+            };
+
+            graph.CollectorData.Insert(data);
+            graph.Persist();
+
+        }
+
+        private string GetSurvey(string collectorToken)
         {
 
             //todo: We will need to dig into the HTML attributes needed to send the results directly to the URi we need to go to 
-            //      We should also be able to find flags to send the awnsers in the body as opposed to Query parameters which 
+            //      We should also be able to find flags to send the answers in the body as opposed to Query parameters which 
             //      I believe this will do.
 
             //todo: we need to dynamically get the current endpoint out of the request as to be able to correctly parse the 
@@ -146,7 +157,7 @@ Thank You Your Submitted your answer was {1}
             //todo: if the survey has already been awnsered or expired for this collector we need to pass back an alternate to indicate so to the 
             //      user who  clicked the link.
 
-            var submitUrl = $"{listningEndPoint}?{cCollectorID}={collectorId}&{cMode}={cSubmitSurveyMode}";
+            var submitUrl = $"{listningEndPoint}?{cCollectorToken}={collectorToken}&{cMode}={cSubmitSurveyMode}";
 
             //todo: Theoretically this html template below would be stored on and configurable on the 
             //      survey record itself. it could then be modified as needed to bedizen it up to its
@@ -171,6 +182,8 @@ Thank You Your Submitted your answer was {1}
                 </select><br>
                 <label for= ""COVTEMP"">Self Temperature</label>
                 <input type =""number"" id = ""COVTEMP"" name = ""COVTEMP"" min =""96"" max = ""105""><br>
+                
+
                 <label for=""COVTRAVEL"">What Locations Have you Traveled to ?</label><br>
                 <input type = ""text"" id = ""COVTRAVEL"" name = ""COVTRAVEL"" value = """" ><br><br>
                 <input type =""submit"" value =""Submit"">
@@ -179,7 +192,7 @@ Thank You Your Submitted your answer was {1}
 </html>
 ";
 
-            return String.Format(view, collectorId,submitUrl);
+            return String.Format(view, collectorToken,submitUrl);
         }
 
 
