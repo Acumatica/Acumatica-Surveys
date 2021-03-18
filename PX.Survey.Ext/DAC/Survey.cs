@@ -1,6 +1,7 @@
 ﻿using System;
 using PX.Data;
 using PX.Objects.CS;
+using PX.SM;
 
 namespace PX.Survey.Ext
 {
@@ -47,8 +48,42 @@ namespace PX.Survey.Ext
         public virtual bool? Active { get; set; }
         #endregion
 
-        #region NoteID
-        public abstract class noteID : PX.Data.BQL.BqlGuid.Field<Survey.noteID> { }
+        #region MailNotificationID
+
+        public abstract class mailNotificationID : PX.Data.BQL.BqlInt.Field<mailNotificationID> { }
+
+        [PXDBInt]
+        [PXDefault]
+        [PXSelector(typeof(Notification.notificationID),
+            DescriptionField = typeof(Notification.name), ValidateValue = true)]
+        [PXUIField(DisplayName = "Mail Notification ID")]
+        public int? MailNotificationID { get; set; }
+
+        #endregion
+
+        #region TemplateNotificationID
+
+        public abstract class templateNotificationID : PX.Data.BQL.BqlInt.Field<templateNotificationID> { }
+
+        [PXDBInt]
+        [PXDefault]
+        [PXSelector(typeof(Notification.notificationID),
+            DescriptionField = typeof(Notification.name), ValidateValue = true)]
+        [PXUIField(DisplayName = "Template Notification ID")]
+        public int? TemplateNotificationID { get; set; }
+
+        #endregion
+
+        #region Body
+        public abstract class body : PX.Data.BQL.BqlString.Field<body> { }
+
+        [PXString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Web Survey Body")]
+        public virtual String Body { get; set; }
+    #endregion
+
+    #region NoteID
+    public abstract class noteID : PX.Data.BQL.BqlGuid.Field<Survey.noteID> { }
         [PXNote()]
         public virtual Guid? NoteID { get; set; }        
         #endregion

@@ -7,6 +7,7 @@ using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.SM;
 
 namespace PX.Survey.Ext
 {
@@ -32,6 +33,10 @@ namespace PX.Survey.Ext
         [PXHidden]
         [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyCollector;
+
+        [PXHidden]
+        [PXCopyPasteHiddenView]
+        public SelectFrom<Notification>.View Notifications;
 
         public SurveyMaint()
         {

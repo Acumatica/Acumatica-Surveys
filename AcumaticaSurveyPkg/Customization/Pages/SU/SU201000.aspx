@@ -5,8 +5,8 @@
     <px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
                      TypeName="PX.Survey.Ext.SurveyMaint" PrimaryView="SurveyCurrent">
         <CallbackCommands>
-			<px:PXDSCallbackCommand Name="Insert" PostData="Self" />
-			<px:PXDSCallbackCommand Name="Save" CommitChanges="True" />
+            <px:PXDSCallbackCommand Name="Insert" PostData="Self" />
+            <px:PXDSCallbackCommand Name="Save" CommitChanges="True" />
             <px:PXDSCallbackCommand Name="AddRecipients" Visible="False" />
         </CallbackCommands>
     </px:PXDataSource>
@@ -19,6 +19,9 @@
             <px:PXSelector runat="server" ID="edSurveyCD" DataField="SurveyCD"/>
             <px:PXTextEdit runat="server" ID="edSurveyName" DataField="SurveyName" Width="300px" CommitChanges="true"/>
             <px:PXNumberEdit runat="server" ID="edSurveyID" DataField="SurveyID"></px:PXNumberEdit>
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="false"></px:PXLayoutRule>
+            <px:PXSelector runat="server" ID="edMailNotificationID" DataField="MailNotificationID" AllowEdit="True" AutoRefresh="True" CommitChanges="True"></px:PXSelector>            
+            <px:PXSelector runat="server" ID="edTemplateNotificationID" DataField="TemplateNotificationID" AllowEdit="True" AutoRefresh="True" CommitChanges="True"></px:PXSelector>            
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true"></px:PXLayoutRule>
             <px:PXCheckBox runat="server" ID="edActive" DataField="Active" CommitChanges="true"></px:PXCheckBox>            
         </Template>
@@ -29,16 +32,16 @@
         <Items>
             <px:PXTabItem Text="Details">
                 <Template>
-					<px:PXGrid ID="AttributesGrid" runat="server" SkinID="Details" ActionsPosition="Top" DataSourceID="ds" 
+                    <px:PXGrid ID="AttributesGrid" runat="server" SkinID="Details" ActionsPosition="Top" DataSourceID="ds" 
                                Width="100%" BorderWidth="0px" MatrixMode="True">
                         <AutoSize Enabled="True"/>
                         <Layout WrapText="True" />
                         <Levels>
                             <px:PXGridLevel DataMember="Mapping">
-								<RowTemplate>
+                                <RowTemplate>
                                     <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM"/>
                                     <px:PXSelector runat="server" ID="edCRAttributeID" DataField="AttributeID" FilterByAllFields="True" AutoRefresh="true"/>
-								</RowTemplate>
+                                </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="IsActive" Type="CheckBox" TextAlign="Center" AllowNull="False" CommitChanges="True"/>
                                     <px:PXGridColumn DataField="AttributeID" DisplayFormat=">aaaaaaaaaa" Width="150px" AutoCallBack="True" LinkCommand="CRAttribute_ViewDetails"/>
@@ -88,7 +91,7 @@
     </px:PXTab>
     <px:PXSmartPanel ID="PanelAddRecipients" runat="server" Key="UsersForAddition" LoadOnDemand="true" Width="1100px" Height="500px"
                      Caption="Select Recipients" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true">
-	    <px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
+        <px:PXGrid ID="grdRecipientContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire" 
                    SyncPosition="True" NoteIndicator="False" FilesIndicator="False" TabIndex="4900" AllowPaging="true">       
             <Levels>
                 <px:PXGridLevel DataMember="UsersForAddition">

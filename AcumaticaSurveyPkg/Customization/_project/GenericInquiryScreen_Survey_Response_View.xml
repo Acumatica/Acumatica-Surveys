@@ -1,6 +1,6 @@
 ﻿<GenericInquiryScreen>
     <data-set>
-        <relations format-version="3" relations-version="20190630" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+        <relations format-version="3" relations-version="20190730" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
             <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
@@ -131,7 +131,7 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0">
+                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
                     <GIFilter LineNbr="1" IsActive="1" Name="SurveyID" FieldName="SurveyCollector.surveyID" DataType="string" DisplayName="Survey ID" IsExpression="0" ColSpan="1" Required="0" />
                     <GINavigationScreen ScreenID="SU301000" LineNbr="3" WindowMode="L" Icon="arrow_forward">
                         <GINavigationParameter LineNbr="3" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
@@ -149,7 +149,7 @@
                         <GIResult LineNbr="7" SortOrder="7" IsActive="1" Field="collectorStatus" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="782d1d9a-7aaa-4c7f-9613-45e6eec64681" />
                         <GIResult LineNbr="6" SortOrder="6" IsActive="1" Field="collectedDate" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="2f6a97c8-f4be-41fa-8336-9957569dcc4a" />
                         <GIResult LineNbr="5" SortOrder="5" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="3363021e-95d5-4993-a1ce-0b0a83f7638e" />
-                        <GIResult LineNbr="4" SortOrder="4" IsActive="1" Field="userid" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="60ba764f-8f4e-4a2b-af57-0313dac7f9b1" />
+                        <GIResult LineNbr="4" SortOrder="4" IsActive="1" Field="userID_description" Caption="Recipient" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="60ba764f-8f4e-4a2b-af57-0313dac7f9b1" />
                         <GIResult LineNbr="3" SortOrder="3" IsActive="1" Field="surveyID_description" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="80b487be-1827-42a8-94f9-c4195a876a32" />
                         <GIResult LineNbr="2" SortOrder="2" IsActive="1" Field="collectorName" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="0072d4ea-f6a0-4af8-ae8e-de383dc894cd" />
                         <GIResult LineNbr="1" SortOrder="1" IsActive="1" Field="collectorID" IsVisible="0" DefaultNav="0" NavigationNbr="1" QuickFilter="0" FastFilter="1" RowID="73aacd61-4f10-45c4-9dea-cd80620ecaf1" />
