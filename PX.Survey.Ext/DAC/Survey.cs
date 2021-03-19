@@ -1,14 +1,12 @@
-﻿using System;
-using PX.Data;
+﻿using PX.Data;
 using PX.Objects.CS;
+using System;
 
-namespace PX.Survey.Ext
-{
+namespace PX.Survey.Ext {
     [Serializable]
     [PXPrimaryGraph(typeof(SurveyMaint))]
     [PXCacheName(Messages.SurveyCacheName)]
-    public class Survey : IBqlTable
-    {
+    public class Survey : IBqlTable {
         #region SurveyID
         public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
 
@@ -41,7 +39,7 @@ namespace PX.Survey.Ext
 
         #region Active
         public abstract class active : PX.Data.BQL.BqlBool.Field<Survey.active> { }
-        
+
         [PXDBBool()]
         [PXUIField(DisplayName = "Active")]
         public virtual bool? Active { get; set; }
@@ -50,7 +48,7 @@ namespace PX.Survey.Ext
         #region NoteID
         public abstract class noteID : PX.Data.BQL.BqlGuid.Field<Survey.noteID> { }
         [PXNote()]
-        public virtual Guid? NoteID { get; set; }        
+        public virtual Guid? NoteID { get; set; }
         #endregion
 
         #region LineCntr

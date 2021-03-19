@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using PX.Common;
+﻿using PX.Common;
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using System.Collections;
+using System.Linq;
 
-namespace PX.Survey.Ext
-{
-    public class SurveyMaint : PXGraph<SurveyMaint, Survey>
-    {
+namespace PX.Survey.Ext {
+    public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
         public SelectFrom<Survey>.View SurveyCurrent;
 
         [PXViewName(PX.Objects.CR.Messages.Attributes)]
@@ -33,8 +30,7 @@ namespace PX.Survey.Ext
         [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyCollector;
 
-        public SurveyMaint()
-        {
+        public SurveyMaint() {
             SurveySetup Data = SurveySetup.Current;
 
             UsersForAddition.Cache.AllowInsert = false;
@@ -45,12 +41,10 @@ namespace PX.Survey.Ext
 
         [PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton(VisibleOnDataSource = false)]
-        public virtual IEnumerable addUsers(PXAdapter adapter)
-        {
+        public virtual IEnumerable addUsers(PXAdapter adapter) {
             var users = UsersForAddition.Select().Where(a => a.GetItem<Contact>().Selected == true).ToList();
 
-            foreach (var user in users)
-            {
+            foreach (var user in users) {
                 var surveyUser = new SurveyUser();
                 surveyUser.Active = true;
                 surveyUser.SurveyID = SurveyCurrent.Current.SurveyID;
@@ -66,10 +60,8 @@ namespace PX.Survey.Ext
         [PXButton]
         [PXUIField(DisplayName = "Add Recipients", MapViewRights = PXCacheRights.Select,
             MapEnableRights = PXCacheRights.Select)]
-        public virtual IEnumerable addRecipients(PXAdapter adapter)
-        {
-            if (UsersForAddition.AskExt((graph, viewName) =>
-            {
+        public virtual IEnumerable addRecipients(PXAdapter adapter) {
+            if (UsersForAddition.AskExt((graph, viewName) => {
                 graph.Views[UsersForAddition.View.Name].Cache.Clear();
                 graph.Views[viewName].Cache.Clear();
                 graph.Views[viewName].Cache.ClearQueryCache();
@@ -79,21 +71,18 @@ namespace PX.Survey.Ext
             return addUsers(adapter);
         }
 
-        protected virtual void _(Events.RowSelecting<Survey> e)
-        {
+        protected virtual void _(Events.RowSelecting<Survey> e) {
             Survey row = e.Row;
             if (row == null) { return; }
 
-            using (new PXConnectionScope())
-            {
+            using (new PXConnectionScope()) {
                 var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
                                         View.SelectWindowed(this, 0, 1, row.SurveyID).TopFirst;
-                row.IsSurveyInUse = (collectorData != null); 
+                row.IsSurveyInUse = (collectorData != null);
             }
         }
 
-        protected virtual void _(Events.RowSelected<Survey> e)
-        {
+        protected virtual void _(Events.RowSelected<Survey> e) {
             Survey currentSurvey = e.Row;
             if (currentSurvey == null) { return; }
 
@@ -102,7 +91,7 @@ namespace PX.Survey.Ext
             e.Cache.AllowDelete = unlockSurvey;
             Mapping.Cache.AllowUpdate = unlockSurvey;
             Mapping.Cache.AllowInsert = unlockSurvey;
-            Mapping.Cache.AllowDelete = unlockSurvey;            
+            Mapping.Cache.AllowDelete = unlockSurvey;
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
 
@@ -120,7 +109,7 @@ namespace PX.Survey.Ext
 
         [PXMergeAttributes]
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<CSAttributeGroup.entityClassID>>>>), LeaveChildren = true)]
-        [PXDBLiteDefault(typeof(Survey.surveyIDStringID))]
+        [PXDBDefault(typeof(Survey.surveyIDStringID))]
         protected virtual void _(Events.CacheAttached<CSAttributeGroup.entityClassID> e) { }
     }
 }

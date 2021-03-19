@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PX.Data;
+﻿using PX.Data;
+using System;
 // ReSharper disable IdentifierTypo
 
-namespace PX.Survey.Ext
-{
-    public class PXDBTimeSpanLongExtAttribute : PXDBTimeSpanLongAttribute
-    {
-        
+namespace PX.Survey.Ext {
+    public class PXDBTimeSpanLongExtAttribute : PXDBTimeSpanLongAttribute {
 
-        public override void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
-        {
+
+        public override void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e) {
             if (string.IsNullOrEmpty(InputMask)) InputMask = "### d\\ays ## hrs ## mins";
-            if (_AttributeLevel == PXAttributeLevel.Item || e.IsAltered)
-            {
+            if (_AttributeLevel == PXAttributeLevel.Item || e.IsAltered) {
                 string inputMask = _inputMasks[(int)this._Format];
                 int lenght = _lengths[(int)this._Format];
                 inputMask = PXMessages.LocalizeNoPrefix(inputMask);
@@ -25,14 +17,12 @@ namespace PX.Survey.Ext
 
             int maskLenght = 0;
 
-            foreach (char c in InputMask)
-            {
+            foreach (char c in InputMask) {
                 if (c == '#' || c == '0')
                     maskLenght += 1;
             }
 
-            if (e.ReturnValue != null)
-            {
+            if (e.ReturnValue != null) {
                 int mins = 0;
                 int.TryParse(e.ReturnValue.ToString(), out mins);
                 TimeSpan span = new TimeSpan(0, 0, mins, 0);

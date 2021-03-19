@@ -2,13 +2,11 @@
 using PX.Objects.CS;
 using System;
 
-namespace PX.Survey.Ext
-{
+namespace PX.Survey.Ext {
     [Serializable]
     [PXPrimaryGraph(typeof(SurveySetupMaint))]
     [PXCacheName(Messages.SurveySetupCacheName)]
-    public class SurveySetup : IBqlTable
-    {
+    public class SurveySetup : IBqlTable {
         #region SurveyNumberingID
         public abstract class surveyNumberingID : PX.Data.BQL.BqlString.Field<surveyNumberingID> { }
 

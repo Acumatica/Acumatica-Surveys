@@ -1,12 +1,8 @@
-using System;
 using PX.Data;
 using PX.Data.BQL;
-// ReSharper disable UnusedMember.Global
-// ReSharper disable IdentifierTypo
+using System;
 
-
-namespace PX.Survey.Ext.DAC
-{
+namespace PX.Survey.Ext.DAC {
 
     /// <summary>
     /// This entity is used to coordinate gathering and attaching Survey answers to a specific time. 
@@ -15,8 +11,7 @@ namespace PX.Survey.Ext.DAC
     [PXCacheName(Messages.SurveyCollectorDataCacheName)]
     //todo: determine if we need a new graph I would assume we would use SurveyCollectorMaint
     //[PXPrimaryGraph(typeof(SurveyCollectorMaint))]
-    public class SurveyCollectorData : IBqlTable
-    {
+    public class SurveyCollectorData : IBqlTable {
 
         /* will use this for the short term to manually create the table.
          once we have a Customization object to auto create this table we will then
@@ -103,7 +98,7 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         public virtual int? CollectorID { get; set; }
         #endregion
 
-        
+
         #region Payload
         public abstract class payload : BqlString.Field<payload> { }
         //DBDefinition: [Payload] [nvarchar] (MAX) NULL,
@@ -140,7 +135,7 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
-        
+
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID()]
@@ -159,7 +154,7 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         [PXUIField(DisplayName = "Created Date Time")]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
-        
+
         //todo: doubt these will ever be modified. Ask team what they think
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }

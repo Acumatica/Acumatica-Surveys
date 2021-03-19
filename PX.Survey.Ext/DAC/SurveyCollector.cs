@@ -1,17 +1,15 @@
-﻿using System;
-using PX.Data;
+﻿using PX.Data;
 using PX.Objects.CR;
+using System;
 
-namespace PX.Survey.Ext
-{
+namespace PX.Survey.Ext {
     /// <summary>
     /// This entity is used to coordinate gathering and attaching Survey answers to a specific time. 
     /// </summary>
     [Serializable]
     [PXCacheName(Messages.SurveyCollectorCacheName)]
     [PXPrimaryGraph(typeof(SurveyCollectorMaint))]
-    public class SurveyCollector : IBqlTable
-    {
+    public class SurveyCollector : IBqlTable {
         #region Selected
         public abstract class selected : PX.Data.BQL.BqlBool.Field<selected> { }
 

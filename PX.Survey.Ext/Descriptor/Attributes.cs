@@ -1,21 +1,17 @@
-﻿using System;
+﻿using PX.Api.Mobile.PushNotifications.DAC;
 using PX.Data;
-using PX.Api.Mobile.PushNotifications.DAC;
+using System;
 using System.Collections.Generic;
 
-namespace PX.Survey.Ext
-{
+namespace PX.Survey.Ext {
     public class MobileAppEnabled<UserID> : BqlFormulaEvaluator<UserID>
-                where UserID : IBqlOperand
-    {
-        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars)
-        {
+                where UserID : IBqlOperand {
+        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars) {
             Guid? userID = (Guid?)pars[typeof(UserID)];
 
             bool isMobileAppEnabled = false;
 
-            if (userID.HasValue)
-            {
+            if (userID.HasValue) {
                 MobileDevice device = PXSelectReadonly<MobileDevice, Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>,
                                                                         And<MobileDevice.enabled, Equal<True>,
                                                                         And<MobileDevice.expiredToken, NotEqual<True>>>>>
@@ -28,14 +24,11 @@ namespace PX.Survey.Ext
     }
 
     public class MobileAppDeviceOS<UserID> : BqlFormulaEvaluator<UserID>
-                where UserID : IBqlOperand
-    {
-        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars)
-        {
+                where UserID : IBqlOperand {
+        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars) {
             Guid? userID = (Guid?)pars[typeof(UserID)];
 
-            if (userID.HasValue)
-            {
+            if (userID.HasValue) {
                 MobileDevice device = PXSelectReadonly<MobileDevice, Where<MobileDevice.userID, Equal<Required<MobileDevice.userID>>,
                                                                         And<MobileDevice.enabled, Equal<True>,
                                                                         And<MobileDevice.expiredToken, NotEqual<True>>>>>
@@ -48,10 +41,8 @@ namespace PX.Survey.Ext
     }
 
     public class CollectedDateAsString<CollectedDate> : BqlFormulaEvaluator<CollectedDate>
-                where CollectedDate : IBqlOperand
-    {
-        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars)
-        {
+                where CollectedDate : IBqlOperand {
+        public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars) {
             DateTime? collectedDate = (DateTime?)pars[typeof(CollectedDate)];
             if (!collectedDate.HasValue) return null;
             return collectedDate.Value.Date.ToString("d");

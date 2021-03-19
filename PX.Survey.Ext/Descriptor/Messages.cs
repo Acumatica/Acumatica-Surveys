@@ -1,10 +1,8 @@
 ﻿using PX.Common;
 
-namespace PX.Survey.Ext
-{
+namespace PX.Survey.Ext {
     [PXLocalizable(Prefix)]
-    public static class Messages
-    {
+    public static class Messages {
         public const string Prefix = "Acumatica Survey";
 
         #region CacheNames
@@ -71,6 +69,6 @@ namespace PX.Survey.Ext
 
         #endregion
 
-       
+
     }
 }

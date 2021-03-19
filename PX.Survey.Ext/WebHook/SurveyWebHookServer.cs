@@ -1,42 +1,27 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+﻿using PX.Data;
 using PX.Data.Webhooks;
-using System.Web.Http;
-//using Newtonsoft.Json;
-using PX.Data;
-using Newtonsoft.Json;
-using System.Web.Http.Results;
-
+using PX.Survey.Ext.DAC;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
-using PX.Objects.Common;
-using PX.Survey.Ext.DAC;
+using System.Web.Http;
 
-namespace PX.Survey.Ext.WebHook
-{
-    public class SurveyWebhookServerHandler : IWebhookHandler
-    {
+namespace PX.Survey.Ext.WebHook {
+    public class SurveyWebhookServerHandler : IWebhookHandler {
         private NameValueCollection _queryParameters;
         private const string cCollectorToken = "CollectorToken";
         private const string cMode = "Mode";
         private const string cGetSurveyMode = "GetSurvey";
         private const string cSubmitSurveyMode = "SubmitSurvey";
 
-        async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            using (var scope = GetUserScope())
-            {
+        async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
+            using (var scope = GetUserScope()) {
                 _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
 
 
@@ -46,41 +31,38 @@ namespace PX.Survey.Ext.WebHook
                 var collectorToken = _queryParameters[cCollectorToken];
 
 
-                var sMode = !_queryParameters.AllKeys.Contains(cMode) 
-                    ? "GetSurvey" 
+                var sMode = !_queryParameters.AllKeys.Contains(cMode)
+                    ? "GetSurvey"
                     : _queryParameters[cMode];
 
                 string htmlResponse;
-                switch (sMode)
-                {
+                switch (sMode) {
                     case cGetSurveyMode:
                         htmlResponse = GetSurvey(collectorToken);
                         break;
                     case cSubmitSurveyMode:
                         htmlResponse = SubmitSurvey(collectorToken, request);
                         break;
-                    default: 
+                    default:
                         htmlResponse = ReturnModeNotRecognized(sMode);
                         break;
                 }
 
-                var response = new HttpResponseMessage(HttpStatusCode.OK)
-                {
+                var response = new HttpResponseMessage(HttpStatusCode.OK) {
                     Content = new StringContent(htmlResponse)
                 };
 
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-                
+
 
                 return new HtmlActionResult(htmlResponse);
-                
+
             }
 
 
         }
 
-        private string ReturnModeNotRecognized(string sMode)
-        {
+        private string ReturnModeNotRecognized(string sMode) {
             var view = @"
 <!DOCTYPE html>
 <html>
@@ -90,11 +72,10 @@ namespace PX.Survey.Ext.WebHook
 </html>
 ";
 
-            return String.Format(view,sMode);
+            return String.Format(view, sMode);
         }
 
-        private string SubmitSurvey(string collectorToken, HttpRequestMessage request)
-        {
+        private string SubmitSurvey(string collectorToken, HttpRequestMessage request) {
             //todo: do something to show the answers store to a collector.
 
             var body = request.Content.ReadAsStringAsync().Result;
@@ -102,8 +83,8 @@ namespace PX.Survey.Ext.WebHook
             //todo: need to fish out the IP address and send it along.
 
             SaveSurveySubmissionToDb(
-                collectorToken, 
-                body, 
+                collectorToken,
+                body,
                 queryParameters.ToString()); //todo: I doubt ToString is going to work. need to confirm
 
 
@@ -124,12 +105,10 @@ Thank You Your Submitted your answer was {1}
             return string.Format(view, collectorToken, body, cCollectorToken);
         }
 
-        private void SaveSurveySubmissionToDb(string collectorToken, string payload, string queryParameters)
-        {
+        private void SaveSurveySubmissionToDb(string collectorToken, string payload, string queryParameters) {
             var graph = PXGraph.CreateInstance<SurveyCollectorDataMaint>();
 
-            var data = new SurveyCollectorData
-            {
+            var data = new SurveyCollectorData {
                 CollectorToken = collectorToken,
                 Payload = payload,
                 QueryParameters = queryParameters
@@ -140,8 +119,7 @@ Thank You Your Submitted your answer was {1}
 
         }
 
-        private string GetSurvey(string collectorToken)
-        {
+        private string GetSurvey(string collectorToken) {
 
             //todo: We will need to dig into the HTML attributes needed to send the results directly to the URi we need to go to 
             //      We should also be able to find flags to send the answers in the body as opposed to Query parameters which 
@@ -192,7 +170,7 @@ Thank You Your Submitted your answer was {1}
 </html>
 ";
 
-            return String.Format(view, collectorToken,submitUrl);
+            return String.Format(view, collectorToken, submitUrl);
         }
 
 
@@ -200,18 +178,15 @@ Thank You Your Submitted your answer was {1}
         /// Defines the LoginScope to be used for the WebHooks
         /// </summary>
         /// <returns></returns>
-        private IDisposable GetUserScope()
-        {
+        private IDisposable GetUserScope() {
 
             //todo: For now we will use admin but we will want to throttle back to a 
             //      user with restricted access as to reduce any risk of attack.
             //      perhaps this can be configured in the Surveys Preferences/Setup page.
             var userName = "admin";
-            if (PXDatabase.Companies.Length > 0)
-            {
+            if (PXDatabase.Companies.Length > 0) {
                 var company = PXAccess.GetCompanyName();
-                if (string.IsNullOrEmpty(company))
-                {
+                if (string.IsNullOrEmpty(company)) {
                     company = PXDatabase.Companies[0];
                 }
                 userName = userName + "@" + company;
@@ -224,20 +199,16 @@ Thank You Your Submitted your answer was {1}
 
     //pulled from the Team Beta Hackathon
     //this will likely lead to what we need for the return
-    public class HtmlActionResult : IHttpActionResult
-    {
-        
+    public class HtmlActionResult : IHttpActionResult {
+
         private string _view;
 
-        public HtmlActionResult(string view)
-
-        {
+        public HtmlActionResult(string view) {
             _view = view;
 
         }
 
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-        {
+        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new StringContent(_view);
 

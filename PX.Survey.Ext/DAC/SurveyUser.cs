@@ -1,13 +1,11 @@
-﻿using System;
-using PX.Data;
+﻿using PX.Data;
 using PX.Objects.CR;
+using System;
 
-namespace PX.Survey.Ext
-{
+namespace PX.Survey.Ext {
     [Serializable]
     [PXCacheName(Messages.SurveyUserCacheName)]
-    public class SurveyUser : IBqlTable
-    {
+    public class SurveyUser : IBqlTable {
         #region Selected
         public abstract class selected : PX.Data.BQL.BqlBool.Field<selected> { }
 

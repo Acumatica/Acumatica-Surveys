@@ -1,12 +1,8 @@
 ﻿using PX.Data;
-using PX.Data.BQL.Fluent;
 using PX.Objects.CS;
-using System.Collections.Generic;
 
-namespace PX.Survey.Ext
-{
-    public class SurveySetupMaint : PXGraph<SurveySetupMaint>
-    {
+namespace PX.Survey.Ext {
+    public class SurveySetupMaint : PXGraph<SurveySetupMaint> {
         #region views
         public PXSave<SurveySetup> Save;
         public PXCancel<SurveySetup> Cancel;
@@ -17,15 +13,11 @@ namespace PX.Survey.Ext
         public PXAction<SurveySetup> AddDemoSurvey;
         [PXUIField(DisplayName = "Create Demo Survey", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton()]
-        public virtual void addDemoSurvey()
-        {
+        public virtual void addDemoSurvey() {
             SurveySetup setup = this.surveySetup.Current;
-            if (setup != null)
-            {
-                if (setup.DemoSurvey != true)
-                {
-                    try
-                    {
+            if (setup != null) {
+                if (setup.DemoSurvey != true) {
+                    try {
                         //create the attributes
                         CSAttribute attribute = new CSAttribute();
                         CSAttributeMaint attrGraph = PXGraph.CreateInstance<CSAttributeMaint>();
@@ -33,8 +25,7 @@ namespace PX.Survey.Ext
 
                         #region  COVSYMPTOM                    
                         attribute = attrGraph.Attributes.Search<CSAnswers.attributeID>("COVSYMPTOM");
-                        if (attribute == null)
-                        {
+                        if (attribute == null) {
 
                             CreateAttribute(attrGraph, "COVSYMPTOM", Messages.COVSYMPTOM, 2);
                             CreateAttributeDetails(attrGraph, "SymYes", "Yes", sortOrder++);
@@ -44,8 +35,7 @@ namespace PX.Survey.Ext
 
                         #region  COVCONTACT
                         attribute = attrGraph.Attributes.Search<CSAnswers.attributeID>("COVCONTACT");
-                        if (attribute == null)
-                        {
+                        if (attribute == null) {
                             CreateAttribute(attrGraph, "COVCONTACT", Messages.COVCONTACT, 2);
 
                             sortOrder = 1;
@@ -56,8 +46,7 @@ namespace PX.Survey.Ext
 
                         #region  COVTEMP
                         attribute = attrGraph.Attributes.Search<CSAnswers.attributeID>("COVTEMP");
-                        if (attribute == null)
-                        {
+                        if (attribute == null) {
                             CreateAttribute(attrGraph, "COVTEMP", Messages.COVTEMP, 2);
 
                             sortOrder = 1;
@@ -71,8 +60,7 @@ namespace PX.Survey.Ext
 
                         #region  COVTRAVEL
                         attribute = attrGraph.Attributes.Search<CSAnswers.attributeID>("COVTRAVEL");
-                        if (attribute == null)
-                        {
+                        if (attribute == null) {
                             CreateAttribute(attrGraph, "COVTRAVEL", Messages.COVTRAVEL, 1);
                         }
                         #endregion
@@ -80,13 +68,11 @@ namespace PX.Survey.Ext
                         attrGraph.Actions.PressSave();
                         attrGraph.Clear();
 
-                        if (!string.IsNullOrEmpty(setup.SurveyNumberingID))
-                        {
+                        if (!string.IsNullOrEmpty(setup.SurveyNumberingID)) {
                             //now create the survey record
                             SurveyMaint surveyGraph = PXGraph.CreateInstance<SurveyMaint>();
                             Survey demoSurvey = surveyGraph.SurveyCurrent.Search<Survey.surveyCD>("DEMOCOVID");
-                            if (demoSurvey == null)
-                            {
+                            if (demoSurvey == null) {
                                 demoSurvey = new Survey();
                                 demoSurvey.SurveyCD = "DEMOCOVID";
                                 demoSurvey.SurveyName = Messages.DEMOCOVID;
@@ -108,9 +94,7 @@ namespace PX.Survey.Ext
                         setup.DemoSurvey = true;
                         this.surveySetup.Update(setup);
                         this.Persist();
-                    }
-                    catch (PXException ex)
-                    {
+                    } catch (PXException ex) {
                         Clear();
                         throw ex;
                     }
@@ -122,13 +106,11 @@ namespace PX.Survey.Ext
         #endregion
 
         #region events
-        protected virtual void _(Events.RowSelected<SurveySetup> e)
-        {
+        protected virtual void _(Events.RowSelected<SurveySetup> e) {
             SurveySetup setup = e.Row;
             if (setup == null) { return; }
 
-            if (setup.DemoSurvey == true)
-            {
+            if (setup.DemoSurvey == true) {
                 this.AddDemoSurvey.SetEnabled(false);
             }
         }
@@ -137,8 +119,7 @@ namespace PX.Survey.Ext
 
         #region methods
 
-        private void CreateAttribute(CSAttributeMaint attrGraph, string attributeID, string description, int controlType)
-        {
+        private void CreateAttribute(CSAttributeMaint attrGraph, string attributeID, string description, int controlType) {
             CSAttribute attribute = new CSAttribute();
             attribute.AttributeID = attributeID;
             attribute.Description = description;
@@ -146,8 +127,7 @@ namespace PX.Survey.Ext
             attrGraph.Attributes.Insert(attribute);
         }
 
-        private void CreateAttributeDetails(CSAttributeMaint attrGraph, string valueID, string description, short sortOrder)
-        {
+        private void CreateAttributeDetails(CSAttributeMaint attrGraph, string valueID, string description, short sortOrder) {
             CSAttributeDetail detail = new CSAttributeDetail();
             detail.ValueID = valueID;
             detail.Description = description;
@@ -155,8 +135,7 @@ namespace PX.Survey.Ext
             attrGraph.AttributeDetails.Insert(detail);
         }
 
-        private void AssignSurveyAttributes(SurveyMaint surveyGraph, string attributeID, short sortOrder, bool required = true)
-        {
+        private void AssignSurveyAttributes(SurveyMaint surveyGraph, string attributeID, short sortOrder, bool required = true) {
             CSAttributeGroup surveyDetails = new CSAttributeGroup();
             surveyDetails.AttributeID = attributeID;
             surveyDetails.Required = required;

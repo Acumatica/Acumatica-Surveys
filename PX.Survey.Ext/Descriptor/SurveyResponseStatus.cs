@@ -1,15 +1,11 @@
 ﻿using PX.Data;
 
-namespace PX.Survey.Ext
-{
-    public static class SurveyResponseStatus
-    {
-        public class ListAttribute : PXStringListAttribute
-        {
+namespace PX.Survey.Ext {
+    public static class SurveyResponseStatus {
+        public class ListAttribute : PXStringListAttribute {
             public ListAttribute() : base(
                 new string[] { CollectorNew, CollectorSent, CollectorResponded, CollectorExpired },
-                new string[] { Messages.CollectorNew, Messages.CollectorSent, Messages.CollectorResponded, Messages.CollectorExpired })
-            { }
+                new string[] { Messages.CollectorNew, Messages.CollectorSent, Messages.CollectorResponded, Messages.CollectorExpired }) { }
         }
 
         public const string CollectorNew = "N";

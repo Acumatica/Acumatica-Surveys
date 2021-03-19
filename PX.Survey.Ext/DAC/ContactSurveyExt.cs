@@ -1,11 +1,9 @@
-﻿using System;
-using PX.Data;
+﻿using PX.Data;
 using PX.Objects.CR;
+using System;
 
-namespace PX.Survey.Ext
-{
-    public sealed class ContactSurveyExt : PXCacheExtension<Contact>
-    {
+namespace PX.Survey.Ext {
+    public sealed class ContactSurveyExt : PXCacheExtension<Contact> {
         #region UsrMobileAppDeviceOS
         public abstract class usrMobileAppDeviceOS : PX.Data.BQL.BqlString.Field<usrMobileAppDeviceOS> { }
 
@@ -17,7 +15,7 @@ namespace PX.Survey.Ext
         #region UsrUsingMobileApp
         public abstract class usrUsingMobileApp : PX.Data.BQL.BqlBool.Field<usrUsingMobileApp> { }
 
-        [PXBool()]        
+        [PXBool()]
         [PXUIField(DisplayName = "Mobile App Notifications", Enabled = false)]
         public bool? UsrUsingMobileApp { get; set; }
         #endregion
