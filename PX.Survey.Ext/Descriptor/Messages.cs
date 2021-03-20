@@ -6,12 +6,14 @@ namespace PX.Survey.Ext {
         public const string Prefix = "Acumatica Survey";
 
         #region CacheNames
-        public const string SurveyCollectorCacheName = "Survey Collector";
-        public const string SurveyCollectorDataCacheName = "Survey Collector Data";
-        public const string SurveySetupCacheName = "Survey Setup";
-        public const string SurveyCacheName = "Survey";
-        public const string SurveyUserCacheName = "Survey User";
-        public const string SurveyFilterCacheName = "Survey Filter";
+        public class CacheNames {
+            public const string SurveyCollector = "Survey Collector";
+            public const string SurveyCollectorData = "Survey Collector Data";
+            public const string SurveySetup = "Survey Setup";
+            public const string Survey = "Survey";
+            public const string SurveyUser = "Survey User";
+            public const string SurveyFilter = "Survey Filter";
+        }
         #endregion
 
         #region Survey Response Status
@@ -48,6 +50,8 @@ namespace PX.Survey.Ext {
         public const string SettingTheExpirationForUserID_0_Failed = "Setting the expiration for userID:{0} failed";
         public const string SetExpirationSuccess = "Set Expiration Success";
         public const string SetExpirationFailed = "Set Expiration Failed";
+        public const string AnErrorOccuredTryingToResendANotificationForUserID_0 =
+            "An Error Occured Trying to resend a notification for UserID:{0}";
 
         #region Demo Survey
         public const string COVSYMPTOM = "Are you experiencing any of these symptoms? (fever, cough, shortness of breath, sore throat or diarrhea)";
@@ -58,15 +62,14 @@ namespace PX.Survey.Ext {
         #endregion
 
 
-        #region Survey Action
-
-        public const string SurveyActionDefault = "All (New, Remind, Expire)";
-        public const string SurveyActionNewOnly = "Send New";
-        public const string SurveyActionRemindOnly = "Remind Un-Answered";
-        public const string SurveyActionExpireOnly = "Expire Un-Answered";
-        public const string AnErrorOccuredTryingToResendANotificationForUserID_0 =
-            "An Error Occured Trying to resend a notification for UserID:{0}";
-
+        #region SurveyAction
+        public class SurveyAction {
+            public const string Default = "All (New, Remind, Expire)";
+            public const string NewOnly = "Send New";
+            public const string RemindOnly = "Remind Un-Answered";
+            public const string ExpireOnly = "Expire Un-Answered";
+            public const string ProcessAnswers = "Process Answers";
+        }
         #endregion
 
 

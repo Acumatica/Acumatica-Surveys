@@ -5,6 +5,12 @@
     <Company>Acumatica</Company>
     <Product>Acumatica Surveys Extension</Product>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator">
       <HintPath>..\lib\CommonServiceLocator.dll</HintPath>
@@ -38,6 +44,8 @@
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\lib\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Channels" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Http">
       <HintPath>..\lib\System.Web.Http.dll</HintPath>

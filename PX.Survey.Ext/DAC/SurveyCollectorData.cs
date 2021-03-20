@@ -2,86 +2,41 @@ using PX.Data;
 using PX.Data.BQL;
 using System;
 
-namespace PX.Survey.Ext.DAC {
+namespace PX.Survey.Ext {
 
     /// <summary>
     /// This entity is used to coordinate gathering and attaching Survey answers to a specific time. 
     /// </summary>
     [Serializable]
-    [PXCacheName(Messages.SurveyCollectorDataCacheName)]
+    [PXCacheName(Messages.CacheNames.SurveyCollectorData)]
     //todo: determine if we need a new graph I would assume we would use SurveyCollectorMaint
     //[PXPrimaryGraph(typeof(SurveyCollectorMaint))]
-    public class SurveyCollectorData : IBqlTable {
-
-        /* will use this for the short term to manually create the table.
-         once we have a Customization object to auto create this table we will then
-         purge this from here as we will not need the superfluous commentary.
-
-
-      --Drop Table SurveyCollectorData
-CREATE TABLE [dbo].[SurveyCollectorData](
-	[CompanyID] [int] NOT NULL,
-	--[SurveyID] [int] NOT NULL,
-	[CollectorDataID] [int] IDENTITY(1,1) NOT NULL,
-	--we want to allow for retrieving the collector at a later time
-	[CollectorID] [int] NULL, 
-	[CollectorToken] [nvarchar](255) NULL,
-	[Payload] [nvarchar](MAX) NULL,
-	[QueryParameters] [nvarchar](255) NULL,
-	[IpAddress] [varchar] (32) Null,
-	--[UserID] [uniqueidentifier] NOT NULL,
-	[NoteID] [uniqueidentifier] NOT NULL,
-	[CreatedByID] [uniqueidentifier] NOT NULL,
-	[CreatedByScreenID] [char](8) NOT NULL,
-	[CreatedDateTime] [datetime] NOT NULL,
-	[LastModifiedByID] [uniqueidentifier] NOT NULL,
-	[LastModifiedByScreenID] [char](8) NOT NULL,
-	[LastModifiedDateTime] [datetime] NOT NULL,
-	[tstamp] [timestamp] NOT NULL,
- CONSTRAINT [SurveyCollectorData_PK] PRIMARY KEY CLUSTERED 
-(
-	[CompanyID] ASC,
-	[CollectorDataID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[SurveyCollectorData] ADD  DEFAULT ((0)) FOR [CompanyID]
-GO
-
-
-ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(8000)
-
-         */
+    public class SurveyCollectorData : IBqlTable, INotable {
 
         #region CollectorDataID
         public abstract class collectorDataID : BqlInt.Field<collectorDataID> { }
-
         /// <summary>
         /// Uniquely Identifies this Collector record.
         /// </summary>
         [PXUIField(DisplayName = "Collector ID", Visible = false)]
         [PXDBIdentity(IsKey = true, BqlField = typeof(collectorID))]
-        [PXSelector(typeof(Search<SurveyCollector.collectorID>))]
+        //[PXSelector(typeof(Search<SurveyCollector.collectorID>))]
         public virtual int? CollectorDataID { get; set; }
         #endregion
 
         #region CollectorToken
         public abstract class collectorToken : BqlInt.Field<collectorToken> { }
-
         /// <summary>
         /// Collector Token is a opaque bearer token used in lue of the Collector ID as to
         /// make guessing one improbable
         /// </summary>
-        [PXUIField(DisplayName = "Collector Token", Enabled = false)]
-        [PXDBString(255, //tokens can be up to 255 chars. we could consider lessening it 
-            IsUnicode = true)]
+        [PXUIField(DisplayName = "Collector Token", IsReadOnly = true)]
+        [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
         public virtual string CollectorToken { get; set; }
         #endregion
 
         #region CollectorID
         public abstract class collectorID : BqlInt.Field<collectorID> { }
-
         /// <summary>
         /// Identifies the collector that this Data record belongs to.
         /// </summary>
@@ -89,7 +44,7 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         /// This may have a null value upfront with a processing page that populates the value
         /// once the processing page kicks in.
         /// </remarks>
-        [PXUIField(DisplayName = "Collector ID", Enabled = false)]
+        [PXUIField(DisplayName = "Collector ID", IsReadOnly = true)]
         [PXDBInt]
         //todo: determine if we need to establish a parent child relationship. 
         //      i see this more as a backend parking lot to temporarily store 
@@ -98,23 +53,8 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         public virtual int? CollectorID { get; set; }
         #endregion
 
-
-        #region Payload
-        public abstract class payload : BqlString.Field<payload> { }
-        //DBDefinition: [Payload] [nvarchar] (MAX) NULL,
-        /// <summary>
-        /// This will hold the content from the html survey submission 
-        /// </summary>
-        [PXUIField(DisplayName = "Payload", Enabled = false)]
-        [PXDBString(8000, //todo: Find out if we can use Mas and the ramification of doing so. DB is currently defined as MAX
-            IsUnicode = true)]
-        public virtual string Payload { get; set; }
-        #endregion
-
-
-
-        #region QueryParameters
-        public abstract class queryParameters : BqlString.Field<queryParameters> { }
+        #region Uri
+        public abstract class uri : BqlString.Field<uri> { }
         //DBDefinition: //[QueryParameters] [nvarchar] (255) NULL,
         //todo: we might not technically need this but going to have it here
         //      in-case we want to pass flags along as to invoke dynamic behavior.
@@ -122,12 +62,37 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         /// <summary>
         /// This will hold the query parameter string
         /// </summary>
-        [PXUIField(DisplayName = "queryParameters", Enabled = false)]
-        [PXDBString(8000, IsUnicode = true)]
+        [PXUIField(DisplayName = "URI", IsReadOnly = true)]
+        [PXDBText(IsUnicode = true)]
+        public virtual string Uri { get; set; }
+        #endregion
+
+        #region Payload
+        public abstract class payload : BqlString.Field<payload> { }
+        /// <summary>
+        /// This will hold the content from the html survey submission 
+        /// </summary>
+        [PXUIField(DisplayName = "Payload", IsReadOnly = true)]
+        [PXDBText(IsUnicode = true)]
+        public virtual string Payload { get; set; }
+        #endregion
+
+        #region QueryParameters
+        public abstract class queryParameters : BqlString.Field<queryParameters> { }
+        /// <summary>
+        /// This will hold the query parameter string
+        /// </summary>
+        [PXUIField(DisplayName = "Query Parameters", IsReadOnly = true)]
+        [PXDBText(IsUnicode = true)]
         public virtual string QueryParameters { get; set; }
         #endregion
 
-        //[IpAddress] [varchar] (32) Null,
+        #region SurveyID
+        public abstract class surveyID : BqlInt.Field<surveyID> { }
+        [PXDBInt]
+        [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<surveyID>>>>))]
+        public virtual int? SurveyID { get; set; }
+        #endregion
 
         #region NoteID
         public abstract class noteID : IBqlField { }
@@ -146,7 +111,6 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         [PXDBCreatedByScreenID()]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
-
         #region CreatedDateTime
         //todo: this field should satisfy the Date requirements for building the actual time the survey was answered.
         public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
@@ -154,8 +118,6 @@ ALTER TABLE [dbo].[SurveyCollectorData] alter column QueryParameters varchar(800
         [PXUIField(DisplayName = "Created Date Time")]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
-
-        //todo: doubt these will ever be modified. Ask team what they think
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
         [PXDBLastModifiedByID()]

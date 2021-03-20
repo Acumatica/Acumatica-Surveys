@@ -1,17 +1,20 @@
 ﻿using PX.Data;
+using PX.Data.BQL;
 using PX.Objects.CR;
 using System;
 
 namespace PX.Survey.Ext {
+
     /// <summary>
     /// This entity is used to coordinate gathering and attaching Survey answers to a specific time. 
     /// </summary>
     [Serializable]
-    [PXCacheName(Messages.SurveyCollectorCacheName)]
+    [PXCacheName(Messages.CacheNames.SurveyCollector)]
     [PXPrimaryGraph(typeof(SurveyCollectorMaint))]
-    public class SurveyCollector : IBqlTable {
+    public class SurveyCollector : IBqlTable, INotable {
+
         #region Selected
-        public abstract class selected : PX.Data.BQL.BqlBool.Field<selected> { }
+        public abstract class selected : BqlBool.Field<selected> { }
 
         /// <summary>
         /// Selected
@@ -23,31 +26,28 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region CollectorID
-        public abstract class collectorID : PX.Data.BQL.BqlInt.Field<collectorID> { }
-
+        public abstract class collectorID : BqlInt.Field<collectorID> { }
         /// <summary>
         /// Uniquely Identifies this Collector record.
         /// </summary>
+        [PXDBIdentity(IsKey = true)]
         [PXUIField(DisplayName = "Collector ID", Visible = false)]
-        [PXDBIdentity(IsKey = true, BqlField = typeof(collectorID))]
         [PXSelector(typeof(Search<SurveyCollector.collectorID>))]
         public virtual int? CollectorID { get; set; }
         #endregion
 
         #region CollectorName
-        public abstract class collectorName : PX.Data.BQL.BqlInt.Field<collectorName> { }
-
+        public abstract class collectorName : BqlInt.Field<collectorName> { }
         /// <summary>
         /// Name of this Collector record.
         /// </summary>
-        [PXUIField(DisplayName = "Collector", Enabled = false)]
         [PXDBString(60, IsUnicode = true)]
-        public virtual String CollectorName { get; set; }
+        [PXUIField(DisplayName = "Collector", Enabled = false)]
+        public virtual string CollectorName { get; set; }
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : PX.Data.BQL.BqlInt.Field<surveyID> { }
-
+        public abstract class surveyID : BqlInt.Field<surveyID> { }
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
@@ -55,13 +55,14 @@ namespace PX.Survey.Ext {
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
                     typeof(Survey.surveyCD),
                     typeof(Survey.surveyName),
-                    DescriptionField = typeof(Survey.surveyName))]
+            SubstituteKey = typeof(Survey.surveyCD),
+            DescriptionField = typeof(Survey.surveyName))]
         [PXDBInt]
         public virtual int? SurveyID { get; set; }
         #endregion
 
         #region UserID
-        public abstract class userID : PX.Data.BQL.BqlGuid.Field<userID> { }
+        public abstract class userID : BqlGuid.Field<userID> { }
 
         /// <summary>
         /// Identifies the user that this Collector is assigned too.
@@ -76,7 +77,7 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region CollectedDate
-        public abstract class collectedDate : PX.Data.BQL.BqlDateTime.Field<collectedDate> { }
+        public abstract class collectedDate : BqlDateTime.Field<collectedDate> { }
         /// <summary>
         /// Specifies the date that the Survey was collected
         /// </summary>
@@ -86,7 +87,7 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region ExpirationDate
-        public abstract class expirationDate : PX.Data.BQL.BqlDateTime.Field<expirationDate> { }
+        public abstract class expirationDate : BqlDateTime.Field<expirationDate> { }
         /// <summary>
         /// Specifies the date that this Collector expires. The user has up until this date to finish the survey.
         /// </summary>        
@@ -96,7 +97,7 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region CollectorStatus
-        public abstract class collectorStatus : PX.Data.BQL.BqlString.Field<collectorStatus> { }
+        public abstract class collectorStatus : BqlString.Field<collectorStatus> { }
         /// <summary>
         /// Reference to the state the collector record is in   
         /// </summary>
@@ -107,12 +108,14 @@ namespace PX.Survey.Ext {
         public virtual string CollectorStatus { get; set; }
 
         #endregion
+
         #region NoteID
         public abstract class noteID : PX.Data.IBqlField { }
 
         [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
+
         #region Attributes
         public abstract class attributes : BqlAttributes.Field<attributes> { }
 
@@ -125,7 +128,7 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region CollectedDatePart
-        public abstract class collectedDatePart : PX.Data.BQL.BqlString.Field<collectedDatePart> { }
+        public abstract class collectedDatePart : BqlString.Field<collectedDatePart> { }
         /// <summary>
         /// Specifies the date part that the Survey was collected
         /// </summary>
@@ -136,40 +139,40 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region CreatedByID
-        public abstract class createdByID : PX.Data.BQL.BqlGuid.Field<createdByID> { }
+        public abstract class createdByID : BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID()]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
-        public abstract class createdByScreenID : PX.Data.BQL.BqlString.Field<createdByScreenID> { }
+        public abstract class createdByScreenID : BqlString.Field<createdByScreenID> { }
         [PXDBCreatedByScreenID()]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
-        public abstract class createdDateTime : PX.Data.BQL.BqlDateTime.Field<createdDateTime> { }
+        public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
         [PXDBCreatedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Created Date Time")]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
         #region LastModifiedByID
-        public abstract class lastModifiedByID : PX.Data.BQL.BqlGuid.Field<lastModifiedByID> { }
+        public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
         [PXDBLastModifiedByID()]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
-        public abstract class lastModifiedByScreenID : PX.Data.BQL.BqlString.Field<lastModifiedByScreenID> { }
+        public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
         [PXDBLastModifiedByScreenID()]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime
-        public abstract class lastModifiedDateTime : PX.Data.BQL.BqlDateTime.Field<lastModifiedDateTime> { }
+        public abstract class lastModifiedDateTime : BqlDateTime.Field<lastModifiedDateTime> { }
         [PXDBLastModifiedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Last Modified Date Time")]
         public virtual DateTime? LastModifiedDateTime { get; set; }
         #endregion
 
         #region tstamp        
-        public abstract class Tstamp : PX.Data.BQL.BqlByteArray.Field<Tstamp> { }
+        public abstract class Tstamp : BqlByteArray.Field<Tstamp> { }
 
         [PXDBTimestamp]
         public virtual Byte[] tstamp { get; set; }

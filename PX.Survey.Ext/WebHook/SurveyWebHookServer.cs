@@ -1,6 +1,5 @@
 ﻿using PX.Data;
 using PX.Data.Webhooks;
-using PX.Survey.Ext.DAC;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -11,6 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PX.Survey.Ext.WebHook {
     public class SurveyWebhookServerHandler : IWebhookHandler {
@@ -20,21 +23,18 @@ namespace PX.Survey.Ext.WebHook {
         private const string cGetSurveyMode = "GetSurvey";
         private const string cSubmitSurveyMode = "SubmitSurvey";
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             using (var scope = GetUserScope()) {
                 _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
-
-
                 //when we get into anonymous surveys we will likely point to a get a Survey ID for those as the collector will not yet exist 
                 if (!_queryParameters.AllKeys.Contains(cCollectorToken))
                     throw new Exception($"The {cCollectorToken} Parameter was not specified in the Query String");
                 var collectorToken = _queryParameters[cCollectorToken];
-
-
                 var sMode = !_queryParameters.AllKeys.Contains(cMode)
                     ? "GetSurvey"
                     : _queryParameters[cMode];
-
                 string htmlResponse;
                 switch (sMode) {
                     case cGetSurveyMode:
@@ -47,19 +47,12 @@ namespace PX.Survey.Ext.WebHook {
                         htmlResponse = ReturnModeNotRecognized(sMode);
                         break;
                 }
-
                 var response = new HttpResponseMessage(HttpStatusCode.OK) {
                     Content = new StringContent(htmlResponse)
                 };
-
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-
-
                 return new HtmlActionResult(htmlResponse);
-
             }
-
-
         }
 
         private string ReturnModeNotRecognized(string sMode) {
@@ -76,18 +69,15 @@ namespace PX.Survey.Ext.WebHook {
         }
 
         private string SubmitSurvey(string collectorToken, HttpRequestMessage request) {
-            //todo: do something to show the answers store to a collector.
-
             var body = request.Content.ReadAsStringAsync().Result;
-            var queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
-            //todo: need to fish out the IP address and send it along.
-
-            SaveSurveySubmissionToDb(
+            var uri = request.RequestUri;
+            var props = request.Properties;
+            //var ipAddress = GetIPAddress(request);
+            SaveSurveySubmission(
                 collectorToken,
                 body,
-                queryParameters.ToString()); //todo: I doubt ToString is going to work. need to confirm
-
-
+                uri,
+                props);
             //todo: Theoretically this html template below would be stored on and configurable on the 
             //      survey record itself. it could then be modified as needed to bedizen it up to its
             //      fullest potential via anything that can be done with HTML5
@@ -101,22 +91,32 @@ Thank You Your Submitted your answer was {1}
 </body>
 </html>
 ";
-
             return string.Format(view, collectorToken, body, cCollectorToken);
         }
 
-        private void SaveSurveySubmissionToDb(string collectorToken, string payload, string queryParameters) {
-            var graph = PXGraph.CreateInstance<SurveyCollectorDataMaint>();
+        //public static string GetIPAddress(HttpRequestMessage request) {
+        //    var props = request.Properties;
+        //    if (props.ContainsKey("MS_HttpContext")) {
+        //        return ((HttpContextWrapper)props["MS_HttpContext"]).Request.UserHostAddress;
+        //    } else if (props.ContainsKey(RemoteEndpointMessageProperty.Name)) {
+        //        var prop = (RemoteEndpointMessageProperty)props[RemoteEndpointMessageProperty.Name];
+        //        return prop.Address;
+        //    } else {
+        //        return null;
+        //    }
+        //}
 
+        private void SaveSurveySubmission(string collectorToken, string payload, Uri uri, IDictionary<string, object> props) {
+            var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
+            var queryParams = props != null ? JsonConvert.SerializeObject(props) : null ;
             var data = new SurveyCollectorData {
                 CollectorToken = collectorToken,
+                Uri = uri.ToString(),
                 Payload = payload,
-                QueryParameters = queryParameters
+                QueryParameters = queryParams
             };
-
-            graph.CollectorData.Insert(data);
+            var inserted = graph.CollectedAnswers.Insert(data);
             graph.Persist();
-
         }
 
         private string GetSurvey(string collectorToken) {
