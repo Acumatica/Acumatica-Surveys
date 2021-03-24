@@ -54,4 +54,7 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Scriban" Version="3.6.0" />
+  </ItemGroup>
 </Project>

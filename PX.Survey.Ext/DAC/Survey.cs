@@ -1,5 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CS;
 using System;
 
@@ -9,6 +10,17 @@ namespace PX.Survey.Ext {
     [PXPrimaryGraph(typeof(SurveyMaint))]
     [PXCacheName(Messages.CacheNames.Survey)]
     public class Survey : IBqlTable, INotable {
+
+        #region Keys
+        public class PK : PrimaryKeyOf<Survey>.By<surveyID> {
+            public static Survey Find(PXGraph graph, int? surveyID) => FindBy(graph, surveyID);
+            public static Survey FindDirty(PXGraph graph, int? surveyID)
+                => (Survey)PXSelect<Survey, Where<surveyID, Equal<Required<surveyID>>>>.SelectWindowed(graph, 0, 1, surveyID);
+        }
+        public class UK : PrimaryKeyOf<Survey>.By<surveyCD> {
+            public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
+        }
+        #endregion
 
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
@@ -40,31 +52,39 @@ namespace PX.Survey.Ext {
         #region Active
         public abstract class active : BqlBool.Field<Survey.active> { }
 
-        [PXDBBool()]
+        [PXDBBool]
         [PXUIField(DisplayName = "Active")]
         public virtual bool? Active { get; set; }
         #endregion
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
-        [PXNote()]
+        [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
 
-        #region LineCntr
-        public abstract class lineCntr : BqlInt.Field<lineCntr> { }
-        [PXDBInt()]
-        [PXDefault(0)]
-        public virtual Int32? LineCntr { get; set; }
+        #region Template
+        public abstract class template : BqlString.Field<template> { }
+        [PXDBLocalizableString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Template")]
+        public virtual string Template { get; set; }
         #endregion
+
+        //#region Rendered
+        //public abstract class rendered : BqlString.Field<rendered> { }
+        //[PXDBLocalizableString(IsUnicode = true)]
+        //[PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
+        //public virtual string Rendered { get; set; }
+        //#endregion
+
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<Survey.createdByID> { }
-        [PXDBCreatedByID()]
+        [PXDBCreatedByID]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
         public abstract class createdByScreenID : BqlString.Field<Survey.createdByScreenID> { }
-        [PXDBCreatedByScreenID()]
+        [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
@@ -75,12 +95,12 @@ namespace PX.Survey.Ext {
         #endregion
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<Survey.lastModifiedByID> { }
-        [PXDBLastModifiedByID()]
+        [PXDBLastModifiedByID]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
         public abstract class lastModifiedByScreenID : BqlString.Field<Survey.lastModifiedByScreenID> { }
-        [PXDBLastModifiedByScreenID()]
+        [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime
@@ -108,7 +128,7 @@ namespace PX.Survey.Ext {
         /// Field to identify if Survey is in use
         /// </summary>
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXBool()]
+        [PXBool]
         public virtual bool? IsSurveyInUse { get; set; }
         #endregion
     }

@@ -11,7 +11,6 @@ namespace PX.Survey.Ext {
 
         #region Selected
         public abstract class selected : BqlBool.Field<selected> { }
-
         [PXBool]
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Selected")]
@@ -20,7 +19,6 @@ namespace PX.Survey.Ext {
 
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
-
         [PXDBInt(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<surveyID>>>>))]
@@ -29,11 +27,10 @@ namespace PX.Survey.Ext {
 
         #region LineNbr
         public abstract class lineNbr : BqlInt.Field<lineNbr> { }
-
         [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(Survey.lineCntr))]
+        [PXLineNbr(typeof(Survey))]
         [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
-        public virtual Int32? LineNbr { get; set; }
+        public virtual int? LineNbr { get; set; }
         #endregion
 
         #region ContactID
@@ -51,8 +48,7 @@ namespace PX.Survey.Ext {
 
         #region Active
         public abstract class active : BqlBool.Field<active> { }
-
-        [PXDBBool()]
+        [PXDBBool]
         [PXDefault(true)]
         [PXUIField(DisplayName = "Active")]
         public virtual bool? Active { get; set; }
@@ -60,7 +56,6 @@ namespace PX.Survey.Ext {
 
         #region RecipientType
         public abstract class recipientType : BqlString.Field<recipientType> { }
-
         [PXString(2, IsFixed = true)]
         [ContactTypes]
         [PXFormula(typeof(Selector<contactID, Contact.contactType>))]
@@ -70,7 +65,6 @@ namespace PX.Survey.Ext {
 
         #region UserID
         public abstract class userID : BqlGuid.Field<userID> { }
-
         [PXGuid]
         [PXFormula(typeof(Selector<contactID, Contact.userID>))]
         public virtual Guid? UserID { get; set; }
@@ -78,7 +72,6 @@ namespace PX.Survey.Ext {
 
         #region RecipientFirstName
         public abstract class recipientFirstName : BqlString.Field<recipientFirstName> { }
-
         [PXString(IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.firstName>))]
         [PXUIField(DisplayName = "First Name", Enabled = false)]
@@ -87,7 +80,6 @@ namespace PX.Survey.Ext {
 
         #region RecipientLastName
         public abstract class recipientLastName : BqlString.Field<recipientLastName> { }
-
         [PXString(IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.lastName>))]
         [PXUIField(DisplayName = "Last Name", Enabled = false)]
@@ -96,7 +88,6 @@ namespace PX.Survey.Ext {
 
         #region RecipientPhone
         public abstract class recipientPhone : BqlString.Field<recipientPhone> { }
-
         [PXString(50, IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.phone1>))]
         [PXUIField(DisplayName = "Phone", Enabled = false)]
@@ -105,7 +96,6 @@ namespace PX.Survey.Ext {
 
         #region RecipientEmail
         public abstract class recipientEmail : BqlString.Field<recipientEmail> { }
-
         [PXString(255, IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.eMail>))]
         [PXUIField(DisplayName = "Email", Enabled = false)]
@@ -114,7 +104,6 @@ namespace PX.Survey.Ext {
 
         #region MobileAppDeviceOS
         public abstract class mobileAppDeviceOS : BqlString.Field<mobileAppDeviceOS> { }
-
         [PXString]
         [PXDependsOnFields(typeof(SurveyUser.contactID), typeof(SurveyUser.userID))]
         [PXFormula(typeof(MobileAppDeviceOS<SurveyUser.userID>))]
@@ -124,7 +113,6 @@ namespace PX.Survey.Ext {
 
         #region UsingMobileApp
         public abstract class usingMobileApp : BqlBool.Field<usingMobileApp> { }
-
         [PXBool]
         [PXDependsOnFields(typeof(SurveyUser.mobileAppDeviceOS))]
         [PXFormula(typeof(IIf<Where<SurveyUser.mobileAppDeviceOS, IsNull>, False, True>))]
@@ -164,7 +152,7 @@ namespace PX.Survey.Ext {
 
         #region LastModifiedByScreenID
         public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
-        [PXDBLastModifiedByScreenID()]
+        [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
 

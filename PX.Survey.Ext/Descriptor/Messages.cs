@@ -16,14 +16,13 @@ namespace PX.Survey.Ext {
         }
         #endregion
 
-        #region Survey Response Status
-
-        public const string CollectorNew = "New";
-        public const string CollectorSent = "Awaiting Response";
-        public const string CollectorResponded = "Responded";
-        public const string CollectorExpired = "Expired";
-
-        #endregion
+        public class CollectorStatus {
+            public const string New = "New";
+            public const string Rendered = "Rendered";
+            public const string Sent = "Awaiting Response";
+            public const string Responded = "Responded";
+            public const string Expired = "Expired";
+        }
 
         public const string Send = "Process";
         public const string SendAll = "Process All";
@@ -41,7 +40,7 @@ namespace PX.Survey.Ext {
         public const string ReOpen = "Re-open";
 
         public const string AnswerReqiredQuestions = "Answers should be specified for all required questions.";
-
+        public const string TemplateNeeded = "You need to create a template to render a survey";
 
         public const string PushNotificationMessageBodySurveyIOS = "You have new Survey # {0} to complete";
         public const string SurveyActionNotRecognised = "Survey Action Not Recognised";
@@ -65,6 +64,7 @@ namespace PX.Survey.Ext {
         #region SurveyAction
         public class SurveyAction {
             public const string Default = "All (New, Remind, Expire)";
+            public const string RenderOnly = "Render";
             public const string NewOnly = "Send New";
             public const string RemindOnly = "Remind Un-Answered";
             public const string ExpireOnly = "Expire Un-Answered";

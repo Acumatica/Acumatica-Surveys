@@ -19,17 +19,19 @@ namespace PX.Survey.Ext {
         public PXSave<SurveyCollector> Save;
 
         protected void _(Events.RowSelected<SurveyCollector> e) {
-            bool bEnabled = (Collector.Current.CollectorStatus == SurveyResponseStatus.CollectorSent ||
-                             Collector.Current.CollectorStatus == SurveyResponseStatus.CollectorNew);
+            var row = e.Row;
+            if (row == null) {
+                return;
+            }
+            bool bEnabled = (row.Status == CollectorStatus.Sent || row.Status == CollectorStatus.New);
             Submit.SetEnabled(bEnabled);
             Answers.Cache.AllowUpdate = (bEnabled);
-            ReOpen.SetEnabled(Collector.Current.CollectorStatus == SurveyResponseStatus.CollectorResponded);
+            ReOpen.SetEnabled(row.Status == CollectorStatus.Responded);
             PXUIFieldAttribute.SetDisplayName<CSAnswers.attributeID>(Answers.Cache, Messages.Question);
             PXUIFieldAttribute.SetDisplayName<CSAnswers.value>(Answers.Cache, Messages.Answer);
         }
 
         public PXAction<SurveyCollector> Submit;
-
         [PXButton(CommitChanges = true)]
         [PXUIField(DisplayName = Messages.Submit, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
         public virtual IEnumerable submit(PXAdapter adapter) {
@@ -42,7 +44,7 @@ namespace PX.Survey.Ext {
                                                              (String.IsNullOrEmpty(x.GetItem<CSAnswers>().Value))))) {
                     throw new PXException(Messages.AnswerReqiredQuestions);
                 }
-                graph.Collector.Current.CollectorStatus = SurveyResponseStatus.CollectorResponded;
+                graph.Collector.Current.Status = CollectorStatus.Responded;
                 graph.Collector.Current.CollectedDate = PXTimeZoneInfo.Now;
                 graph.Collector.Update(graph.Collector.Current);
                 graph.Persist();
@@ -60,7 +62,7 @@ namespace PX.Survey.Ext {
             PXLongOperation.StartOperation(this, delegate () {
                 SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
                 graph.Collector.Current = graph.Collector.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
-                graph.Collector.Current.CollectorStatus = SurveyResponseStatus.CollectorSent;
+                graph.Collector.Current.Status = CollectorStatus.Sent;
                 graph.Collector.Current.CollectedDate = null;
                 graph.Collector.Update(graph.Collector.Current);
                 graph.Persist();

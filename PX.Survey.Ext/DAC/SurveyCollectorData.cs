@@ -103,12 +103,12 @@ namespace PX.Survey.Ext {
 
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }
-        [PXDBCreatedByID()]
+        [PXDBCreatedByID]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
         public abstract class createdByScreenID : BqlString.Field<createdByScreenID> { }
-        [PXDBCreatedByScreenID()]
+        [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
@@ -120,12 +120,12 @@ namespace PX.Survey.Ext {
         #endregion
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
-        [PXDBLastModifiedByID()]
+        [PXDBLastModifiedByID]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
         public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
-        [PXDBLastModifiedByScreenID()]
+        [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime

@@ -4,18 +4,20 @@ using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using System;
 using System.Collections;
 using System.Linq;
 
 namespace PX.Survey.Ext {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
 
-        public SelectFrom<Survey>.View SurveyCurrent;
+        public SelectFrom<Survey>.View CurrentSurvey;
 
         [PXViewName(Objects.CR.Messages.Attributes)]
         public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Mapping;
 
-        public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyUsers;
+        public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
+        public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
@@ -92,14 +94,14 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select, Visible = false)]
         [PXLookupButton]
         public virtual IEnumerable AddSelectedRecipients(PXAdapter adapter) {
-            SurveyUsers.Cache.ForceExceptionHandling = true;
+            Users.Cache.ForceExceptionHandling = true;
             foreach (RecipientSelected recipient in recipients.Cache.Cached) {
                 if (recipient.Selected == true) {
                     var surveyUser = new SurveyUser();
                     surveyUser.Active = true;
-                    surveyUser.SurveyID = SurveyCurrent.Current.SurveyID;
+                    surveyUser.SurveyID = CurrentSurvey.Current.SurveyID;
                     surveyUser.ContactID = recipient.ContactID;
-                    SurveyUsers.Update(surveyUser);
+                    Users.Update(surveyUser);
                 }
             }
             recipients.Cache.Clear();
@@ -107,7 +109,7 @@ namespace PX.Survey.Ext {
         }
         #endregion
         protected virtual void _(Events.RowSelecting<Survey> e) {
-        Survey row = e.Row;
+            Survey row = e.Row;
             if (row == null) { return; }
             using (new PXConnectionScope()) {
                 var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
@@ -126,6 +128,41 @@ namespace PX.Survey.Ext {
             Mapping.Cache.AllowDelete = unlockSurvey;
             PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
         }
+
+        //public PXAction<Survey> render;
+        //[PXUIField(DisplayName = "Render", MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Select)]
+        //[PXButton]
+        //public virtual IEnumerable Render(PXAdapter adapter) {
+        //    Save.Press();
+        //    var list = adapter.Get<Survey>().ToList();
+        //    PXLongOperation.StartOperation(this, delegate () {
+        //        var docgraph = CreateInstance<SurveyMaint>();
+        //        foreach (var survey in list) {
+        //            try {
+        //                if (adapter.MassProcess) {
+        //                    PXProcessing<Survey>.SetCurrentItem(survey);
+        //                }
+        //                docgraph.DoProcessSurvey(survey, adapter.MassProcess);
+        //            } catch (Exception ex) {
+        //                if (!adapter.MassProcess) {
+        //                    throw;
+        //                }
+        //                PXProcessing<Survey>.SetError(ex);
+        //            }
+        //        }
+        //    });
+        //    return list;
+        //}
+
+        //public virtual void DoProcessSurvey(Survey survey, bool massProcess) {
+        //    var generator = new SurveyGenerator();
+        //    var surveySays = generator.GenerateSurvey(this, survey);
+        //    survey.Rendered = surveySays;
+        //    //survey.Status = state.Status;
+        //    CurrentSurvey.Update(survey);
+        //    Save.Press();
+        //    CurrentSurvey.View.RequestRefresh();
+        //}
 
         //[PXMergeAttributes(Method = MergeMethod.Append)]
         //[PXFormula(typeof(MobileAppDeviceOS<Contact.userID>))]

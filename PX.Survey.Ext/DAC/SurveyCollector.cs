@@ -1,5 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CR;
 using System;
 
@@ -13,9 +14,17 @@ namespace PX.Survey.Ext {
     [PXPrimaryGraph(typeof(SurveyCollectorMaint))]
     public class SurveyCollector : IBqlTable, INotable {
 
+        #region Keys
+        public class PK : PrimaryKeyOf<SurveyCollector>.By<collectorID> {
+            public static SurveyCollector Find(PXGraph graph, int? collectorID) => FindBy(graph, collectorID);
+        }
+        public static class FK {
+            public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyCollector>.By<collectorID> { }
+        }
+        #endregion
+
         #region Selected
         public abstract class selected : BqlBool.Field<selected> { }
-
         /// <summary>
         /// Selected
         /// </summary>
@@ -51,23 +60,24 @@ namespace PX.Survey.Ext {
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
+        [PXDBInt]
+        [PXDBDefault(typeof(Survey.surveyID), DefaultForUpdate = false)]
+        [PXParent(typeof(FK.SUSurvey))]
         [PXUIField(DisplayName = "Survey ID", Enabled = false)]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
                     typeof(Survey.surveyCD),
                     typeof(Survey.surveyName),
             SubstituteKey = typeof(Survey.surveyCD),
             DescriptionField = typeof(Survey.surveyName))]
-        [PXDBInt]
         public virtual int? SurveyID { get; set; }
         #endregion
 
         #region UserID
         public abstract class userID : BqlGuid.Field<userID> { }
-
         /// <summary>
         /// Identifies the user that this Collector is assigned too.
         /// </summary>
-        [PXDBGuid()]
+        [PXDBGuid]
         [PXUIField(DisplayName = "Recipient", Enabled = false)]
         [PXSelector(typeof(Search<Contact.userID, Where<Contact.userID, IsNotNull,
                                 And<Contact.isActive, Equal<True>,
@@ -96,17 +106,24 @@ namespace PX.Survey.Ext {
         public virtual DateTime? ExpirationDate { get; set; }
         #endregion
 
-        #region CollectorStatus
-        public abstract class collectorStatus : BqlString.Field<collectorStatus> { }
+        #region Status
+        public abstract class status : BqlString.Field<status> { }
         /// <summary>
         /// Reference to the state the collector record is in   
         /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
-        [PXDefault(SurveyResponseStatus.CollectorNew)]
+        [PXDefault(CollectorStatus.New)]
         [PXUIField(DisplayName = "Collector Status", Enabled = false)]
-        [SurveyResponseStatus.List]
-        public virtual string CollectorStatus { get; set; }
+        [CollectorStatus.List]
+        public virtual string Status { get; set; }
 
+        #endregion
+
+        #region Rendered
+        public abstract class rendered : BqlString.Field<rendered> { }
+        [PXDBLocalizableString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
+        public virtual string Rendered { get; set; }
         #endregion
 
         #region NoteID
@@ -132,7 +149,7 @@ namespace PX.Survey.Ext {
         /// <summary>
         /// Specifies the date part that the Survey was collected
         /// </summary>
-        [PXString()]
+        [PXString]
         [PXUIField(DisplayName = "Collected Date Mobile", Enabled = false)]
         [PXFormula(typeof(CollectedDateAsString<SurveyCollector.collectedDate>))]
         public virtual String CollectedDatePart { get; set; }
@@ -140,12 +157,12 @@ namespace PX.Survey.Ext {
 
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }
-        [PXDBCreatedByID()]
+        [PXDBCreatedByID]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
         public abstract class createdByScreenID : BqlString.Field<createdByScreenID> { }
-        [PXDBCreatedByScreenID()]
+        [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
@@ -156,12 +173,12 @@ namespace PX.Survey.Ext {
         #endregion
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
-        [PXDBLastModifiedByID()]
+        [PXDBLastModifiedByID]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
         public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
-        [PXDBLastModifiedByScreenID()]
+        [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime
