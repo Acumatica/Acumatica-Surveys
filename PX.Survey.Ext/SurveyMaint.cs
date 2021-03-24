@@ -17,7 +17,10 @@ namespace PX.Survey.Ext {
         public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Mapping;
 
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
-        public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
+        public SelectFrom<SurveyCollector>.
+            InnerJoin<SurveyUser>.
+            On<SurveyUser.userID.IsEqual<SurveyCollector.userID>>.
+            Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
 
         [PXHidden]
         [PXCopyPasteHiddenView]

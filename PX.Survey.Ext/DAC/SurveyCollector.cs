@@ -126,6 +126,14 @@ namespace PX.Survey.Ext {
         public virtual string Rendered { get; set; }
         #endregion
 
+        #region Message
+        public abstract class message : BqlString.Field<message> { }
+        [PXDBText]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Processing Message", Enabled = false)]
+        public virtual string Message { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : PX.Data.IBqlField { }
 
