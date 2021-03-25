@@ -1,6 +1,8 @@
-﻿using PX.Data;
+﻿using Newtonsoft.Json;
+using PX.Data;
 using PX.Data.Webhooks;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -10,10 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace PX.Survey.Ext.WebHook {
     public class SurveyWebhookServerHandler : IWebhookHandler {
@@ -64,7 +62,6 @@ namespace PX.Survey.Ext.WebHook {
 </body>
 </html>
 ";
-
             return String.Format(view, sMode);
         }
 
@@ -120,31 +117,22 @@ Thank You Your Submitted your answer was {1}
         }
 
         private string GetSurvey(string collectorToken) {
-
             //todo: We will need to dig into the HTML attributes needed to send the results directly to the URi we need to go to 
             //      We should also be able to find flags to send the answers in the body as opposed to Query parameters which 
             //      I believe this will do.
-
             //todo: we need to dynamically get the current endpoint out of the request as to be able to correctly parse the 
             //      desired redirect.
             //      For Prototyping Purposes we will use a hard coded value. We will obviously want to look this up or reference the webhook record in Survey preferences 
             //      once we get rolling
             var listningEndPoint = "https://desktop-vm0inj5/SUV20_104_0012/Webhooks/Company/176e3e36-c871-4827-810a-ccd04e6177e3";
-
-
             //todo: if the survey has already been awnsered or expired for this collector we need to pass back an alternate to indicate so to the 
             //      user who  clicked the link.
-
             var submitUrl = $"{listningEndPoint}?{cCollectorToken}={collectorToken}&{cMode}={cSubmitSurveyMode}";
-
             //todo: Theoretically this html template below would be stored on and configurable on the 
             //      survey record itself. it could then be modified as needed to bedizen it up to its
             //      fullest potential via anything that can be done with HTML5
-
-
             //todo: another ideal feature is we should implement a action on the survey record that will auto compile 
             //      a basic html survey as to provide a starting point for any further refinement.
-
             var view = @"
 <!DOCTYPE html>
 <html>
@@ -179,7 +167,6 @@ Thank You Your Submitted your answer was {1}
         /// </summary>
         /// <returns></returns>
         private IDisposable GetUserScope() {
-
             //todo: For now we will use admin but we will want to throttle back to a 
             //      user with restricted access as to reduce any risk of attack.
             //      perhaps this can be configured in the Surveys Preferences/Setup page.
@@ -196,7 +183,6 @@ Thank You Your Submitted your answer was {1}
 
     }
 
-
     //pulled from the Team Beta Hackathon
     //this will likely lead to what we need for the return
     public class HtmlActionResult : IHttpActionResult {
@@ -205,17 +191,14 @@ Thank You Your Submitted your answer was {1}
 
         public HtmlActionResult(string view) {
             _view = view;
-
         }
 
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new StringContent(_view);
-
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
             return Task.FromResult(response);
         }
-
     }
 }
 

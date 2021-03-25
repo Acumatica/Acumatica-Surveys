@@ -11,7 +11,7 @@ using System.Linq;
 namespace PX.Survey.Ext {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
 
-        public SelectFrom<Survey>.View CurrentSurvey;
+        public SelectFrom<Survey>.View Survey;
 
         [PXViewName(Objects.CR.Messages.Attributes)]
         public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Mapping;
@@ -21,6 +21,9 @@ namespace PX.Survey.Ext {
             InnerJoin<SurveyUser>.
             On<SurveyUser.userID.IsEqual<SurveyCollector.userID>>.
             Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
+
+        public SelectFrom<SurveyCollectorData>.
+            Where<SurveyCollectorData.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View CollectorDataRecords;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
@@ -102,7 +105,7 @@ namespace PX.Survey.Ext {
                 if (recipient.Selected == true) {
                     var surveyUser = new SurveyUser();
                     surveyUser.Active = true;
-                    surveyUser.SurveyID = CurrentSurvey.Current.SurveyID;
+                    surveyUser.SurveyID = Survey.Current.SurveyID;
                     surveyUser.ContactID = recipient.ContactID;
                     Users.Update(surveyUser);
                 }

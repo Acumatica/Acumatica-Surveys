@@ -94,6 +94,26 @@ namespace PX.Survey.Ext {
         public virtual int? SurveyID { get; set; }
         #endregion
 
+        #region Status
+        public abstract class status : BqlString.Field<status> { }
+        /// <summary>
+        /// Reference to the state the collector record is in   
+        /// </summary>
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(CollectorDataStatus.New)]
+        [PXUIField(DisplayName = "Collector Status", Enabled = false)]
+        [CollectorStatus.List]
+        public virtual string Status { get; set; }
+        #endregion
+
+        #region Message
+        public abstract class message : BqlString.Field<message> { }
+        [PXDBText]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Processing Message", Enabled = false)]
+        public virtual string Message { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : IBqlField { }
 

@@ -21,7 +21,16 @@ namespace PX.Survey.Ext {
             public const string Rendered = "Rendered";
             public const string Sent = "Awaiting Response";
             public const string Responded = "Responded";
+            public const string Reminded = "Reminded";
             public const string Expired = "Expired";
+            public const string Error = "Error";
+        }
+
+        public class CollectorDataStatus {
+            public const string New = "New";
+            public const string Connected = "Connected";
+            public const string Processed = "Processed";
+            public const string Error = "Error";
         }
 
         public const string Send = "Process";
@@ -51,6 +60,12 @@ namespace PX.Survey.Ext {
         public const string SetExpirationFailed = "Set Expiration Failed";
         public const string AnErrorOccuredTryingToResendANotificationForUserID_0 =
             "An Error Occured Trying to resend a notification for UserID:{0}";
+
+        public const string NoteIDNotFound = "No NoteID on object of type '{0}'";
+        public const string CollectorNotFound = "Cannot find a collector with ID {0}";
+        public const string AnswersNotfound = "No answers found";
+        public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
+
 
         #region Demo Survey
         public const string COVSYMPTOM = "Are you experiencing any of these symptoms? (fever, cough, shortness of breath, sore throat or diarrhea)";

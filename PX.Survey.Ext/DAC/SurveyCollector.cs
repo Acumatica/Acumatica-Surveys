@@ -116,7 +116,6 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Collector Status", Enabled = false)]
         [CollectorStatus.List]
         public virtual string Status { get; set; }
-
         #endregion
 
         #region Rendered

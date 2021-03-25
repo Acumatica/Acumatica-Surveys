@@ -16,7 +16,7 @@ namespace PX.Survey.Ext {
         }
 
         public string GenerateSurvey(Survey survey, SurveyUser user) {
-            graph.CurrentSurvey.Current = survey;
+            graph.Survey.Current = survey;
             var questions = graph.Mapping.Select().FirstTableItems;
             string templateText = survey.Template;
             if (string.IsNullOrEmpty(templateText?.Trim())) {
