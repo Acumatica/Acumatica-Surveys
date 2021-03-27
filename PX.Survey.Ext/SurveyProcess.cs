@@ -79,16 +79,16 @@ namespace PX.Survey.Ext {
             var collectors = graph.Collectors.Select().FirstTableItems;
             var users = graph.Users.Select().FirstTableItems;
             foreach (var user in users) {
-                var collector = collectors.FirstOrDefault(coll => coll.UserID == user.UserID);
+                var collector = collectors.FirstOrDefault(coll => coll.UserLineNbr == user.LineNbr);
                 if (collector != null && collector.Status != CollectorStatus.New && collector.Status != CollectorStatus.Error) {
                     continue;
                 }
                 if (collector == null) {
                     collector = new SurveyCollector {
-                        CollectorName =
-                            $"{survey.SurveyName} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
+                        Name =
+                            $"{survey.Name} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
                         SurveyID = survey.SurveyID,
-                        UserID = user.UserID,
+                        UserLineNbr = user.LineNbr,
                         CollectedDate = null,
                         ExpirationDate = CalculateExpirationDate(filter.DurationTimeSpan),
                     };
@@ -110,7 +110,7 @@ namespace PX.Survey.Ext {
 
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
-            var questions = graph.Mapping.Select().FirstTableItems;
+            var questions = graph.Questions.Select().FirstTableItems;
             var collectors = graph.Collectors.Select().FirstTableItems;
             var collDataRecs = graph.CollectorDataRecords.Select().FirstTableItems;
             foreach (var collData in collDataRecs) {
@@ -189,14 +189,17 @@ namespace PX.Survey.Ext {
             var allUnanswered = collectorGraph.UnprocessedCollectedAnswers.Select();
             foreach (SurveyCollectorData unanswered in allUnanswered) {
                 try {
-                    var collectorID = unanswered.CollectorID;
-                    SurveyCollector collector = collectorGraph.Collector.Search<SurveyCollector.collectorID>(collectorID);
+                    var collectorToken = unanswered.Token;
+                    SurveyCollector collector = collectorGraph.Collector.Search<SurveyCollector.token>(collectorToken);
                     if (collector == null) {
-                        throw new PXException(Messages.CollectorNotFound, collectorID);
+                        throw new PXException(Messages.CollectorNotFound, collectorToken);
                     }
                     unanswered.SurveyID = collector.SurveyID;
+                    unanswered.CollectorID = collector.CollectorID;
                     unanswered.Status = CollectorDataStatus.Connected;
                     unanswered.Message = null;
+                    collector.CollectedDate = unanswered.LastModifiedDateTime;
+                    collectorGraph.Collector.Update(collector);
                 } catch (Exception ex) {
                     unanswered.Status = CollectorStatus.Error;
                     unanswered.Message = ex.Message;
@@ -322,7 +325,7 @@ namespace PX.Survey.Ext {
                 pushNotificationSender.SendNotificationAsync(
                     userIds: userIds,
                     title: Messages.PushNotificationTitleSurvey,
-                    text: $"{Messages.PushNotificationMessageBodySurvey} # {surveyCollector.CollectorName}.",
+                    text: $"{Messages.PushNotificationMessageBodySurvey} # {surveyCollector.Name}.",
                     link: (sScreenID, noteID),
                     cancellation: CancellationToken.None);
             }
@@ -441,9 +444,10 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
                     typeof(Survey.surveyCD),
-                    typeof(Survey.surveyName),
+                    typeof(Survey.surveyType),
+                    typeof(Survey.name),
                     SubstituteKey = typeof(Survey.surveyCD),
-                    DescriptionField = typeof(Survey.surveyName))]
+                    DescriptionField = typeof(Survey.name))]
         public virtual int? SurveyID { get; set; }
         #endregion
 

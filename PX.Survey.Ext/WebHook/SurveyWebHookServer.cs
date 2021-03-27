@@ -107,7 +107,7 @@ Thank You Your Submitted your answer was {1}
             var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
             var queryParams = props != null ? JsonConvert.SerializeObject(props) : null ;
             var data = new SurveyCollectorData {
-                CollectorToken = collectorToken,
+                Token = collectorToken,
                 Uri = uri.ToString(),
                 Payload = payload,
                 QueryParameters = queryParams

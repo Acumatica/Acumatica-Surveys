@@ -33,6 +33,14 @@ namespace PX.Survey.Ext {
             public const string Error = "Error";
         }
 
+        public class SurveyType {
+            public const string User = "User";
+            public const string Contact = "Contact";
+            public const string Anonymous = "Anonymous";
+            public const string Device = "Device";
+        }
+
+
         public const string Send = "Process";
         public const string SendAll = "Process All";
 
@@ -63,6 +71,7 @@ namespace PX.Survey.Ext {
 
         public const string NoteIDNotFound = "No NoteID on object of type '{0}'";
         public const string CollectorNotFound = "Cannot find a collector with ID {0}";
+        public const string UserNotFound = "Cannot find a user with Line Nbr. {0}";
         public const string AnswersNotfound = "No answers found";
         public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
 

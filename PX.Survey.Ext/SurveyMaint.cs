@@ -4,7 +4,6 @@ using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
-using System;
 using System.Collections;
 using System.Linq;
 
@@ -14,16 +13,18 @@ namespace PX.Survey.Ext {
         public SelectFrom<Survey>.View Survey;
 
         [PXViewName(Objects.CR.Messages.Attributes)]
-        public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Mapping;
+        public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Questions;
 
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
         public SelectFrom<SurveyCollector>.
-            InnerJoin<SurveyUser>.
-            On<SurveyUser.userID.IsEqual<SurveyCollector.userID>>.
+            LeftJoin<SurveyUser>.
+                On<SurveyUser.surveyID.IsEqual<SurveyCollector.surveyID>.
+                And<SurveyUser.lineNbr.IsEqual<SurveyCollector.userLineNbr>>>.
             Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
 
         public SelectFrom<SurveyCollectorData>.
-            Where<SurveyCollectorData.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View CollectorDataRecords;
+            Where<SurveyCollectorData.surveyID.IsEqual<Survey.surveyID.FromCurrent>.
+            And<SurveyCollectorData.token.IsEqual<SurveyCollector.token.FromCurrent>>>.View CollectorDataRecords;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
@@ -118,21 +119,34 @@ namespace PX.Survey.Ext {
             Survey row = e.Row;
             if (row == null) { return; }
             using (new PXConnectionScope()) {
-                var collectorData = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
-                                        View.SelectWindowed(this, 0, 1, row.SurveyID).TopFirst;
-                row.IsSurveyInUse = (collectorData != null);
+                var collectors = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
+                                        View.SelectWindowed(this, 0, 1, row.SurveyID);
+                row.IsSurveyInUse = collectors.Any();
             }
         }
 
         protected virtual void _(Events.RowSelected<Survey> e) {
             Survey currentSurvey = e.Row;
             if (currentSurvey == null) { return; }
-            bool unlockSurvey = !(currentSurvey.IsSurveyInUse.GetValueOrDefault(false));
+            bool unlockSurvey = !(currentSurvey.IsSurveyInUse == true);
             e.Cache.AllowDelete = unlockSurvey;
-            Mapping.Cache.AllowUpdate = unlockSurvey;
-            Mapping.Cache.AllowInsert = unlockSurvey;
-            Mapping.Cache.AllowDelete = unlockSurvey;
-            PXUIFieldAttribute.SetEnabled<Survey.surveyName>(e.Cache, currentSurvey, unlockSurvey);
+            Questions.Cache.AllowUpdate = unlockSurvey;
+            Questions.Cache.AllowInsert = unlockSurvey;
+            Questions.Cache.AllowDelete = unlockSurvey;
+            PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, currentSurvey, unlockSurvey);
+        }
+
+        public void _(Events.FieldUpdated<SurveyCollector, SurveyCollector.collectorID> e) {
+            e.Cache.SetDefaultExt<SurveyCollector.token>(e.Row);
+        }
+
+        protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
+            var row = e.Row;
+            if (row == null || row.CollectorID == null) {
+                return;
+            }
+            e.NewValue = Net_Utils.ComputeMd5(row.CollectorID.ToString(), true);
+            e.Cancel = true;
         }
 
         //public PXAction<Survey> render;

@@ -75,7 +75,7 @@ namespace PX.Survey.Ext {
                             if (demoSurvey == null) {
                                 demoSurvey = new Survey();
                                 demoSurvey.SurveyCD = "DEMOCOVID";
-                                demoSurvey.SurveyName = Messages.DEMOCOVID;
+                                demoSurvey.Name = Messages.DEMOCOVID;
                                 demoSurvey.Active = true;
                                 surveyGraph.Survey.Insert(demoSurvey);
 
@@ -140,7 +140,7 @@ namespace PX.Survey.Ext {
             surveyDetails.AttributeID = attributeID;
             surveyDetails.Required = required;
             surveyDetails.SortOrder = sortOrder;
-            surveyGraph.Mapping.Insert(surveyDetails);
+            surveyGraph.Questions.Insert(surveyDetails);
         }
 
         #endregion
