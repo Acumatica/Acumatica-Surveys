@@ -80,7 +80,7 @@ namespace PX.Survey.Ext {
         //        Where<CSAttribute.attributeID, Equal<Required<CSAttribute.attributeID>>>>(graph).SelectSingle(new object[] { attributeId });
         //}
 
-        private static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {
+        public static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {
             return PXSelect<CSAttributeDetail, 
                 Where<CSAttributeDetail.attributeID, Equal<Required<CSAttributeDetail.attributeID>>, 
                 And<CSAttributeDetail.disabled, NotEqual<True>>>>.Select(graph, new object[] { attributeId }).FirstTableItems;

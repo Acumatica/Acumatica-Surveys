@@ -126,14 +126,15 @@ namespace PX.Survey.Ext {
         }
 
         protected virtual void _(Events.RowSelected<Survey> e) {
-            Survey currentSurvey = e.Row;
-            if (currentSurvey == null) { return; }
-            bool unlockSurvey = !(currentSurvey.IsSurveyInUse == true);
-            e.Cache.AllowDelete = unlockSurvey;
-            Questions.Cache.AllowUpdate = unlockSurvey;
-            Questions.Cache.AllowInsert = unlockSurvey;
-            Questions.Cache.AllowDelete = unlockSurvey;
-            PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, currentSurvey, unlockSurvey);
+            var row = e.Row;
+            if (row == null) { return; }
+            bool unlockedSurvey = !(row.IsSurveyInUse == true);
+            e.Cache.AllowDelete = unlockedSurvey;
+            Questions.Cache.AllowUpdate = unlockedSurvey;
+            Questions.Cache.AllowInsert = unlockedSurvey;
+            Questions.Cache.AllowDelete = unlockedSurvey;
+            PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, row, unlockedSurvey);
+            PXUIFieldAttribute.SetEnabled<Survey.surveyType>(e.Cache, row, unlockedSurvey);
         }
 
         public void _(Events.FieldUpdated<SurveyCollector, SurveyCollector.collectorID> e) {
