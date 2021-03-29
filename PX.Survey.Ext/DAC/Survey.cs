@@ -82,13 +82,6 @@ namespace PX.Survey.Ext {
         public virtual string Template { get; set; }
         #endregion
 
-        //#region Rendered
-        //public abstract class rendered : BqlString.Field<rendered> { }
-        //[PXDBLocalizableString(IsUnicode = true)]
-        //[PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
-        //public virtual string Rendered { get; set; }
-        //#endregion
-
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<Survey.createdByID> { }
         [PXDBCreatedByID]
@@ -124,7 +117,7 @@ namespace PX.Survey.Ext {
         #region tstamp
         public abstract class Tstamp : BqlByteArray.Field<Tstamp> { }
         [PXDBTimestamp]
-        public virtual Byte[] tstamp { get; set; }
+        public virtual byte[] tstamp { get; set; }
         #endregion
 
         #region SurveyIDStringID

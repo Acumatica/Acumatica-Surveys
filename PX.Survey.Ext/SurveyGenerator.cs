@@ -45,7 +45,7 @@ namespace PX.Survey.Ext {
 
         public class Question {
 
-            private CSAttributeGroup _attrGroup;
+            private readonly CSAttributeGroup _attrGroup;
 
             public Question(CSAttributeGroup attrGroup) {
                 this._attrGroup = attrGroup;
@@ -55,8 +55,11 @@ namespace PX.Survey.Ext {
             public bool Required => _attrGroup.Required == true;
             public string Description => _attrGroup.Description;
             public string AttributeID => _attrGroup.AttributeID;
+            public string ID => _attrGroup.AttributeID;
+            public string Name => _attrGroup.AttributeID;
+            public int MaxLength { get; set; } = -1;
             public int ControlType => _attrGroup.ControlType ?? 0;
-            public IEnumerable<QuestionDetail> Details { get; set; }
+            public IEnumerable<QuestionDetail> Details { get; set; } = Enumerable.Empty<QuestionDetail>();
             public bool HasDetails => Details != null && Details.Any();
         }
 
@@ -81,6 +84,7 @@ namespace PX.Survey.Ext {
                             Select(x => new QuestionDetail() { ValueID = x.ValueID, Description = x.Description });
                         break;
                     case 7: // Selector
+                        // TODO
                         break;
                 }
                 questions.Add(question);

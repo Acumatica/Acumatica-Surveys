@@ -30,51 +30,12 @@ namespace PX.Survey.Ext {
         [PXCopyPasteHiddenView]
         public PXSetup<SurveySetup> SurveySetup;
 
-        //[PXCopyPasteHiddenView]
-        //public SelectFrom<Contact>.
-        //        Where<Contact.contactType.IsEqual<ContactTypesAttribute.employee>.
-        //        And<Contact.isActive.IsEqual<True>>.
-        //        And<Contact.userID.IsNotNull>>.
-        //        OrderBy<Asc<Contact.displayName>>.View UsersForAddition;
-
         [PXHidden]
         [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyCollector;
 
         public SurveyMaint() {
-            //SurveySetup Data = SurveySetup.Current;
-            //UsersForAddition.Cache.AllowInsert = false;
-            //UsersForAddition.Cache.AllowDelete = false;
         }
-
-        //public PXAction<Survey> AddUsers;
-        //[PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        //[PXButton(VisibleOnDataSource = false)]
-        //public virtual IEnumerable addUsers(PXAdapter adapter) {
-        //    var users = UsersForAddition.Select().Where(a => a.GetItem<Contact>().Selected == true).ToList();
-        //    foreach (var user in users) {
-        //        var surveyUser = new SurveyUser();
-        //        surveyUser.Active = true;
-        //        surveyUser.SurveyID = SurveyCurrent.Current.SurveyID;
-        //        surveyUser.ContactID = user.GetItem<Contact>().ContactID;
-        //        surveyUser = SurveyUsers.Insert(surveyUser);
-        //    }
-        //    return adapter.Get();
-        //}
-
-        //public PXAction<Survey> addRecipients;
-        //[PXButton]
-        //[PXUIField(DisplayName = "Add Recipients", MapViewRights = PXCacheRights.Select,
-        //    MapEnableRights = PXCacheRights.Select)]
-        //public virtual IEnumerable AddRecipients(PXAdapter adapter) {
-        //    if (UsersForAddition.AskExt((graph, viewName) => {
-        //        graph.Views[UsersForAddition.View.Name].Cache.Clear();
-        //        graph.Views[viewName].Cache.Clear();
-        //        graph.Views[viewName].Cache.ClearQueryCache();
-        //        graph.Views[viewName].ClearDialog();
-        //    }, true) != WebDialogResult.OK) return adapter.Get();
-        //    return addUsers(adapter);
-        //}
 
 
         #region SiteStatus Lookup
@@ -149,41 +110,6 @@ namespace PX.Survey.Ext {
             e.NewValue = Net_Utils.ComputeMd5(row.CollectorID.ToString(), true);
             e.Cancel = true;
         }
-
-        //public PXAction<Survey> render;
-        //[PXUIField(DisplayName = "Render", MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Select)]
-        //[PXButton]
-        //public virtual IEnumerable Render(PXAdapter adapter) {
-        //    Save.Press();
-        //    var list = adapter.Get<Survey>().ToList();
-        //    PXLongOperation.StartOperation(this, delegate () {
-        //        var docgraph = CreateInstance<SurveyMaint>();
-        //        foreach (var survey in list) {
-        //            try {
-        //                if (adapter.MassProcess) {
-        //                    PXProcessing<Survey>.SetCurrentItem(survey);
-        //                }
-        //                docgraph.DoProcessSurvey(survey, adapter.MassProcess);
-        //            } catch (Exception ex) {
-        //                if (!adapter.MassProcess) {
-        //                    throw;
-        //                }
-        //                PXProcessing<Survey>.SetError(ex);
-        //            }
-        //        }
-        //    });
-        //    return list;
-        //}
-
-        //public virtual void DoProcessSurvey(Survey survey, bool massProcess) {
-        //    var generator = new SurveyGenerator();
-        //    var surveySays = generator.GenerateSurvey(this, survey);
-        //    survey.Rendered = surveySays;
-        //    //survey.Status = state.Status;
-        //    CurrentSurvey.Update(survey);
-        //    Save.Press();
-        //    CurrentSurvey.View.RequestRefresh();
-        //}
 
         //[PXMergeAttributes(Method = MergeMethod.Append)]
         //[PXFormula(typeof(MobileAppDeviceOS<Contact.userID>))]
