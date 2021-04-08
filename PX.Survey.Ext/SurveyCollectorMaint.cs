@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using PX.Common;
+﻿using PX.Common;
 using PX.Data;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using System;
+using System.Collections;
+using System.Linq;
 
-namespace PX.Survey.Ext
-{
-    public class SurveyCollectorMaint : PXGraph<SurveyCollectorMaint>
-    {
-        public SelectFrom<SurveyCollector>.View SurveyQuestions;
+namespace PX.Survey.Ext {
+    public class SurveyCollectorMaint : PXGraph<SurveyCollectorMaint> {
 
+        public SelectFrom<SurveyCollector>.View Collector;
+        public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.collectorID.IsEqual<SurveyCollector.collectorID.FromCurrent>>.View CollectedAnswers;
+        public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.surveyID.IsNull>.View UnprocessedCollectedAnswers;
         public CRAttributeList<SurveyCollector> Answers;
 
         public PXCancel<SurveyCollector> Cancel;
         public PXSave<SurveyCollector> Save;
 
-        protected void _(Events.RowSelected<SurveyCollector> e)
-        {
-            bool bEnabled = (SurveyQuestions.Current.CollectorStatus == SurveyResponseStatus.CollectorSent ||
-                             SurveyQuestions.Current.CollectorStatus == SurveyResponseStatus.CollectorNew);
+        protected void _(Events.RowSelected<SurveyCollector> e) {
+            bool bEnabled = (Collector.Current.CollectorStatus == SurveyResponseStatus.CollectorSent ||
+                             Collector.Current.CollectorStatus == SurveyResponseStatus.CollectorNew);
             Submit.SetEnabled(bEnabled);
             Answers.Cache.AllowUpdate = (bEnabled);
-
-            ReOpen.SetEnabled(SurveyQuestions.Current.CollectorStatus == SurveyResponseStatus.CollectorResponded);
-
+            ReOpen.SetEnabled(Collector.Current.CollectorStatus == SurveyResponseStatus.CollectorResponded);
             PXUIFieldAttribute.SetDisplayName<CSAnswers.attributeID>(Answers.Cache, Messages.Question);
             PXUIFieldAttribute.SetDisplayName<CSAnswers.value>(Answers.Cache, Messages.Answer);
         }
@@ -35,28 +32,21 @@ namespace PX.Survey.Ext
 
         [PXButton(CommitChanges = true)]
         [PXUIField(DisplayName = Messages.Submit, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
-        public virtual IEnumerable submit(PXAdapter adapter)
-        {
+        public virtual IEnumerable submit(PXAdapter adapter) {
             Persist();
-            var currentQuestion = SurveyQuestions.Current;
-
-            PXLongOperation.StartOperation(this, delegate ()
-            {
+            var currentQuestion = Collector.Current;
+            PXLongOperation.StartOperation(this, delegate () {
                 SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-                graph.SurveyQuestions.Current = graph.SurveyQuestions.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
-
+                graph.Collector.Current = graph.Collector.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
                 if (graph.Answers.Select().ToList().Any(x => (x.GetItem<CSAnswers>().IsRequired.GetValueOrDefault(false) &&
-                                                             (String.IsNullOrEmpty(x.GetItem<CSAnswers>().Value)))))
-                {
+                                                             (String.IsNullOrEmpty(x.GetItem<CSAnswers>().Value))))) {
                     throw new PXException(Messages.AnswerReqiredQuestions);
                 }
-
-                graph.SurveyQuestions.Current.CollectorStatus = SurveyResponseStatus.CollectorResponded;
-                graph.SurveyQuestions.Current.CollectedDate = PXTimeZoneInfo.Now;
-                graph.SurveyQuestions.Update(graph.SurveyQuestions.Current);
+                graph.Collector.Current.CollectorStatus = SurveyResponseStatus.CollectorResponded;
+                graph.Collector.Current.CollectedDate = PXTimeZoneInfo.Now;
+                graph.Collector.Update(graph.Collector.Current);
                 graph.Persist();
             });
-
             return adapter.Get();
         }
 
@@ -64,21 +54,17 @@ namespace PX.Survey.Ext
 
         [PXButton(CommitChanges = true)]
         [PXUIField(DisplayName = Messages.ReOpen, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
-        public virtual IEnumerable reOpen(PXAdapter adapter)
-        {
+        public virtual IEnumerable reOpen(PXAdapter adapter) {
             Persist();
-            var currentQuestion = SurveyQuestions.Current;
-
-            PXLongOperation.StartOperation(this, delegate ()
-            {
+            var currentQuestion = Collector.Current;
+            PXLongOperation.StartOperation(this, delegate () {
                 SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-                graph.SurveyQuestions.Current = graph.SurveyQuestions.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
-                graph.SurveyQuestions.Current.CollectorStatus = SurveyResponseStatus.CollectorSent;
-                graph.SurveyQuestions.Current.CollectedDate = null;
-                graph.SurveyQuestions.Update(graph.SurveyQuestions.Current);
+                graph.Collector.Current = graph.Collector.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
+                graph.Collector.Current.CollectorStatus = SurveyResponseStatus.CollectorSent;
+                graph.Collector.Current.CollectedDate = null;
+                graph.Collector.Update(graph.Collector.Current);
                 graph.Persist();
             });
-
             return adapter.Get();
         }
     }
