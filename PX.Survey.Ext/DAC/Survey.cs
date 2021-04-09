@@ -69,17 +69,17 @@ namespace PX.Survey.Ext {
         public virtual bool? Active { get; set; }
         #endregion
 
-        #region NoteID
-        public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
-        [PXNote]
-        public virtual Guid? NoteID { get; set; }
-        #endregion
-
         #region Template
         public abstract class template : BqlString.Field<template> { }
         [PXDBLocalizableString(IsUnicode = true)]
         [PXUIField(DisplayName = "Template")]
         public virtual string Template { get; set; }
+        #endregion
+
+        #region NoteID
+        public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
+        [PXNote]
+        public virtual Guid? NoteID { get; set; }
         #endregion
 
         #region CreatedByID

@@ -15,6 +15,8 @@ namespace PX.Survey.Ext {
         [PXViewName(Objects.CR.Messages.Attributes)]
         public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Questions;
 
+        public SurveyDetailSelect Details;
+
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
         public SelectFrom<SurveyCollector>.
             LeftJoin<SurveyUser>.
@@ -38,7 +40,7 @@ namespace PX.Survey.Ext {
         }
 
 
-        #region SiteStatus Lookup
+        #region RecipientSelected Lookup
         public PXFilter<RecipientFilter> recipientfilter;
         [PXFilterable]
         [PXCopyPasteHiddenView]
@@ -76,6 +78,45 @@ namespace PX.Survey.Ext {
             return adapter.Get();
         }
         #endregion
+
+        #region TemplateSelected Lookup
+        public PXFilter<TemplateFilter> templatefilter;
+        [PXFilterable]
+        [PXCopyPasteHiddenView]
+        public TemplateLookup<TemplateSelected, TemplateFilter> templates;
+
+        public PXAction<Survey> addTemplates;
+        [PXUIField(DisplayName = "Add Templates", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXLookupButton]
+        public virtual IEnumerable AddTemplates(PXAdapter adapter) {
+            if (templatefilter.Current == null) {
+                templatefilter.Current = templatefilter.Insert(new TemplateFilter());
+            }
+            if (templates.AskExt() == WebDialogResult.OK) {
+                return AddSelectedTemplate(adapter);
+            }
+            recipients.Cache.Clear();
+            return adapter.Get();
+        }
+
+        public PXAction<Survey> addSelectedTemplate;
+        [PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select, Visible = false)]
+        [PXLookupButton]
+        public virtual IEnumerable AddSelectedTemplate(PXAdapter adapter) {
+            Details.Cache.ForceExceptionHandling = true;
+            foreach (TemplateSelected template in templates.Cache.Cached) {
+                if (template.Selected == true) {
+                    var surveyDetail = new SurveyDetail();
+                    surveyDetail.SurveyID = Survey.Current.SurveyID;
+                    surveyDetail.TemplateID = template.TemplateID;
+                    Details.Update(surveyDetail);
+                }
+            }
+            templates.Cache.Clear();
+            return adapter.Get();
+        }
+        #endregion
+
         protected virtual void _(Events.RowSelecting<Survey> e) {
             Survey row = e.Row;
             if (row == null) { return; }

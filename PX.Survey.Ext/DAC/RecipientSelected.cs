@@ -17,7 +17,7 @@ namespace PX.Survey.Ext {
         And<Where<CurrentValue<RecipientFilter.contactType>, IsNull, 
             Or<Contact.contactType, Equal<CurrentValue<RecipientFilter.contactType>>>>>>>>>,
         OrderBy<Asc<Contact.displayName>>>))]
-    public class RecipientSelected : IBqlTable {
+    public class RecipientSelected : IBqlTable, IPXSelectable {
 
         #region Selected
         public abstract class selected : BqlType<IBqlBool, bool>.Field<selected> { }

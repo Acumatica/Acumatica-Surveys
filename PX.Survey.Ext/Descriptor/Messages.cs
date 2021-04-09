@@ -40,9 +40,20 @@ namespace PX.Survey.Ext {
             public const string Device = "Device";
         }
 
+        public class TemplateType {
+            public const string Header = "Header";
+            public const string PageHeader = "Page Header";
+            public const string QuestionPage = "Question";
+            public const string ContentPage = "Content";
+            public const string PageFooter = "Page Footer";
+            public const string Footer = "Footer";
+        }
+
 
         public const string Send = "Process";
         public const string SendAll = "Process All";
+        public const string SurveyDetailPasteLineCommand = "Survey Detail Paste Line";
+        public const string SurveyDetailResetOrderCommand = "Survey Detail Reset Order";
 
         public const string PushNotificationTitleSurvey = "Complete Survey";
         public const string PushNotificationMessageBodySurvey = "Tap to complete Survey";

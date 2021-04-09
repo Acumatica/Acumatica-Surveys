@@ -2,6 +2,7 @@ using CommonServiceLocator;
 using PX.Api.Mobile.PushNotifications;
 using PX.Common;
 using PX.Data;
+using PX.Data.BQL;
 using PX.Objects.CS;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace PX.Survey.Ext {
             Where<Survey.active, Equal<True>,
             And<SurveyUser.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Surveys;
 
-        private static IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
+        private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
         public SurveyProcess() {
             Surveys.SetProcessCaption(Messages.Send);
@@ -438,8 +439,8 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : IBqlField { }
-        [PXDBInt]
+        public abstract class surveyID : BqlInt.Field<surveyID> { }
+        [PXInt]
         [PXDefault]
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
@@ -452,7 +453,7 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region DurationTimeSpan
-        public abstract class durationTimeSpan : Data.BQL.BqlInt.Field<durationTimeSpan> { }
+        public abstract class durationTimeSpan : BqlInt.Field<durationTimeSpan> { }
         [PXDBTimeSpanLongExt(Format = TimeSpanFormatType.DaysHoursMinites)]
         [PXDefault(0)]
         [PXUIField(DisplayName = "Expire After")]
