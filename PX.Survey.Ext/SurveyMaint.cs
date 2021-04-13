@@ -108,6 +108,7 @@ namespace PX.Survey.Ext {
                 if (template.Selected == true) {
                     var surveyDetail = new SurveyDetail();
                     surveyDetail.SurveyID = Survey.Current.SurveyID;
+                    surveyDetail.Description = template.Description;
                     surveyDetail.TemplateID = template.TemplateID;
                     Details.Update(surveyDetail);
                 }
