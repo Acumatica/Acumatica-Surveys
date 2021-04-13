@@ -19,9 +19,9 @@ namespace PX.Survey.Ext {
         }
 
         public abstract class templateID : BqlInt.Field<templateID> { }
-        [PXDBIdentity]
-        [PXReferentialIntegrityCheck]
-        [PXUIField(DisplayName = "Template ID", Visibility = PXUIVisibility.Visible, Visible = false)]
+        [PXDBIdentity(IsKey = true)]
+        [PXSelector(typeof(templateID), new Type[] { typeof(templateID), typeof(subject) }, DescriptionField = typeof(description))]
+        [PXUIField(DisplayName = "Template ID")]
         public virtual int? TemplateID { get; set; }
 
         /// <summary>
@@ -29,10 +29,10 @@ namespace PX.Survey.Ext {
         /// The user-friendly unique identifier of the Survey Template.
         /// The structure of the identifier is determined by the <i>SURVEYTEMPLATE</i> <see cref="T:PX.Objects.CS.Dimension">Segmented Key</see>.
         /// </summary>
-        public abstract class templateCD : BqlString.Field<templateCD> { }
-        [TemplateRaw(IsKey = true, DisplayName = "Template ID")]
-        [PXDefault]
-        public virtual string TemplateCD { get; set; }
+        //public abstract class templateCD : BqlString.Field<templateCD> { }
+        //[TemplateRaw(IsKey = true, DisplayName = "Template ID")]
+        //[PXDefault]
+        //public virtual string TemplateCD { get; set; }
 
         #region Active
         public abstract class active : BqlBool.Field<active> { }
@@ -45,7 +45,7 @@ namespace PX.Survey.Ext {
         #region TemplateType
         public abstract class templateType : BqlString.Field<templateType> { }
         [PXDBString(2, IsUnicode = false, IsFixed = true)]
-        [PXDefault()]
+        [PXDefault]
         [PXUIField(DisplayName = "Template Type")]
         [TemplateType.List]
         public virtual string TemplateType { get; set; }
