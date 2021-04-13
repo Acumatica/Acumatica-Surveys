@@ -28,7 +28,7 @@ namespace PX.Survey.Ext {
         [PXDBString(2, IsFixed = true, BqlField = typeof(SurveyTemplate.templateType))]
         [TemplateType.List]
         [PXUIField(DisplayName = "Type", Enabled = false, Visibility = PXUIVisibility.SelectorVisible)]
-        public virtual string ContactType { get; set; }
+        public virtual string TemplateType { get; set; }
 
         [PXDBString(256, IsUnicode = true, BqlField = typeof(SurveyTemplate.description))]
         [PXUIField(DisplayName = "Description")]
