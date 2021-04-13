@@ -59,6 +59,7 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Template")]
         [PXDefault]
         [PXForeignReference(typeof(FK.SUSurveyTemplate))]
+        [PXSelector(typeof(SurveyTemplate.templateID), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description), typeof(SurveyTemplate.subject) }, DescriptionField = typeof(SurveyTemplate.description))]
         public virtual int? TemplateID { get; set; }
         #endregion
 
