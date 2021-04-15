@@ -136,8 +136,51 @@ namespace PX.Survey.Ext {
             Questions.Cache.AllowUpdate = unlockedSurvey;
             Questions.Cache.AllowInsert = unlockedSurvey;
             Questions.Cache.AllowDelete = unlockedSurvey;
-            PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, row, unlockedSurvey);
-            PXUIFieldAttribute.SetEnabled<Survey.surveyType>(e.Cache, row, unlockedSurvey);
+            //PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, row, unlockedSurvey);
+            PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
+            PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
+        }
+
+        protected virtual void _(Events.RowSelected<SurveyDetail> e) {
+            var row = e.Row;
+            if (row == null || Survey.Current == null || Survey.Current.Layout == null) {
+                return;
+            }
+            var isMulti = Survey.Current.Layout == SurveyLayout.MultiPage;
+            PXUIFieldAttribute.SetEnabled<SurveyDetail.pageNbr>(e.Cache, row, isMulti);
+        }
+
+        protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.templateID> e) {
+            e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
+        }
+
+        protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.description> e) {
+            var row = e.Row;
+            if (row == null || row.TemplateID == null) {
+                return;
+            }
+            SurveyTemplate st = SurveyTemplate.PK.Find(this, row.TemplateID);
+            e.NewValue = st.Description;
+            e.Cancel = e.NewValue != null;
+        }
+
+        protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.pageNbr> e) {
+            var row = e.Row;
+            if (row == null || Survey.Current == null || Survey.Current.Layout == null) {
+                return;
+            }
+            var isMulti = Survey.Current.Layout == SurveyLayout.MultiPage;
+            if (isMulti) { 
+                e.NewValue = GetMaxPage(Survey.Current.SurveyID) + 1;
+            } else {
+                e.NewValue = 1;
+            }
+            e.Cancel = true;
+        }
+
+        private int GetMaxPage(int? surveyID) {
+            var maxPage = PXSelect<SurveyDetail, Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>>>.Select(this, surveyID).FirstTableItems.Select(sd => sd.PageNbr).Max();
+            return maxPage ?? 0;
         }
 
         public void _(Events.FieldUpdated<SurveyCollector, SurveyCollector.collectorID> e) {

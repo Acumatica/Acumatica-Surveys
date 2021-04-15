@@ -1,4 +1,5 @@
-﻿using PX.Data;
+﻿using PX.CS;
+using PX.Data;
 using PX.Data.BQL;
 using PX.Data.EP;
 using PX.Data.ReferentialIntegrity.Attributes;
@@ -49,6 +50,18 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Template Type")]
         [TemplateType.List]
         public virtual string TemplateType { get; set; }
+        #endregion
+
+        #region AttributeID
+        public abstract class attributeID : BqlString.Field<attributeID> { }
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXSelector(typeof(CSAttribute.attributeID), DescriptionField = typeof(CSAttribute.description))]
+        [PXUIField(DisplayName = "Answer Meta")]
+        [PXUIVisible(typeof(Where<templateType, Equal<TemplateType.questionPage>>))]
+        [PXUIEnabled(typeof(Where<templateType, Equal<TemplateType.questionPage>>))]
+        [PXUIRequired(typeof(Where<templateType, Equal<TemplateType.questionPage>>))]
+        public virtual string AttributeID { get; set; }
         #endregion
 
         public abstract class description : BqlString.Field<description> { }

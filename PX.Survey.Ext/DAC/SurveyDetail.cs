@@ -53,18 +53,30 @@ namespace PX.Survey.Ext {
         public virtual bool? Active { get; set; }
         #endregion
 
+        #region PageNbr
+        public abstract class pageNbr : BqlInt.Field<pageNbr> { }
+        [PXDBInt]
+        [PXDefault]
+        [PXUIField(DisplayName = "Page Nbr.")]
+        public virtual int? PageNbr { get; set; }
+        #endregion
+
         #region TemplateID
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBInt]
         [PXUIField(DisplayName = "Template")]
         [PXDefault]
         [PXForeignReference(typeof(FK.SUSurveyTemplate))]
-        [PXSelector(typeof(SurveyTemplate.templateID), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description), typeof(SurveyTemplate.subject) }, DescriptionField = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(SurveyTemplate.templateID), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description), typeof(SurveyTemplate.subject) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
         public virtual int? TemplateID { get; set; }
         #endregion
 
+        public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
 

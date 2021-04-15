@@ -33,7 +33,7 @@ namespace PX.Survey.Ext {
             public const string Error = "Error";
         }
 
-        public class SurveyType {
+        public class SurveyTarget {
             public const string User = "User";
             public const string Contact = "Contact";
             public const string Anonymous = "Anonymous";
@@ -49,6 +49,10 @@ namespace PX.Survey.Ext {
             public const string Footer = "Footer";
         }
 
+        public class SurveyLayout {
+            public const string SinglePage = "Single Page";
+            public const string MultiPage = "Multi Page";
+        }
 
         public const string Send = "Process";
         public const string SendAll = "Process All";

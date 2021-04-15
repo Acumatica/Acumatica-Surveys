@@ -31,6 +31,8 @@
             </px:PXSelector>
             <px:PXTextEdit ID="edDescription" runat="server" DataField="Description" AlreadyLocalized="False" DefaultLocale="" />
 			<px:PXDropDown ID="edTemplateType" runat="server" DataField="TemplateType" />
+            <px:PXSelector runat="server" ID="edAttributeID" DataField="AttributeID" DataSourceID="ds"/>
+			
             <%--<px:PXSelector ID="edFrom" runat="server" DataField="NFrom" FilterByAllFields="True" DisplayMode="Text" TextMode="Search" />--%>
             <%--			<px:PXTreeSelector ID="edNTo" runat="server" DataField="NTo" 
 				TreeDataSourceID="ds" PopulateOnDemand="True" InitialExpandLevel="0"

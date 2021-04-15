@@ -35,7 +35,8 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Survey.surveyCD),
                     typeof(Survey.surveyCD),
-                    typeof(Survey.surveyType),
+                    typeof(Survey.target),
+                    typeof(Survey.layout),
                     typeof(Survey.name))]
         [AutoNumber(typeof(SurveySetup.surveyNumberingID), typeof(AccessInfo.businessDate))]
         public virtual string SurveyCD { get; set; }
@@ -49,16 +50,28 @@ namespace PX.Survey.Ext {
         public virtual string Name { get; set; }
         #endregion
 
-        #region SurveyType
-        public abstract class surveyType : BqlString.Field<surveyType> { }
+        #region Target
+        public abstract class target : BqlString.Field<target> { }
         /// <summary>
         /// Reference to the state the collector record is in   
         /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
-        [PXDefault]
-        [PXUIField(DisplayName = "Type")]
-        [SurveyType.List]
-        public virtual string SurveyType { get; set; }
+        [PXDefault(SurveyTarget.User)]
+        [PXUIField(DisplayName = "Target")]
+        [SurveyTarget.List]
+        public virtual string Target { get; set; }
+        #endregion
+
+        #region Layout
+        public abstract class layout : BqlString.Field<layout> { }
+        /// <summary>
+        /// Reference to the state the collector record is in   
+        /// </summary>
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SurveyLayout.SinglePage)]
+        [PXUIField(DisplayName = "Layout")]
+        [SurveyLayout.List]
+        public virtual string Layout { get; set; }
         #endregion
 
         #region Active

@@ -65,7 +65,8 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Survey ID", Enabled = false)]
         [PXSelector(typeof(Search<Survey.surveyID>),
                     typeof(Survey.surveyCD),
-                    typeof(Survey.surveyType),
+                    typeof(Survey.target),
+                    typeof(Survey.layout),
                     typeof(Survey.name),
             SubstituteKey = typeof(Survey.surveyCD),
             DescriptionField = typeof(Survey.name))]

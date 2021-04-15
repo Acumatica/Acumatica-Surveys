@@ -2,13 +2,13 @@
 using PX.Data.BQL;
 
 namespace PX.Survey.Ext {
-    public static class SurveyType {
+    public static class SurveyTarget {
         public class ListAttribute : PXStringListAttribute {
             public ListAttribute() : base(
                 new string[] { User, Contact, Anonymous, Device},
                 new string[] { 
-                    Messages.SurveyType.User, Messages.SurveyType.Contact,
-                    Messages.SurveyType.Anonymous, Messages.SurveyType.Device, 
+                    Messages.SurveyTarget.User, Messages.SurveyTarget.Contact,
+                    Messages.SurveyTarget.Anonymous, Messages.SurveyTarget.Device, 
                 }) { }
         }
 
