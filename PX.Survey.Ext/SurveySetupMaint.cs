@@ -71,13 +71,13 @@ namespace PX.Survey.Ext {
                         if (!string.IsNullOrEmpty(setup.SurveyNumberingID)) {
                             //now create the survey record
                             SurveyMaint surveyGraph = PXGraph.CreateInstance<SurveyMaint>();
-                            Survey demoSurvey = surveyGraph.SurveyCurrent.Search<Survey.surveyCD>("DEMOCOVID");
+                            Survey demoSurvey = surveyGraph.Survey.Search<Survey.surveyCD>("DEMOCOVID");
                             if (demoSurvey == null) {
                                 demoSurvey = new Survey();
                                 demoSurvey.SurveyCD = "DEMOCOVID";
-                                demoSurvey.SurveyName = Messages.DEMOCOVID;
+                                demoSurvey.Name = Messages.DEMOCOVID;
                                 demoSurvey.Active = true;
-                                surveyGraph.SurveyCurrent.Insert(demoSurvey);
+                                surveyGraph.Survey.Insert(demoSurvey);
 
                                 //add the attributes to the survey created from above
                                 sortOrder = 1;
@@ -140,7 +140,7 @@ namespace PX.Survey.Ext {
             surveyDetails.AttributeID = attributeID;
             surveyDetails.Required = required;
             surveyDetails.SortOrder = sortOrder;
-            surveyGraph.Mapping.Insert(surveyDetails);
+            surveyGraph.Questions.Insert(surveyDetails);
         }
 
         #endregion

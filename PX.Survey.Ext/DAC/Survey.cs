@@ -1,5 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CS;
 using PX.SM;
 using System;
@@ -10,6 +11,17 @@ namespace PX.Survey.Ext {
     [PXPrimaryGraph(typeof(SurveyMaint))]
     [PXCacheName(Messages.CacheNames.Survey)]
     public class Survey : IBqlTable, INotable {
+
+        #region Keys
+        public class PK : PrimaryKeyOf<Survey>.By<surveyID> {
+            public static Survey Find(PXGraph graph, int? surveyID) => FindBy(graph, surveyID);
+            public static Survey FindDirty(PXGraph graph, int? surveyID)
+                => (Survey)PXSelect<Survey, Where<surveyID, Equal<Required<surveyID>>>>.SelectWindowed(graph, 0, 1, surveyID);
+        }
+        public class UK : PrimaryKeyOf<Survey>.By<surveyCD> {
+            public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
+        }
+        #endregion
 
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
@@ -24,24 +36,49 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Survey.surveyCD),
                     typeof(Survey.surveyCD),
-                    typeof(Survey.surveyName))]
+                    typeof(Survey.target),
+                    typeof(Survey.layout),
+                    typeof(Survey.name))]
         [AutoNumber(typeof(SurveySetup.surveyNumberingID), typeof(AccessInfo.businessDate))]
         public virtual string SurveyCD { get; set; }
         #endregion
 
-        #region SurveyName
-        public abstract class surveyName : BqlString.Field<Survey.surveyName> { }
-
+        #region Name
+        public abstract class name : BqlString.Field<Survey.name> { }
         [PXDefault]
         [PXDBString(100, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Survey Name")]
-        public virtual string SurveyName { get; set; }
+        [PXUIField(DisplayName = "Name")]
+        public virtual string Name { get; set; }
+        #endregion
+
+        #region Target
+        public abstract class target : BqlString.Field<target> { }
+        /// <summary>
+        /// Reference to the state the collector record is in   
+        /// </summary>
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SurveyTarget.User)]
+        [PXUIField(DisplayName = "Target")]
+        [SurveyTarget.List]
+        public virtual string Target { get; set; }
+        #endregion
+
+        #region Layout
+        public abstract class layout : BqlString.Field<layout> { }
+        /// <summary>
+        /// Reference to the state the collector record is in   
+        /// </summary>
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SurveyLayout.SinglePage)]
+        [PXUIField(DisplayName = "Layout")]
+        [SurveyLayout.List]
+        public virtual string Layout { get; set; }
         #endregion
 
         #region Active
         public abstract class active : BqlBool.Field<Survey.active> { }
 
-        [PXDBBool()]
+        [PXDBBool]
         [PXUIField(DisplayName = "Active")]
         public virtual bool? Active { get; set; }
         #endregion
@@ -59,47 +96,28 @@ namespace PX.Survey.Ext {
 
         #endregion
 
-        #region TemplateNotificationID
+        #region Template
+        public abstract class template : BqlString.Field<template> { }
+        [PXDBLocalizableString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Template")]
+        public virtual string Template { get; set; }
 
-        public abstract class templateNotificationID : PX.Data.BQL.BqlInt.Field<templateNotificationID> { }
-
-        [PXDBInt]
-        [PXDefault]
-        [PXSelector(typeof(Notification.notificationID),
-            DescriptionField = typeof(Notification.name), ValidateValue = true)]
-        [PXUIField(DisplayName = "Template Notification ID")]
-        public int? TemplateNotificationID { get; set; }
-
-        #endregion
-
-        #region Body
-        public abstract class body : PX.Data.BQL.BqlString.Field<body> { }
-
-        [PXString(IsUnicode = true)]
-        [PXUIField(DisplayName = "Web Survey Body")]
-        public virtual String Body { get; set; }
         #endregion
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
-        [PXNote()]
+        [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
 
-        #region LineCntr
-        public abstract class lineCntr : BqlInt.Field<lineCntr> { }
-        [PXDBInt()]
-        [PXDefault(0)]
-        public virtual Int32? LineCntr { get; set; }
-        #endregion
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<Survey.createdByID> { }
-        [PXDBCreatedByID()]
+        [PXDBCreatedByID]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
         public abstract class createdByScreenID : BqlString.Field<Survey.createdByScreenID> { }
-        [PXDBCreatedByScreenID()]
+        [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
@@ -110,12 +128,12 @@ namespace PX.Survey.Ext {
         #endregion
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<Survey.lastModifiedByID> { }
-        [PXDBLastModifiedByID()]
+        [PXDBLastModifiedByID]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
         public abstract class lastModifiedByScreenID : BqlString.Field<Survey.lastModifiedByScreenID> { }
-        [PXDBLastModifiedByScreenID()]
+        [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime
@@ -127,7 +145,7 @@ namespace PX.Survey.Ext {
         #region tstamp
         public abstract class Tstamp : BqlByteArray.Field<Tstamp> { }
         [PXDBTimestamp]
-        public virtual Byte[] tstamp { get; set; }
+        public virtual byte[] tstamp { get; set; }
         #endregion
 
         #region SurveyIDStringID
@@ -143,7 +161,7 @@ namespace PX.Survey.Ext {
         /// Field to identify if Survey is in use
         /// </summary>
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXBool()]
+        [PXBool]
         public virtual bool? IsSurveyInUse { get; set; }
         #endregion
     }

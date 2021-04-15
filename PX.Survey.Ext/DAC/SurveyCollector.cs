@@ -1,5 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CR;
 using System;
 
@@ -13,9 +14,17 @@ namespace PX.Survey.Ext {
     [PXPrimaryGraph(typeof(SurveyCollectorMaint))]
     public class SurveyCollector : IBqlTable, INotable {
 
+        #region Keys
+        public class PK : PrimaryKeyOf<SurveyCollector>.By<collectorID> {
+            public static SurveyCollector Find(PXGraph graph, int? collectorID) => FindBy(graph, collectorID);
+        }
+        public static class FK {
+            public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyCollector>.By<collectorID> { }
+        }
+        #endregion
+
         #region Selected
         public abstract class selected : BqlBool.Field<selected> { }
-
         /// <summary>
         /// Selected
         /// </summary>
@@ -31,19 +40,18 @@ namespace PX.Survey.Ext {
         /// Uniquely Identifies this Collector record.
         /// </summary>
         [PXDBIdentity(IsKey = true)]
-        [PXUIField(DisplayName = "Collector ID", Visible = false)]
         [PXSelector(typeof(Search<SurveyCollector.collectorID>))]
         public virtual int? CollectorID { get; set; }
         #endregion
 
-        #region CollectorName
-        public abstract class collectorName : BqlInt.Field<collectorName> { }
+        #region Name
+        public abstract class name : BqlInt.Field<name> { }
         /// <summary>
         /// Name of this Collector record.
         /// </summary>
         [PXDBString(60, IsUnicode = true)]
-        [PXUIField(DisplayName = "Collector", Enabled = false)]
-        public virtual string CollectorName { get; set; }
+        [PXUIField(DisplayName = "Name", Enabled = false)]
+        public virtual string Name { get; set; }
         #endregion
 
         #region SurveyID
@@ -51,29 +59,38 @@ namespace PX.Survey.Ext {
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
-        [PXUIField(DisplayName = "Survey ID", Enabled = false)]
-        [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
-                    typeof(Survey.surveyCD),
-                    typeof(Survey.surveyName),
-            SubstituteKey = typeof(Survey.surveyCD),
-            DescriptionField = typeof(Survey.surveyName))]
         [PXDBInt]
+        [PXDBDefault(typeof(Survey.surveyID), DefaultForUpdate = false)]
+        [PXParent(typeof(FK.SUSurvey))]
+        [PXUIField(DisplayName = "Survey ID", Enabled = false)]
+        [PXSelector(typeof(Search<Survey.surveyID>),
+                    typeof(Survey.surveyCD),
+                    typeof(Survey.target),
+                    typeof(Survey.layout),
+                    typeof(Survey.name),
+            SubstituteKey = typeof(Survey.surveyCD),
+            DescriptionField = typeof(Survey.name))]
         public virtual int? SurveyID { get; set; }
         #endregion
 
-        #region UserID
-        public abstract class userID : BqlGuid.Field<userID> { }
+        #region UserLineNbr
+        public abstract class userLineNbr : BqlInt.Field<userLineNbr> { }
+        [PXDBInt]
+        [PXDBDefault(typeof(SurveyUser.lineNbr), DefaultForUpdate = false)]
+        [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
+        public virtual int? UserLineNbr { get; set; }
+        #endregion
 
+        #region Token
+        public abstract class token : BqlInt.Field<token> { }
         /// <summary>
-        /// Identifies the user that this Collector is assigned too.
+        /// Collector Token is a opaque bearer token used in lue of the Collector ID as to
+        /// make guessing one improbable
         /// </summary>
-        [PXDBGuid()]
-        [PXUIField(DisplayName = "Recipient", Enabled = false)]
-        [PXSelector(typeof(Search<Contact.userID, Where<Contact.userID, IsNotNull,
-                                And<Contact.isActive, Equal<True>,
-                                And<Contact.contactType, Equal<ContactTypesAttribute.employee>>>>>),
-                    DescriptionField = typeof(Contact.displayName))]
-        public virtual Guid? UserID { get; set; }
+        [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
+        [PXUIField(DisplayName = "Token", IsReadOnly = true)]
+        [PXDefault]
+        public virtual string Token { get; set; }
         #endregion
 
         #region CollectedDate
@@ -96,17 +113,31 @@ namespace PX.Survey.Ext {
         public virtual DateTime? ExpirationDate { get; set; }
         #endregion
 
-        #region CollectorStatus
-        public abstract class collectorStatus : BqlString.Field<collectorStatus> { }
+        #region Status
+        public abstract class status : BqlString.Field<status> { }
         /// <summary>
         /// Reference to the state the collector record is in   
         /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
-        [PXDefault(SurveyResponseStatus.CollectorNew)]
-        [PXUIField(DisplayName = "Collector Status", Enabled = false)]
-        [SurveyResponseStatus.List]
-        public virtual string CollectorStatus { get; set; }
+        [PXDefault(CollectorStatus.New)]
+        [PXUIField(DisplayName = "Status", Enabled = false)]
+        [CollectorStatus.List]
+        public virtual string Status { get; set; }
+        #endregion
 
+        #region Rendered
+        public abstract class rendered : BqlString.Field<rendered> { }
+        [PXDBLocalizableString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
+        public virtual string Rendered { get; set; }
+        #endregion
+
+        #region Message
+        public abstract class message : BqlString.Field<message> { }
+        [PXDBText]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Processing Message", Enabled = false)]
+        public virtual string Message { get; set; }
         #endregion
 
         #region NoteID
@@ -132,7 +163,7 @@ namespace PX.Survey.Ext {
         /// <summary>
         /// Specifies the date part that the Survey was collected
         /// </summary>
-        [PXString()]
+        [PXString]
         [PXUIField(DisplayName = "Collected Date Mobile", Enabled = false)]
         [PXFormula(typeof(CollectedDateAsString<SurveyCollector.collectedDate>))]
         public virtual String CollectedDatePart { get; set; }
@@ -140,12 +171,12 @@ namespace PX.Survey.Ext {
 
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }
-        [PXDBCreatedByID()]
+        [PXDBCreatedByID]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
         public abstract class createdByScreenID : BqlString.Field<createdByScreenID> { }
-        [PXDBCreatedByScreenID()]
+        [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
@@ -156,12 +187,12 @@ namespace PX.Survey.Ext {
         #endregion
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
-        [PXDBLastModifiedByID()]
+        [PXDBLastModifiedByID]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
         public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
-        [PXDBLastModifiedByScreenID()]
+        [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime

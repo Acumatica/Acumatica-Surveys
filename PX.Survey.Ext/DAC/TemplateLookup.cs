@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PX.Survey.Ext {
 
-    public class RecipientLookup<RowToSelect, RowFilter> : PXSelectBase<RowToSelect>
+    public class TemplateLookup<RowToSelect, RowFilter> : PXSelectBase<RowToSelect>
         where RowToSelect : class, IBqlTable, IPXSelectable, new()
         where RowFilter : class, IBqlTable, new() {
 
@@ -14,13 +14,13 @@ namespace PX.Survey.Ext {
 
         private PXView intView;
 
-        public RecipientLookup(PXGraph graph) {
+        public TemplateLookup(PXGraph graph) {
             Type[] typeArray = new Type[] { BqlCommand.Compose(new Type[] { typeof(Select<>), typeof(RowToSelect) }) };
             View = new PXView(graph, false, BqlCommand.CreateInstance(typeArray), new PXSelectDelegate(viewHandler));
             InitHandlers(graph);
         }
 
-        public RecipientLookup(PXGraph graph, Delegate handler) {
+        public TemplateLookup(PXGraph graph, Delegate handler) {
             View = new PXView(graph, false, BqlCommand.CreateInstance(new Type[] { typeof(Select<>), typeof(RowToSelect) }), handler);
             InitHandlers(graph);
         }
