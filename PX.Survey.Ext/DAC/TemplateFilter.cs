@@ -9,7 +9,7 @@ namespace PX.Survey.Ext {
         #region TemplateType
         public abstract class templateType : BqlString.Field<templateType> { }
         [PXString(2, IsFixed = true)]
-        [TemplateType.List]
+        [SUTemplateType.List]
         [PXUIField(DisplayName = "Template Type")]
         public virtual string TemplateType { get; set; }
         #endregion

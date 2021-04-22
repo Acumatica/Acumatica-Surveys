@@ -20,6 +20,9 @@ namespace PX.Survey.Ext {
         public class UK : PrimaryKeyOf<Survey>.By<surveyCD> {
             public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
         }
+        public static class FK {
+            public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<SurveyDetail>.By<templateID> { }
+        }
         #endregion
 
         #region SurveyID
@@ -72,6 +75,18 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Layout")]
         [SurveyLayout.List]
         public virtual string Layout { get; set; }
+        #endregion
+
+        #region TemplateID
+        public abstract class templateID : BqlInt.Field<templateID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Template")]
+        [PXDefault]
+        [PXForeignReference(typeof(FK.SUSurveyTemplate))]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? TemplateID { get; set; }
         #endregion
 
         #region Active

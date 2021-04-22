@@ -61,13 +61,22 @@ namespace PX.Survey.Ext {
         public virtual int? PageNbr { get; set; }
         #endregion
 
+        #region TemplateType
+        public abstract class templateType : BqlString.Field<templateType> { }
+        [PXDBString(2, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SUTemplateType.QuestionPage)]
+        [PXUIField(DisplayName = "Template Type")]
+        [SUTemplateType.List]
+        public virtual string TemplateType { get; set; }
+        #endregion
+
         #region TemplateID
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBInt]
         [PXUIField(DisplayName = "Template")]
         [PXDefault]
         [PXForeignReference(typeof(FK.SUSurveyTemplate))]
-        [PXSelector(typeof(SurveyTemplate.templateID), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description), typeof(SurveyTemplate.subject) },
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<Current<templateType>>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
         public virtual int? TemplateID { get; set; }
@@ -80,49 +89,40 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
 
-        #region TemplateType
-        public abstract class templateType : BqlString.Field<templateType> { }
-        [PXString(2, IsUnicode = false, IsFixed = true)]
-        [PXUIField(DisplayName = "Template Type", Enabled = false)]
-        [TemplateType.List]
-        [PXFormula(typeof(Selector<templateID, SurveyTemplate.templateType>))]
-        public virtual string TemplateType { get; set; }
-        #endregion
-
         #region NoteID
-        public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
+        public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
 
         #region CreatedByID
-        public abstract class createdByID : BqlGuid.Field<Survey.createdByID> { }
+        public abstract class createdByID : BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
         #region CreatedByScreenID
-        public abstract class createdByScreenID : BqlString.Field<Survey.createdByScreenID> { }
+        public abstract class createdByScreenID : BqlString.Field<createdByScreenID> { }
         [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
         #region CreatedDateTime
-        public abstract class createdDateTime : BqlDateTime.Field<Survey.createdDateTime> { }
+        public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
         [PXDBCreatedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Created Date Time", Enabled = false)]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
         #region LastModifiedByID
-        public abstract class lastModifiedByID : BqlGuid.Field<Survey.lastModifiedByID> { }
+        public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
         [PXDBLastModifiedByID]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
         #region LastModifiedByScreenID
-        public abstract class lastModifiedByScreenID : BqlString.Field<Survey.lastModifiedByScreenID> { }
+        public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
         [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
         #region LastModifiedDateTime
-        public abstract class lastModifiedDateTime : BqlDateTime.Field<Survey.lastModifiedDateTime> { }
+        public abstract class lastModifiedDateTime : BqlDateTime.Field<lastModifiedDateTime> { }
         [PXDBLastModifiedDateTime(InputMask = "g", DisplayMask = "g")]
         [PXUIField(DisplayName = "Last Modified Date Time", Enabled = false)]
         public virtual DateTime? LastModifiedDateTime { get; set; }

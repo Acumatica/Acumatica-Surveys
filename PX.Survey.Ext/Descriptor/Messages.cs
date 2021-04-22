@@ -40,7 +40,8 @@ namespace PX.Survey.Ext {
             public const string Device = "Device";
         }
 
-        public class TemplateType {
+        public class SUTemplateType {
+            public const string Survey = "Survey";
             public const string Header = "Header";
             public const string PageHeader = "Page Header";
             public const string QuestionPage = "Question";

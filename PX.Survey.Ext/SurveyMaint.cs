@@ -12,8 +12,8 @@ namespace PX.Survey.Ext {
 
         public SelectFrom<Survey>.View Survey;
 
-        [PXViewName(Objects.CR.Messages.Attributes)]
-        public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Questions;
+        //[PXViewName(Objects.CR.Messages.Attributes)]
+        //public CSAttributeGroupList<Survey.surveyID, SurveyCollector> Questions;
 
         public SurveyDetailSelect Details;
 
@@ -81,12 +81,13 @@ namespace PX.Survey.Ext {
 
         #region TemplateSelected Lookup
         public PXFilter<TemplateFilter> templatefilter;
+
         [PXFilterable]
         [PXCopyPasteHiddenView]
         public TemplateLookup<TemplateSelected, TemplateFilter> templates;
 
         public PXAction<Survey> addTemplates;
-        [PXUIField(DisplayName = "Add Templates", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = "Add Pages", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
         public virtual IEnumerable AddTemplates(PXAdapter adapter) {
             if (templatefilter.Current == null) {
@@ -108,6 +109,7 @@ namespace PX.Survey.Ext {
                 if (template.Selected == true) {
                     var surveyDetail = new SurveyDetail();
                     surveyDetail.SurveyID = Survey.Current.SurveyID;
+                    surveyDetail.TemplateType = template.TemplateType;
                     surveyDetail.Description = template.Description;
                     surveyDetail.TemplateID = template.TemplateID;
                     Details.Update(surveyDetail);
@@ -133,9 +135,9 @@ namespace PX.Survey.Ext {
             if (row == null) { return; }
             bool unlockedSurvey = !(row.IsSurveyInUse == true);
             e.Cache.AllowDelete = unlockedSurvey;
-            Questions.Cache.AllowUpdate = unlockedSurvey;
-            Questions.Cache.AllowInsert = unlockedSurvey;
-            Questions.Cache.AllowDelete = unlockedSurvey;
+            //Questions.Cache.AllowUpdate = unlockedSurvey;
+            //Questions.Cache.AllowInsert = unlockedSurvey;
+            //Questions.Cache.AllowDelete = unlockedSurvey;
             //PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);

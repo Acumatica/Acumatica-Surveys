@@ -21,7 +21,7 @@ namespace PX.Survey.Ext {
 
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBIdentity(IsKey = true)]
-        [PXSelector(typeof(templateID), new Type[] { typeof(templateID), typeof(subject) }, DescriptionField = typeof(description))]
+        [PXSelector(typeof(templateID), new Type[] { typeof(templateID) }, DescriptionField = typeof(description))]
         [PXUIField(DisplayName = "Template ID")]
         public virtual int? TemplateID { get; set; }
 
@@ -48,7 +48,7 @@ namespace PX.Survey.Ext {
         [PXDBString(2, IsUnicode = false, IsFixed = true)]
         [PXDefault]
         [PXUIField(DisplayName = "Template Type")]
-        [TemplateType.List]
+        [SUTemplateType.List]
         public virtual string TemplateType { get; set; }
         #endregion
 
@@ -58,9 +58,9 @@ namespace PX.Survey.Ext {
         [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXSelector(typeof(CSAttribute.attributeID), DescriptionField = typeof(CSAttribute.description))]
         [PXUIField(DisplayName = "Answer Meta")]
-        [PXUIVisible(typeof(Where<templateType, Equal<TemplateType.questionPage>>))]
-        [PXUIEnabled(typeof(Where<templateType, Equal<TemplateType.questionPage>>))]
-        [PXUIRequired(typeof(Where<templateType, Equal<TemplateType.questionPage>>))]
+        [PXUIVisible(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
+        [PXUIEnabled(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
+        [PXUIRequired(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
         public virtual string AttributeID { get; set; }
         #endregion
 
@@ -70,10 +70,10 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
 
-        public abstract class subject : BqlString.Field<subject> { }
-        [PXDBLocalizableString(255, InputMask = "", IsUnicode = true)]
-        [PXUIField(DisplayName = "Subject", Visibility = PXUIVisibility.SelectorVisible)]
-        public virtual string Subject { get; set; }
+        //public abstract class subject : BqlString.Field<subject> { }
+        //[PXDBLocalizableString(255, InputMask = "", IsUnicode = true)]
+        //[PXUIField(DisplayName = "Subject", Visibility = PXUIVisibility.SelectorVisible)]
+        //public virtual string Subject { get; set; }
 
         public abstract class body : BqlString.Field<body> { }
         [PXDBText(IsUnicode = true)]
