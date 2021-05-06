@@ -3,16 +3,17 @@ using PX.Data.BQL;
 
 namespace PX.Survey.Ext {
 
-    public class TemplateType {
+    public class SUTemplateType {
         public class ListAttribute : PXStringListAttribute {
             public ListAttribute() : base(
-                new[] { Header, PageHeader, QuestionPage,
+                new[] { Survey, Header, PageHeader, QuestionPage,
                     ContentPage, PageFooter, Footer },
-                new[] { Messages.TemplateType.Header, Messages.TemplateType.PageHeader,
-                    Messages.TemplateType.QuestionPage, Messages.TemplateType.ContentPage, 
-                    Messages.TemplateType.PageFooter, Messages.TemplateType.Footer}) { }
+                new[] { Messages.SUTemplateType.Survey, Messages.SUTemplateType.Header, Messages.SUTemplateType.PageHeader,
+                    Messages.SUTemplateType.QuestionPage, Messages.SUTemplateType.ContentPage, 
+                    Messages.SUTemplateType.PageFooter, Messages.SUTemplateType.Footer}) { }
         }
 
+        public const string Survey = "SU";
         public const string Header = "HE";
         public const string PageHeader = "PH";
         public const string QuestionPage = "QU";
@@ -20,6 +21,7 @@ namespace PX.Survey.Ext {
         public const string PageFooter = "PF";
         public const string Footer = "FO";
 
+        public class survey : BqlString.Constant<survey> { public survey() : base(Survey) { } }
         public class header : BqlString.Constant<header> { public header() : base(Header) { } }
         public class pageHeader : BqlString.Constant<pageHeader> { public pageHeader() : base(PageHeader) { } }
         public class questionPage : BqlString.Constant<questionPage> { public questionPage() : base(QuestionPage) { } }

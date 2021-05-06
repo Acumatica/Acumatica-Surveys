@@ -15,30 +15,31 @@ using System.Web.Http;
 
 namespace PX.Survey.Ext.WebHook {
     public class SurveyWebhookServerHandler : IWebhookHandler {
-        private NameValueCollection _queryParameters;
-        private const string cCollectorToken = "CollectorToken";
-        private const string cMode = "Mode";
-        private const string cGetSurveyMode = "GetSurvey";
-        private const string cSubmitSurveyMode = "SubmitSurvey";
+
+        private const string TOKEN_PARAM = "CollectorToken";
+        private const string MODE_PARAM = "Mode";
+        private const string PAGE_PARAM = "Page";
+        private const string GetSurvey_PARAM = "GetSurvey";
+        private const string SubmitSurvey_PARAM = "SubmitSurvey";
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
             using (var scope = GetUserScope()) {
-                _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
-                //when we get into anonymous surveys we will likely point to a get a Survey ID for those as the collector will not yet exist 
-                if (!_queryParameters.AllKeys.Contains(cCollectorToken))
-                    throw new Exception($"The {cCollectorToken} Parameter was not specified in the Query String");
-                var collectorToken = _queryParameters[cCollectorToken];
-                var sMode = !_queryParameters.AllKeys.Contains(cMode)
-                    ? "GetSurvey"
-                    : _queryParameters[cMode];
+                var _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
+                var collectorToken = _queryParameters.Get(TOKEN_PARAM);
+                if (string.IsNullOrEmpty(collectorToken)) { 
+                    throw new Exception($"The {TOKEN_PARAM} Parameter was not specified in the Query String");
+                }
+                var sMode = _queryParameters[MODE_PARAM] ?? GetSurvey_PARAM;
                 string htmlResponse;
                 switch (sMode) {
-                    case cGetSurveyMode:
-                        htmlResponse = GetSurvey(collectorToken);
+                    case GetSurvey_PARAM:
+                        var page = _queryParameters.Get(PAGE_PARAM);
+                        var pageNbr = GetPageNumber(page);
+                        htmlResponse = GetSurveyPage(collectorToken, pageNbr);
                         break;
-                    case cSubmitSurveyMode:
+                    case SubmitSurvey_PARAM:
                         htmlResponse = SubmitSurvey(collectorToken, request);
                         break;
                     default:
@@ -51,6 +52,13 @@ namespace PX.Survey.Ext.WebHook {
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
                 return new HtmlActionResult(htmlResponse);
             }
+        }
+
+        private static int GetPageNumber(string page) {
+            if (string.IsNullOrEmpty(page) || !int.TryParse(page, out int pageNbr)) {
+                return 0;
+            }
+            return pageNbr;
         }
 
         private string ReturnModeNotRecognized(string sMode) {
@@ -88,7 +96,7 @@ Thank You Your Submitted your answer was {1}
 </body>
 </html>
 ";
-            return string.Format(view, collectorToken, body, cCollectorToken);
+            return string.Format(view, collectorToken, body, TOKEN_PARAM);
         }
 
         //public static string GetIPAddress(HttpRequestMessage request) {
@@ -116,7 +124,7 @@ Thank You Your Submitted your answer was {1}
             graph.Persist();
         }
 
-        private string GetSurvey(string collectorToken) {
+        private string GetSurveyPage(string collectorToken, int pageNbr) {
             //todo: We will need to dig into the HTML attributes needed to send the results directly to the URi we need to go to 
             //      We should also be able to find flags to send the answers in the body as opposed to Query parameters which 
             //      I believe this will do.
@@ -127,7 +135,7 @@ Thank You Your Submitted your answer was {1}
             var listningEndPoint = "https://desktop-vm0inj5/SUV20_104_0012/Webhooks/Company/176e3e36-c871-4827-810a-ccd04e6177e3";
             //todo: if the survey has already been awnsered or expired for this collector we need to pass back an alternate to indicate so to the 
             //      user who  clicked the link.
-            var submitUrl = $"{listningEndPoint}?{cCollectorToken}={collectorToken}&{cMode}={cSubmitSurveyMode}";
+            var submitUrl = $"{listningEndPoint}?{TOKEN_PARAM}={collectorToken}&{MODE_PARAM}={SubmitSurvey_PARAM}";
             //todo: Theoretically this html template below would be stored on and configurable on the 
             //      survey record itself. it could then be modified as needed to bedizen it up to its
             //      fullest potential via anything that can be done with HTML5

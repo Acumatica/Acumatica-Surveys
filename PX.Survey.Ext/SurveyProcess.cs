@@ -49,9 +49,9 @@ namespace PX.Survey.Ext {
                 switch (action) {
                     //note: the or clauses below are intended to preserve a previous error indicator and not let 
                     //      successive iterations override a previous error detection.
-                    case SurveyAction.RenderOnly:
-                        errorOccurred = Render(graph, generator, survey, filter) || errorOccurred;
-                        break;
+                    //case SurveyAction.RenderOnly:
+                    //    errorOccurred = Render(graph, generator, survey, filter) || errorOccurred;
+                    //    break;
                     case SurveyAction.ProcessAnswers:
                         errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
                         break;
@@ -441,7 +441,7 @@ namespace PX.Survey.Ext {
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
         [PXInt]
-        [PXDefault]
+        [PXUnboundDefault]
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
                     typeof(Survey.surveyCD),

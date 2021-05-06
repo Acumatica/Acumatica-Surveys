@@ -8,8 +8,9 @@ namespace PX.Survey.Ext {
     [PXCacheName("TemplateSelected")]
     [PXProjection(typeof(Select<SurveyTemplate,
         Where<SurveyTemplate.active, Equal<True>,
+        And<SurveyTemplate.templateType, NotEqual<SUTemplateType.survey>,
         And<Where<CurrentValue<TemplateFilter.templateType>, IsNull,
-            Or<SurveyTemplate.templateType, Equal<CurrentValue<TemplateFilter.templateType>>>>>>,
+            Or<SurveyTemplate.templateType, Equal<CurrentValue<TemplateFilter.templateType>>>>>>>,
         OrderBy<Asc< SurveyTemplate.description>>>))]
     public class TemplateSelected : IBqlTable, IPXSelectable {
 
@@ -26,7 +27,7 @@ namespace PX.Survey.Ext {
         public virtual int? TemplateID { get; set; }
 
         [PXDBString(2, IsFixed = true, BqlField = typeof(SurveyTemplate.templateType))]
-        [TemplateType.List]
+        [SUTemplateType.List]
         [PXUIField(DisplayName = "Type", Enabled = false, Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string TemplateType { get; set; }
 
