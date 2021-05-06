@@ -146,7 +146,9 @@ namespace PX.Survey.Ext {
             //COVSYMPTOM=YES&COVCONTACT=YES&COVTEMP=103&COVTRAVEL=New+York
             var answers = new List<CSAnswers>();
             foreach (var kvp in dict) {
-                var attrID = kvp.Key;
+                var templateID = kvp.Key;
+                var template = GetTemplate(templateID);
+                var attrID = template.AttributeID;
                 var value = kvp.Value;
                 var question = questions.FirstOrDefault(qu => qu.AttributeID == attrID);
                 if (question == null) {
@@ -159,6 +161,10 @@ namespace PX.Survey.Ext {
                 answers.Add(answer);
             }
             SurveyUtils.InstallAnswers(graph, collector, answers);
+        }
+
+        private static SurveyTemplate GetTemplate(string templateID) {
+            throw new NotImplementedException();
         }
 
         /// <summary>
