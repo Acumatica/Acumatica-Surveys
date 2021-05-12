@@ -97,9 +97,8 @@ namespace PX.Survey.Ext {
         }
 
 
-        // TODO
         private IEnumerable<SurveyDetail> SelectPages(Survey survey, IEnumerable<SurveyDetail> allPages, int pageNbr) {
-            return allPages;
+            return allPages.Where(pa => pa.PageNbr == pageNbr).OrderBy(pa => pa.SortOrder.Value);
         }
 
         //private TemplateContext GetContext(Survey survey, SurveyUser user, IEnumerable<SurveyDetail> questions, int pageNbr) {
