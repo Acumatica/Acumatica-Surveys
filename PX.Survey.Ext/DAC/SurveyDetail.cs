@@ -89,6 +89,14 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
 
+        #region AttributeID
+        public abstract class attributeID : BqlString.Field<attributeID> { }
+        [PXString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXFormula(typeof(Selector<templateID, SurveyTemplate.attributeID>))]
+        [PXUIField(DisplayName = "Answer Meta")]
+        public virtual string AttributeID { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
