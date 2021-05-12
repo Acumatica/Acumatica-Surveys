@@ -1,6 +1,7 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Data.ReferentialIntegrity.Attributes;
+using PX.Objects.CA;
 using PX.Objects.CR;
 using System;
 
@@ -81,15 +82,26 @@ namespace PX.Survey.Ext {
         public virtual int? UserLineNbr { get; set; }
         #endregion
 
+        public abstract class isEncrypted : BqlBool.Field<isEncrypted> { }
+        [PXDBBool]
+        [PXDefault(false)]
+        public virtual bool? IsEncrypted { get; set; }
+
+        public abstract class isEncryptionRequired : BqlBool.Field<isEncryptionRequired> { }
+        [PXDBBool]
+        [PXDefault(false)]
+        public virtual bool? IsEncryptionRequired { get; set; }
+
         #region Token
         public abstract class token : BqlInt.Field<token> { }
         /// <summary>
-        /// Collector Token is a opaque bearer token used in lieu of the Collector ID as to
-        /// make guessing one improbable
+        /// Collector Token is a opaque bearer token used in lieu of the Collector ID as to make guessing one improbable
         /// </summary>
-        [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
+        [PXDBDefault(typeof(collectorID))]
+        [PXRSACryptStringWithConditional(255, typeof(isEncryptionRequired), typeof(isEncrypted))]
+        //[PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
         [PXUIField(DisplayName = "Token", IsReadOnly = true)]
-        [PXDefault]
+        //[PXDefault]
         public virtual string Token { get; set; }
         #endregion
 
