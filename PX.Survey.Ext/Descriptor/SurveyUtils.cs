@@ -81,8 +81,8 @@ namespace PX.Survey.Ext {
         //}
 
         public static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {
-            return PXSelect<CSAttributeDetail, 
-                Where<CSAttributeDetail.attributeID, Equal<Required<CSAttributeDetail.attributeID>>, 
+            return PXSelect<CSAttributeDetail,
+                Where<CSAttributeDetail.attributeID, Equal<Required<CSAttributeDetail.attributeID>>,
                 And<CSAttributeDetail.disabled, NotEqual<True>>>>.Select(graph, new object[] { attributeId }).FirstTableItems;
         }
 
@@ -181,6 +181,22 @@ namespace PX.Survey.Ext {
         private static Type GetEntityTypeFromAttribute(PXGraph graph, object row) {
             var classIdField = GetClassIdField(graph, row);
             return classIdField?.DeclaringType;
+        }
+
+        public static bool HasLetter(string value) {
+            return !string.IsNullOrEmpty(value) && value.Any(char.IsLetter);
+        }
+
+        public static bool IsOnlyDigit(string value) {
+            return !string.IsNullOrEmpty(value) && value.All(char.IsDigit);
+        }
+
+        public static bool HasDigit(string value) {
+            return !string.IsNullOrEmpty(value) && value.Any(char.IsDigit);
+        }
+
+        public static bool IsGuid(string value) {
+            return !string.IsNullOrEmpty(value) && Guid.TryParse(value, out var fieldGuid);
         }
     }
 }

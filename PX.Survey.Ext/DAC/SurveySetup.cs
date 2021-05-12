@@ -2,6 +2,7 @@
 using PX.Data.BQL;
 using PX.Objects.CS;
 using System;
+using PX.Objects.CR;
 
 namespace PX.Survey.Ext {
 
@@ -19,11 +20,33 @@ namespace PX.Survey.Ext {
         public virtual string SurveyNumberingID { get; set; }
         #endregion
 
-        #region DemoSurvey
-        public abstract class demoSurvey : BqlBool.Field<demoSurvey> { }
-        [PXDBBool]
-        [PXUIField(DisplayName = "Created Demo Survey", Enabled = false)]
-        public virtual bool? DemoSurvey { get; set; }
+        //#region DemoSurvey
+        //public abstract class demoSurvey : BqlBool.Field<demoSurvey> { }
+        //[PXDBBool]
+        //[PXUIField(DisplayName = "Created Demo Survey", Enabled = false)]
+        //public virtual bool? DemoSurvey { get; set; }
+        //#endregion
+
+        #region TemplateID
+        public abstract class templateID : BqlInt.Field<templateID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Bad Request Template")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.badRequest>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? TemplateID { get; set; }
+        #endregion
+
+        #region ContactID
+        public abstract class contactID : BqlInt.Field<contactID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Sample Contact")]
+        [PXSelector(typeof(Search<Contact.contactID,
+                            Where<Contact.contactType, Equal<ContactTypesAttribute.employee>,
+                            And<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>>),
+                    DescriptionField = typeof(Contact.displayName))]
+        public virtual int? ContactID { get; set; }
         #endregion
 
         #region NoteID

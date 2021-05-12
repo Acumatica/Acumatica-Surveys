@@ -18,7 +18,36 @@ namespace PX.Survey.Ext {
             this.graph = graph;
         }
 
-        public string GenerateSurvey(Survey survey, SurveyUser user, int pageNbr) {
+        public string GenerateBadRequestPage(string message) {
+            var setup = graph.SurveySetup.Current;
+            var pageTemplate = SurveyTemplate.PK.Find(graph, setup.TemplateID);
+            var template = Template.Parse(pageTemplate.Body);
+            var context = new TemplateContext();
+            var container = new ScriptObject {
+                //{"Survey", survey},
+                //{"User", user},
+                //{"ContentList", content},
+                //{"Content", string.Join("\n", content)},
+                {"Message", message},
+            };
+            //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
+            //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
+            context.PushGlobal(container);
+            var rendered = template.Render(context);
+            return rendered;
+        }
+
+        public string GenerateSurveyPage(string token, int pageNbr) {
+            (var survey, var user) = GetSurveyAndUser(token);
+            return GenerateSurveyPage(survey, user, pageNbr);
+        }
+
+        private (Survey survey, SurveyUser user) GetSurveyAndUser(string token) {
+            // TODO
+            throw new System.NotImplementedException();
+        }
+
+        public string GenerateSurveyPage(Survey survey, SurveyUser user, int pageNbr) {
             graph.Survey.Current = survey;
             var mainTemplateID = survey.TemplateID;
             var mainTemplate = SurveyTemplate.PK.Find(graph, mainTemplateID);

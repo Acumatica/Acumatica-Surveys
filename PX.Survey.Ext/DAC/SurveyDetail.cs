@@ -66,7 +66,7 @@ namespace PX.Survey.Ext {
         [PXDBString(2, IsUnicode = false, IsFixed = true)]
         [PXDefault(SUTemplateType.QuestionPage)]
         [PXUIField(DisplayName = "Template Type")]
-        [SUTemplateType.List]
+        [SUTemplateType.DetailList]
         public virtual string TemplateType { get; set; }
         #endregion
 

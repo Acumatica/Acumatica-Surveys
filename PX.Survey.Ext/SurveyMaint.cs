@@ -6,6 +6,7 @@ using PX.Objects.CR;
 using PX.Objects.CS;
 using System.Collections;
 using System.Linq;
+using System.Text;
 
 namespace PX.Survey.Ext {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
@@ -119,6 +120,63 @@ namespace PX.Survey.Ext {
             return adapter.Get();
         }
         #endregion
+
+        public PXAction<Survey> generateSample;
+        [PXUIField(DisplayName = "Generate Sample", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXLookupButton]
+        public virtual IEnumerable GenerateSample(PXAdapter adapter) {
+            var list = adapter.Get<Survey>().ToList();
+            Save.Press();
+            var graph = CreateInstance<SurveyMaint>();
+            foreach (var survey in list) {
+                var row = PXCache<Survey>.CreateCopy(survey);
+                var user = graph.GenerateSampleUser(row);
+                graph.DoGenerateSample(row, user);
+            }
+            return adapter.Get();
+        }
+
+        private void DoGenerateSample(Survey survey, SurveyUser user) {
+            var pages = GetPageNumbers(survey);
+            var generator = new SurveyGenerator();
+            foreach (var pageNbr in pages) {
+                var pageContent = generator.GenerateSurveyPage(survey, user, pageNbr);
+                SaveContentToAttachment($"Survey-{survey.SurveyID.Value}-Page-{pageNbr}.html", pageContent);
+            }
+            Actions.PressSave();
+        }
+
+        public int[] GetPageNumbers(Survey survey) {
+            Survey.Current = survey;
+            var details = Details.Select().
+                FirstTableItems.
+                Where(pd => pd.PageNbr != null && pd.PageNbr > 0);
+            var pages = details.
+                Select(sd => sd.PageNbr.Value).
+                Distinct().OrderBy(pageNbr => pageNbr).ToArray();
+            return pages;
+        }
+
+        private void SaveContentToAttachment(string name, string content) {
+            var bytes = Encoding.UTF8.GetBytes(content);
+            var file = new SM.FileInfo(name, null, bytes);
+            var fm = CreateInstance<SM.UploadFileMaintenance>();
+            fm.SaveFile(file, SM.FileExistsAction.CreateVersion);
+            PXNoteAttribute.SetFileNotes(Survey.Cache, Survey.Current, file.UID.Value);
+        }
+
+        private SurveyUser GenerateSampleUser(Survey survey) {
+            var setup = SurveySetup.Current;
+            if (!setup.ContactID.HasValue) {
+                throw new PXSetPropertyException(Messages.ContactNotSetup, Messages.SUSetup);
+            }
+            var user = new SurveyUser() {
+                Active = true,
+                ContactID = setup.ContactID,
+                SurveyID = survey.SurveyID
+            };
+            return user;
+        }
 
         protected virtual void _(Events.RowSelecting<Survey> e) {
             Survey row = e.Row;

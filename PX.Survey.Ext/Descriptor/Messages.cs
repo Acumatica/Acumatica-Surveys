@@ -4,6 +4,8 @@ namespace PX.Survey.Ext {
     [PXLocalizable(Prefix)]
     public static class Messages {
         public const string Prefix = "Acumatica Survey";
+        public const string ContactNotSetup = "Sample Contact is not entered in " + SUSetup;
+        public const string SUSetup = "Survey Preferences";
 
         #region CacheNames
         public class CacheNames {
@@ -43,11 +45,12 @@ namespace PX.Survey.Ext {
         public class SUTemplateType {
             public const string Survey = "Survey";
             public const string Header = "Header";
-            public const string StartArea = "Page Header";
+            public const string StartArea = "Start Area";
             public const string QuestionPage = "Question";
             public const string ContentPage = "Content";
-            public const string EndArea = "Page Footer";
+            public const string EndArea = "End Area";
             public const string Footer = "Footer";
+            public const string BadRequest = "Bad Request";
         }
 
         public class SurveyLayout {
