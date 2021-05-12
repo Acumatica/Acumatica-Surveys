@@ -84,7 +84,7 @@ namespace PX.Survey.Ext {
         #region Token
         public abstract class token : BqlInt.Field<token> { }
         /// <summary>
-        /// Collector Token is a opaque bearer token used in lue of the Collector ID as to
+        /// Collector Token is a opaque bearer token used in lieu of the Collector ID as to
         /// make guessing one improbable
         /// </summary>
         [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
