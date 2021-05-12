@@ -24,7 +24,7 @@
                     <Columns>
                         <px:PXGridColumn DataField="TemplateID" Width="60px" />
                         <px:PXGridColumn DataField="Description" Width="120px" />
-                        <px:PXGridColumn DataField="Subject" Width="220px" />
+                        <%--<px:PXGridColumn DataField="Subject" Width="220px" />--%>
                         <%--<px:PXGridColumn DataField="ScreenID" Width="60px"/>--%>
                     </Columns>
                 </GridProperties>
@@ -32,7 +32,9 @@
             <px:PXTextEdit ID="edDescription" runat="server" DataField="Description" AlreadyLocalized="False" DefaultLocale="" />
 			<px:PXDropDown ID="edTemplateType" runat="server" DataField="TemplateType" />
             <px:PXSelector runat="server" ID="edAttributeID" DataField="AttributeID" DataSourceID="ds"/>
-			
+	        <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true"></px:PXLayoutRule>
+            <px:PXCheckBox runat="server" ID="edActive" DataField="Active" CommitChanges="true"></px:PXCheckBox>
+		
             <%--<px:PXSelector ID="edFrom" runat="server" DataField="NFrom" FilterByAllFields="True" DisplayMode="Text" TextMode="Search" />--%>
             <%--			<px:PXTreeSelector ID="edNTo" runat="server" DataField="NTo" 
 				TreeDataSourceID="ds" PopulateOnDemand="True" InitialExpandLevel="0"
