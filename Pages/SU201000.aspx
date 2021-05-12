@@ -14,6 +14,7 @@
             <px:PXDSCallbackCommand Name="AddSelectedTemplates" Visible="False" />
             <px:PXDSCallbackCommand Name="SurveyDetailPasteLine" Visible="False" />
             <px:PXDSCallbackCommand Name="SurveyDetailResetOrder" Visible="False" CommitChanges="true" />
+            <px:PXDSCallbackCommand Name="GenerateSample" Visible="False" />
         </CallbackCommands>
     </px:PXDataSource>
 </asp:Content>
