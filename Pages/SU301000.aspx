@@ -3,13 +3,13 @@
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
 	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-        TypeName="PX.Survey.Ext.SurveyCollectorMaint" PrimaryView="Collector">
+        TypeName="PX.Survey.Ext.SurveyCollectorMaint" PrimaryView="SurveyQuestions">
 		<CallbackCommands>
 		</CallbackCommands>
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="Collector" 
+	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="SurveyQuestions" 
 				   Width="100%" Height="100px" AllowAutoHide="False" TabIndex="100">
 		<Template>
 			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
