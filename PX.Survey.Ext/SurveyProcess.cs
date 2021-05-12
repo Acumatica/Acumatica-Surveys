@@ -77,41 +77,40 @@ namespace PX.Survey.Ext {
         }
 
         private static bool Render(SurveyMaint graph, SurveyGenerator generator, Survey survey, SurveyFilter filter) {
-            var collectors = graph.Collectors.Select().FirstTableItems;
-            var users = graph.Users.Select().FirstTableItems;
-            foreach (var user in users) {
-                var collector = collectors.FirstOrDefault(coll => coll.UserLineNbr == user.LineNbr);
-                if (collector != null && collector.Status != CollectorStatus.New && collector.Status != CollectorStatus.Error) {
-                    continue;
-                }
-                if (collector == null) {
-                    collector = new SurveyCollector {
-                        Name =
-                            $"{survey.Name} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
-                        SurveyID = survey.SurveyID,
-                        UserLineNbr = user.LineNbr,
-                        CollectedDate = null,
-                        ExpirationDate = CalculateExpirationDate(filter.DurationTimeSpan),
-                    };
-                    var inserted = graph.Collectors.Insert(collector);
-                }
-                try {
-                    var surveySays = generator.GenerateSurvey(survey, user);
-                    collector.Rendered = surveySays;
-                    collector.Status = CollectorStatus.Rendered;
-                    collector.Message = null;
-                } catch (Exception ex) {
-                    collector.Status = CollectorStatus.Error;
-                    collector.Message = ex.Message;
-                }
-                var updated = graph.Collectors.Update(collector);
-            }
+            //var collectors = graph.Collectors.Select().FirstTableItems;
+            //var users = graph.Users.Select().FirstTableItems;
+            //foreach (var user in users) {
+            //    var collector = collectors.FirstOrDefault(coll => coll.UserLineNbr == user.LineNbr);
+            //    if (collector != null && collector.Status != CollectorStatus.New && collector.Status != CollectorStatus.Error) {
+            //        continue;
+            //    }
+            //    if (collector == null) {
+            //        collector = new SurveyCollector {
+            //            Name =
+            //                $"{survey.Name} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
+            //            SurveyID = survey.SurveyID,
+            //            UserLineNbr = user.LineNbr,
+            //            CollectedDate = null,
+            //            ExpirationDate = CalculateExpirationDate(filter.DurationTimeSpan),
+            //        };
+            //        var inserted = graph.Collectors.Insert(collector);
+            //    }
+            //    try {
+            //        var surveySays = generator.GenerateSurvey(survey, user);
+            //        collector.Rendered = surveySays;
+            //        collector.Status = CollectorStatus.Rendered;
+            //        collector.Message = null;
+            //    } catch (Exception ex) {
+            //        collector.Status = CollectorStatus.Error;
+            //        collector.Message = ex.Message;
+            //    }
+            //    var updated = graph.Collectors.Update(collector);
+            //}
             return false;
         }
 
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
-            var questions = graph.Questions.Select().FirstTableItems;
             var collectors = graph.Collectors.Select().FirstTableItems;
             var collDataRecs = graph.CollectorDataRecords.Select().FirstTableItems;
             foreach (var collData in collDataRecs) {
@@ -123,7 +122,7 @@ namespace PX.Survey.Ext {
                     throw new PXException(Messages.CollectorNotFound, collData.CollectorID);
                 }
                 try {
-                    DoProcessAnswers(graph, collData, collector, questions);
+                    DoProcessAnswers(graph, collData, collector);
                     collData.Status = CollectorStatus.Rendered;
                     collData.Message = null;
                 } catch (Exception ex) {
@@ -136,7 +135,7 @@ namespace PX.Survey.Ext {
             return errorOccurred;
         }
 
-        private static void DoProcessAnswers(SurveyMaint graph, SurveyCollectorData collDataRec, SurveyCollector collector, IEnumerable<CSAttributeGroup> questions) {
+        private static void DoProcessAnswers(SurveyMaint graph, SurveyCollectorData collDataRec, SurveyCollector collector) {
             var queryString = collDataRec.QueryParameters;
             if (string.IsNullOrEmpty(queryString)) {
                 throw new PXException(Messages.AnswersNotfound);
@@ -147,13 +146,21 @@ namespace PX.Survey.Ext {
             var answers = new List<CSAnswers>();
             foreach (var kvp in dict) {
                 var templateID = kvp.Key;
-                var template = GetTemplate(templateID);
-                var attrID = template.AttributeID;
-                var value = kvp.Value;
-                var question = questions.FirstOrDefault(qu => qu.AttributeID == attrID);
+                string attrID = null;
+                if (SurveyUtils.IsOnlyDigit(templateID)) {
+                    int.TryParse(templateID, out var id);
+                    var template = SurveyTemplate.PK.Find(graph, id);
+                    attrID = template.AttributeID;
+                }
+                if (attrID == null) {
+                    // Not a question
+                    continue;
+                }
+                var question = CSAttribute.PK.Find(graph, attrID);
                 if (question == null) {
                     throw new PXException(Messages.SurveyQuestionNotFound, attrID);
                 }
+                var value = kvp.Value;
                 var answer = new CSAnswers() {
                     AttributeID = attrID,
                     Value = value
