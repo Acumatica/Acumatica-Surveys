@@ -1,11 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Objects.CR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PX.Survey.Ext {
 
@@ -22,9 +17,9 @@ namespace PX.Survey.Ext {
 
         #region ContactType
         public abstract class contactType : BqlString.Field<contactType> { }
+        [PXString(2, IsFixed = true)]
+        [PXUnboundDefault(ContactTypesAttribute.Employee)]
         [ContactTypes]
-        [PXDBString(2, IsFixed = true)]
-        [PXDefault(ContactTypesAttribute.Employee)]
         [PXUIField(DisplayName = "Recipient Type")]
         public virtual string ContactType { get; set; }
         #endregion
