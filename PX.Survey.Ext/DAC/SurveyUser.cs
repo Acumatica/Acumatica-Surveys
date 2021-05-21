@@ -38,8 +38,7 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Recipient Name")]
         [PXSelector(typeof(Search<Contact.contactID,
-                            Where<Contact.contactType, Equal<ContactTypesAttribute.employee>,
-                            And<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>>),
+                            Where<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>),
                     DescriptionField = typeof(Contact.displayName))]
         [PXCheckUnique(Where = typeof(Where<SurveyUser.surveyID, Equal<Current<surveyID>>>), ClearOnDuplicate = false)]
         public virtual int? ContactID { get; set; }
