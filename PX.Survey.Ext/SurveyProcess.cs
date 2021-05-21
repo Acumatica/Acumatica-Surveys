@@ -16,9 +16,10 @@ namespace PX.Survey.Ext {
         public PXCancel<SurveyFilter> Cancel;
         public PXFilter<SurveyFilter> Filter;
 
-        public PXFilteredProcessing<Survey, SurveyFilter,
+        public PXFilteredProcessingJoin<Survey, SurveyFilter,
+            LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<Survey.surveyID>>>,
             Where<Survey.active, Equal<True>,
-            And<SurveyUser.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Surveys;
+            And<Survey.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Surveys;
 
         private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
@@ -346,6 +347,7 @@ namespace PX.Survey.Ext {
         }
 
         private static void SendMailNotification(SurveyUser surveyUser, SurveyCollector collector) {
+            // Acuminator disable once PX1050 HardcodedStringInLocalizationMethod [Justification]
             throw new PXException("Don't know how to send using email");
             //Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(context.MessageGraph, notificationID);
             //var sent = false;
