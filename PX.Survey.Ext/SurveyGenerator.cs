@@ -3,6 +3,7 @@ using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CS;
 using Scriban;
 using Scriban.Runtime;
+using Scriban.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,15 @@ namespace PX.Survey.Ext {
     public class SurveyGenerator {
 
         private SurveyMaint graph;
+
+        private static string INNER_CONTENT = "InnerContent";
+        private static string INNER_CONTENT_LIST = INNER_CONTENT + "List";
+        private static string CURRENT_PAGE_NBR = "CurrentPageNbr";
+        private static string FIRST_PAGE_NBR = "FirstPageNbr";
+        private static string LAST_PAGE_NBR = "LastPageNbr";
+        private static string NB_PAGES = "Nbpages";
+        private static string IS_FIRST_PAGE = "IsFirstPage";
+        private static string IS_LAST_PAGE = "IsLastPage";
 
         public SurveyGenerator() : this(PXGraph.CreateInstance<SurveyMaint>()) {
         }
@@ -68,7 +78,7 @@ namespace PX.Survey.Ext {
 
         private IEnumerable<string> GetSurveyContent(Survey survey, SurveyUser user, int pageNbr) {
             graph.Survey.Current = survey;
-            var details = graph.Details.Select().FirstTableItems;
+            var details = graph.Details.Select().FirstTableItems.Where(det => det.PageNbr != null);
             var selectedPages = SelectPages(survey, details, pageNbr);
             var allRendered = new List<string>();
             foreach (var selectedPage in selectedPages) {
@@ -76,19 +86,37 @@ namespace PX.Survey.Ext {
                 var pageTemplate = SurveyTemplate.PK.Find(graph, pageTemplateID);
                 var template = Template.Parse(pageTemplate.Body);
                 var context = GetContext(survey, user, selectedPage, pageTemplate);
+                FillPageInfo(context, details, selectedPage);
                 var rendered = template.Render(context);
                 allRendered.Add(rendered);
             }
             return allRendered;
         }
 
+        private void FillPageInfo(TemplateContext context, IEnumerable<SurveyDetail> details, SurveyDetail selectedPage) {
+            var count = details.Count();
+            var min = details.Min(det => det.PageNbr);
+            var max = details.Max(det => det.PageNbr);
+            var current = selectedPage.PageNbr;
+            context.SetValue(new ScriptVariableGlobal(CURRENT_PAGE_NBR), selectedPage.PageNbr);
+            context.SetValue(new ScriptVariableGlobal(FIRST_PAGE_NBR), min);
+            context.SetValue(new ScriptVariableGlobal(LAST_PAGE_NBR), max);
+            context.SetValue(new ScriptVariableGlobal(NB_PAGES), count);
+            context.SetValue(new ScriptVariableGlobal(IS_FIRST_PAGE), current == min);
+            context.SetValue(new ScriptVariableGlobal(IS_LAST_PAGE), current == max);
+        }
+
         private TemplateContext GetSurveyContext(Survey survey, SurveyUser user, IEnumerable<string> content) {
             var context = new TemplateContext();
+            var webHook = PXSelect<Api.Webhooks.DAC.WebHook, 
+                Where<Api.Webhooks.DAC.WebHook.webHookID, 
+                Equal<Required< Api.Webhooks.DAC.WebHook.webHookID >>>>.Select(graph, survey.WebHookID);
             var container = new ScriptObject {
-                {"Survey", survey},
-                {"User", user},
-                {"ContentList", content},
-                {"Content", string.Join("\n", content)},
+                {survey.GetType().Name, survey},
+                {user.GetType().Name, user},
+                {webHook.GetType().Name, webHook},
+                {INNER_CONTENT_LIST, content},
+                {INNER_CONTENT, string.Join("\n", content)},
             };
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
             //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
@@ -116,17 +144,15 @@ namespace PX.Survey.Ext {
 
         private TemplateContext GetContext(Survey survey, SurveyUser user, SurveyDetail detail, SurveyTemplate template) {
             var context = new TemplateContext();
-            var isQuestion = template.TemplateType == SUTemplateType.QuestionPage;
             var container = new ScriptObject {
-                {"Survey", survey},
-                {"User", user},
-                {"Detail", detail},
-                {"Template", template},
-                {"IsQuestion", isQuestion},
+                {survey.GetType().Name, survey},
+                {user.GetType().Name, user},
+                {detail.GetType().Name, detail},
+                {template.GetType().Name, template},
             };
-            if (isQuestion) {
+            if (template.IsQuestion == true) {
                 var question = GetQuestion(template.AttributeID);
-                container.Add("Question", question);
+                container.Add(question.GetType().Name, question);
             }
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
             //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);

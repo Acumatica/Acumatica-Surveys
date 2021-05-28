@@ -1,10 +1,7 @@
 ﻿using PX.Data;
-using PX.Data.BQL.Fluent;
-using System;
-using PX.Objects.CR;
 using PX.Data.BQL;
-using PX.SM;
-using PX.Data.EP;
+using PX.Objects.CR;
+using System;
 
 namespace PX.Survey.Ext {
 
@@ -12,10 +9,8 @@ namespace PX.Survey.Ext {
     [PXCacheName("RecipientSelected")]
     [PXProjection(typeof(Select<Contact, 
         Where<Contact.isActive, Equal<True>,
-        And<Where<CurrentValue<RecipientFilter.onlyUsers>, NotEqual<True>,
-            Or<Contact.userID, IsNotNull,
         And<Where<CurrentValue<RecipientFilter.contactType>, IsNull, 
-            Or<Contact.contactType, Equal<CurrentValue<RecipientFilter.contactType>>>>>>>>>,
+            Or<Contact.contactType, Equal<CurrentValue<RecipientFilter.contactType>>>>>>,
         OrderBy<Asc<Contact.displayName>>>))]
     public class RecipientSelected : IBqlTable, IPXSelectable {
 

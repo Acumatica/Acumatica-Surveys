@@ -1,6 +1,7 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Data.ReferentialIntegrity.Attributes;
+using PX.Data.Webhooks;
 using PX.Objects.CS;
 using System;
 
@@ -46,18 +47,36 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region Name
-        public abstract class name : BqlString.Field<Survey.name> { }
+        public abstract class name : BqlString.Field<name> { }
         [PXDefault]
         [PXDBString(100, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Name")]
         public virtual string Name { get; set; }
         #endregion
 
+        #region FormName
+        public abstract class formName : BqlString.Field<formName> { }
+        [PXDefault("SurveyForm")]
+        [PXDBString(20, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "Form Name")]
+        public virtual string FormName { get; set; }
+        #endregion
+
+        #region WebHookID
+        public abstract class webHookID : BqlGuid.Field<webHookID> { }
+        [PXDBGuid(false)]
+        [PXDefault(typeof(SurveySetup.webHookID))]
+        [PXUIField(DisplayName = "Web Hook")]
+        [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID),
+            new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive),
+                typeof(Api.Webhooks.DAC.WebHook.isSystem) },
+            DescriptionField = typeof(Api.Webhooks.DAC.WebHook.name),
+            SubstituteKey = typeof(Api.Webhooks.DAC.WebHook.name))]
+        public Guid? WebHookID { get; set; }
+        #endregion
+
         #region Target
         public abstract class target : BqlString.Field<target> { }
-        /// <summary>
-        /// Reference to the state the collector record is in   
-        /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(SurveyTarget.User)]
         [PXUIField(DisplayName = "Target")]
@@ -67,9 +86,6 @@ namespace PX.Survey.Ext {
 
         #region Layout
         public abstract class layout : BqlString.Field<layout> { }
-        /// <summary>
-        /// Reference to the state the collector record is in   
-        /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(SurveyLayout.SinglePage)]
         [PXUIField(DisplayName = "Layout")]

@@ -25,16 +25,6 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Template ID")]
         public virtual int? TemplateID { get; set; }
 
-        /// <summary>
-        /// Key field.
-        /// The user-friendly unique identifier of the Survey Template.
-        /// The structure of the identifier is determined by the <i>SURVEYTEMPLATE</i> <see cref="T:PX.Objects.CS.Dimension">Segmented Key</see>.
-        /// </summary>
-        //public abstract class templateCD : BqlString.Field<templateCD> { }
-        //[TemplateRaw(IsKey = true, DisplayName = "Template ID")]
-        //[PXDefault]
-        //public virtual string TemplateCD { get; set; }
-
         #region Active
         public abstract class active : BqlBool.Field<active> { }
         [PXDBBool]
@@ -64,16 +54,47 @@ namespace PX.Survey.Ext {
         public virtual string AttributeID { get; set; }
         #endregion
 
+        #region IsQuestion
+        public abstract class isQuestion : BqlBool.Field<isQuestion> { }
+        [PXBool]
+        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
+        [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual bool? IsQuestion { get; set; }
+        #endregion
+
+        #region ControlType
+        public abstract class controlType : BqlInt.Field<controlType> { }
+        [PXInt]
+        [SUControlType.List]
+        [PXUIField(DisplayName = "Control Type", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXFormula(typeof(Search<CSAttribute.controlType, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
+        public virtual int? ControlType { get; set; }
+        #endregion
+
+        #region ReverseOrder
+        public abstract class reverseOrder : BqlBool.Field<reverseOrder> { }
+        [PXDBBool]
+        [PXDefault(false)]
+        [PXUIField(DisplayName = "Reverse Order", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXUIVisible(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
+        [PXUIEnabled(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
+        [PXUIRequired(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
+        public virtual bool? ReverseOrder { get; set; }
+        #endregion
+
+        #region AttrDesc
+        public abstract class attrDesc : BqlString.Field<attrDesc> { }
+        [PXString(255, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "Control Description")]
+        [PXFormula(typeof(Search<CSAttribute.description, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
+        public virtual string AttrDesc { get; set; }
+        #endregion
+
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
-
-        //public abstract class subject : BqlString.Field<subject> { }
-        //[PXDBLocalizableString(255, InputMask = "", IsUnicode = true)]
-        //[PXUIField(DisplayName = "Subject", Visibility = PXUIVisibility.SelectorVisible)]
-        //public virtual string Subject { get; set; }
 
         public abstract class body : BqlString.Field<body> { }
         [PXDBText(IsUnicode = true)]
@@ -84,23 +105,6 @@ namespace PX.Survey.Ext {
         [PXDBGuid(false)]
         [PXUIField(DisplayName = "Entity Link")]
         public virtual Guid? RefNoteID { get; set; }
-
-        //public abstract class screenID : BqlString.Field<screenID> { }
-        //[PXDBString(8, IsFixed = true, InputMask = "CC.CC.CC.CC")]
-        //[PXDefault]
-        //[PXUIField(DisplayName = "Screen Name", Visibility = PXUIVisibility.SelectorVisible)]
-        //public virtual string ScreenID { get; set; }
-
-        //public abstract class screenIdValue : BqlString.Field<screenIdValue> { }
-        //[PXDefault]
-        //[PXString]
-        //[PXUIField(DisplayName = "Screen ID", Enabled = false)]
-        //public string ScreenIdValue {
-        //    get {
-        //        return this.ScreenID;
-        //    }
-        //}
-
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }

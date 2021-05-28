@@ -93,6 +93,8 @@ namespace PX.Survey.Ext {
         public const string UserNotFound = "Cannot find a user with Line Nbr. {0}";
         public const string AnswersNotfound = "No answers found";
         public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
+        public const string ValueCannotBefound = "'{0}' with a value of '{1}' cannot be found in the system.";
+
 
 
         #region Demo Survey

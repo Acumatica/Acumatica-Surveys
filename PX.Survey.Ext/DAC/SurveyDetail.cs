@@ -82,6 +82,16 @@ namespace PX.Survey.Ext {
         public virtual int? TemplateID { get; set; }
         #endregion
 
+        #region QuestionNbr
+        public abstract class questionNbr : BqlInt.Field<questionNbr> { }
+        [PXDBInt]
+        [PXDefault]
+        [PXUIField(DisplayName = "Question Nbr.")]
+        [PXUIEnabled(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
+        [PXUIRequired(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
+        public virtual int? QuestionNbr { get; set; }
+        #endregion
+
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]

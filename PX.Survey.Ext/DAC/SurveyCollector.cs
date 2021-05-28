@@ -82,15 +82,15 @@ namespace PX.Survey.Ext {
         public virtual int? UserLineNbr { get; set; }
         #endregion
 
-        public abstract class isEncrypted : BqlBool.Field<isEncrypted> { }
-        [PXDBBool]
-        [PXDefault(false)]
-        public virtual bool? IsEncrypted { get; set; }
+        //public abstract class isEncrypted : BqlBool.Field<isEncrypted> { }
+        //[PXDBBool]
+        //[PXDefault(false)]
+        //public virtual bool? IsEncrypted { get; set; }
 
-        public abstract class isEncryptionRequired : BqlBool.Field<isEncryptionRequired> { }
-        [PXDBBool]
-        [PXDefault(false)]
-        public virtual bool? IsEncryptionRequired { get; set; }
+        //public abstract class isEncryptionRequired : BqlBool.Field<isEncryptionRequired> { }
+        //[PXDBBool]
+        //[PXDefault(false)]
+        //public virtual bool? IsEncryptionRequired { get; set; }
 
         #region Token
         public abstract class token : BqlInt.Field<token> { }
@@ -98,7 +98,8 @@ namespace PX.Survey.Ext {
         /// Collector Token is a opaque bearer token used in lieu of the Collector ID as to make guessing one improbable
         /// </summary>
         [PXDBDefault(typeof(collectorID))]
-        [PXRSACryptStringWithConditional(255, typeof(isEncryptionRequired), typeof(isEncrypted))]
+        //[PXRSACryptStringWithConditional(255, typeof(isEncryptionRequired), typeof(isEncrypted))]
+        [PXRSACryptString(255)]
         //[PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
         [PXUIField(DisplayName = "Token", IsReadOnly = true)]
         //[PXDefault]

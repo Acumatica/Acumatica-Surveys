@@ -3,6 +3,7 @@ using PX.Data.BQL;
 using PX.Objects.CS;
 using System;
 using PX.Objects.CR;
+using PX.Api.Webhooks.DAC;
 
 namespace PX.Survey.Ext {
 
@@ -48,6 +49,20 @@ namespace PX.Survey.Ext {
                     DescriptionField = typeof(Contact.displayName))]
         public virtual int? ContactID { get; set; }
         #endregion
+
+        #region WebHookID
+        public abstract class webHookID : BqlGuid.Field<webHookID> { }
+        [PXDBGuid(false)]
+        [PXDefault]
+        [PXUIField(DisplayName = "Web Hook")]
+        [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID), 
+            new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive), 
+                typeof(Api.Webhooks.DAC.WebHook.isSystem) },
+            DescriptionField = typeof(Api.Webhooks.DAC.WebHook.name),
+            SubstituteKey = typeof(Api.Webhooks.DAC.WebHook.name))]
+        public Guid? WebHookID { get; set; }
+        #endregion
+
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }

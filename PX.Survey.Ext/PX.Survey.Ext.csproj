@@ -20,24 +20,35 @@
     </Reference>
     <Reference Include="PX.Api.Mobile">
       <HintPath>..\lib\PX.Api.Mobile.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="PX.Api.Webhooks">
+      <HintPath>..\lib\PX.Api.Webhooks.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Common">
       <HintPath>..\lib\PX.Common.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="PX.CS.Contracts">
       <HintPath>..\lib\PX.CS.Contracts.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Data">
       <HintPath>..\lib\PX.Data.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
       <HintPath>..\lib\PX.Data.BQL.Fluent.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Objects">
       <HintPath>..\lib\PX.Objects.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Web.Customization">
       <HintPath>..\lib\PX.Web.Customization.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Net.Http" />
