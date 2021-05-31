@@ -78,7 +78,7 @@ namespace PX.Survey.Ext {
 
         private IEnumerable<string> GetSurveyContent(Survey survey, SurveyUser user, int pageNbr) {
             graph.Survey.Current = survey;
-            var details = graph.Details.Select().FirstTableItems.Where(det => det.PageNbr != null);
+            var details = graph.Details.Select().FirstTableItems.Where(det => det.PageNbr != null && det.Active == true);
             var selectedPages = SelectPages(survey, details, pageNbr);
             var allRendered = new List<string>();
             foreach (var selectedPage in selectedPages) {
