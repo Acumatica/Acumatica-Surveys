@@ -14,7 +14,6 @@ namespace PX.Survey.Ext {
 
         private static string INNER_CONTENT = "InnerContent";
         private static string INNER_CONTENT_LIST = INNER_CONTENT + "List";
-        private static string CURRENT_PAGE_NBR = "CurrentPageNbr";
         private static string FIRST_PAGE_NBR = "FirstPageNbr";
         private static string LAST_PAGE_NBR = "LastPageNbr";
         private static string NB_PAGES = "Nbpages";
@@ -34,10 +33,6 @@ namespace PX.Survey.Ext {
             var template = Template.Parse(pageTemplate.Body);
             var context = new TemplateContext();
             var container = new ScriptObject {
-                //{"Survey", survey},
-                //{"User", user},
-                //{"ContentList", content},
-                //{"Content", string.Join("\n", content)},
                 {"Message", message},
             };
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
@@ -53,8 +48,19 @@ namespace PX.Survey.Ext {
         }
 
         private (Survey survey, SurveyUser user) GetSurveyAndUser(string token) {
-            // TODO
-            throw new System.NotImplementedException();
+            var collector = SurveyCollector.UK.Find(graph, token);
+            if (collector == null) {
+                throw new PXException(Messages.TokenNoFound, token);
+            }
+            var survey = Survey.PK.Find(graph, collector.SurveyID);
+            if (survey == null) {
+                throw new PXException(Messages.TokenNoSurvey, token);
+            }
+            SurveyUser user = SurveyUser.PK.Find(graph, survey.SurveyID, collector.UserLineNbr);
+            if (user == null) {
+                throw new PXException(Messages.TokenNoUser, token);
+            }
+            return (survey, user);
         }
 
         public string GenerateSurveyPage(Survey survey, SurveyUser user, int pageNbr) {
@@ -98,7 +104,6 @@ namespace PX.Survey.Ext {
             var min = details.Min(det => det.PageNbr);
             var max = details.Max(det => det.PageNbr);
             var current = selectedPage.PageNbr;
-            context.SetValue(new ScriptVariableGlobal(CURRENT_PAGE_NBR), selectedPage.PageNbr);
             context.SetValue(new ScriptVariableGlobal(FIRST_PAGE_NBR), min);
             context.SetValue(new ScriptVariableGlobal(LAST_PAGE_NBR), max);
             context.SetValue(new ScriptVariableGlobal(NB_PAGES), count);
@@ -150,8 +155,8 @@ namespace PX.Survey.Ext {
                 {detail.GetType().Name, detail},
                 {template.GetType().Name, template},
             };
-            if (template.IsQuestion == true) {
-                var question = GetQuestion(template.AttributeID);
+            if (detail.IsQuestion == true) {
+                var question = GetQuestion(detail.AttributeID);
                 container.Add(question.GetType().Name, question);
             }
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
