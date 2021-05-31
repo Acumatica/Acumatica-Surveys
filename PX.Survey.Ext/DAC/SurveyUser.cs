@@ -1,5 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CR;
 using System;
 
@@ -8,6 +9,19 @@ namespace PX.Survey.Ext {
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveyUser)]
     public class SurveyUser : IBqlTable, INotable {
+
+        #region Keys
+        public class PK : PrimaryKeyOf<SurveyUser>.By<surveyID, lineNbr> {
+            public static SurveyUser Find(PXGraph graph, int? surveyID, int? lineNbr) => FindBy(graph, surveyID, lineNbr);
+        }
+        public class UK : PrimaryKeyOf<SurveyUser>.By<surveyID, contactID> {
+            public static SurveyUser Find(PXGraph graph, int? surveyID, int? contactID) => FindBy(graph, surveyID, contactID);
+        }
+        public static class FK {
+            public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyDetail>.By<surveyID> { }
+            public class SUContact : Contact.PK.ForeignKeyOf<SurveyDetail>.By<contactID> { }
+        }
+        #endregion
 
         #region Selected
         public abstract class selected : BqlBool.Field<selected> { }
@@ -21,7 +35,7 @@ namespace PX.Survey.Ext {
         public abstract class surveyID : BqlInt.Field<surveyID> { }
         [PXDBInt(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
-        [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<surveyID>>>>))]
+        [PXParent(typeof(FK.SUSurvey))]
         public virtual int? SurveyID { get; set; }
         #endregion
 
@@ -41,6 +55,7 @@ namespace PX.Survey.Ext {
                             Where<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>),
                     DescriptionField = typeof(Contact.displayName))]
         [PXCheckUnique(Where = typeof(Where<SurveyUser.surveyID, Equal<Current<surveyID>>>), ClearOnDuplicate = false)]
+        [PXForeignReference(typeof(FK.SUContact))]
         public virtual int? ContactID { get; set; }
         #endregion
 
