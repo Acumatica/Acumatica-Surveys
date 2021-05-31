@@ -1,6 +1,7 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Data.EP;
+using PX.Data.ReferentialIntegrity;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.IN.Matrix.Attributes;
 using System;
@@ -103,25 +104,8 @@ namespace PX.Survey.Ext {
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]
-        //[PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
-
-        //#region AttributeID
-        //public abstract class attributeID : BqlString.Field<attributeID> { }
-        //[PXString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
-        //[PXFormula(typeof(Selector<templateID, SurveyTemplate.attributeID>))]
-        //[PXUIField(DisplayName = "Answer Meta")]
-        //public virtual string AttributeID { get; set; }
-        //#endregion
-
-        //#region IsQuestion
-        //public abstract class isQuestion : BqlBool.Field<isQuestion> { }
-        //[PXBool]
-        //[PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
-        //[PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
-        //public virtual bool? IsQuestion { get; set; }
-        //#endregion
 
         #region AttributeID
         public abstract class attributeID : BqlString.Field<attributeID> { }
@@ -129,7 +113,6 @@ namespace PX.Survey.Ext {
         [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
         [PXUIField(DisplayName = "Answer Type")]
-        //[PXUIVisible(typeof(Where<isQuestion, Equal<True>>))]
         [PXUIEnabled(typeof(Where<isQuestion, Equal<True>>))]
         [PXUIRequired(typeof(Where<isQuestion, Equal<True>>))]
         public virtual string AttributeID { get; set; }
@@ -140,7 +123,6 @@ namespace PX.Survey.Ext {
         [PXInt]
         [SUControlType.List]
         [PXUIField(DisplayName = "Control Type", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
-        //[PXFormula(typeof(Search<CSAttribute.controlType, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
         [PXFormula(typeof(Selector<attributeID, CS.CSAttribute.controlType>))]
         public virtual int? ControlType { get; set; }
         #endregion
@@ -150,9 +132,7 @@ namespace PX.Survey.Ext {
         [PXDBBool]
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Reverse", Visibility = PXUIVisibility.SelectorVisible)]
-        //[PXUIVisible(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
         [PXUIEnabled(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
-        //[PXUIRequired(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
         public virtual bool? ReverseOrder { get; set; }
         #endregion
 
@@ -170,7 +150,6 @@ namespace PX.Survey.Ext {
         public abstract class attrDesc : BqlString.Field<attrDesc> { }
         [PXString(255, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Control Description", IsReadOnly = true)]
-        //[PXFormula(typeof(Search<CSAttribute.description, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
         [PXFormula(typeof(Selector<attributeID, CS.CSAttribute.description>))]
         public virtual string AttrDesc { get; set; }
         #endregion
