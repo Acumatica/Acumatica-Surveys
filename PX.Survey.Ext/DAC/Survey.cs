@@ -2,7 +2,9 @@
 using PX.Data.BQL;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Data.Webhooks;
+using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.TM;
 using System;
 
 namespace PX.Survey.Ext {
@@ -22,7 +24,8 @@ namespace PX.Survey.Ext {
             public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
         }
         public static class FK {
-            public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<SurveyDetail>.By<templateID> { }
+            public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<templateID> { }
+            //public class WebHook : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<webHookID> { }
         }
         #endregion
 
@@ -37,11 +40,7 @@ namespace PX.Survey.Ext {
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">CCCCCCCCCCCCCCC")]
         [PXUIField(DisplayName = "Survey ID")]
-        [PXSelector(typeof(Survey.surveyCD),
-                    typeof(Survey.surveyCD),
-                    typeof(Survey.target),
-                    typeof(Survey.layout),
-                    typeof(Survey.name))]
+        [PXSelector(typeof(Survey.surveyCD))]
         [AutoNumber(typeof(SurveySetup.surveyNumberingID), typeof(AccessInfo.businessDate))]
         public virtual string SurveyCD { get; set; }
         #endregion
@@ -67,6 +66,7 @@ namespace PX.Survey.Ext {
         [PXDBGuid(false)]
         [PXDefault(typeof(SurveySetup.webHookID))]
         [PXUIField(DisplayName = "Web Hook")]
+        [PXForeignReference(typeof(Field<webHookID>.IsRelatedTo<Api.Webhooks.DAC.WebHook.webHookID>)),]
         [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID),
             new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive),
                 typeof(Api.Webhooks.DAC.WebHook.isSystem) },
@@ -98,8 +98,8 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Template")]
         [PXDefault]
-        [PXForeignReference(typeof(FK.SUSurveyTemplate))]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+        [PXForeignReference(typeof(FK.SUSurveyTemplate)), ]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), 
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
         public virtual int? TemplateID { get; set; }
