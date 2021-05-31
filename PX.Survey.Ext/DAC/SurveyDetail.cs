@@ -82,6 +82,14 @@ namespace PX.Survey.Ext {
         public virtual int? TemplateID { get; set; }
         #endregion
 
+        #region IsQuestion
+        public abstract class isQuestion : BqlBool.Field<isQuestion> { }
+        [PXBool]
+        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
+        [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual bool? IsQuestion { get; set; }
+        #endregion
+
         #region QuestionNbr
         public abstract class questionNbr : BqlInt.Field<questionNbr> { }
         [PXDBInt]
@@ -95,7 +103,7 @@ namespace PX.Survey.Ext {
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]
-        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        //[PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
 
