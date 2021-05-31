@@ -120,6 +120,24 @@ namespace PX.Survey.Ext {
         public virtual string Template { get; set; }
         #endregion
 
+        #region WorkgroupID
+        public abstract class workgroupID : BqlInt.Field<workgroupID> { }
+        [PXDBInt]
+        //[PXDefault(typeof(BAccount.workgroupID), PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXCompanyTreeSelector]
+        [PXUIField(DisplayName = "Workgroup")]
+        public virtual int? WorkgroupID { get; set; }
+        #endregion
+
+        #region OwnerID
+        public abstract class ownerID : BqlInt.Field<ownerID> { }
+        [PXDefault(typeof(Search<CREmployee.defContactID, Where<CREmployee.userID, Equal<Current<AccessInfo.userID>>, And<CREmployee.status, NotEqual<BAccount.status.inactive>>>>),
+            PersistingCheck = PXPersistingCheck.Nothing)]
+        [Owner(typeof(workgroupID), null, false, false, null, null)] // Do not validate : Did not allow some value when data was coming from Shipments
+        //[PXFormula(typeof(Selector<bAccountID, BAccount.ownerID>))]
+        public virtual int? OwnerID { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
         [PXNote]
