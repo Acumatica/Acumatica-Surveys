@@ -21,7 +21,7 @@ namespace PX.Survey.Ext {
 
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBIdentity(IsKey = true)]
-        [PXSelector(typeof(templateID), new Type[] { typeof(templateID) }, DescriptionField = typeof(description))]
+        [PXSelector(typeof(templateID), DescriptionField = typeof(description))]
         [PXUIField(DisplayName = "Template ID")]
         public virtual int? TemplateID { get; set; }
 
@@ -42,24 +42,24 @@ namespace PX.Survey.Ext {
         public virtual string TemplateType { get; set; }
         #endregion
 
-        #region AttributeID
-        public abstract class attributeID : BqlString.Field<attributeID> { }
-        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
-        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXSelector(typeof(CSAttribute.attributeID), DescriptionField = typeof(CSAttribute.description))]
-        [PXUIField(DisplayName = "Answer Meta")]
-        [PXUIVisible(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        [PXUIEnabled(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        [PXUIRequired(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        public virtual string AttributeID { get; set; }
-        #endregion
-
         #region IsQuestion
         public abstract class isQuestion : BqlBool.Field<isQuestion> { }
         [PXBool]
         [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
         [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual bool? IsQuestion { get; set; }
+        #endregion
+
+        #region AttributeID
+        public abstract class attributeID : BqlString.Field<attributeID> { }
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXSelector(typeof(CSAttribute.attributeID), DescriptionField = typeof(CSAttribute.description))]
+        [PXUIField(DisplayName = "Answer Type")]
+        [PXUIVisible(typeof(Where<isQuestion, Equal<True>>))]
+        [PXUIEnabled(typeof(Where<isQuestion, Equal<True>>))]
+        [PXUIRequired(typeof(Where<isQuestion, Equal<True>>))]
+        public virtual string AttributeID { get; set; }
         #endregion
 
         #region ControlType
