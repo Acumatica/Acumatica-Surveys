@@ -86,7 +86,7 @@ namespace PX.Survey.Ext {
         public abstract class isQuestion : BqlBool.Field<isQuestion> { }
         [PXBool]
         [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
-        [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
         public virtual bool? IsQuestion { get; set; }
         #endregion
 
