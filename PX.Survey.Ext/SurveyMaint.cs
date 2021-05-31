@@ -362,9 +362,9 @@ namespace PX.Survey.Ext {
             PXUIFieldAttribute.SetEnabled<SurveyDetail.pageNbr>(e.Cache, row, isMulti);
         }
 
-        protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.templateID> e) {
-            e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
-        }
+        //protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.templateID> e) {
+        //    e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
+        //}
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.description> e) {
             var row = e.Row;
