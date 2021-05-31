@@ -45,10 +45,10 @@ namespace PX.Survey.Ext {
         public class SUTemplateType {
             public const string Survey = "Survey";
             public const string Header = "Header";
-            public const string StartArea = "Start Area";
+            public const string PageHeader = "Page Header";
             public const string QuestionPage = "Question";
             public const string ContentPage = "Content";
-            public const string EndArea = "End Area";
+            public const string PageFooter = "Page Footer";
             public const string Footer = "Footer";
             public const string BadRequest = "Bad Request";
         }
