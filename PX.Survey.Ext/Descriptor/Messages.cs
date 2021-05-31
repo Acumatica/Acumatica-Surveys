@@ -95,17 +95,6 @@ namespace PX.Survey.Ext {
         public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
         public const string ValueCannotBefound = "'{0}' with a value of '{1}' cannot be found in the system.";
 
-
-
-        #region Demo Survey
-        public const string COVSYMPTOM = "Are you experiencing any of these symptoms? (fever, cough, shortness of breath, sore throat or diarrhea)";
-        public const string COVCONTACT = "Contact with individuals diagnosed with COVID-19?";
-        public const string COVTEMP = "Self Temperature";
-        public const string COVTRAVEL = "Travel Locations";
-        public const string DEMOCOVID = "COVID-19 Wellness Survey";
-        #endregion
-
-
         #region SurveyAction
         public class SurveyAction {
             public const string Default = "All (New, Remind, Expire)";
