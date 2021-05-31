@@ -1,9 +1,8 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Objects.CR;
 using PX.Objects.CS;
 using System;
-using PX.Objects.CR;
-using PX.Api.Webhooks.DAC;
 
 namespace PX.Survey.Ext {
 
@@ -21,13 +20,6 @@ namespace PX.Survey.Ext {
         public virtual string SurveyNumberingID { get; set; }
         #endregion
 
-        //#region DemoSurvey
-        //public abstract class demoSurvey : BqlBool.Field<demoSurvey> { }
-        //[PXDBBool]
-        //[PXUIField(DisplayName = "Created Demo Survey", Enabled = false)]
-        //public virtual bool? DemoSurvey { get; set; }
-        //#endregion
-
         #region TemplateID
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBInt]
@@ -37,6 +29,61 @@ namespace PX.Survey.Ext {
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
         public virtual int? TemplateID { get; set; }
+        #endregion
+
+        #region PHHeaderID
+        public abstract class pHHeaderID : BqlInt.Field<pHHeaderID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Place Holder Header")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.header>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? PHHeaderID { get; set; }
+        #endregion
+
+        #region PHPageHeaderID
+        public abstract class pHPageHeaderID : BqlInt.Field<pHPageHeaderID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Place Holder Page Header")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageHeader>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? PHPageHeaderID { get; set; }
+        #endregion
+
+        #region PHQuestionID
+        public abstract class pHQuestionID : BqlInt.Field<pHQuestionID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Place Holder Question")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.questionPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? PHQuestionID { get; set; }
+        #endregion
+
+        #region PHPageFooterID
+        public abstract class pHPageFooterID : BqlInt.Field<pHPageFooterID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Place Holder Page Footer")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageFooter>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? PHPageFooterID { get; set; }
+        #endregion
+
+        #region PHFooterID
+        public abstract class pHFooterID : BqlInt.Field<pHFooterID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Place Holder Footer")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.footer>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? PHFooterID { get; set; }
         #endregion
 
         #region ContactID
