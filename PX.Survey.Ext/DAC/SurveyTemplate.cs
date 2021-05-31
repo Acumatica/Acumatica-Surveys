@@ -67,7 +67,8 @@ namespace PX.Survey.Ext {
         [PXInt]
         [SUControlType.List]
         [PXUIField(DisplayName = "Control Type", Visibility = PXUIVisibility.SelectorVisible)]
-        [PXFormula(typeof(Search<CSAttribute.controlType, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
+        //[PXFormula(typeof(Search<CSAttribute.controlType, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
+        [PXFormula(typeof(Selector<attributeID, CSAttribute.controlType>))]
         public virtual int? ControlType { get; set; }
         #endregion
 
@@ -86,7 +87,8 @@ namespace PX.Survey.Ext {
         public abstract class attrDesc : BqlString.Field<attrDesc> { }
         [PXString(255, IsUnicode = true, InputMask = "")]
         [PXUIField(DisplayName = "Control Description")]
-        [PXFormula(typeof(Search<CSAttribute.description, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
+        //[PXFormula(typeof(Search<CSAttribute.description, Where<CSAttribute.attributeID, Equal<Current<attributeID>>>>))]
+        [PXFormula(typeof(Selector<attributeID, CSAttribute.description>))]
         public virtual string AttrDesc { get; set; }
         #endregion
 
