@@ -94,6 +94,9 @@ namespace PX.Survey.Ext {
         public const string AnswersNotfound = "No answers found";
         public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
         public const string ValueCannotBefound = "'{0}' with a value of '{1}' cannot be found in the system.";
+        public const string TokenNoFound = "Cannot find a collector for token {0}";
+        public const string TokenNoSurvey = "Token {0} is connected to a non existing survey";
+        public const string TokenNoUser = "Token {0} is connected to a non existing survey user";
 
         #region SurveyAction
         public class SurveyAction {
