@@ -152,7 +152,7 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Reverse", Visibility = PXUIVisibility.SelectorVisible)]
         //[PXUIVisible(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
         [PXUIEnabled(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
-        [PXUIRequired(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
+        //[PXUIRequired(typeof(Where<controlType, In3<SUControlType.combo, SUControlType.multi, SUControlType.selector>>))]
         public virtual bool? ReverseOrder { get; set; }
         #endregion
 
