@@ -238,20 +238,30 @@ namespace PX.Survey.Ext {
             var graph = CreateInstance<SurveyMaint>();
             foreach (var survey in list) {
                 var row = PXCache<Survey>.CreateCopy(survey);
-                var user = graph.GenerateSampleUser(row);
-                graph.DoGenerateSample(row, user);
+                graph.DoGenerateSample(row);
             }
             return adapter.Get();
         }
 
-        private void DoGenerateSample(Survey survey, SurveyUser user) {
+        private void DoGenerateSample(Survey survey) {
+            var user = GenerateSampleUser(survey);
+            var collector = InsertCollector(survey, user);
             var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
-                var pageContent = generator.GenerateSurveyPage(survey, user, pageNbr);
+                var pageContent = generator.GenerateSurveyPage(collector.Token, pageNbr);
                 SaveContentToAttachment($"Survey-{survey.SurveyCD}-Page-{pageNbr}.html", pageContent);
             }
             Actions.PressSave();
+        }
+
+        private SurveyCollector InsertCollector(Survey survey, SurveyUser user) {
+            var collector = new SurveyCollector {
+                SurveyID = survey.SurveyID,
+                UserLineNbr = user.LineNbr,
+            };
+            var inserted = Collectors.Insert(collector);
+            return inserted;
         }
 
         public int[] GetPageNumbers(Survey survey, Func<SurveyDetail, bool> predicate) {
@@ -410,6 +420,17 @@ namespace PX.Survey.Ext {
 
         public void _(Events.FieldUpdated<SurveyCollector, SurveyCollector.collectorID> e) {
             e.Cache.SetDefaultExt<SurveyCollector.token>(e.Row);
+        }
+
+
+        protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.name> e) {
+            var row = e.Row;
+            if (row == null || row.SurveyID == null) {
+                return;
+            }
+            var survey = Survey.Current;
+            e.NewValue = $"{survey.SurveyCD} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
+            e.Cancel = true;
         }
 
         protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
