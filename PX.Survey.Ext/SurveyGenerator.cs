@@ -107,19 +107,6 @@ namespace PX.Survey.Ext {
             return allRendered;
         }
 
-        //private TemplateContext GetContext(Survey survey, SurveyUser user, IEnumerable<SurveyDetail> questions, int pageNbr) {
-        //    var context = new TemplateContext();
-        //    var container = new ScriptObject {
-        //        {"Survey", survey},
-        //        {"User", user},
-        //        {"Questions", GetQuestions(questions)},
-        //    };
-        //    //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
-        //    //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
-        //    context.PushGlobal(container);
-        //    return context;
-        //}
-
         private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyTemplate template) {
             var container = new ScriptObject {
                 {detail.GetType().Name, detail},
@@ -129,30 +116,10 @@ namespace PX.Survey.Ext {
                 var question = GetQuestion(detail.AttributeID);
                 container.Add(question.GetType().Name, question);
             }
-            //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
-            //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
             context.PushGlobal(container);
         }
 
-        //public class Question {
 
-            //    private readonly CSAttributeGroup _attrGroup;
-
-            //    public Question(CSAttributeGroup attrGroup) {
-            //        this._attrGroup = attrGroup;
-            //    }
-
-            //    public string DefaultValue => _attrGroup.DefaultValue;
-            //    public bool Required => _attrGroup.Required == true;
-            //    public string Description => _attrGroup.Description;
-            //    public string AttributeID => _attrGroup.AttributeID;
-            //    public string ID => _attrGroup.AttributeID;
-            //    public string Name => _attrGroup.AttributeID;
-            //    public int MaxLength { get; set; } = -1;
-            //    public int ControlType => _attrGroup.ControlType ?? 0;
-            //    public IEnumerable<QuestionDetail> Details { get; set; } = Enumerable.Empty<QuestionDetail>();
-            //    public bool HasDetails => Details != null && Details.Any();
-            //}
         private void FillPageInfo(TemplateContext context, IEnumerable<SurveyDetail> details, SurveyDetail selectedPage) {
             var nbPages = details.Select(det => det.PageNbr).Distinct().Count();
             var min = details.Min(det => det.PageNbr);
@@ -189,36 +156,6 @@ namespace PX.Survey.Ext {
             public string ValueID { get; set; }
             public string Description { get; set; }
         }
-
-        //private IList<Question> GetQuestions(IEnumerable<CSAttributeGroup> attrGroups) {
-        //    var questions = new List<Question>();
-        //    var selectedGroups = attrGroups.Where(qu => qu.IsActive == true).OrderBy(qu => qu.SortOrder ?? 0);
-        //    foreach (var selectedGroup in selectedGroups) {
-        //        Question question = GetQuestion(selectedGroup);
-        //        questions.Add(question);
-        //    }
-        //    return questions;
-        //}
-
-        //private Question GetQuestion(CSAttributeGroup selectedGroup) {
-        //    var question = new Question(selectedGroup);
-        //    var controlType = selectedGroup.ControlType;
-        //    var attrID = question.AttributeID;
-        //    switch (controlType) {
-        //        case 2: // Combo
-        //        case 6: // Multi Select Combo
-        //            question.Details = SurveyUtils.
-        //                GetAttributeDetails(graph, attrID).
-        //                OrderBy(det => det.SortOrder ?? 0).
-        //                Select(x => new QuestionDetail() { ValueID = x.ValueID, Description = x.Description });
-        //            break;
-        //        case 7: // Selector
-        //                // TODO
-        //            break;
-        //    }
-
-        //    return question;
-        //}
 
         public class CSAttributePK : PrimaryKeyOf<CSAttribute>.By<CSAttribute.attributeID> {
             public static CSAttribute Find(PXGraph graph, string attributeID) => FindBy(graph, attributeID);
