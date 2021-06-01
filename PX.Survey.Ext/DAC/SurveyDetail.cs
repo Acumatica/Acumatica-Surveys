@@ -101,11 +101,13 @@ namespace PX.Survey.Ext {
         public virtual int? QuestionNbr { get; set; }
         #endregion
 
+        #region Description
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
+        #endregion
 
         #region AttributeID
         public abstract class attributeID : BqlString.Field<attributeID> { }

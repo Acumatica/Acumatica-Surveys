@@ -1,9 +1,11 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Data.EP;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Data.Webhooks;
 using PX.Objects.CR;
 using PX.Objects.CS;
+using PX.Objects.IN.Matrix.Attributes;
 using PX.TM;
 using System;
 
@@ -45,12 +47,13 @@ namespace PX.Survey.Ext {
         public virtual string SurveyCD { get; set; }
         #endregion
 
-        #region Name
-        public abstract class name : BqlString.Field<name> { }
+        #region Title
+        public abstract class title : BqlString.Field<title> { }
         [PXDefault]
-        [PXDBString(100, IsUnicode = true, InputMask = "")]
-        [PXUIField(DisplayName = "Name")]
-        public virtual string Name { get; set; }
+        [DBMatrixLocalizableDescription(256, IsUnicode = true)]
+        [PXUIField(DisplayName = "Title")]
+        [PXFieldDescription]
+        public virtual string Title { get; set; }
         #endregion
 
         #region FormName
@@ -113,12 +116,12 @@ namespace PX.Survey.Ext {
         public virtual bool? Active { get; set; }
         #endregion
 
-        #region Template
-        public abstract class template : BqlString.Field<template> { }
-        [PXDBLocalizableString(IsUnicode = true)]
-        [PXUIField(DisplayName = "Template")]
-        public virtual string Template { get; set; }
-        #endregion
+        //#region Template
+        //public abstract class template : BqlString.Field<template> { }
+        //[PXDBLocalizableString(IsUnicode = true)]
+        //[PXUIField(DisplayName = "Template")]
+        //public virtual string Template { get; set; }
+        //#endregion
 
         #region WorkgroupID
         public abstract class workgroupID : BqlInt.Field<workgroupID> { }
