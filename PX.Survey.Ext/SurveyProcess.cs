@@ -143,23 +143,28 @@ namespace PX.Survey.Ext {
             }
             var nvc = HttpUtility.ParseQueryString(queryString);
             var dict = nvc.AllKeys.ToDictionary(k => k, k => nvc[k]);
+            var token = collector.Token;
+            (var survey, var user) = SurveyUtils.GetSurveyAndUser(graph, token);
             //COVSYMPTOM=YES&COVCONTACT=YES&COVTEMP=103&COVTRAVEL=New+York
+            //{{PageNbr}}.{{QuestionNbr}}.{{LineNbr}}=Value&...
             var answers = new List<CSAnswers>();
             foreach (var kvp in dict) {
-                var templateID = kvp.Key;
-                string attrID = null;
-                if (SurveyUtils.IsOnlyDigit(templateID)) {
-                    int.TryParse(templateID, out var id);
-                    var template = SurveyTemplate.PK.Find(graph, id);
-                    attrID = template.AttributeID;
+                var answerKey = kvp.Key;
+                if (!answerKey.Contains(".")) {
+                    throw new PXException(Messages.SurveyQuestionNotFound, answerKey);
                 }
+                var parts = answerKey.Split('.');
+                var pageNbr = int.Parse(parts[0]);
+                var quesNbr = int.Parse(parts[1]);
+                var lineNbr = int.Parse(parts[2]);
+                SurveyDetail detail = SurveyDetail.PK.Find(graph, survey.SurveyID, lineNbr);
+                if (detail == null) {
+                    throw new PXException(Messages.SurveyDetailNotFound, answerKey);
+                }
+                string attrID = detail.AttributeID;
                 if (attrID == null) {
                     // Not a question
                     continue;
-                }
-                var question = CSAttribute.PK.Find(graph, attrID);
-                if (question == null) {
-                    throw new PXException(Messages.SurveyQuestionNotFound, attrID);
                 }
                 var value = kvp.Value;
                 var answer = new CSAnswers() {
@@ -462,9 +467,9 @@ namespace PX.Survey.Ext {
                     typeof(Survey.surveyCD),
                     typeof(Survey.target),
                     typeof(Survey.layout),
-                    typeof(Survey.name),
+                    typeof(Survey.title),
                     SubstituteKey = typeof(Survey.surveyCD),
-                    DescriptionField = typeof(Survey.name))]
+                    DescriptionField = typeof(Survey.title))]
         public virtual int? SurveyID { get; set; }
         #endregion
 
