@@ -48,7 +48,7 @@ namespace PX.Survey.Ext {
             return GenerateSurveyPage(survey, user, pageNbr);
         }
 
-        public string GenerateSurveyPage(Survey survey, SurveyUser user, int pageNbr) {
+        private string GenerateSurveyPage(Survey survey, SurveyUser user, int pageNbr) {
             graph.Survey.Current = survey;
             var mainTemplateID = survey.TemplateID;
             var mainTemplate = SurveyTemplate.PK.Find(graph, mainTemplateID);
