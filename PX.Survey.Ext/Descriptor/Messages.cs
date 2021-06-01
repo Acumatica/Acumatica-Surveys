@@ -92,7 +92,8 @@ namespace PX.Survey.Ext {
         public const string CollectorNotFound = "Cannot find a collector with ID {0}";
         public const string UserNotFound = "Cannot find a user with Line Nbr. {0}";
         public const string AnswersNotfound = "No answers found";
-        public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
+        public const string SurveyQuestionNotFound = "A Survey Question named '{0}' does not exist";
+        public const string SurveyDetailNotFound = "A Survey Detail named '{0}' does not exist";
         public const string ValueCannotBefound = "'{0}' with a value of '{1}' cannot be found in the system.";
         public const string TokenNoFound = "Cannot find a collector for token {0}";
         public const string TokenNoSurvey = "Token {0} is connected to a non existing survey";
