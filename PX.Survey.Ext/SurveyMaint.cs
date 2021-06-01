@@ -109,7 +109,6 @@ namespace PX.Survey.Ext {
             var setup = SurveySetup.Current;
             DoResetPageNumbers(survey);
             var nbQuestions = filter.NbQuestions ?? 10;
-            //var totalPages = nbQuestions + 2;// X pages + Header + Footer
             InsertMissing(survey, 1, SUTemplateType.Header, setup.PHHeaderID);
             var pageNumbers = Enumerable.Range(2, nbQuestions);
             foreach (var pageNumber in pageNumbers) {
@@ -325,7 +324,7 @@ namespace PX.Survey.Ext {
                 return;
             if (e.TranStatus == PXTranStatus.Completed) {
                 //DoResetPageNumbers(row);
-                DoResetQuestionNumbers(row);
+                //DoResetQuestionNumbers(row);
             }
         }
 
@@ -356,10 +355,6 @@ namespace PX.Survey.Ext {
                     OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.sortOrder>>>>.Select(this, surveyID);
         }
 
-        private void DoResetQuestionNumbers(Survey row) {
-            // TODO
-        }
-
         protected virtual void _(Events.RowSelected<SurveyDetail> e) {
             var row = e.Row;
             if (row == null || Survey.Current == null || Survey.Current.Layout == null) {
@@ -368,10 +363,6 @@ namespace PX.Survey.Ext {
             var isMulti = Survey.Current.Layout == SurveyLayout.MultiPage;
             PXUIFieldAttribute.SetEnabled<SurveyDetail.pageNbr>(e.Cache, row, isMulti);
         }
-
-        //protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.templateID> e) {
-        //    e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
-        //}
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.description> e) {
             var row = e.Row;
