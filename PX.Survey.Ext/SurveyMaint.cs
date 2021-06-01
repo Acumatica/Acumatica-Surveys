@@ -10,9 +10,6 @@ using System.Text;
 namespace PX.Survey.Ext {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
 
-        private static Func<SurveyDetail, bool> ALL_PAGES = (x) => { return true; };
-        private static Func<SurveyDetail, bool> EXCEPT_HF = (x) => { return x.TemplateType != SUTemplateType.Header && x.TemplateType != SUTemplateType.Footer; };
-
         public SelectFrom<Survey>.View Survey;
 
         public SurveyDetailSelect Details;
@@ -211,7 +208,7 @@ namespace PX.Survey.Ext {
             if (page != null) {
                 UpdatePageNbr(page, 9999, 0); // PageNbr = 9999, SortOrder = 99990;
             }
-            var currentPageNumbers = GetPageNumbers(survey, EXCEPT_HF);
+            var currentPageNumbers = GetPageNumbers(survey, SurveyUtils.EXCEPT_HF);
             var newPageNumbers = Enumerable.Range(2, currentPageNumbers.Length);
             var mappings = currentPageNumbers.Zip(newPageNumbers, (currPage, newPage) => new Tuple<int, int>(currPage, newPage));
             var pages = GetRegularPages(surveyID);
@@ -248,7 +245,7 @@ namespace PX.Survey.Ext {
         }
 
         private void DoGenerateSample(Survey survey, SurveyUser user) {
-            var pages = GetPageNumbers(survey, ALL_PAGES);
+            var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
                 var pageContent = generator.GenerateSurveyPage(survey, user, pageNbr);

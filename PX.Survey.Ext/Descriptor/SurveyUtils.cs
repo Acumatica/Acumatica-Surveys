@@ -7,11 +7,24 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PX.Survey.Ext {
 
     public static class SurveyUtils {
+
+        public static Func<SurveyDetail, bool> ALL_PAGES = (x) => { return true; };
+        public static Func<SurveyDetail, bool> ACTIVE_ONLY = (x) => { return x.Active == true; };
+        public static Func<SurveyDetail, bool> EXCEPT_HF = (x) => { return x.TemplateType != SUTemplateType.Header && x.TemplateType != SUTemplateType.Footer; };
+
+        public static IEnumerable<SurveyDetail> SelectPages(Survey survey, IEnumerable<SurveyDetail> details, int pageNbr) {
+            IEnumerable<SurveyDetail> pages = Enumerable.Empty<SurveyDetail>();
+            var max = details.Max(det => det.PageNbr);
+            while (!pages.Any() && pageNbr <= max) {
+                pages = details.Where(det => det.PageNbr != null && det.Active == true && det.PageNbr == pageNbr).OrderBy(pa => pa.SortOrder.Value);
+                pageNbr++;
+            }
+            return pages;
+        }
 
         public static PXCache InstallAnswers(PXGraph graph, object row, List<CSAnswers> destAnswers) {
             var helper = new EntityHelper(graph);
@@ -80,6 +93,23 @@ namespace PX.Survey.Ext {
         //    return new PXSelect<CSAttribute, 
         //        Where<CSAttribute.attributeID, Equal<Required<CSAttribute.attributeID>>>>(graph).SelectSingle(new object[] { attributeId });
         //}
+
+        public static (Survey survey, SurveyUser user) GetSurveyAndUser(PXGraph graph, string token) {
+            var collector = SurveyCollector.UK.Find(graph, token);
+            if (collector == null) {
+                throw new PXException(Messages.TokenNoFound, token);
+            }
+            var survey = Survey.PK.Find(graph, collector.SurveyID);
+            if (survey == null) {
+                throw new PXException(Messages.TokenNoSurvey, token);
+            }
+            SurveyUser user = SurveyUser.PK.Find(graph, survey.SurveyID, collector.UserLineNbr);
+            if (user == null) {
+                throw new PXException(Messages.TokenNoUser, token);
+            }
+            return (survey, user);
+        }
+
 
         public static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {
             return PXSelect<CSAttributeDetail,
