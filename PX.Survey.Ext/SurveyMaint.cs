@@ -253,6 +253,8 @@ namespace PX.Survey.Ext {
                 SaveContentToAttachment($"Survey-{survey.SurveyCD}-Page-{pageNbr}.html", pageContent);
             }
             Actions.PressSave();
+            var url = generator.GetUrl(collector.Token);
+            throw new PXRedirectToUrlException(url, "Survey");
         }
 
         private SurveyCollector InsertCollector(Survey survey, SurveyUser user) {
