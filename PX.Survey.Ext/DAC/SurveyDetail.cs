@@ -141,7 +141,7 @@ namespace PX.Survey.Ext {
         #region NbrOfRows
         public abstract class nbrOfRows : BqlInt.Field<nbrOfRows> { }
         [PXDBInt]
-        [PXDefault(0, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Nbr. Of Rows")]
         [PXUIEnabled(typeof(Where<controlType, Equal<SUControlType.text>>))]
         [PXUIRequired(typeof(Where<controlType, Equal<SUControlType.text>>))]
