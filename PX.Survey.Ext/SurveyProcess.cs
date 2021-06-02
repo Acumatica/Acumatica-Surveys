@@ -112,26 +112,29 @@ namespace PX.Survey.Ext {
 
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
-            var collectors = graph.Collectors.Select().FirstTableItems;
-            var collDataRecs = graph.CollectorDataRecords.Select().FirstTableItems;
-            foreach (var collData in collDataRecs) {
-                if (collData.Status != CollectorDataStatus.Connected && collData.Status != CollectorDataStatus.Error) {
-                    continue;
+            var allCollectors = graph.Collectors.Select().FirstTableItems;
+            var allCollectorDatas = graph.CollectorDataRecords.Select().FirstTableItems;
+            foreach (var collector in allCollectors) {
+                var collectorDatas = allCollectorDatas.Where(cd => cd.CollectorID == collector.CollectorID).ToArray();
+                foreach (var collData in collectorDatas) {
+                    if (collData.Status != CollectorDataStatus.Connected && collData.Status != CollectorDataStatus.Error) {
+                        continue;
+                    }
+                    try {
+                        DoProcessAnswers(graph, collData, collector);
+                        collData.Status = CollectorDataStatus.Processed;
+                        collData.Message = null;
+                    } catch (Exception ex) {
+                        collData.Status = CollectorDataStatus.Error;
+                        collData.Message = ex.Message;
+                        errorOccurred = true;
+                    }
+                    var updated = graph.CollectorDataRecords.Update(collData);
                 }
-                var collector = collectors.FirstOrDefault(coll => coll.CollectorID == collData.CollectorID);
-                if (collector == null) {
-                    throw new PXException(Messages.CollectorNotFound, collData.CollectorID);
+                if (allCollectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
+                    collector.Status = CollectorDataStatus.Processed;
+                    graph.Collectors.Update(collector);
                 }
-                try {
-                    DoProcessAnswers(graph, collData, collector);
-                    collData.Status = CollectorStatus.Rendered;
-                    collData.Message = null;
-                } catch (Exception ex) {
-                    collData.Status = CollectorStatus.Error;
-                    collData.Message = ex.Message;
-                    errorOccurred = true;
-                }
-                var updated = graph.CollectorDataRecords.Update(collData);
             }
             return errorOccurred;
         }
