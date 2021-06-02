@@ -25,6 +25,9 @@ namespace PX.Survey.Ext {
         private static string NB_PAGES = "Nbpages";
         private static string IS_FIRST_PAGE = "IsFirstPage";
         private static string IS_LAST_PAGE = "IsLastPage";
+        private static string NEXT_IS_LAST = "NextIsLast";
+        private static string NEXT_IS_QUES = "NextIsQuestion";
+        private static string NEXT_IS_FOOT = "NextIsFooter";
 
         public SurveyGenerator() : this(PXGraph.CreateInstance<SurveyMaint>()) {
         }
@@ -127,6 +130,7 @@ namespace PX.Survey.Ext {
             graph.Survey.Current = survey;
             var activePages = graph.Details.Select().FirstTableItems.Where(det => det.Active == true);
             var selectedPages = SurveyUtils.SelectPages(survey, activePages, pageNbr);
+            var firstOfSelected = selectedPages.FirstOrDefault();
             var allRendered = new List<string>();
             foreach (var selectedPage in selectedPages) {
                 var pageTemplateID = selectedPage.TemplateID;
@@ -138,10 +142,23 @@ namespace PX.Survey.Ext {
                 allRendered.Add(rendered);
             }
             // TODO Handle nothing rendered
-            var firstOfSelected = selectedPages.First();
+            var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
+            var nextPages = SurveyUtils.SelectPages(survey, activePages, ++selectedPageNbr);
+            FillPageLookAhead(context, activePages, nextPages);
             var url = GetUrl(context, firstOfSelected.PageNbr.Value);
             context.SetValue(new ScriptVariableGlobal(URL), url);
             return allRendered;
+        }
+
+        private void FillPageLookAhead(TemplateContext context, IEnumerable<SurveyDetail> details, IEnumerable<SurveyDetail> nextPages) {
+            var max = details.Max(det => det.PageNbr);
+            var hasQues = nextPages.Any(det => det.TemplateType == SUTemplateType.QuestionPage);
+            var hasFoot = nextPages.Any(det => det.TemplateType == SUTemplateType.Footer);
+            var nextNbr = nextPages.FirstOrDefault()?.PageNbr.Value ?? -1;
+            var isLast = nextNbr == max;
+            context.SetValue(new ScriptVariableGlobal(NEXT_IS_QUES), hasQues);
+            context.SetValue(new ScriptVariableGlobal(NEXT_IS_FOOT), hasFoot);
+            context.SetValue(new ScriptVariableGlobal(NEXT_IS_LAST), isLast);
         }
 
         private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyTemplate template) {
