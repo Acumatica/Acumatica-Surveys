@@ -13,6 +13,7 @@ namespace PX.Survey.Ext {
     public class SurveyGenerator {
 
         private SurveyMaint graph;
+        private Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
 
         private static string URL = "SurveyURL";
         private static string TOKEN = "Token";
@@ -110,12 +111,8 @@ namespace PX.Survey.Ext {
         }
 
         private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
-            var whGraph = PXGraph.CreateInstance<PX.Api.Webhooks.Graph.WebhookMaint>();
             whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
             return whGraph.Webhook.Current;
-            //return PXSelect<Api.Webhooks.DAC.WebHook,
-            //    Where<Api.Webhooks.DAC.WebHook.webHookID,
-            //    Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(graph, survey.WebHookID);
         }
 
         public static string MyMemberRenamerDelegate(MemberInfo member) {
