@@ -64,17 +64,19 @@ namespace PX.Survey.Ext {
         }
 
         private void FillRenderedPages(TemplateContext context, IEnumerable<string> renderedPage) {
-            var container = new ScriptObject {
-                {INNER_CONTENT_LIST, renderedPage},
-                {INNER_CONTENT, string.Join("\n", renderedPage)},
-            };
-            context.PushGlobal(container);
+            //var container = new ScriptObject {
+            //    {INNER_CONTENT_LIST, renderedPage},
+            //    {INNER_CONTENT, string.Join("\n", renderedPage)},
+            //};
+            //context.PushGlobal(container);
+            context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedPage);
+            context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedPage));
         }
 
         private TemplateContext GetSurveyContext(Survey survey, SurveyUser user, string token) {
             var setup = graph.SurveySetup.Current;
             var context = new TemplateContext();
-            var webHook = PXSelect<Api.Webhooks.DAC.WebHook,
+            Api.Webhooks.DAC.WebHook webHook = PXSelect<Api.Webhooks.DAC.WebHook,
                 Where<Api.Webhooks.DAC.WebHook.webHookID,
                 Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(graph, survey.WebHookID);
             var container = new ScriptObject {
@@ -108,15 +110,18 @@ namespace PX.Survey.Ext {
         }
 
         private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyTemplate template) {
-            var container = new ScriptObject {
-                {detail.GetType().Name, detail},
-                {template.GetType().Name, template},
-            };
+            //var container = new ScriptObject {
+            //    {detail.GetType().Name, detail},
+            //    {template.GetType().Name, template},
+            //};
+            context.SetValue(new ScriptVariableGlobal(detail.GetType().Name), detail);
+            context.SetValue(new ScriptVariableGlobal(template.GetType().Name), template);
             if (detail.IsQuestion == true) {
                 var question = GetQuestion(detail.AttributeID);
-                container.Add(question.GetType().Name, question);
+                context.SetValue(new ScriptVariableGlobal(question.GetType().Name), question);
+                //container.Add(question.GetType().Name, question);
             }
-            context.PushGlobal(container);
+            //context.PushGlobal(container);
         }
 
 
