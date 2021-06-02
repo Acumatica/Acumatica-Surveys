@@ -23,7 +23,7 @@
     <px:PXGrid ID="grid" runat="server" DataSourceID="ds" Style="z-index: 100" 
 		Width="100%" Height="150px" SkinID="Details" TabIndex="7400">
 		<Levels>
-			<px:PXGridLevel DataMember="Records" DataKeyNames="ContactID">
+			<px:PXGridLevel DataMember="Surveys" DataKeyNames="ContactID">
 			    <Columns>
 					<px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true" />
 					<px:PXGridColumn DataField="UserID" Width="0px" AllowFilter="false" AllowResize="false" AllowShowHide="False" />
