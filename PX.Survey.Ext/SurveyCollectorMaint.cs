@@ -63,7 +63,7 @@ namespace PX.Survey.Ext {
                 SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
                 graph.Collector.Current = graph.Collector.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
                 graph.Collector.Current.Status = CollectorStatus.Sent;
-                graph.Collector.Current.CollectedDate = null;
+                //graph.Collector.Current.CollectedDate = null;
                 graph.Collector.Update(graph.Collector.Current);
                 graph.Persist();
             });

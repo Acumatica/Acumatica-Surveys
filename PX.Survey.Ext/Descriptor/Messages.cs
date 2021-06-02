@@ -20,12 +20,13 @@ namespace PX.Survey.Ext {
 
         public class CollectorStatus {
             public const string New = "New";
-            public const string Rendered = "Rendered";
+            //public const string Rendered = "Rendered";
             public const string Sent = "Awaiting Response";
             public const string Responded = "Responded";
             public const string Reminded = "Reminded";
             public const string Expired = "Expired";
             public const string Error = "Error";
+            public const string Processed = "Processed";
         }
 
         public class CollectorDataStatus {

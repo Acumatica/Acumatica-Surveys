@@ -218,7 +218,7 @@ namespace PX.Survey.Ext {
                     unanswered.CollectorID = collector.CollectorID;
                     unanswered.Status = CollectorDataStatus.Connected;
                     unanswered.Message = null;
-                    collector.CollectedDate = unanswered.LastModifiedDateTime;
+                    //collector.CollectedDate = unanswered.LastModifiedDateTime;
                     collectorGraph.Collector.Update(collector);
                 } catch (Exception ex) {
                     unanswered.Status = CollectorStatus.Error;
@@ -249,7 +249,7 @@ namespace PX.Survey.Ext {
             var collectors = graph.Collectors.Select();
             foreach (var res in collectors) {
                 var collector = PXResult.Unwrap<SurveyCollector>(res);
-                if (collector.Status != CollectorStatus.Rendered) {
+                if (collector.Status != CollectorStatus.New) {
                     continue;
                 }
                 var surveyUser = PXResult.Unwrap<SurveyUser>(res);

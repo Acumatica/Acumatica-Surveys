@@ -162,15 +162,15 @@ namespace PX.Survey.Ext {
             set; }
         #endregion
 
-        #region CollectedDate
-        public abstract class collectedDate : BqlDateTime.Field<collectedDate> { }
-        /// <summary>
-        /// Specifies the date that the Survey was collected
-        /// </summary>
-        [PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
-        [PXUIField(DisplayName = "Collected Date", Enabled = false)]
-        public virtual DateTime? CollectedDate { get; set; }
-        #endregion
+        //#region CollectedDate
+        //public abstract class collectedDate : BqlDateTime.Field<collectedDate> { }
+        ///// <summary>
+        ///// Specifies the date that the Survey was collected
+        ///// </summary>
+        //[PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
+        //[PXUIField(DisplayName = "Collected Date", Enabled = false)]
+        //public virtual DateTime? CollectedDate { get; set; }
+        //#endregion
 
         #region ExpirationDate
         public abstract class expirationDate : BqlDateTime.Field<expirationDate> { }
@@ -194,12 +194,12 @@ namespace PX.Survey.Ext {
         public virtual string Status { get; set; }
         #endregion
 
-        #region Rendered
-        public abstract class rendered : BqlString.Field<rendered> { }
-        [PXDBLocalizableString(IsUnicode = true)]
-        [PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
-        public virtual string Rendered { get; set; }
-        #endregion
+        //#region Rendered
+        //public abstract class rendered : BqlString.Field<rendered> { }
+        //[PXDBLocalizableString(IsUnicode = true)]
+        //[PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
+        //public virtual string Rendered { get; set; }
+        //#endregion
 
         #region Message
         public abstract class message : BqlString.Field<message> { }
@@ -224,16 +224,16 @@ namespace PX.Survey.Ext {
         //public virtual string[] Attributes { get; set; }
         //#endregion
 
-        #region CollectedDatePart
-        public abstract class collectedDatePart : BqlString.Field<collectedDatePart> { }
-        /// <summary>
-        /// Specifies the date part that the Survey was collected
-        /// </summary>
-        [PXString]
-        [PXUIField(DisplayName = "Collected Date Mobile", Enabled = false)]
-        [PXFormula(typeof(DateAsString<SurveyCollector.collectedDate, DateAsStringFormat.shortDate>))]
-        public virtual String CollectedDatePart { get; set; }
-        #endregion
+        //#region CollectedDatePart
+        //public abstract class collectedDatePart : BqlString.Field<collectedDatePart> { }
+        ///// <summary>
+        ///// Specifies the date part that the Survey was collected
+        ///// </summary>
+        //[PXString]
+        //[PXUIField(DisplayName = "Collected Date Mobile", Enabled = false)]
+        //[PXFormula(typeof(DateAsString<SurveyCollector.collectedDate, DateAsStringFormat.shortDate>))]
+        //public virtual String CollectedDatePart { get; set; }
+        //#endregion
 
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }

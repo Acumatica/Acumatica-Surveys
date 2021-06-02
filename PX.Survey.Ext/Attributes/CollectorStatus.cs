@@ -5,21 +5,22 @@ namespace PX.Survey.Ext {
     public static class CollectorStatus {
         public class ListAttribute : PXStringListAttribute {
             public ListAttribute() : base(
-                new string[] { New, Rendered, Sent, Responded, Reminded, Expired, Error },
+                new string[] { New, /*Rendered, */Sent, Responded, Reminded, Expired, Error, Processed },
                 new string[] { 
-                    Messages.CollectorStatus.New, Messages.CollectorStatus.Rendered,
+                    Messages.CollectorStatus.New, //Messages.CollectorStatus.Rendered,
                     Messages.CollectorStatus.Sent, Messages.CollectorStatus.Responded,
                     Messages.CollectorStatus.Reminded, Messages.CollectorStatus.Expired, 
-                    Messages.CollectorStatus.Error }) { }
+                    Messages.CollectorStatus.Error, Messages.CollectorStatus.Processed }) { }
         }
 
         public const string New = "N";
-        public const string Rendered = "H";
+        //public const string Rendered = "H";
         public const string Sent = "S";
         public const string Responded = "R";
         public const string Reminded = "M";
         public const string Expired = "X";
         public const string Error = "E";
+        public const string Processed = "P";
 
         //public class _new : BqlString.Constant<_new> { public _new() : base(New) { } }
         //public class rendered : BqlString.Constant<rendered> { public rendered() : base(Rendered) { } }
