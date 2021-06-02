@@ -3,13 +3,13 @@
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
 	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%"
-        TypeName="PX.Survey.Ext.SurveyCollectorMaint" PrimaryView="SurveyQuestions">
+        TypeName="PX.Survey.Ext.SurveyCollectorMaint" PrimaryView="Collector">
 		<CallbackCommands>
 		</CallbackCommands>
 	</px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
-	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="SurveyQuestions" 
+	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="Collector" 
 				   Width="100%" Height="100px" AllowAutoHide="False" TabIndex="100">
 		<Template>
 			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
@@ -27,11 +27,11 @@
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
-	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" SkinID="Inquire" Width="100%" Caption="Questions" 
+	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" SkinID="Inquire" Width="100%" Caption="Collected Answers" 
 			   MatrixMode="True" DataSourceID="ds" AutoAdjustColumns="true">
 		<Layout WrapText="true" />
 		<Levels>
-			<px:PXGridLevel DataMember="Answers" DataKeyNames="AttributeID,EntityType,EntityID">
+			<px:PXGridLevel DataMember="CollectedAnswers" DataKeyNames="AttributeID,EntityType,EntityID">
 				<RowTemplate>
 					<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="edParameterID" DataField="AttributeID" TextMode="MultiLine"></px:PXTextEdit>
