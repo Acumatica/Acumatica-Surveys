@@ -85,6 +85,13 @@ namespace PX.Survey.Ext {
         public virtual string QueryParameters { get; set; }
         #endregion
 
+        #region PageNbr
+        public abstract class pageNbr : BqlInt.Field<pageNbr> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Page Nbr.")]
+        public virtual int? PageNbr { get; set; }
+        #endregion
+
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
         [PXDBInt]

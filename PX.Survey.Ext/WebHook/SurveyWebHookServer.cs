@@ -34,7 +34,7 @@ namespace PX.Survey.Ext.WebHook {
                     var pageNbrStr = _queryParameters.Get(PAGE_PARAM);
                     var pageNbr = GetPageNumber(pageNbrStr);
                     if (pageNbrStr != null && request.Method == HttpMethod.Post) {
-                        SubmitSurvey(collectorToken, request);
+                        SubmitSurvey(collectorToken, request, pageNbr);
                         pageNbr = GetNextOrPrevPageNbr(collectorToken, request, pageNbr);
                     }
                     message = GetSurveyPage(collectorToken, pageNbr);
@@ -68,20 +68,21 @@ namespace PX.Survey.Ext.WebHook {
             return content;
         }
 
-        private void SubmitSurvey(string collectorToken, HttpRequestMessage request) {
+        private void SubmitSurvey(string collectorToken, HttpRequestMessage request, int? pageNbr) {
             var body = request.Content.ReadAsStringAsync().Result;
             var uri = request.RequestUri;
             var props = request.Properties;
-            SaveSurveySubmission(collectorToken, body, uri, props);
+            SaveSurveySubmission(collectorToken, body, uri, props, pageNbr);
         }
 
-        private void SaveSurveySubmission(string collectorToken, string payload, Uri uri, IDictionary<string, object> props) {
+        private void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
             var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
             //var queryParams = props != null ? JsonConvert.SerializeObject(props) : null;
             var data = new SurveyCollectorData {
                 Token = collectorToken,
                 Uri = uri.ToString(),
                 Payload = payload,
+                PageNbr = pageNbr
                 //QueryParameters = queryParams
             };
             var inserted = graph.CollectedAnswers.Insert(data);
