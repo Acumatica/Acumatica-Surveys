@@ -20,7 +20,7 @@ namespace PX.Survey.Ext {
             IEnumerable<SurveyDetail> pages = Enumerable.Empty<SurveyDetail>();
             var max = details.Max(det => det.PageNbr);
             while (!pages.Any() && pageNbr <= max) {
-                pages = details.Where(det => det.PageNbr != null && det.Active == true && det.PageNbr == pageNbr).OrderBy(pa => pa.SortOrder.Value);
+                pages = details.Where(det => det.PageNbr != null && det.Active == true && det.PageNbr == pageNbr).OrderBy(pa => pa.SortOrder.Value).ToArray(); // Force eval, otherwise, we get pages for the next number
                 pageNbr++;
             }
             return pages;
