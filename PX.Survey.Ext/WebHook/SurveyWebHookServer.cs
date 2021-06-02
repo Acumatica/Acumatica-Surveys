@@ -32,10 +32,11 @@ namespace PX.Survey.Ext.WebHook {
                     //            //todo: if the survey has already been awnsered or expired for this collector we need to pass back an alternate to indicate so to the 
                     //            //      user who  clicked the link.
                     var pageNbrStr = _queryParameters.Get(PAGE_PARAM);
-                    if (pageNbrStr != null) {
-                        SubmitSurvey(collectorToken, request);
-                    }
                     var pageNbr = GetPageNumber(pageNbrStr);
+                    if (pageNbrStr != null && request.Method == HttpMethod.Post) {
+                        SubmitSurvey(collectorToken, request);
+                        pageNbr = GetNextOrPrevPageNbr(collectorToken, request, pageNbr);
+                    }
                     message = GetSurveyPage(collectorToken, pageNbr);
                 } catch (Exception ex) {
                     status = HttpStatusCode.BadRequest;
@@ -43,6 +44,15 @@ namespace PX.Survey.Ext.WebHook {
                 }
                 return new HtmlActionResult(message, status);
             }
+        }
+
+        private int GetNextOrPrevPageNbr(string collectorToken, HttpRequestMessage request, int pageNbr) {
+            var body = request.Content.ReadAsStringAsync().Result;
+            // TODO Check for next or previous
+            if (body.Contains("action=prev")) {
+                return --pageNbr;
+            }
+            return ++pageNbr;
         }
 
         private static int GetPageNumber(string page) {
@@ -67,12 +77,12 @@ namespace PX.Survey.Ext.WebHook {
 
         private void SaveSurveySubmission(string collectorToken, string payload, Uri uri, IDictionary<string, object> props) {
             var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-            var queryParams = props != null ? JsonConvert.SerializeObject(props) : null;
+            //var queryParams = props != null ? JsonConvert.SerializeObject(props) : null;
             var data = new SurveyCollectorData {
                 Token = collectorToken,
                 Uri = uri.ToString(),
                 Payload = payload,
-                QueryParameters = queryParams
+                //QueryParameters = queryParams
             };
             var inserted = graph.CollectedAnswers.Insert(data);
             graph.Persist();
