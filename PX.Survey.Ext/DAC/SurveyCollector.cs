@@ -155,7 +155,7 @@ namespace PX.Survey.Ext {
         [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
         [PXUIField(DisplayName = "Token", IsReadOnly = true)]
         //[PXFormula(typeof(AccessInfo.businessDate))]
-        [PXFormula(typeof(DateAsString<AccessInfo.businessDate, DateAsStringFormat.roundTrip>))]
+        [PXFormula(typeof(DateAsString<PXDateAndTimeAttribute.now, DateAsStringFormat.roundTrip>))]
         //[PXDefault]
         public virtual string Token { 
             get; 
