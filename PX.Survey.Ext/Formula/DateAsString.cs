@@ -35,7 +35,7 @@ namespace PX.Survey.Ext {
             if (!collectedDate.HasValue) {
                 return null;
             }
-            return collectedDate.Value.Date.ToString(Format);
+            return collectedDate.Value.ToString(Format);
         }
     }
 }
