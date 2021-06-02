@@ -77,11 +77,13 @@ namespace PX.Survey.Ext.WebHook {
 
         private void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
             var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
+            var (survey, user) = SurveyUtils.GetSurveyAndUser(graph, token);
             //var queryParams = props != null ? JsonConvert.SerializeObject(props) : null;
             var data = new SurveyCollectorData {
-                Token = collectorToken,
+                Token = token,
                 Uri = uri.ToString(),
                 Payload = payload,
+                SurveyID = survey?.SurveyID,
                 PageNbr = pageNbr
                 //QueryParameters = queryParams
             };
