@@ -28,10 +28,10 @@ namespace PX.Survey.Ext {
 
         public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars) {
             DateTime? collectedDate = (DateTime?)pars[typeof(TDate)];
-            if (!collectedDate.HasValue) {
-                var parCache = cache.Graph.Caches[typeof(TDate).DeclaringType];
-                collectedDate = (DateTime?) parCache?.GetValueExt(parCache.Current, typeof(TDate).Name);
-            }
+            //if (!collectedDate.HasValue) {
+            //    var parCache = cache.Graph.Caches[typeof(TDate).DeclaringType];
+            //    collectedDate = (DateTime?) parCache?.GetValue(parCache.Current, typeof(TDate).Name);
+            //}
             if (!collectedDate.HasValue) {
                 return null;
             }
