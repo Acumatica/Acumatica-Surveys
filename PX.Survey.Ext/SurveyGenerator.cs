@@ -1,6 +1,7 @@
 ﻿using PX.Data;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CS;
+using PX.Survey.Ext.WebHook;
 using Scriban;
 using Scriban.Runtime;
 using Scriban.Syntax;
@@ -13,6 +14,7 @@ namespace PX.Survey.Ext {
 
         private SurveyMaint graph;
 
+        private static string URL = "SurveyURL";
         private static string TOKEN = "Token";
         private static string INNER_CONTENT = "InnerContent";
         private static string INNER_CONTENT_LIST = INNER_CONTENT + "List";
@@ -64,12 +66,21 @@ namespace PX.Survey.Ext {
             return rendered;
         }
 
+        public string GetUrl(string token) {
+            (var survey, var user) = SurveyUtils.GetSurveyAndUser(graph, token);
+            return GetUrl(survey, user, token);
+        }
+
+        public string GetUrl(Survey survey, SurveyUser user, string token) {
+            Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+            var activePages = graph.Details.Select().FirstTableItems.Where(det => det.Active == true);
+            var firstPage = activePages.Min(det => det.PageNbr);
+            graph.Survey.Current = survey;
+            var url = $"{webHook.Url}?{SurveyWebhookServerHandler.PAGE_PARAM}={firstPage}&{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
+            return url;
+        }
+
         private void FillRenderedPages(TemplateContext context, IEnumerable<string> renderedPage) {
-            //var container = new ScriptObject {
-            //    {INNER_CONTENT_LIST, renderedPage},
-            //    {INNER_CONTENT, string.Join("\n", renderedPage)},
-            //};
-            //context.PushGlobal(container);
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedPage);
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedPage));
         }
@@ -79,20 +90,26 @@ namespace PX.Survey.Ext {
             var context = new TemplateContext();
             context.MemberRenamer = MyMemberRenamerDelegate;
             context.MemberFilter = MyMemberFilterDelegate;
-            Api.Webhooks.DAC.WebHook webHook = PXSelect<Api.Webhooks.DAC.WebHook,
-                Where<Api.Webhooks.DAC.WebHook.webHookID,
-                Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(graph, survey.WebHookID);
+            Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+            var url = GetUrl(survey, user, token);
             var container = new ScriptObject {
                 {survey.GetType().Name, survey},
                 {setup.GetType().Name, setup},
                 {user.GetType().Name, user},
                 {webHook.GetType().Name, webHook},
                 {TOKEN, token},
+                {URL, url },
             };
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
             //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
             context.PushGlobal(container);
             return context;
+        }
+
+        private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
+            return PXSelect<Api.Webhooks.DAC.WebHook,
+                Where<Api.Webhooks.DAC.WebHook.webHookID,
+                Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(graph, survey.WebHookID);
         }
 
         public static string MyMemberRenamerDelegate(MemberInfo member) {
@@ -121,18 +138,12 @@ namespace PX.Survey.Ext {
         }
 
         private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyTemplate template) {
-            //var container = new ScriptObject {
-            //    {detail.GetType().Name, detail},
-            //    {template.GetType().Name, template},
-            //};
             context.SetValue(new ScriptVariableGlobal(detail.GetType().Name), detail);
             context.SetValue(new ScriptVariableGlobal(template.GetType().Name), template);
             if (detail.IsQuestion == true) {
                 var question = GetQuestion(detail.AttributeID);
                 context.SetValue(new ScriptVariableGlobal(question.GetType().Name), question);
-                //container.Add(question.GetType().Name, question);
             }
-            //context.PushGlobal(container);
         }
 
 

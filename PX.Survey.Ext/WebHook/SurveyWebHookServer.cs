@@ -14,8 +14,8 @@ using System.Web.Http;
 namespace PX.Survey.Ext.WebHook {
     public class SurveyWebhookServerHandler : IWebhookHandler {
 
-        private const string TOKEN_PARAM = "CollectorToken";
-        private const string PAGE_PARAM = "PageNbr";
+        public const string TOKEN_PARAM = "CollectorToken";
+        public const string PAGE_PARAM = "PageNbr";
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
