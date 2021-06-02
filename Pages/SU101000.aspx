@@ -13,11 +13,16 @@
 	<px:PXFormView ID="form" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%" DataMember="surveySetup" TabIndex="3600"
                    FilesIndicator="true" NoteIndicator="true" DefaultControlID="edSurveyNumberingID">
 		<Template>
-			<px:PXLayoutRule runat="server" StartRow="True" LabelsWidth="SM" ControlSize="M"/>
+			<px:PXLayoutRule runat="server" StartRow="True" LabelsWidth="M" ControlSize="XL"/>
             <px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Numbering Settings" />		    
 			<px:PXSelector ID="edSurveyNumberingID" runat="server" DataField="SurveyNumberingID" CommitChanges="True" AllowEdit="True"/>
 			<px:PXSelector ID="edTemplateID" runat="server" DataField="TemplateID" CommitChanges="True" AllowEdit="True"/>
-		    <%--<px:PXCheckBox ID="edDemoSurvey" runat="server" AlreadyLocalized="False" DataField="DemoSurvey" Text="Created Demo Survey"/>--%>
+			<px:PXSelector ID="edPHHeaderID" runat="server" DataField="PHHeaderID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edPHPageHeaderID" runat="server" DataField="PHPageHeaderID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edPHQuestionID" runat="server" DataField="PHQuestionID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edPHPageFooterID" runat="server" DataField="PHPageFooterID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edPHFooterID" runat="server" DataField="PHFooterID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edWebHookID" runat="server" DataField="WebHookID" AllowEdit="True" CommitChanges="true"/>
 			<px:PXSelector ID="edContactID" runat="server" DataField="ContactID" CommitChanges="True" AllowEdit="True"/>
 		</Template>
 		<AutoSize Container="Window" Enabled="True" MinHeight="200" />
