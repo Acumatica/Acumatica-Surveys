@@ -1,5 +1,6 @@
 using PX.Data;
 using PX.Data.BQL;
+using PX.Data.ReferentialIntegrity.Attributes;
 using System;
 
 namespace PX.Survey.Ext {
@@ -9,9 +10,21 @@ namespace PX.Survey.Ext {
     /// </summary>
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveyCollectorData)]
-    //todo: determine if we need a new graph I would assume we would use SurveyCollectorMaint
-    //[PXPrimaryGraph(typeof(SurveyCollectorMaint))]
+    [PXPrimaryGraph(typeof(SurveyCollectorMaint))]
     public class SurveyCollectorData : IBqlTable, INotable {
+
+        #region Keys
+        public class PK : PrimaryKeyOf<SurveyCollectorData>.By<collectorDataID> {
+            public static SurveyCollectorData Find(PXGraph graph, int? collectorDataID) => FindBy(graph, collectorDataID);
+        }
+
+        public static class FK {
+            public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyCollectorData>.By<surveyID> { }
+            public class SUCollectorToken : SurveyCollector.UK.ForeignKeyOf<SurveyCollectorData>.By<token> { }
+        }
+
+
+        #endregion
 
         #region CollectorDataID
         public abstract class collectorDataID : BqlInt.Field<collectorDataID> { }
@@ -30,6 +43,7 @@ namespace PX.Survey.Ext {
         /// </summary>
         [PXUIField(DisplayName = "Token", IsReadOnly = true)]
         [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
+        //[PXParent(typeof(FK.SUCollectorToken))] // Crashes
         public virtual string Token { get; set; }
         #endregion
 
@@ -44,22 +58,11 @@ namespace PX.Survey.Ext {
         /// </remarks>
         [PXUIField(DisplayName = "Collector ID", IsReadOnly = true)]
         [PXDBInt]
-        //todo: determine if we need to establish a parent child relationship. 
-        //      i see this more as a backend parking lot to temporarily store 
-        //      data in a super easy manor so we are unlikely going to need 
-        //      to have it reference on the UI. 
         public virtual int? CollectorID { get; set; }
         #endregion
 
         #region Uri
         public abstract class uri : BqlString.Field<uri> { }
-        //DBDefinition: //[QueryParameters] [nvarchar] (255) NULL,
-        //todo: we might not technically need this but going to have it here
-        //      in-case we want to pass flags along as to invoke dynamic behavior.
-        //      it could prove as a mechanism to turn stuff on or off during processing.
-        /// <summary>
-        /// This will hold the query parameter string
-        /// </summary>
         [PXUIField(DisplayName = "URI", IsReadOnly = true)]
         [PXDBText(IsUnicode = true)]
         public virtual string Uri { get; set; }
@@ -68,7 +71,7 @@ namespace PX.Survey.Ext {
         #region Payload
         public abstract class payload : BqlString.Field<payload> { }
         /// <summary>
-        /// This will hold the content from the html survey submission 
+        /// This will hold the content from the html form submission 
         /// </summary>
         [PXUIField(DisplayName = "Payload", IsReadOnly = true)]
         [PXDBText(IsUnicode = true)]
@@ -95,7 +98,7 @@ namespace PX.Survey.Ext {
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
         [PXDBInt]
-        [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<surveyID>>>>))]
+        [PXForeignReference(typeof(FK.SUSurvey))]
         public virtual int? SurveyID { get; set; }
         #endregion
 
