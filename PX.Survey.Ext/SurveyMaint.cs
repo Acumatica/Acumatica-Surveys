@@ -243,7 +243,8 @@ namespace PX.Survey.Ext {
         }
 
         private void DoGenerateSample(Survey survey) {
-            var user = GenerateSampleUser(survey);
+            Survey.Current = survey;
+            var user = InsertSampleUser(survey);
             var collector = InsertCollector(survey, user);
             var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_ONLY);
             var generator = new SurveyGenerator();
@@ -260,6 +261,9 @@ namespace PX.Survey.Ext {
                 UserLineNbr = user.LineNbr,
             };
             var inserted = Collectors.Insert(collector);
+            Actions.PressSave();
+            //var updated = Collectors.Insert(inserted);
+            //Actions.PressSave();
             return inserted;
         }
 
@@ -282,16 +286,26 @@ namespace PX.Survey.Ext {
             PXNoteAttribute.SetFileNotes(Survey.Cache, Survey.Current, file.UID.Value);
         }
 
-        private SurveyUser GenerateSampleUser(Survey survey) {
+        private SurveyUser InsertSampleUser(Survey survey) {
             var setup = SurveySetup.Current;
             if (!setup.ContactID.HasValue) {
                 throw new PXSetPropertyException(Messages.ContactNotSetup, Messages.SUSetup);
             }
-            var user = new SurveyUser() {
-                Active = true,
-                ContactID = setup.ContactID,
-                SurveyID = survey.SurveyID
-            };
+            //var cache = Users.Cache;
+            SurveyUser user = SelectFrom<SurveyUser>.
+                Where<SurveyUser.surveyID.IsEqual<@P.AsInt>.
+                And<SurveyUser.contactID.IsEqual<@P.AsInt>>>.
+                View.SelectWindowed(this, 0, 1, survey.SurveyID, setup.ContactID);
+            if (user == null) {
+                user = new SurveyUser() {
+                    Active = true,
+                    ContactID = setup.ContactID,
+                    SurveyID = survey.SurveyID
+                };
+                user = Users.Insert(user);
+                //cache.SetDefaultExt<SurveyUser.lineNbr>(user);
+                Actions.PressSave();
+            }
             return user;
         }
 
@@ -400,9 +414,9 @@ namespace PX.Survey.Ext {
             e.Cancel = true;
         }
 
-        protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.pageNbr> e) {
-            e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
-        }
+        //protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.pageNbr> e) {
+        //    e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
+        //}
 
         private int GetMaxPage(int? surveyID) {
             var maxPage = PXSelect<SurveyDetail, Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>>>.Select(this, surveyID).FirstTableItems.Select(sd => sd.PageNbr).Max();
@@ -415,23 +429,26 @@ namespace PX.Survey.Ext {
 
 
         protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.name> e) {
-            var row = e.Row;
-            if (row == null || row.SurveyID == null) {
+            //var row = e.Row;
+            //if (row == null || row.SurveyID == null) {
+            //    return;
+            //}
+            if (Survey.Current == null) {
                 return;
             }
             var survey = Survey.Current;
-            e.NewValue = $"{survey.SurveyCD} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
+            e.NewValue = $"{survey.SurveyCD}-{PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
             e.Cancel = true;
         }
 
-        protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
-            var row = e.Row;
-            if (row == null || row.CollectorID == null) {
-                return;
-            }
-            e.NewValue = Net_Utils.ComputeMd5(row.CollectorID.ToString(), true);
-            e.Cancel = true;
-        }
+        //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
+        //    var row = e.Row;
+        //    if (row == null || row.CollectorID == null) {
+        //        return;
+        //    }
+        //    e.NewValue = Net_Utils.ComputeMd5(row.CollectorID.ToString(), true);
+        //    e.Cancel = true;
+        //}
 
         [PXCacheName("CreateSurveyFilter")]
         [Serializable]

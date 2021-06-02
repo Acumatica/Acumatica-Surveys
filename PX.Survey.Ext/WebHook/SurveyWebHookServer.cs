@@ -21,10 +21,11 @@ namespace PX.Survey.Ext.WebHook {
         async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
             using (var scope = GetUserScope()) {
                 string message;
+                string collectorToken = "NO_TOKEN";
                 HttpStatusCode status = HttpStatusCode.OK;
                 try {
                     var _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
-                    var collectorToken = _queryParameters.Get(TOKEN_PARAM);
+                    collectorToken = _queryParameters.Get(TOKEN_PARAM);
                     if (string.IsNullOrEmpty(collectorToken)) {
                         throw new Exception($"The {TOKEN_PARAM} Parameter was not specified in the Query String");
                     }
@@ -38,7 +39,7 @@ namespace PX.Survey.Ext.WebHook {
                     message = GetSurveyPage(collectorToken, pageNbr);
                 } catch (Exception ex) {
                     status = HttpStatusCode.BadRequest;
-                    message = GetBadRequestPage(ex.Message);
+                    message = GetBadRequestPage(collectorToken, ex.Message);
                 }
                 return new HtmlActionResult(message, status);
             }
@@ -51,9 +52,9 @@ namespace PX.Survey.Ext.WebHook {
             return pageNbr;
         }
 
-        private string GetBadRequestPage(string message) {
+        private string GetBadRequestPage(string token, string message) {
             var generator = new SurveyGenerator();
-            var content = generator.GenerateBadRequestPage(message);
+            var content = generator.GenerateBadRequestPage(token, message);
             return content;
         }
 
