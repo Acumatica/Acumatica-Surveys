@@ -6,6 +6,7 @@ using Scriban.Runtime;
 using Scriban.Syntax;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace PX.Survey.Ext {
     public class SurveyGenerator {
@@ -76,6 +77,8 @@ namespace PX.Survey.Ext {
         private TemplateContext GetSurveyContext(Survey survey, SurveyUser user, string token) {
             var setup = graph.SurveySetup.Current;
             var context = new TemplateContext();
+            context.MemberRenamer = MyMemberRenamerDelegate;
+            context.MemberFilter = MyMemberFilterDelegate;
             Api.Webhooks.DAC.WebHook webHook = PXSelect<Api.Webhooks.DAC.WebHook,
                 Where<Api.Webhooks.DAC.WebHook.webHookID,
                 Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(graph, survey.WebHookID);
@@ -90,6 +93,14 @@ namespace PX.Survey.Ext {
             //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
             context.PushGlobal(container);
             return context;
+        }
+
+        public static string MyMemberRenamerDelegate(MemberInfo member) {
+            return member.Name;
+        }
+
+        public static bool MyMemberFilterDelegate(MemberInfo member) {
+            return true;
         }
 
         private IEnumerable<string> GetRenderedPage(Survey survey, SurveyUser user, TemplateContext context, int pageNbr) {
