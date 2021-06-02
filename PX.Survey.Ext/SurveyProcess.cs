@@ -56,7 +56,7 @@ namespace PX.Survey.Ext {
                     case SurveyAction.ProcessAnswers:
                         errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
                         break;
-                    case SurveyAction.NewOnly:
+                    case SurveyAction.SendNew:
                         errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
                         break;
                     case SurveyAction.RemindOnly:
