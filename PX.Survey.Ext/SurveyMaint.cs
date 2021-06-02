@@ -13,25 +13,32 @@ namespace PX.Survey.Ext {
         public SelectFrom<Survey>.View Survey;
 
         public SurveyDetailSelect Details;
+        public PXSelect<SurveyDetail,
+            Where<SurveyDetail.surveyID, Equal<Current<Survey.surveyID>>,
+            And<SurveyDetail.active, Equal<True>>>,
+            OrderBy<Asc<SurveyDetail.sortOrder, Asc<SurveyDetail.lineNbr>>>> ActivePages;
 
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
+
+        [PXCopyPasteHiddenView]
         public SelectFrom<SurveyCollector>.
             LeftJoin<SurveyUser>.
                 On<SurveyUser.surveyID.IsEqual<SurveyCollector.surveyID>.
                 And<SurveyUser.lineNbr.IsEqual<SurveyCollector.userLineNbr>>>.
             Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
 
-        public SelectFrom<SurveyCollectorData>.
-            Where<SurveyCollectorData.surveyID.IsEqual<Survey.surveyID.FromCurrent>.
-            And<SurveyCollectorData.token.IsEqual<SurveyCollector.token.FromCurrent>>>.View CollectorDataRecords;
+        //public SelectFrom<SurveyCollectorData>.
+        //    Where<SurveyCollectorData.surveyID.IsEqual<Survey.surveyID.FromCurrent>.
+        //    And<SurveyCollectorData.token.IsEqual<SurveyCollector.token.FromCurrent>>>.View CollectorDataRecords;
+
+        public PXSelect<SurveyCollectorData,
+            Where<SurveyCollectorData.surveyID, Equal<Current<Survey.surveyID>>,
+            And<SurveyCollectorData.token, Equal<Current<SurveyCollector.token>>>>,
+            OrderBy<Asc<SurveyCollectorData.createdDateTime>>> CollectorDataRecords;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
         public PXSetup<SurveySetup> SurveySetup;
-
-        [PXHidden]
-        [PXCopyPasteHiddenView]
-        public SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View SurveyCollector;
 
         public SurveyMaint() {
         }
