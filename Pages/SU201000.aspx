@@ -12,9 +12,14 @@
             <px:PXDSCallbackCommand Name="AddSelectedRecipients" Visible="False" />
             <px:PXDSCallbackCommand Name="AddTemplates" Visible="False" />
             <px:PXDSCallbackCommand Name="AddSelectedTemplates" Visible="False" />
+            <px:PXDSCallbackCommand Name="CheckCreateParams" Visible="False" PopupCommand="" PopupCommandTarget="" PopupPanel="" Text="" />
+            <px:PXDSCallbackCommand Name="ResetPageNumbers" Visible="False" />
+            <px:PXDSCallbackCommand Name="CreateSurvey" Visible="False" />
             <px:PXDSCallbackCommand Name="SurveyDetailPasteLine" Visible="False" />
             <px:PXDSCallbackCommand Name="SurveyDetailResetOrder" Visible="False" CommitChanges="true" />
             <px:PXDSCallbackCommand Name="GenerateSample" Visible="False" />
+            <px:PXDSCallbackCommand Name="InsertSampleCollector" Visible="False" />
+            <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
         </CallbackCommands>
     </px:PXDataSource>
 </asp:Content>
@@ -22,13 +27,17 @@
     <px:PXFormView ID="form" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%" DataMember="Survey" Caption="Survey"
         DefaultControlID="edSurveyCD" FilesIndicator="true" NoteIndicator="true">
         <Template>
-            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM"></px:PXLayoutRule>
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" />
             <px:PXSelector runat="server" ID="edSurveyCD" DataField="SurveyCD" />
-            <px:PXTextEdit runat="server" ID="edName" DataField="Name" Width="300px" CommitChanges="true" />
             <px:PXDropDown runat="server" ID="edTarget" DataField="Target" CommitChanges="true" />
             <px:PXDropDown runat="server" ID="edLayout" DataField="Layout" CommitChanges="true" />
+            <px:PXLayoutRule runat="server" LabelsWidth="S" ColumnSpan="2" />
+            <px:PXTextEdit runat="server" ID="edTitle" DataField="Title" Width="500px" CommitChanges="true" />
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" />
             <px:PXSelector runat="server" ID="edTemplateID" DataField="TemplateID" Width="300px" CommitChanges="true" />
-            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true"></px:PXLayoutRule>
+            <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
+            <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true" />
             <px:PXCheckBox runat="server" ID="edActive" DataField="Active" CommitChanges="true"></px:PXCheckBox>
         </Template>
     </px:PXFormView>
@@ -41,37 +50,49 @@
                     <%--<px:PXSplitContainer runat="server" SplitterPosition="200" ID="spv1" Height="400px" SkinID="Horizontal">
                         <AutoSize Enabled="true" />
                         <Template1>--%>
-                            <px:PXGrid runat="server" AllowPaging="False" ID="gridDetails" SyncPosition="True" KeepPosition="True" AutoCallBack-Target="gridViewFields" AutoCallBack-Command="Refresh" SkinID="Details" TabIndex="500" Width="100%" DataSourceID="ds">
-                                <AutoSize Enabled="True" MinHeight="280" />
-                                <Levels>
-                                    <px:PXGridLevel DataMember="Details">
-                                        <RowTemplate>
-                                        </RowTemplate>
-                                        <Columns>
-                                            <px:PXGridColumn DataField="Active" AllowNull="False" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" Width="60px" />
-                                            <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true" CommitChanges="true" />
-                                            <px:PXGridColumn DataField="TemplateType" Width="150px" AllowDragDrop="true" CommitChanges="true" />
-                                            <px:PXGridColumn DataField="TemplateID" Width="300px" AllowDragDrop="true" CommitChanges="true" LinkCommand="ViewTemplate"/>
-                                            <px:PXGridColumn DataField="Description" Width="400px" AllowDragDrop="true" />
-                                            <px:PXGridColumn DataField="AttributeID" Width="150px" AllowDragDrop="true" LinkCommand="ViewAttribute"/>
-                                        </Columns>
-                                    </px:PXGridLevel>
-                                </Levels>
-                                <ActionBar>
-                                    <CustomItems>
-                                        <px:PXToolBarButton Key="AddTemplates">
-                                            <AutoCallBack Command="AddTemplates" Target="ds" />
-                                        </px:PXToolBarButton>
-                                        <px:PXToolBarButton Key="GenerateSample">
-                                            <AutoCallBack Command="GenerateSample" Target="ds" />
-                                        </px:PXToolBarButton>
-                                    </CustomItems>
-                                </ActionBar>
-                                <CallbackCommands PasteCommand="SurveyDetailPasteLine">
-                                </CallbackCommands>
-                                <Mode InitNewRow="True" AllowDragRows="true" />
-                            </px:PXGrid>
-                        <%-- </Template1>
+                    <px:PXGrid runat="server" AllowPaging="False" ID="gridDetails" SyncPosition="True" KeepPosition="True" AutoCallBack-Target="gridViewFields" AutoCallBack-Command="Refresh" SkinID="Details" TabIndex="500" Width="100%" DataSourceID="ds">
+                        <AutoSize Enabled="True" MinHeight="280" />
+                        <Levels>
+                            <px:PXGridLevel DataMember="Details">
+                                <RowTemplate>
+                                </RowTemplate>
+                                <Columns>
+                                    <px:PXGridColumn DataField="Active" AllowNull="False" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" Width="60px" />
+                                    <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="TemplateType" Width="120px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="TemplateID" Width="250px" AllowDragDrop="true" CommitChanges="true" LinkCommand="ViewTemplate" />
+                                    <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="Description" Width="500px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" CommitChanges="true" LinkCommand="ViewAttribute" />
+                                    <px:PXGridColumn DataField="AttrDesc" Width="150px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="ControlType" Type="DropDownList" Width="100px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="ReverseOrder" Type="CheckBox" TextAlign="Center" Width="100px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="NbrOfRows" Width="80px" AllowDragDrop="true" CommitChanges="true" />
+
+                                </Columns>
+                            </px:PXGridLevel>
+                        </Levels>
+                        <ActionBar>
+                            <CustomItems>
+                                <px:PXToolBarButton Key="AddTemplates">
+                                    <AutoCallBack Command="AddTemplates" Target="ds" />
+                                </px:PXToolBarButton>
+                                <px:PXToolBarButton Key="CreateSurvey">
+                                    <AutoCallBack Command="CreateSurvey" Target="ds" />
+                                </px:PXToolBarButton>
+                                <px:PXToolBarButton Key="ResetPageNumbers">
+                                    <AutoCallBack Command="ResetPageNumbers" Target="ds" />
+                                </px:PXToolBarButton>
+                                <px:PXToolBarButton Key="GenerateSample">
+                                    <AutoCallBack Command="GenerateSample" Target="ds" />
+                                </px:PXToolBarButton>
+                            </CustomItems>
+                        </ActionBar>
+                        <CallbackCommands PasteCommand="SurveyDetailPasteLine">
+                        </CallbackCommands>
+                        <Mode InitNewRow="True" AllowDragRows="true" />
+                    </px:PXGrid>
+                    <%-- </Template1>
                         <Template2>
                             <px:PXGrid ID="gridViewFields" AllowPaging="False" AllowSearch="true" AllowFilter="true" runat="server" DataSourceID="ds" DefaultControlID="edExternalNameField" SkinID="DetailsWithFilter" Width="100%" Height="200px" MatrixMode="True">
                                 <AutoSize Enabled="True" MinHeight="320" />
@@ -228,7 +249,7 @@
 					</px:PXGrid>
 				</Template>
 			</px:PXTabItem>--%>
-            <px:PXTabItem Text="Collectors" BindingContext="form">
+            <px:PXTabItem Text="Collectors">
                 <Template>
                     <px:PXSplitContainer runat="server" SplitterPosition="200" ID="spv1" Height="400px" SkinID="Horizontal">
                         <AutoSize Enabled="true" />
@@ -246,19 +267,21 @@
                                             <px:PXGridColumn DataField="SurveyUser__DisplayName" Width="180px" />
                                             <px:PXGridColumn DataField="SurveyUser__Phone" Width="180px" />
                                             <px:PXGridColumn DataField="SurveyUser__Email" Width="180px" />
-                                            <px:PXGridColumn DataField="CollectedDate" Width="280px" />
                                             <px:PXGridColumn DataField="ExpirationDate" Width="200px" />
                                             <px:PXGridColumn DataField="Status" Type="DropDownList" Width="200px" />
                                             <px:PXGridColumn DataField="Message" Width="200px" />
-                                            <px:PXGridColumn DataField="Rendered" Width="200px" />
+                                            <px:PXGridColumn DataField="LastModifiedDateTime" Width="280px" />
                                         </Columns>
                                     </px:PXGridLevel>
                                 </Levels>
                                 <ActionBar>
                                     <CustomItems>
-                                        <%--                                        <px:PXToolBarButton Text="Load Views">
-                                            <AutoCallBack Command="LoadViews" Target="ds" />
-                                        </px:PXToolBarButton>--%>
+                                        <px:PXToolBarButton Key="InsertSampleCollector">
+                                            <AutoCallBack Command="InsertSampleCollector" Target="ds" />
+                                        </px:PXToolBarButton>
+                                        <px:PXToolBarButton Key="RedirectToSurvey">
+                                            <AutoCallBack Command="RedirectToSurvey" Target="ds" />
+                                        </px:PXToolBarButton>
                                     </CustomItems>
                                 </ActionBar>
                                 <%--<CallbackCommands PasteCommand="ViewPasteLine">
@@ -268,18 +291,17 @@
                             </px:PXGrid>
                         </Template1>
                         <Template2>
-                            <px:PXGrid ID="gridCollectorDatas" AllowPaging="False" AllowSearch="true" AllowFilter="true" runat="server" DataSourceID="ds" DefaultControlID="edExternalNameField" SkinID="DetailsWithFilter" Width="100%" Height="200px" MatrixMode="True">
+                            <px:PXGrid ID="gridCollectorDatas" AllowSearch="true" AllowFilter="true" runat="server" DataSourceID="ds" SkinID="DetailsWithFilter" Width="100%" Height="200px">
                                 <AutoSize Enabled="True" MinHeight="320" />
                                 <Levels>
                                     <px:PXGridLevel DataMember="CollectorDataRecords">
                                         <RowTemplate>
                                         </RowTemplate>
                                         <Columns>
-                                            <px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" />
-                                            <px:PXGridColumn DataField="Uri" Width="180px" />
-                                            <px:PXGridColumn DataField="QueryParameters" Width="280px" />
+                                            <px:PXGridColumn DataField="PageNbr" Width="100px" />
+                                            <px:PXGridColumn DataField="Payload" Width="400px" />
                                             <px:PXGridColumn DataField="Status" Type="DropDownList" Width="200px" />
-                                            <px:PXGridColumn DataField="Message" Width="200px" />
+                                            <px:PXGridColumn DataField="Message" Width="300px" />
                                         </Columns>
                                     </px:PXGridLevel>
                                 </Levels>
@@ -287,41 +309,13 @@
                                     <Actions>
                                         <Search Enabled="true" />
                                     </Actions>
-                                    <CustomItems>
-                                        <%--                                        <px:PXToolBarButton Text="Clear Unused" DependOnGrid="gridCollectors">
-                                            <AutoCallBack Command="ClearUnusedFields" Target="ds" />
-                                        </px:PXToolBarButton>--%>
-                                    </CustomItems>
                                 </ActionBar>
-                                <%--<CallbackCommands PasteCommand="FieldPasteLine">
-                                    <%--                                    <Save PostData="Container" />--%
-                                </CallbackCommands>--%>
-                                <Mode InitNewRow="True" AllowDragRows="true" AllowAddNew="True" AllowDelete="True" />
+                                <Mode InitNewRow="True" AllowDelete="True" />
                             </px:PXGrid>
                         </Template2>
                     </px:PXSplitContainer>
                 </Template>
             </px:PXTabItem>
-            <%--<px:PXTabItem Text="Template">
-                <Template>
-                    <px:PXFormView ID="outTemplateForm" runat="server" DataSourceID="ds" Style="left: 18px; top: 36px;" Width="100%" DataMember="Survey"
-                        CaptionVisible="False" SkinID="Transparent">
-                        <Template>
-                            <px:PXTextEdit SuppressLabel="true" ID="outTemplateBox" DisableSpellcheck="true" runat="server" Width="100%" Height="500" DataField="Template" TextMode="MultiLine" />
-                        </Template>
-                    </px:PXFormView>
-                </Template>
-            </px:PXTabItem>--%>
-            <%--<px:PXTabItem Text="Rendered Survey" >
-                <Template>
-                    <px:PXFormView ID="outRenderedForm" runat="server" DataSourceID="ds" Style="left: 18px; top: 36px;" Width="100%" DataMember="Survey"
-                        CaptionVisible="False" SkinID="Transparent">
-                        <Template>
-                            <px:PXTextEdit SuppressLabel="true" ID="outRenderedBox" Enabled="false" DisableSpellcheck="true" runat="server" Width="100%" Height="500" DataField="Rendered" TextMode="MultiLine" />
-                        </Template>
-                    </px:PXFormView>
-                </Template>
-            </px:PXTabItem>--%>
         </Items>
         <AutoSize Container="Window" Enabled="True" MinHeight="250" />
     </px:PXTab>
@@ -387,7 +381,6 @@
                         <px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" />
                         <px:PXGridColumn DataField="TemplateType" />
                         <px:PXGridColumn DataField="Description" Width="200px" />
-
                     </Columns>
                 </px:PXGridLevel>
             </Levels>
@@ -397,6 +390,24 @@
             <px:PXButton ID="btnTemplateAdd" runat="server" CommandSourceID="ds" Text="Add" CommandName="AddSelectedTemplates" />
             <px:PXButton ID="btnTemplateAddAndClose" runat="server" Text="Add & Close" DialogResult="OK" />
             <px:PXButton ID="btnTemplateCancel" runat="server" DialogResult="Cancel" Text="Cancel" />
+        </px:PXPanel>
+    </px:PXSmartPanel>
+    <%-- Create Survey --%>
+    <px:PXSmartPanel ID="panelCreateSurvey" runat="server" Caption="Create Survey" CaptionVisible="true" LoadOnDemand="true" Key="createSurveyFilter"
+        AutoCallBack-Enabled="true" AutoCallBack-Target="formCreateSurvey" AutoCallBack-Command="Refresh" CallBackMode-CommitChanges="True"
+        CallBackMode-PostData="Page">
+        <div style="padding: 5px">
+            <px:PXFormView ID="formCreateSurvey" runat="server" DataSourceID="ds" CaptionVisible="False" DataMember="createSurveyFilter">
+                <Activity Height="" HighlightColor="" SelectedColor="" Width="" />
+                <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                <Template>
+                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" />
+                    <px:PXTextEdit runat="server" ID="edNbQuestions" DataField="NbQuestions" Width="300px" CommitChanges="true" />
+                </Template>
+            </px:PXFormView>
+        </div>
+        <px:PXPanel ID="btnPanelCreateSurvey" runat="server" SkinID="Buttons">
+            <px:PXButton ID="btnCreateSurvey" runat="server" DialogResult="OK" Text="OK" CommandName="CheckCreateParams" CommandSourceID="ds" />
         </px:PXPanel>
     </px:PXSmartPanel>
 </asp:Content>
