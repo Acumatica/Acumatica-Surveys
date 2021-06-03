@@ -35,6 +35,14 @@ namespace PX.Survey.Ext {
         public abstract class surveyID : BqlInt.Field<surveyID> { }
         [PXDBInt(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
+        [PXUIField(DisplayName = "Survey ID", IsReadOnly = true)]
+        [PXSelector(typeof(Search<Survey.surveyID>),
+                    typeof(Survey.surveyCD),
+                    typeof(Survey.title),
+                    typeof(Survey.target),
+                    typeof(Survey.layout),
+            SubstituteKey = typeof(Survey.surveyCD),
+            DescriptionField = typeof(Survey.title))]
         [PXParent(typeof(FK.SUSurvey))]
         public virtual int? SurveyID { get; set; }
         #endregion
@@ -50,21 +58,13 @@ namespace PX.Survey.Ext {
         #region ContactID
         public abstract class contactID : BqlInt.Field<contactID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Recipient Name")]
-        [PXSelector(typeof(Search<Contact.contactID,
-                            Where<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>),
-                    DescriptionField = typeof(Contact.displayName))]
+        [PXUIField(DisplayName = "Recipient")]
+        [PXRestrictor(typeof(Where<Contact.isActive, Equal<True>>), "Contact '{0}' is inactive or closed.", new Type[] { typeof(Contact.displayName) })]
+        [PXSelector(typeof(Search2<Contact.contactID, LeftJoin<BAccount, On<BAccount.bAccountID, Equal<Contact.bAccountID>>>>),
+            DescriptionField = typeof(Contact.displayName), Filterable = true)]
         [PXCheckUnique(Where = typeof(Where<SurveyUser.surveyID, Equal<Current<surveyID>>>), ClearOnDuplicate = false)]
         [PXForeignReference(typeof(FK.SUContact))]
         public virtual int? ContactID { get; set; }
-        #endregion
-
-        #region Active
-        public abstract class active : BqlBool.Field<active> { }
-        [PXDBBool]
-        [PXDefault(true)]
-        [PXUIField(DisplayName = "Active")]
-        public virtual bool? Active { get; set; }
         #endregion
 
         #region RecipientType
@@ -74,6 +74,14 @@ namespace PX.Survey.Ext {
         [PXFormula(typeof(Selector<contactID, Contact.contactType>))]
         [PXUIField(DisplayName = "Recipient Type", Enabled = false)]
         public virtual string RecipientType { get; set; }
+        #endregion
+
+        #region Active
+        public abstract class active : BqlBool.Field<active> { }
+        [PXDBBool]
+        [PXDefault(true)]
+        [PXUIField(DisplayName = "Active")]
+        public virtual bool? Active { get; set; }
         #endregion
 
         #region UserID
@@ -103,21 +111,50 @@ namespace PX.Survey.Ext {
         public abstract class displayName : BqlString.Field<displayName> { }
         [PXString(IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.displayName>))]
-        [PXUIField(DisplayName = "Display Name", Enabled = false)]
+        [PXUIField(DisplayName = "Full Name", Enabled = false)]
         public virtual string DisplayName { get; set; }
         #endregion
 
-        #region Phone
+        #region Phone1
         public abstract class phone1 : BqlString.Field<phone1> { }
         [PXString(50, IsUnicode = true)]
+        [PXPersonalDataField]
         [PXFormula(typeof(Selector<contactID, Contact.phone1>))]
-        [PXUIField(DisplayName = "Phone", Enabled = false)]
-        public virtual string Phone { get; set; }
+        [PXUIField(DisplayName = "Phone 1", Enabled = false)]
+        public virtual string Phone1 { get; set; }
+        #endregion
+
+        #region Phone1Type
+        public abstract class phone1Type : BqlString.Field<phone1Type> { }
+        [PXString(3)]
+        [PhoneTypes]
+        [PXFormula(typeof(Selector<contactID, Contact.phone1Type>))]
+        [PXUIField(DisplayName = "Phone 1 Type", Enabled = false)]
+        public virtual string Phone1Type { get; set; }
+        #endregion
+
+        #region Phone2
+        public abstract class phone2 : BqlString.Field<phone2> { }
+        [PXString(50, IsUnicode = true)]
+        [PXPersonalDataField]
+        [PXFormula(typeof(Selector<contactID, Contact.phone2>))]
+        [PXUIField(DisplayName = "Phone 2", Enabled = false)]
+        public virtual string Phone2 { get; set; }
+        #endregion
+
+        #region Phone2Type
+        public abstract class phone2Type : BqlString.Field<phone2Type> { }
+        [PXString(3)]
+        [PhoneTypes]
+        [PXFormula(typeof(Selector<contactID, Contact.phone2Type>))]
+        [PXUIField(DisplayName = "Phone 2 Type", Enabled = false)]
+        public virtual string Phone2Type { get; set; }
         #endregion
 
         #region Email
         public abstract class email : BqlString.Field<email> { }
         [PXString(255, IsUnicode = true)]
+        [PXPersonalDataField]
         [PXFormula(typeof(Selector<contactID, Contact.eMail>))]
         [PXUIField(DisplayName = "Email", Enabled = false)]
         public virtual string Email { get; set; }
