@@ -38,7 +38,7 @@ namespace PX.Survey.Ext {
 
         public string GenerateBadRequestPage(string token, string message) {
             var setup = graph.SurveySetup.Current;
-            var pageTemplate = SurveyTemplate.PK.Find(graph, setup.TemplateID);
+            var pageTemplate = SurveyTemplate.PK.Find(graph, setup.BadRequestID);
             var template = Template.Parse(pageTemplate.Body);
             var context = new TemplateContext();
             var container = new ScriptObject {

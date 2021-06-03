@@ -48,6 +48,7 @@ namespace PX.Survey.Ext {
             public const string Header = "Header";
             public const string PageHeader = "Page Header";
             public const string QuestionPage = "Question";
+            public const string CommentPage = "Comment";
             public const string ContentPage = "Content";
             public const string PageFooter = "Page Footer";
             public const string Footer = "Footer";

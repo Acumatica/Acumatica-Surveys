@@ -20,70 +20,109 @@ namespace PX.Survey.Ext {
         public virtual string SurveyNumberingID { get; set; }
         #endregion
 
-        #region TemplateID
-        public abstract class templateID : BqlInt.Field<templateID> { }
+        #region BadRequestID
+        public abstract class badRequestID : BqlInt.Field<badRequestID> { }
         [PXDBInt]
         [PXUIField(DisplayName = "Bad Request Template")]
         [PXDefault]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.badRequest>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? BadRequestID { get; set; }
+        #endregion
+
+        #region TemplateID
+        public abstract class templateID : BqlInt.Field<templateID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Main Template")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
         public virtual int? TemplateID { get; set; }
         #endregion
 
-        #region PHHeaderID
-        public abstract class pHHeaderID : BqlInt.Field<pHHeaderID> { }
+        #region DefHeaderID
+        public abstract class defHeaderID : BqlInt.Field<defHeaderID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Place Holder Header")]
+        [PXUIField(DisplayName = "Default Header")]
         [PXDefault]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.header>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
-        public virtual int? PHHeaderID { get; set; }
+        public virtual int? DefHeaderID { get; set; }
         #endregion
 
-        #region PHPageHeaderID
-        public abstract class pHPageHeaderID : BqlInt.Field<pHPageHeaderID> { }
+        #region DefPageHeaderID
+        public abstract class defPageHeaderID : BqlInt.Field<defPageHeaderID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Place Holder Page Header")]
+        [PXUIField(DisplayName = "Default Page Header")]
         [PXDefault]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageHeader>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
-        public virtual int? PHPageHeaderID { get; set; }
+        public virtual int? DefPageHeaderID { get; set; }
         #endregion
 
-        #region PHQuestionID
-        public abstract class pHQuestionID : BqlInt.Field<pHQuestionID> { }
+        #region DefQuestionID
+        public abstract class defQuestionID : BqlInt.Field<defQuestionID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Place Holder Question")]
+        [PXUIField(DisplayName = "Default Question")]
         [PXDefault]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.questionPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
-        public virtual int? PHQuestionID { get; set; }
+        public virtual int? DefQuestionID { get; set; }
         #endregion
 
-        #region PHPageFooterID
-        public abstract class pHPageFooterID : BqlInt.Field<pHPageFooterID> { }
+        #region DefAttributeID
+        public abstract class defAttributeID : BqlString.Field<defAttributeID> { }
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXDefault]
+        [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
+        [PXUIField(DisplayName = "Default Answer Type")]
+        public virtual string DefAttributeID { get; set; }
+        #endregion
+
+        #region DefCommentID
+        public abstract class defCommentID : BqlInt.Field<defCommentID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Place Holder Page Footer")]
+        [PXUIField(DisplayName = "Default Comment")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.commentPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefCommentID { get; set; }
+        #endregion
+
+        #region DefNbrOfRows
+        public abstract class defNbrOfRows : BqlInt.Field<defNbrOfRows> { }
+        [PXDBInt]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Def. Comment Rows")]
+        public virtual int? DefNbrOfRows { get; set; }
+        #endregion
+
+        #region DefPageFooterID
+        public abstract class defPageFooterID : BqlInt.Field<defPageFooterID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Page Footer")]
         [PXDefault]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageFooter>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
-        public virtual int? PHPageFooterID { get; set; }
+        public virtual int? DefPageFooterID { get; set; }
         #endregion
 
-        #region PHFooterID
-        public abstract class pHFooterID : BqlInt.Field<pHFooterID> { }
+        #region DefFooterID
+        public abstract class defFooterID : BqlInt.Field<defFooterID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Place Holder Footer")]
+        [PXUIField(DisplayName = "Default Footer")]
         [PXDefault]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.footer>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
-        public virtual int? PHFooterID { get; set; }
+        public virtual int? DefFooterID { get; set; }
         #endregion
 
         #region ContactID
@@ -101,7 +140,7 @@ namespace PX.Survey.Ext {
         public abstract class webHookID : BqlGuid.Field<webHookID> { }
         [PXDBGuid(false)]
         [PXDefault]
-        [PXUIField(DisplayName = "Web Hook")]
+        [PXUIField(DisplayName = "Default Web Hook")]
         [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID), 
             new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive), 
                 typeof(Api.Webhooks.DAC.WebHook.isSystem) },
