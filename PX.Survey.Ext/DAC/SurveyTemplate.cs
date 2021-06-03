@@ -56,13 +56,6 @@ namespace PX.Survey.Ext {
         public virtual string Body { get; set; }
         #endregion
 
-        //#region RefNoteID
-        //public abstract class refNoteID : BqlGuid.Field<refNoteID> { }
-        //[PXDBGuid(false)]
-        //[PXUIField(DisplayName = "Entity Link")]
-        //public virtual Guid? RefNoteID { get; set; }
-        //#endregion
-
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
@@ -72,6 +65,7 @@ namespace PX.Survey.Ext {
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedByID, Enabled = false)]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
 
@@ -84,12 +78,14 @@ namespace PX.Survey.Ext {
         #region CreatedDateTime
         public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
         [PXDBCreatedDateTime]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedDateTime, Enabled = false)]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
 
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
         [PXDBLastModifiedByID]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.LastModifiedByID, Enabled = false)]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
 
@@ -102,6 +98,7 @@ namespace PX.Survey.Ext {
         #region LastModifiedDateTime
         public abstract class lastModifiedDateTime : BqlDateTime.Field<lastModifiedDateTime> { }
         [PXDBLastModifiedDateTime]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.LastModifiedDateTime, Enabled = false)]
         public virtual DateTime? LastModifiedDateTime { get; set; }
         #endregion
 

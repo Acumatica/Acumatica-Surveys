@@ -2,7 +2,6 @@
 using PX.Data.BQL;
 using PX.Data.EP;
 using PX.Data.ReferentialIntegrity.Attributes;
-using PX.Data.Webhooks;
 using PX.Objects.CR;
 using PX.Objects.CS;
 using PX.Objects.IN.Matrix.Attributes;
@@ -42,7 +41,7 @@ namespace PX.Survey.Ext {
         [PXDefault]
         [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">CCCCCCCCCCCCCCC")]
         [PXUIField(DisplayName = "Survey ID")]
-        [PXSelector(typeof(Survey.surveyCD))]
+        [PXSelector(typeof(surveyCD))]
         [AutoNumber(typeof(SurveySetup.surveyNumberingID), typeof(AccessInfo.businessDate))]
         public virtual string SurveyCD { get; set; }
         #endregion
@@ -109,19 +108,12 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region Active
-        public abstract class active : BqlBool.Field<Survey.active> { }
+        public abstract class active : BqlBool.Field<active> { }
 
         [PXDBBool]
         [PXUIField(DisplayName = "Active")]
         public virtual bool? Active { get; set; }
         #endregion
-
-        //#region Template
-        //public abstract class template : BqlString.Field<template> { }
-        //[PXDBLocalizableString(IsUnicode = true)]
-        //[PXUIField(DisplayName = "Template")]
-        //public virtual string Template { get; set; }
-        //#endregion
 
         #region WorkgroupID
         public abstract class workgroupID : BqlInt.Field<workgroupID> { }
@@ -137,63 +129,63 @@ namespace PX.Survey.Ext {
         [PXDefault(typeof(Search<CREmployee.defContactID, Where<CREmployee.userID, Equal<Current<AccessInfo.userID>>, And<CREmployee.status, NotEqual<BAccount.status.inactive>>>>),
             PersistingCheck = PXPersistingCheck.Nothing)]
         [Owner(typeof(workgroupID), null, false, false, null, null)] // Do not validate : Did not allow some value when data was coming from Shipments
-        //[PXFormula(typeof(Selector<bAccountID, BAccount.ownerID>))]
         public virtual int? OwnerID { get; set; }
         #endregion
 
         #region NoteID
-        public abstract class noteID : BqlGuid.Field<Survey.noteID> { }
+        public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
 
         #region CreatedByID
-        public abstract class createdByID : BqlGuid.Field<Survey.createdByID> { }
+        public abstract class createdByID : BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedByID, Enabled = false)]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
+
         #region CreatedByScreenID
-        public abstract class createdByScreenID : BqlString.Field<Survey.createdByScreenID> { }
+        public abstract class createdByScreenID : BqlString.Field<createdByScreenID> { }
         [PXDBCreatedByScreenID]
         public virtual string CreatedByScreenID { get; set; }
         #endregion
+
         #region CreatedDateTime
-        public abstract class createdDateTime : BqlDateTime.Field<Survey.createdDateTime> { }
-        [PXDBCreatedDateTime(InputMask = "g", DisplayMask = "g")]
-        [PXUIField(DisplayName = "Created Date Time", Enabled = false)]
+        public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
+        [PXDBCreatedDateTime]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedDateTime, Enabled = false)]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
+
         #region LastModifiedByID
-        public abstract class lastModifiedByID : BqlGuid.Field<Survey.lastModifiedByID> { }
+        public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
         [PXDBLastModifiedByID]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.LastModifiedByID, Enabled = false)]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
+
         #region LastModifiedByScreenID
-        public abstract class lastModifiedByScreenID : BqlString.Field<Survey.lastModifiedByScreenID> { }
+        public abstract class lastModifiedByScreenID : BqlString.Field<lastModifiedByScreenID> { }
         [PXDBLastModifiedByScreenID]
         public virtual string LastModifiedByScreenID { get; set; }
         #endregion
+
         #region LastModifiedDateTime
-        public abstract class lastModifiedDateTime : BqlDateTime.Field<Survey.lastModifiedDateTime> { }
-        [PXDBLastModifiedDateTime(InputMask = "g", DisplayMask = "g")]
-        [PXUIField(DisplayName = "Last Modified Date Time", Enabled = false)]
+        public abstract class lastModifiedDateTime : BqlDateTime.Field<lastModifiedDateTime> { }
+        [PXDBLastModifiedDateTime]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.LastModifiedDateTime, Enabled = false)]
         public virtual DateTime? LastModifiedDateTime { get; set; }
         #endregion
+
         #region tstamp
         public abstract class Tstamp : BqlByteArray.Field<Tstamp> { }
         [PXDBTimestamp]
         public virtual byte[] tstamp { get; set; }
         #endregion
 
-        #region SurveyIDStringID
-        public abstract class surveyIDStringID : BqlString.Field<surveyIDStringID> { }
-        [PXString]
-        [PXUIField(Visible = false, Visibility = PXUIVisibility.Invisible)]
-        public virtual string SurveyIDStringID => this.SurveyID.ToString();
-        #endregion
-
         #region IsSurveyInUse
-        public abstract class isSurveyInUse : BqlBool.Field<Survey.isSurveyInUse> { }
+        public abstract class isSurveyInUse : BqlBool.Field<isSurveyInUse> { }
         /// <summary>
         /// Field to identify if Survey is in use
         /// </summary>

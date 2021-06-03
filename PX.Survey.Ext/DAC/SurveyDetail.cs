@@ -1,7 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Data.EP;
-using PX.Data.ReferentialIntegrity;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.IN.Matrix.Attributes;
 using System;
