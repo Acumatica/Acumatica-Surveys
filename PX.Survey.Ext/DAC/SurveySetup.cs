@@ -75,13 +75,13 @@ namespace PX.Survey.Ext {
         public virtual int? DefQuestionID { get; set; }
         #endregion
 
-        #region DefAttributeID
-        public abstract class defAttributeID : BqlString.Field<defAttributeID> { }
+        #region DefQuestAttrID
+        public abstract class defQuestAttrID : BqlString.Field<defQuestAttrID> { }
         [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
         [PXDefault]
         [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
-        [PXUIField(DisplayName = "Default Answer Type")]
-        public virtual string DefAttributeID { get; set; }
+        [PXUIField(DisplayName = "Default Question Type")]
+        public virtual string DefQuestAttrID { get; set; }
         #endregion
 
         #region DefCommentID
@@ -93,6 +93,15 @@ namespace PX.Survey.Ext {
             DescriptionField = typeof(SurveyTemplate.description),
             SubstituteKey = typeof(SurveyTemplate.description))]
         public virtual int? DefCommentID { get; set; }
+        #endregion
+
+        #region DefCommAttrID
+        public abstract class defCommAttrID : BqlString.Field<defCommAttrID> { }
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXDefault]
+        [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
+        [PXUIField(DisplayName = "Default Comment Type")]
+        public virtual string DefCommAttrID { get; set; }
         #endregion
 
         #region DefNbrOfRows

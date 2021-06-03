@@ -137,6 +137,7 @@ namespace PX.Survey.Ext {
             DoResetPageNumbers(survey);
             var nbQuestions = filter.NbQuestions ?? 10;
             InsertMissing(survey, 1, SUTemplateType.Header, setup.DefHeaderID);
+            InsertMissing(survey, 1, SUTemplateType.PageFooter, setup.DefPageFooterID, 1);
             var pageNumbers = Enumerable.Range(2, nbQuestions);
             foreach (var pageNumber in pageNumbers) {
                 InsertMissings(survey, pageNumber);
@@ -148,17 +149,29 @@ namespace PX.Survey.Ext {
         private void InsertMissings(Survey survey, int pageNumber) {
             var setup = SurveySetup.Current;
             InsertMissing(survey, pageNumber, SUTemplateType.PageHeader, setup.DefPageHeaderID, 0);
-            InsertMissing(survey, pageNumber, SUTemplateType.QuestionPage, setup.DefQuestionID, 1, pageNumber - 1);
-            InsertMissing(survey, pageNumber, SUTemplateType.CommentPage, setup.DefCommentID, 2, pageNumber - 1);
+            InsertMissing(survey, pageNumber, SUTemplateType.QuestionPage, setup.DefQuestionID, 1, setup.DefQuestAttrID);
+            InsertMissing(survey, pageNumber, SUTemplateType.CommentPage, setup.DefCommentID, 2, setup.DefCommAttrID);
             InsertMissing(survey, pageNumber, SUTemplateType.PageFooter, setup.DefPageFooterID, 3);
         }
 
-        private void InsertMissing(Survey survey, int pageNumber, string templateType, int? templateID, int offset = 0, int? questionNbr = null) {
+        private void InsertMissing(Survey survey, int pageNumber, string templateType, int? templateID, int offset = 0, string attrID = null) {
             SurveyDetail page = PXSelect<SurveyDetail,
                 Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
                 And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
                 And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>>.Select(this, survey.SurveyID, pageNumber, templateType);
-            var setup = SurveySetup.Current;
+            int? questionNbr;
+            // Based on a) Question comes first, b) 1 Question, 1 Comment per page
+            switch (templateType) {
+                case SUTemplateType.QuestionPage:
+                    questionNbr = ((pageNumber - 1) * 2) - 1;
+                    break;
+                case SUTemplateType.CommentPage:
+                    questionNbr = (pageNumber - 1) * 2; 
+                    break;
+                default:
+                    questionNbr = null;
+                    break;
+            }
             if (page == null) {
                 page = new SurveyDetail() {
                     SurveyID = survey.SurveyID,
@@ -166,11 +179,9 @@ namespace PX.Survey.Ext {
                     SortOrder = (pageNumber * 10) + offset,
                     TemplateType = templateType,
                     TemplateID = templateID,
-                    QuestionNbr = questionNbr
+                    QuestionNbr = questionNbr,
+                    AttributeID = attrID
                 };
-                if (page.TemplateType == SUTemplateType.QuestionPage) {
-                    page.AttributeID = setup.DefAttributeID;
-                }
                 page = Details.Insert(page);
             }
         }
@@ -504,19 +515,19 @@ namespace PX.Survey.Ext {
                 case SUTemplateType.PageFooter:
                     break;
                 case SUTemplateType.Header:
-                    e.NewValue = "WELCOME ME";
+                    e.NewValue = "WELCOME YOU";
                     break;
                 case SUTemplateType.QuestionPage:
-                    e.NewValue = "ASK ME";
+                    e.NewValue = "ASK YOU";
                     break;
                 case SUTemplateType.CommentPage:
-                    e.NewValue = "TELL ME";
+                    e.NewValue = "TELL ME MORE";
                     break;
                 case SUTemplateType.ContentPage:
-                    e.NewValue = "SHOW ME";
+                    e.NewValue = "SHOW YOU";
                     break;
                 case SUTemplateType.Footer:
-                    e.NewValue = "THANK ME";
+                    e.NewValue = "THANK YOU";
                     break;
             }
             e.Cancel = e.NewValue != null;

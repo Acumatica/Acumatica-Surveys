@@ -90,13 +90,21 @@ namespace PX.Survey.Ext {
         public virtual bool? IsQuestion { get; set; }
         #endregion
 
+        #region IsComment
+        public abstract class isComment : BqlBool.Field<isComment> { }
+        [PXBool]
+        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.commentPage>>, True>, False>))]
+        [PXUIField(DisplayName = "Is Comment", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
+        public virtual bool? IsComment { get; set; }
+        #endregion
+
         #region QuestionNbr
         public abstract class questionNbr : BqlInt.Field<questionNbr> { }
         [PXDBInt]
         [PXDefault]
         [PXUIField(DisplayName = "Question Nbr.")]
-        [PXUIEnabled(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        [PXUIRequired(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
+        [PXUIEnabled(typeof(Where<isQuestion, Equal<True>, Or<isComment, Equal<True>>>))]
+        [PXUIRequired(typeof(Where<isQuestion, Equal<True>, Or<isComment, Equal<True>>>))]
         public virtual int? QuestionNbr { get; set; }
         #endregion
 
@@ -114,8 +122,8 @@ namespace PX.Survey.Ext {
         [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
         [PXUIField(DisplayName = "Answer Type")]
-        [PXUIEnabled(typeof(Where<isQuestion, Equal<True>>))]
-        [PXUIRequired(typeof(Where<isQuestion, Equal<True>>))]
+        [PXUIEnabled(typeof(Where<isQuestion, Equal<True>, Or<isComment, Equal<True>>>))]
+        [PXUIRequired(typeof(Where<isQuestion, Equal<True>, Or<isComment, Equal<True>>>))]
         public virtual string AttributeID { get; set; }
         #endregion
 
