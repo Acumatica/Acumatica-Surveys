@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 
 namespace PX.Survey.Ext {
-    public class MobileAppDeviceOS<UserID> : BqlFormulaEvaluator<UserID>
+    public class MobileDeviceOS<UserID> : BqlFormulaEvaluator<UserID>
         where UserID : IBqlOperand {
 
         public override object Evaluate(PXCache cache, object item, Dictionary<Type, object> pars) {
