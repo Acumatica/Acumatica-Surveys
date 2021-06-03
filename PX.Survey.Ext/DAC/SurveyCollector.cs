@@ -1,8 +1,6 @@
-﻿using PX.Common;
-using PX.Data;
+﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Data.ReferentialIntegrity.Attributes;
-using PX.Objects.CA;
 using PX.Objects.CR;
 using System;
 
@@ -73,7 +71,7 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXDBDefault(typeof(Survey.surveyID), DefaultForUpdate = false)]
         [PXParent(typeof(FK.SUSurvey))]
-        [PXUIField(DisplayName = "Survey ID", Enabled = false)]
+        [PXUIField(DisplayName = "Survey ID", IsReadOnly = true)]
         [PXSelector(typeof(Search<Survey.surveyID>),
                     typeof(Survey.surveyCD),
                     typeof(Survey.title),
@@ -114,6 +112,7 @@ namespace PX.Survey.Ext {
         public abstract class userID : BqlGuid.Field<userID> { }
         [PXGuid]
         [PXFormula(typeof(Selector<contactID, Contact.userID>))]
+        [PXUIField(DisplayName = "User ID")]
         public virtual Guid? UserID { get; set; }
         #endregion
 
@@ -164,9 +163,7 @@ namespace PX.Survey.Ext {
         //[PXFormula(typeof(AccessInfo.businessDate))]
         [PXFormula(typeof(DateAsString<PXDateAndTimeAttribute.now, DateAsStringFormat.roundTrip>))]
         //[PXDefault]
-        public virtual string Token { 
-            get; 
-            set; }
+        public virtual string Token { get;  set; }
         #endregion
 
         //#region CollectedDate
@@ -184,7 +181,7 @@ namespace PX.Survey.Ext {
         /// <summary>
         /// Specifies the date that this Collector expires. The user has up until this date to finish the survey.
         /// </summary>        
-        [PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
+        [PXDBDate(PreserveTime = true)]
         [PXUIField(DisplayName = "Expiration Date", Enabled = false)]
         public virtual DateTime? ExpirationDate { get; set; }
         #endregion
@@ -201,13 +198,6 @@ namespace PX.Survey.Ext {
         public virtual string Status { get; set; }
         #endregion
 
-        //#region Rendered
-        //public abstract class rendered : BqlString.Field<rendered> { }
-        //[PXDBLocalizableString(IsUnicode = true)]
-        //[PXUIField(DisplayName = "Rendered", IsReadOnly = true)]
-        //public virtual string Rendered { get; set; }
-        //#endregion
-
         #region Message
         public abstract class message : BqlString.Field<message> { }
         [PXDBText]
@@ -221,15 +211,6 @@ namespace PX.Survey.Ext {
         [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
-
-        //#region Attributes
-        //public abstract class attributes : BqlAttributes.Field<attributes> { }
-        ///// <summary>
-        ///// Attributes
-        ///// </summary>
-        //[CRAttributesField(typeof(surveyID), typeof(noteID))]
-        //public virtual string[] Attributes { get; set; }
-        //#endregion
 
         //#region CollectedDatePart
         //public abstract class collectedDatePart : BqlString.Field<collectedDatePart> { }
