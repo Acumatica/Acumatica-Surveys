@@ -107,9 +107,17 @@ namespace PX.Survey.Ext {
         #region DefNbrOfRows
         public abstract class defNbrOfRows : BqlInt.Field<defNbrOfRows> { }
         [PXDBInt]
-        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDefault(3, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Def. Comment Rows")]
         public virtual int? DefNbrOfRows { get; set; }
+        #endregion
+
+        #region DefMaxLength
+        public abstract class defMaxLength : BqlInt.Field<defMaxLength> { }
+        [PXDBInt]
+        [PXDefault(20, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Def. Max Length")]
+        public virtual int? DefMaxLength { get; set; }
         #endregion
 
         #region DefPageFooterID

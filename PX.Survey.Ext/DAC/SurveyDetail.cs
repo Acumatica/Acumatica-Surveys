@@ -155,6 +155,16 @@ namespace PX.Survey.Ext {
         public virtual int? NbrOfRows { get; set; }
         #endregion
 
+        #region MaxLength
+        public abstract class maxLength : BqlInt.Field<maxLength> { }
+        [PXDBInt]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Max Length")]
+        [PXUIEnabled(typeof(Where<controlType, Equal<SUControlType.text>>))]
+        [PXUIRequired(typeof(Where<controlType, Equal<SUControlType.text>>))]
+        public virtual int? MaxLength { get; set; }
+        #endregion
+
         #region AttrDesc
         public abstract class attrDesc : BqlString.Field<attrDesc> { }
         [PXString(255, IsUnicode = true, InputMask = "")]

@@ -586,6 +586,16 @@ namespace PX.Survey.Ext {
             e.Cancel = e.NewValue != null;
         }
 
+        protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.maxLength> e) {
+            var row = e.Row;
+            if (row == null || row.TemplateType == null || row.TemplateType != SUTemplateType.CommentPage) {
+                return;
+            }
+            var setup = SurveySetup.Current;
+            e.NewValue = setup?.DefMaxLength;
+            e.Cancel = e.NewValue != null;
+        }
+
         //protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.pageNbr> e) {
         //    e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
         //}
