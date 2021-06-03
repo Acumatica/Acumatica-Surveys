@@ -401,8 +401,8 @@
                 <Activity Height="" HighlightColor="" SelectedColor="" Width="" />
                 <ContentStyle BackColor="Transparent" BorderStyle="None" />
                 <Template>
-                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" />
-                    <px:PXTextEdit runat="server" ID="edNbQuestions" DataField="NbQuestions" Width="300px" CommitChanges="true" />
+                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="S" />
+                    <px:PXTextEdit runat="server" ID="edNbQuestions" DataField="NbQuestions" Width="100px" CommitChanges="true" />
                 </Template>
             </px:PXFormView>
         </div>
