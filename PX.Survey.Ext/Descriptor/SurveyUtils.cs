@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 
 namespace PX.Survey.Ext {
 
@@ -15,6 +17,33 @@ namespace PX.Survey.Ext {
         public static Func<SurveyDetail, bool> ALL_PAGES = (x) => { return true; };
         public static Func<SurveyDetail, bool> ACTIVE_ONLY = (x) => { return x.Active == true; };
         public static Func<SurveyDetail, bool> EXCEPT_HF = (x) => { return x.TemplateType != SUTemplateType.Header && x.TemplateType != SUTemplateType.Footer; };
+
+        public static int GetNextOrPrevPageNbr(HttpRequestMessage request, int pageNbr) {
+            var body = request.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(body)) {
+                return 1;
+            }
+            var qscoll = HttpUtility.ParseQueryString(body);
+            var action = qscoll.Get("action");
+            if (string.IsNullOrEmpty(action)) {
+                return 1;
+            }
+            switch (action) {
+                case "prev":
+                    return --pageNbr;
+                case "start":
+                    return 1;
+            }
+            return ++pageNbr;
+        }
+
+        public static int GetPageNumber(string page) {
+            if (string.IsNullOrEmpty(page) || !int.TryParse(page, out int pageNbr)) {
+                return 1;
+            }
+            return pageNbr;
+        }
+
 
         public static IEnumerable<SurveyDetail> SelectPages(Survey survey, IEnumerable<SurveyDetail> details, int pageNbr) {
             IEnumerable<SurveyDetail> pages = Enumerable.Empty<SurveyDetail>();

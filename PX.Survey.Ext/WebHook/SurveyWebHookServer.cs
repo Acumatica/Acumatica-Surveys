@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using PX.Data;
+﻿using PX.Data;
 using PX.Data.Webhooks;
 using System;
 using System.Collections.Generic;
@@ -32,10 +31,10 @@ namespace PX.Survey.Ext.WebHook {
                     //            //todo: if the survey has already been awnsered or expired for this collector we need to pass back an alternate to indicate so to the 
                     //            //      user who  clicked the link.
                     var pageNbrStr = _queryParameters.Get(PAGE_PARAM);
-                    var pageNbr = GetPageNumber(pageNbrStr);
+                    var pageNbr = SurveyUtils.GetPageNumber(pageNbrStr);
                     if (pageNbrStr != null && request.Method == HttpMethod.Post) {
                         SubmitSurvey(collectorToken, request, pageNbr);
-                        pageNbr = GetNextOrPrevPageNbr(collectorToken, request, pageNbr);
+                        pageNbr = SurveyUtils.GetNextOrPrevPageNbr(request, pageNbr);
                     }
                     message = GetSurveyPage(collectorToken, pageNbr);
                 } catch (Exception ex) {
@@ -44,22 +43,6 @@ namespace PX.Survey.Ext.WebHook {
                 }
                 return new HtmlActionResult(message, status);
             }
-        }
-
-        private int GetNextOrPrevPageNbr(string collectorToken, HttpRequestMessage request, int pageNbr) {
-            var body = request.Content.ReadAsStringAsync().Result;
-            // TODO Check for next or previous
-            if (body.Contains("action=prev")) {
-                return --pageNbr;
-            }
-            return ++pageNbr;
-        }
-
-        private static int GetPageNumber(string page) {
-            if (string.IsNullOrEmpty(page) || !int.TryParse(page, out int pageNbr)) {
-                return 1;
-            }
-            return pageNbr;
         }
 
         private string GetBadRequestPage(string token, string message) {
@@ -96,7 +79,6 @@ namespace PX.Survey.Ext.WebHook {
             var content = generator.GenerateSurveyPage(collectorToken, pageNbr);
             return content;
         }
-
 
         /// <summary>
         /// Defines the LoginScope to be used for the WebHooks
