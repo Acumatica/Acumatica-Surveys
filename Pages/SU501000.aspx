@@ -26,14 +26,14 @@
 			<px:PXGridLevel DataMember="Surveys" DataKeyNames="ContactID">
 			    <Columns>
 					<px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true" />
-					<px:PXGridColumn DataField="UserID" Width="0px" AllowFilter="false" AllowResize="false" AllowShowHide="False" />
+					<px:PXGridColumn DataField="SurveyUser__UserID" Width="0px" AllowFilter="false" AllowResize="false" AllowShowHide="False" />
 					<px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" />
-                    <px:PXGridColumn DataField="ContactID" DisplayMode="Text"  TextAlign="Left" Width="250px" />
-                    <px:PXGridColumn DataField="RecipientType" />
-                    <px:PXGridColumn DataField="RecipientPhone" Width="180px" />
-                    <px:PXGridColumn DataField="RecipientEmail" Width="280px" />
-					<px:PXGridColumn DataField="MobileAppDeviceOS" Width="200px" />					
-                    <px:PXGridColumn DataField="UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
+                    <px:PXGridColumn DataField="SurveyUser__ContactID" DisplayMode="Text"  TextAlign="Left" Width="250px" />
+                    <px:PXGridColumn DataField="SurveyUser__RecipientType" />
+                    <px:PXGridColumn DataField="SurveyUser__Phone" Width="180px" />
+                    <px:PXGridColumn DataField="SurveyUser__Email" Width="280px" />
+					<px:PXGridColumn DataField="SurveyUser__MobileAppDeviceOS" Width="200px" />					
+                    <px:PXGridColumn DataField="SurveyUser__UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
                 </Columns>
 			</px:PXGridLevel>
 		</Levels>
