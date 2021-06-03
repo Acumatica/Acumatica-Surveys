@@ -14,14 +14,19 @@
                    FilesIndicator="true" NoteIndicator="true" DefaultControlID="edSurveyNumberingID">
 		<Template>
 			<px:PXLayoutRule runat="server" StartRow="True" LabelsWidth="M" ControlSize="XL"/>
-            <px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Numbering Settings" />		    
+            <px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="General Settings" />		    
 			<px:PXSelector ID="edSurveyNumberingID" runat="server" DataField="SurveyNumberingID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edBadRequestID" runat="server" DataField="BadRequestID" CommitChanges="True" AllowEdit="True"/>
 			<px:PXSelector ID="edTemplateID" runat="server" DataField="TemplateID" CommitChanges="True" AllowEdit="True"/>
-			<px:PXSelector ID="edPHHeaderID" runat="server" DataField="PHHeaderID" CommitChanges="True" AllowEdit="True"/>
-			<px:PXSelector ID="edPHPageHeaderID" runat="server" DataField="PHPageHeaderID" CommitChanges="True" AllowEdit="True"/>
-			<px:PXSelector ID="edPHQuestionID" runat="server" DataField="PHQuestionID" CommitChanges="True" AllowEdit="True"/>
-			<px:PXSelector ID="edPHPageFooterID" runat="server" DataField="PHPageFooterID" CommitChanges="True" AllowEdit="True"/>
-			<px:PXSelector ID="edPHFooterID" runat="server" DataField="PHFooterID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefHeaderID" runat="server" DataField="DefHeaderID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefPageHeaderID" runat="server" DataField="DefPageHeaderID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefQuestionID" runat="server" DataField="DefQuestionID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefQuestAttrID" runat="server" DataField="DefQuestAttrID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXTextEdit ID="edDefNbrOfRows" runat="server" DataField="DefNbrOfRows" Width="100" CommitChanges="True"/>
+			<px:PXSelector ID="edDefCommentID" runat="server" DataField="DefCommentID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefCommAttrID" runat="server" DataField="DefCommAttrID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefPageFooterID" runat="server" DataField="DefPageFooterID" CommitChanges="True" AllowEdit="True"/>
+			<px:PXSelector ID="edDefFooterID" runat="server" DataField="DefFooterID" CommitChanges="True" AllowEdit="True"/>
 			<px:PXSelector ID="edWebHookID" runat="server" DataField="WebHookID" AllowEdit="True" CommitChanges="true"/>
 			<px:PXSelector ID="edContactID" runat="server" DataField="ContactID" CommitChanges="True" AllowEdit="True"/>
 		</Template>
