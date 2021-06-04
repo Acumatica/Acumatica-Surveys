@@ -131,7 +131,12 @@ namespace PX.Survey.Ext {
             var activePages = graph.Details.Select().FirstTableItems.Where(det => det.Active == true);
             var selectedPages = SurveyUtils.SelectPages(survey, activePages, pageNbr);
             var firstOfSelected = selectedPages.FirstOrDefault();
+            var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
             var allRendered = new List<string>();
+            var nextPages = SurveyUtils.SelectPages(survey, activePages, ++selectedPageNbr);
+            FillPageInfoLookAhead(context, activePages, nextPages);
+            var url = GetUrl(context, firstOfSelected.PageNbr.Value);
+            context.SetValue(new ScriptVariableGlobal(URL), url);
             foreach (var selectedPage in selectedPages) {
                 var pageTemplateID = selectedPage.TemplateID;
                 var pageTemplate = SurveyTemplate.PK.Find(graph, pageTemplateID);
@@ -142,15 +147,10 @@ namespace PX.Survey.Ext {
                 allRendered.Add(rendered);
             }
             // TODO Handle nothing rendered
-            var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
-            var nextPages = SurveyUtils.SelectPages(survey, activePages, ++selectedPageNbr);
-            FillPageLookAhead(context, activePages, nextPages);
-            var url = GetUrl(context, firstOfSelected.PageNbr.Value);
-            context.SetValue(new ScriptVariableGlobal(URL), url);
             return allRendered;
         }
 
-        private void FillPageLookAhead(TemplateContext context, IEnumerable<SurveyDetail> details, IEnumerable<SurveyDetail> nextPages) {
+        private void FillPageInfoLookAhead(TemplateContext context, IEnumerable<SurveyDetail> details, IEnumerable<SurveyDetail> nextPages) {
             var max = details.Max(det => det.PageNbr);
             var hasQues = nextPages.Any(det => det.TemplateType == SUTemplateType.QuestionPage);
             var hasFoot = nextPages.Any(det => det.TemplateType == SUTemplateType.Footer);
