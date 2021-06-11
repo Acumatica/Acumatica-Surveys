@@ -12,6 +12,7 @@ namespace PX.Survey.Ext {
             public const string SurveyCollector = "Survey Collector";
             public const string SurveyCollectorData = "Survey Collector Data";
             public const string SurveySetup = "Survey Setup";
+            public const string SurveySetupEntity = "Survey Entity Setup";
             public const string Survey = "Survey";
             public const string SurveyUser = "Survey User";
             public const string SurveyFilter = "Survey Filter";
