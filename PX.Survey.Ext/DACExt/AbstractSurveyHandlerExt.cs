@@ -1,10 +1,11 @@
 ﻿using PX.Data;
+using PX.Data.DependencyInjection;
 using System;
 using System.Collections;
 
 namespace PX.Survey.Ext {
 
-    public abstract class AbstractSurveyHandlerExt<EGraph, EDoc> : PXGraphExtension<EGraph>
+    public abstract class AbstractSurveyHandlerExt<EGraph, EDoc> : PXGraphExtension<EGraph>, IGraphWithInitialization
         where EGraph : PXGraph
         where EDoc : class, IBqlTable, new() {
 
@@ -18,14 +19,14 @@ namespace PX.Survey.Ext {
             var entitySetup = GetEntitySetup(primaryType);
             var supportsSurvey = entitySetup != null && entitySetup.SurveyID != null;
             //var showAction = b2Setup?.ShowTriggerActions == true;
-            insertSurveyCollector.SetEnabled(supportsSurvey);
-            insertSurveyCollector.SetVisible(supportsSurvey/* && showAction*/);
+            requestSurvey.SetEnabled(supportsSurvey);
+            requestSurvey.SetVisible(supportsSurvey/* && showAction*/);
         }
 
-        public PXAction<EDoc> insertSurveyCollector;
-        [PXUIField(DisplayName = "Insert Survey Collector")]
+        public PXAction<EDoc> requestSurvey;
+        [PXUIField(DisplayName = "Request Survey")]
         [PXButton(CommitChanges = true, SpecialType = PXSpecialButtonType.Insert, Tooltip = "Insert a Survey Collector to send a survey regarding this Document", ImageKey = "AddNew")]
-        public virtual IEnumerable InsertSurveyCollector(PXAdapter adapter) {
+        public virtual IEnumerable RequestSurvey(PXAdapter adapter) {
             var caches = Base.Caches;
             var cache = caches[typeof(EDoc)];
             var entityType = cache.GetItemType();

@@ -132,7 +132,7 @@ namespace PX.Survey.Ext {
         public virtual int? OwnerID { get; set; }
         #endregion
 
-        public class thisScreen : PX.Data.BQL.BqlString.Constant<thisScreen> {
+        public class thisScreen : BqlString.Constant<thisScreen> {
             public thisScreen() : base("SU201000") { }
         }
 
