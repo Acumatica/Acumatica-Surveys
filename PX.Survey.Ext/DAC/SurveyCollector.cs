@@ -91,12 +91,25 @@ namespace PX.Survey.Ext {
         public virtual int? UserLineNbr { get; set; }
         #endregion
 
-        //#region RefNoteID
-        //public abstract class refNoteID : BqlGuid.Field<refNoteID> { }
-        //[PXDBGuid(false)]
-        //[PXUIField(DisplayName = "Entity Link")]
-        //public virtual Guid? RefNoteID { get; set; }
-        //#endregion
+        #region RefNoteID
+        public abstract class refNoteID : BqlGuid.Field<refNoteID> { }
+        [PXDBGuid(false)]
+        [PXUIField(DisplayName = "Entity Link")]
+        public virtual Guid? RefNoteID { get; set; }
+        #endregion
+
+        /// <summary>
+        /// The description of the entity whose <tt>NoteID</tt> value is specified as <see cref="P:PX.Objects.CR.CRActivity.RefNoteID" />.
+        /// </summary>
+        /// <value>
+        /// The description is retrieved by the
+        /// <see cref="M:PX.Data.EntityHelper.GetEntityDescription(System.Nullable{System.Guid},System.Type)" /> method.
+        /// </value>
+        public abstract class source : BqlString.Field<source> { }
+        [PXFormula(typeof(EntityDescription<refNoteID>))]
+        [PXString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Related Entity Description", Enabled = false)]
+        public virtual string Source { get; set; }
 
         #region ContactID
         public abstract class contactID : BqlInt.Field<contactID> { }

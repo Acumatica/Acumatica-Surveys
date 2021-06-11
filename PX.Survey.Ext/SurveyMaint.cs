@@ -391,6 +391,17 @@ namespace PX.Survey.Ext {
             };
         }
 
+        public PXAction<Survey> ViewEntity;
+        [PXLookupButton(Tooltip = "View Reference Entity", OnClosingPopup = PXSpecialButtonType.Refresh)]
+        [PXUIField(DisplayName = "View Entity", Visible = false)]
+        protected virtual void viewEntity() {
+            SurveyCollector current = this.Collectors.Current;
+            if (current == null) {
+                return;
+            }
+            (new EntityHelper(this)).NavigateToRow(current.RefNoteID, PXRedirectHelper.WindowMode.New);
+        }
+
         protected virtual void _(Events.RowSelecting<Survey> e) {
             Survey row = e.Row;
             if (row == null) { return; }
