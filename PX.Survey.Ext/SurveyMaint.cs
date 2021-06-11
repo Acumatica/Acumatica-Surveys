@@ -168,7 +168,7 @@ namespace PX.Survey.Ext {
                     questionNbr = ((pageNumber - 1) * 2) - 1;
                     break;
                 case SUTemplateType.CommentPage:
-                    questionNbr = (pageNumber - 1) * 2; 
+                    questionNbr = (pageNumber - 1) * 2;
                     break;
                 default:
                     questionNbr = null;

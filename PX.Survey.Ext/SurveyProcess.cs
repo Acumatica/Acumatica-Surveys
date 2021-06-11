@@ -342,7 +342,7 @@ namespace PX.Survey.Ext {
             Guid noteID = surveyCollector.NoteID.GetValueOrDefault();
             if (surveyUser.UserID != null) {
                 PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                PXTrace.WriteInformation("noteID " + noteID.ToString());
+                PXTrace.WriteInformation("NoteID " + noteID.ToString());
                 PXTrace.WriteInformation("ScreenID " + sScreenID);
                 List<Guid> userIds = new List<Guid> { surveyUser.UserID.GetValueOrDefault() };
                 pushNotificationSender.SendNotificationAsync(
