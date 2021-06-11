@@ -2,6 +2,7 @@
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
+using PX.Data.EP;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace PX.Survey.Ext {
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
 
         [PXCopyPasteHiddenView]
+        [PXRefNoteSelector(typeof(SurveyCollector), typeof(SurveyCollector.refNoteID))]
         public SelectFrom<SurveyCollector>.
             LeftJoin<SurveyUser>.
                 On<SurveyUser.surveyID.IsEqual<SurveyCollector.surveyID>.
@@ -288,7 +290,7 @@ namespace PX.Survey.Ext {
         private void DoGenerateSample(Survey survey) {
             Survey.Current = survey;
             var user = DoInsertSampleUser(survey);
-            var collector = DoInsertCollector(survey, user);
+            var collector = DoInsertCollector(survey, user, null);
             var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
@@ -298,10 +300,11 @@ namespace PX.Survey.Ext {
             Actions.PressSave();
         }
 
-        private SurveyCollector DoInsertCollector(Survey survey, SurveyUser user) {
+        public SurveyCollector DoInsertCollector(Survey survey, SurveyUser user, Guid? refNoteID) {
             var collector = new SurveyCollector {
                 SurveyID = survey.SurveyID,
                 UserLineNbr = user.LineNbr,
+                RefNoteID = refNoteID
             };
             var inserted = Collectors.Insert(collector);
             Actions.PressSave();
@@ -334,15 +337,18 @@ namespace PX.Survey.Ext {
             if (!setup.ContactID.HasValue) {
                 throw new PXSetPropertyException(Messages.ContactNotSetup, Messages.SUSetup);
             }
-            //var cache = Users.Cache;
+            return InsertOrFindUser(survey, setup.ContactID);
+        }
+
+        public SurveyUser InsertOrFindUser(Survey survey, int? contactID) {
             SurveyUser user = SelectFrom<SurveyUser>.
                 Where<SurveyUser.surveyID.IsEqual<@P.AsInt>.
                 And<SurveyUser.contactID.IsEqual<@P.AsInt>>>.
-                View.SelectWindowed(this, 0, 1, survey.SurveyID, setup.ContactID);
+                View.SelectWindowed(this, 0, 1, survey.SurveyID, contactID);
             if (user == null) {
                 user = new SurveyUser() {
                     Active = true,
-                    ContactID = setup.ContactID,
+                    ContactID = contactID,
                     SurveyID = survey.SurveyID
                 };
                 user = Users.Insert(user);
@@ -359,7 +365,7 @@ namespace PX.Survey.Ext {
             if (Survey.Current != null) {
                 Save.Press();
                 var user = DoInsertSampleUser(Survey.Current);
-                var collector = DoInsertCollector(Survey.Current, user);
+                var collector = DoInsertCollector(Survey.Current, user, null);
                 Actions.PressSave();
                 Collectors.View.RequestRefresh();
             }
