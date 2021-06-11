@@ -52,7 +52,7 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region Name
-        public abstract class name : BqlInt.Field<name> { }
+        public abstract class name : BqlString.Field<name> { }
         /// <summary>
         /// Name of this Collector record.
         /// </summary>
