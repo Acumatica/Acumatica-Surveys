@@ -9,6 +9,15 @@ namespace PX.Survey.Ext {
     [PXCacheName(Messages.CacheNames.SurveySetupEntity)]
     public partial class SurveySetupEntity : IBqlTable, INotable {
 
+        #region ScreenID
+        public abstract class screenID : BqlString.Field<screenID> { }
+        [PXDBString(8, IsFixed = true, InputMask = "CC.CC.CC.CC")]
+        [PXDefault]
+        [PXSiteMapNodeSelector]
+        [PXUIField(DisplayName = "Screen ID", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual string ScreenID { get; set; }
+        #endregion
+
         #region EntityType
         public abstract class entityType : BqlString.Field<entityType> { }
         [PXDBString(256, IsKey = true, IsUnicode = true)]
@@ -18,16 +27,28 @@ namespace PX.Survey.Ext {
         public virtual string EntityType { get; set; }
         #endregion
 
+        #region ContactField
+        public abstract class contactField : BqlString.Field<contactField> { }
+        //[PXDefault]
+        ////[SUFieldList(typeof(entityType))]
+        //[PXUIField(DisplayName = "Contact Field", Required = true)]
+        //[PrimaryViewFieldsList(typeof(screenID), ShowDisplayNameAsLabel = true)]
+        [PXDBString(64, InputMask = "", IsUnicode = true)]
+        //[PXDefault]
+        [PXUIField(DisplayName = "Contact Field")]
+        public virtual string ContactField { get; set; }
+        #endregion
+
         #region SurveyID
         public abstract class surveyID : BqlInt.Field<surveyID> { }
         [PXDBInt]
-        [PXDefault]
+        //[PXDefault]
         [PXSelector(typeof(Search<Survey.surveyID>),
             typeof(Survey.active),
             typeof(Survey.title),
             SubstituteKey = typeof(Survey.title),
             DescriptionField = typeof(Survey.title))]
-        [PXUIField(DisplayName = "Survey", Visibility = PXUIVisibility.SelectorVisible, Required = true)]
+        [PXUIField(DisplayName = "Survey", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual int? SurveyID { get; set; }
         #endregion
 

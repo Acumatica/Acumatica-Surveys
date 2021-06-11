@@ -132,6 +132,26 @@ namespace PX.Survey.Ext {
         public virtual int? OwnerID { get; set; }
         #endregion
 
+        public class thisScreen : PX.Data.BQL.BqlString.Constant<thisScreen> {
+            public thisScreen() : base("SU201000") { }
+        }
+
+        #region NotificationID
+        public abstract class notificationID : BqlInt.Field<notificationID> { }
+        [PXDBInt]
+        [PXSelector(typeof(Search<SM.Notification.notificationID, Where<SM.Notification.screenID, Equal<thisScreen>>>), SubstituteKey = typeof(SM.Notification.name))]
+        [PXUIField(DisplayName = "Notification")]
+        public virtual int? NotificationID { get; set; }
+        #endregion
+
+        #region EntityType
+        public abstract class entityType : BqlString.Field<entityType> { }
+        [PXDBString(256, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.NullOrBlank)]
+        [PXEntityTypeList]
+        public virtual string EntityType { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
