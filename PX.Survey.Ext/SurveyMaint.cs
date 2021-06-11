@@ -30,10 +30,6 @@ namespace PX.Survey.Ext {
                 And<SurveyUser.lineNbr.IsEqual<SurveyCollector.userLineNbr>>>.
             Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
 
-        //public SelectFrom<SurveyCollectorData>.
-        //    Where<SurveyCollectorData.surveyID.IsEqual<Survey.surveyID.FromCurrent>.
-        //    And<SurveyCollectorData.token.IsEqual<SurveyCollector.token.FromCurrent>>>.View CollectorDataRecords;
-
         public PXSelect<SurveyCollectorData,
             Where<SurveyCollectorData.surveyID, Equal<Current<Survey.surveyID>>,
             And<SurveyCollectorData.token, Equal<Current<SurveyCollector.token>>>>,
@@ -98,16 +94,6 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Load Survey Pages", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton(CommitChanges = true)]
         public virtual IEnumerable CreateSurvey(PXAdapter adapter) {
-            //Actions.PressSave();
-            //createSurveyFilter.Cache.Clear();
-            //WebDialogResult dialogResult = createSurveyFilter.AskExt(setStateFilter, true);
-            //if (dialogResult == WebDialogResult.OK) {
-            //var graph = CreateInstance<SurveyMaint>();
-            //Survey survey = PXCache<Survey>.CreateCopy(Survey.Current);
-            //graph.DoCreateSurvey(survey, createSurveyFilter.Current);
-            //Details.View.RequestRefresh();
-            //}
-            //return adapter.Get<Survey>();
             List<Survey> list = adapter.Get<Survey>().ToList();
             WebDialogResult dialogResult = createSurveyFilter.AskExt(setStateFilter, true);
             if ((dialogResult == WebDialogResult.OK || (this.IsContractBasedAPI && dialogResult == WebDialogResult.Yes)) && createSurveyFilter.Current.NbQuestions > 0) {
@@ -118,14 +104,6 @@ namespace PX.Survey.Ext {
                 return rs;
             }
             return list;
-            //if (Survey.Current != null) {
-            //    Save.Press();
-            //    PXLongOperation.StartOperation(this, delegate () {
-            //        var graph = CreateInstance<SurveyMaint>();
-            //        graph.DoCreateSurvey(Survey.Current, createSurveyFilter.Current);
-            //    });
-            //}
-            //return adapter.Get();
         }
 
         private void setStateFilter(PXGraph aGraph, string ViewName) {
@@ -308,8 +286,6 @@ namespace PX.Survey.Ext {
             };
             var inserted = Collectors.Insert(collector);
             Actions.PressSave();
-            //var updated = Collectors.Insert(inserted);
-            //Actions.PressSave();
             return inserted;
         }
 
@@ -423,57 +399,53 @@ namespace PX.Survey.Ext {
             if (row == null) { return; }
             bool unlockedSurvey = !(row.IsSurveyInUse == true);
             e.Cache.AllowDelete = unlockedSurvey;
-            //Questions.Cache.AllowUpdate = unlockedSurvey;
-            //Questions.Cache.AllowInsert = unlockedSurvey;
-            //Questions.Cache.AllowDelete = unlockedSurvey;
-            //PXUIFieldAttribute.SetEnabled<Survey.name>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
         }
 
-        protected virtual void _(Events.RowPersisted<Survey> e) {
-            var row = e.Row;
-            if (row == null)
-                return;
-            if (e.TranStatus == PXTranStatus.Completed) {
-                //DoResetPageNumbers(row);
-                //DoResetQuestionNumbers(row);
-            }
-        }
+        //protected virtual void _(Events.RowPersisted<Survey> e) {
+        //    var row = e.Row;
+        //    if (row == null)
+        //        return;
+        //    if (e.TranStatus == PXTranStatus.Completed) {
+        //        //DoResetPageNumbers(row);
+        //        //DoResetQuestionNumbers(row);
+        //    }
+        //}
 
-        protected virtual void _(Events.RowPersisted<SurveyDetail> e) {
-            var row = e.Row;
-            if (row == null)
-                return;
-            if (e.TranStatus == PXTranStatus.Completed) {
-                DoInsertMissing(row);
-            }
-        }
+        //protected virtual void _(Events.RowPersisted<SurveyDetail> e) {
+        //    var row = e.Row;
+        //    if (row == null)
+        //        return;
+        //    if (e.TranStatus == PXTranStatus.Completed) {
+        //        DoInsertMissing(row);
+        //    }
+        //}
 
-        private void DoInsertMissing(SurveyDetail row) {
-            var setup = SurveySetup.Current;
-            //if (SUTemplateType.NeedsSurrounding(row.TemplateType)) {
-            //    DoInsertMissing(row, SUTemplateType.PageHeader, -1, setup.DefPageHeaderID);
-            //    DoInsertMissing(row, SUTemplateType.PageFooter, 1, setup.DefPageFooterID);
-            //}
-        }
+        //private void DoInsertMissing(SurveyDetail row) {
+        //    var setup = SurveySetup.Current;
+        //    //if (SUTemplateType.NeedsSurrounding(row.TemplateType)) {
+        //    //    DoInsertMissing(row, SUTemplateType.PageHeader, -1, setup.DefPageHeaderID);
+        //    //    DoInsertMissing(row, SUTemplateType.PageFooter, 1, setup.DefPageFooterID);
+        //    //}
+        //}
 
-        private void DoInsertMissing(SurveyDetail row, string templateType, int offset, int? templateID) {
-            if (!templateID.HasValue) {
-                return;
-            }
-            var page = GetPage(row.SurveyID, row.PageNbr, templateType);
-            if (page == null) {
-                page = new SurveyDetail {
-                    SurveyID = row.SurveyID,
-                    TemplateType = templateType,
-                    TemplateID = templateID,
-                    Active = true
-                };
-                page = Details.Insert(page);
-                UpdatePageNbr(page, row.PageNbr ?? 1, offset);
-            }
-        }
+        //private void DoInsertMissing(SurveyDetail row, string templateType, int offset, int? templateID) {
+        //    if (!templateID.HasValue) {
+        //        return;
+        //    }
+        //    var page = GetPage(row.SurveyID, row.PageNbr, templateType);
+        //    if (page == null) {
+        //        page = new SurveyDetail {
+        //            SurveyID = row.SurveyID,
+        //            TemplateType = templateType,
+        //            TemplateID = templateID,
+        //            Active = true
+        //        };
+        //        page = Details.Insert(page);
+        //        UpdatePageNbr(page, row.PageNbr ?? 1, offset);
+        //    }
+        //}
 
         private void UpdatePageNbr(SurveyDetail page, int pageNbr, int offset) {
             page.PageNbr = pageNbr;
@@ -493,14 +465,6 @@ namespace PX.Survey.Ext {
                     And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
                     And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>>.Select(this, surveyID, pageNbr, templateType);
         }
-
-        //private PXResultset<SurveyDetail> GetRegularPages(int? surveyID, int pageNbr) {
-        //    return PXSelect<SurveyDetail,
-        //            Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
-        //            And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
-        //            And<SurveyDetail.templateType, In3<SUTemplateType.pageHeader, SUTemplateType.questionPage, SUTemplateType.contentPage, SUTemplateType.pageFooter>>>>,
-        //            OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.sortOrder>>>>.Select(this, surveyID, pageNbr);
-        //}
 
         private PXResultset<SurveyDetail> GetRegularPages(int? surveyID) {
             return PXSelect<SurveyDetail,

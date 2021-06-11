@@ -20,7 +20,7 @@ namespace PX.Survey.Ext {
             var supportsSurvey = entitySetup != null && entitySetup.SurveyID != null;
             //var showAction = b2Setup?.ShowTriggerActions == true;
             requestSurvey.SetEnabled(supportsSurvey);
-            requestSurvey.SetVisible(supportsSurvey/* && showAction*/);
+            //requestSurvey.SetVisible(supportsSurvey/* && showAction*/);
         }
 
         public PXAction<EDoc> requestSurvey;
@@ -41,17 +41,6 @@ namespace PX.Survey.Ext {
                     surveyGraph.Survey.Current = survey;
                     var user = surveyGraph.InsertOrFindUser(survey, contactID);
                     var collector = surveyGraph.DoInsertCollector(survey, user, noteID);
-                    //var orderNumber = (string)cache.GetValue(doc, mh.OrderField.Name);
-                    //if (idoc.HasValue) {
-                    //    ProcUtils.InsertB2BTrigger(idoc);
-                    //} else {
-                    //    var mess = $"Cannot find the Document {moduleID}/{orderType}/{orderNumber}";
-                    //    if (Base.IsContractBasedAPI || Base.IsImport || Base.IsExport) {
-                    //        PXTrace.WriteError(mess);
-                    //    } else {
-                    //        throw new PXException(mess);
-                    //    }
-                    //}
                 }
             }
             return adapter.Get();
