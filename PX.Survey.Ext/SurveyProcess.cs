@@ -50,9 +50,6 @@ namespace PX.Survey.Ext {
                 switch (action) {
                     //note: the or clauses below are intended to preserve a previous error indicator and not let 
                     //      successive iterations override a previous error detection.
-                    //case SurveyAction.RenderOnly:
-                    //    errorOccurred = Render(graph, generator, survey, filter) || errorOccurred;
-                    //    break;
                     case SurveyAction.ProcessAnswers:
                         errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
                         break;
@@ -75,39 +72,6 @@ namespace PX.Survey.Ext {
             if (errorOccurred) {
                 throw new PXException(Messages.SurveyError);
             }
-        }
-
-        private static bool Render(SurveyMaint graph, SurveyGenerator generator, Survey survey, SurveyFilter filter) {
-            //var collectors = graph.Collectors.Select().FirstTableItems;
-            //var users = graph.Users.Select().FirstTableItems;
-            //foreach (var user in users) {
-            //    var collector = collectors.FirstOrDefault(coll => coll.UserLineNbr == user.LineNbr);
-            //    if (collector != null && collector.Status != CollectorStatus.New && collector.Status != CollectorStatus.Error) {
-            //        continue;
-            //    }
-            //    if (collector == null) {
-            //        collector = new SurveyCollector {
-            //            Name =
-            //                $"{survey.Name} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
-            //            SurveyID = survey.SurveyID,
-            //            UserLineNbr = user.LineNbr,
-            //            CollectedDate = null,
-            //            ExpirationDate = CalculateExpirationDate(filter.DurationTimeSpan),
-            //        };
-            //        var inserted = graph.Collectors.Insert(collector);
-            //    }
-            //    try {
-            //        var surveySays = generator.GenerateSurvey(survey, user);
-            //        collector.Rendered = surveySays;
-            //        collector.Status = CollectorStatus.Rendered;
-            //        collector.Message = null;
-            //    } catch (Exception ex) {
-            //        collector.Status = CollectorStatus.Error;
-            //        collector.Message = ex.Message;
-            //    }
-            //    var updated = graph.Collectors.Update(collector);
-            //}
-            return false;
         }
 
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
@@ -198,8 +162,7 @@ namespace PX.Survey.Ext {
         /// <param name="filter"></param>
         /// <returns>Whether of not any of the processes within have an error</returns>
         private static bool DefaultRoutine(SurveyMaint graph, SurveyGenerator generator, Survey survey, SurveyFilter filter) {
-            var errorOccurred = Render(graph, generator, survey, filter);
-            errorOccurred = SetExpiredSurveys(graph, survey, filter) || errorOccurred;
+            var errorOccurred = SetExpiredSurveys(graph, survey, filter);
             errorOccurred = SendReminders(graph, survey, filter) || errorOccurred;
             errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
             return errorOccurred;
