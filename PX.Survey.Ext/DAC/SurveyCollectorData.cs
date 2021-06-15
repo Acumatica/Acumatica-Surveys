@@ -31,7 +31,7 @@ namespace PX.Survey.Ext {
         /// <summary>
         /// Uniquely Identifies this Collector record.
         /// </summary>
-        [PXDBIdentity(IsKey = true, BqlField = typeof(collectorID))]
+        [PXDBIdentity(IsKey = true)]
         public virtual int? CollectorDataID { get; set; }
         #endregion
 
