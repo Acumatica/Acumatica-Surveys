@@ -402,6 +402,7 @@ namespace PX.Survey.Ext {
             e.Cache.AllowDelete = unlockedSurvey;
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
+            PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
         }
 
         protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
