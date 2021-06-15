@@ -24,13 +24,13 @@ namespace PX.Survey.Ext {
         public SelectFrom<SurveyUser>.Where<SurveyUser.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Users;
 
         [PXCopyPasteHiddenView]
-        [PXRefNoteSelector(typeof(SurveyCollector), typeof(SurveyCollector.refNoteID))]
         public SelectFrom<SurveyCollector>.
             LeftJoin<SurveyUser>.
                 On<SurveyUser.surveyID.IsEqual<SurveyCollector.surveyID>.
                 And<SurveyUser.lineNbr.IsEqual<SurveyCollector.userLineNbr>>>.
             Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
 
+        [PXCopyPasteHiddenView]
         public PXSelect<SurveyCollectorData,
             Where<SurveyCollectorData.surveyID, Equal<Current<Survey.surveyID>>,
             And<SurveyCollectorData.token, Equal<Current<SurveyCollector.token>>>>,
@@ -42,7 +42,6 @@ namespace PX.Survey.Ext {
 
         public SurveyMaint() {
         }
-
 
         #region RecipientSelected Lookup
         public PXFilter<RecipientFilter> recipientfilter;
@@ -221,6 +220,15 @@ namespace PX.Survey.Ext {
         }
 
         private void DoResetPageNumbers(Survey survey) {
+            if (survey.Layout == SurveyLayout.MultiPage) {
+                DoResetMultiplePageNumbers(survey);
+            } else {
+                DoResetSinglePageNumber(survey);
+            }
+        }
+
+        private void DoResetMultiplePageNumbers(Survey survey) {
+            // TODO - Check if all Page 1
             Survey.Current = survey;
             var surveyID = survey.SurveyID;
             SurveyDetail page = GetPage(surveyID, SUTemplateType.Header);
@@ -247,6 +255,18 @@ namespace PX.Survey.Ext {
                 var newPageNbr = mapping.Item2;
                 UpdatePageNbr(regPage, newPageNbr, offset);// PageNbr = 2, SortOrder = 20, 21, 22;
                 lastPageNbr = mapping.Item1;
+            }
+            Actions.PressSave();
+            Details.View.RequestRefresh();
+        }
+
+        private void DoResetSinglePageNumber(Survey survey) {
+            Survey.Current = survey;
+            var details = Details.Select();
+            int offset = 0;
+            foreach (SurveyDetail detail in details) {
+                UpdatePageNbr(detail, 1, offset);// PageNbr = 2, SortOrder = 20, 21, 22;
+                offset++;
             }
             Actions.PressSave();
             Details.View.RequestRefresh();
