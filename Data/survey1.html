@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Acumatica Case Support Satisfaction Survey</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://gitcdn.link/cdn/Wikiki/bulma-checkradio/38c95578f465f4c3805f578490925f337b87404d/dist/css/bulma-checkradio.min.css" />
+        <style></style>
+    </head>
+    <body class="has-background-light" style="height: 100%; min-height: 100vh">
+        <section class="section container is-max-desktop has-background-white px-0 py-5">
+            <form name="{survey.formname}" action="{webhook.url}" method="post" enctype="multipart/form-data">
+                <!-- INNER CONTENT STARTS HERE -->
+                <!-- Header HTML content starts here -->
+                <header class="hero">
+                    <a class="px-5" target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="image" style="width: 250px" /></a>
+                    <div class="hero-body py-4 mt-4 px-0">
+                        <h1 class="title has-background-info-dark has-text-white px-4 py-4 mb-4">Acumatica Case Support Satisfaction Survey</h1>
+                        <h2 class="subtitle has-background-info has-text-white px-4 py-2 mb-2"></h2>
+                        <div class="columns is-mobile my-4">
+                            <div class="column is-three-fifths is-offset-one-fifth">
+                                <!-- Change value % according to current section/page -->
+                                <!-- value={current page} max={total pages} -->
+                                <progress class="progress progress-text is-primary" value="1" max="4"></progress>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Header HTML content ends here -->
+                <div class="px-5">
+                    <!-- All question components should live inside this section bellow {foreach question}-->
+                    <!-- Radio input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">* 1. Considering everything about your most recent interaction with Acumatica Support, please rate your overall satisfaction with the service you received on a 5-point scale:</label>
+                        <!-- {foreach option start} -->
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio1.id5}" name="{control.radio1.name}" aria-labelledby="{control.radio1.labelid5}" value="5" />
+                            <label id="{control.radio1.labelid5}" for="{control.radio1.id5}">5 = Very Satisfied</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio1.id4}" name="{control.radio1.name}" aria-labelledby="{control.radio1.labelid4}" value="4" />
+                            <label id="{control.radio1.labelid4}" for="{control.radio1.id4}">4 = Satisfied</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio1.id3}" name="{control.radio1.name}" aria-labelledby="{control.radio1.labelid3}" value="3" />
+                            <label id="{control.radio1.labelid3}" for="{control.radio1.id3}">3 = Neutral (Neither Satisfied Nor Dissatisfied)</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio1.id2}" name="{control.radio1.name}" aria-labelledby="{control.radio1.labelid2}" value="2" />
+                            <label id="{control.radio1.labelid2}" for="{control.radio1.id2}">2 = Dissatisfied</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio1.id1}" name="{control.radio1.name}" aria-labelledby="{control.radio1.labelid1}" value="1" />
+                            <label id="{control.radio1.labelid1}" for="{control.radio1.id1}">1 = Very Dissatisfied</label>
+                        </div>
+                        <!-- {foreach option end} -->
+                    </div>
+                    <!-- Radio input component HTML (end cut here) -->
+                    <!-- {end foreach question} All question components should live inside above section-->
+                </div>
+                <!-- Footer HTML content starts here -->
+                <footer class="footer has-background-white">
+                    <div class="content has-text-centered">
+                        <!-- {if page > 1 show back button} -->
+                        <!-- {endif} -->
+
+                        <button type="submit" class="button is-info is-medium" name="action" value="next">Next</button>
+                    </div>
+                    <hr class="mt-1" />
+                    <div class="content level has-text-centered mt-4">
+                        <div class="level-item has-text-centered">
+                            <p class="heading">Powered by</p>
+                            <p class="title ml-2">
+                                <a target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="mt-1" style="width: 100px" /></a>
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer HTML content ends here -->
+                <!-- INNER CONTENT ENDS HERE -->
+            </form>
+        </section>
+    </body>
+</html>

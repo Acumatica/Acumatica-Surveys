@@ -4,12 +4,15 @@ namespace PX.Survey.Ext {
     [PXLocalizable(Prefix)]
     public static class Messages {
         public const string Prefix = "Acumatica Survey";
+        public const string ContactNotSetup = "Sample Contact is not entered in " + SUSetup;
+        public const string SUSetup = "Survey Preferences";
 
         #region CacheNames
         public class CacheNames {
             public const string SurveyCollector = "Survey Collector";
             public const string SurveyCollectorData = "Survey Collector Data";
             public const string SurveySetup = "Survey Setup";
+            public const string SurveySetupEntity = "Survey Entity Setup";
             public const string Survey = "Survey";
             public const string SurveyUser = "Survey User";
             public const string SurveyFilter = "Survey Filter";
@@ -18,12 +21,13 @@ namespace PX.Survey.Ext {
 
         public class CollectorStatus {
             public const string New = "New";
-            public const string Rendered = "Rendered";
+            //public const string Rendered = "Rendered";
             public const string Sent = "Awaiting Response";
             public const string Responded = "Responded";
             public const string Reminded = "Reminded";
             public const string Expired = "Expired";
             public const string Error = "Error";
+            public const string Processed = "Processed";
         }
 
         public class CollectorDataStatus {
@@ -45,9 +49,11 @@ namespace PX.Survey.Ext {
             public const string Header = "Header";
             public const string PageHeader = "Page Header";
             public const string QuestionPage = "Question";
+            public const string CommentPage = "Comment";
             public const string ContentPage = "Content";
             public const string PageFooter = "Page Footer";
             public const string Footer = "Footer";
+            public const string BadRequest = "Bad Request";
         }
 
         public class SurveyLayout {
@@ -89,17 +95,12 @@ namespace PX.Survey.Ext {
         public const string CollectorNotFound = "Cannot find a collector with ID {0}";
         public const string UserNotFound = "Cannot find a user with Line Nbr. {0}";
         public const string AnswersNotfound = "No answers found";
-        public const string SurveyQuestionNotFound = "A Survey Question with AttributeID '{0}' does not exist";
-
-
-        #region Demo Survey
-        public const string COVSYMPTOM = "Are you experiencing any of these symptoms? (fever, cough, shortness of breath, sore throat or diarrhea)";
-        public const string COVCONTACT = "Contact with individuals diagnosed with COVID-19?";
-        public const string COVTEMP = "Self Temperature";
-        public const string COVTRAVEL = "Travel Locations";
-        public const string DEMOCOVID = "COVID-19 Wellness Survey";
-        #endregion
-
+        public const string SurveyQuestionNotFound = "A Survey Question named '{0}' does not exist";
+        public const string SurveyDetailNotFound = "A Survey Detail named '{0}' does not exist";
+        public const string ValueCannotBefound = "'{0}' with a value of '{1}' cannot be found in the system.";
+        public const string TokenNoFound = "Cannot find a collector for token {0}";
+        public const string TokenNoSurvey = "Token {0} is connected to a non existing survey";
+        public const string TokenNoUser = "Token {0} is connected to a non existing survey user";
 
         #region SurveyAction
         public class SurveyAction {

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{survey.title}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://gitcdn.link/cdn/Wikiki/bulma-checkradio/38c95578f465f4c3805f578490925f337b87404d/dist/css/bulma-checkradio.min.css" />
+        <style></style>
+    </head>
+    <body class="has-background-light" style="height: 100%; min-height: 100vh">
+        <section class="section container is-max-desktop has-background-white px-0 py-5">
+            <form name="{survey.formname}" action="{webhook.url}" method="post" enctype="multipart/form-data">
+                <!-- INNER CONTENT STARTS HERE -->
+                <!-- Header HTML content starts here -->
+                <header class="hero">
+                    <a class="px-5" target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="image" style="width: 250px" /></a>
+                    <div class="hero-body py-4 mt-4 px-0">
+                        <h1 class="title has-background-info-dark has-text-white px-4 py-4 mb-4">{survey.title}</h1>
+                        <h2 class="subtitle has-background-info has-text-white px-4 py-2 mb-2">{survey.subtitle}</h2>
+                        <div class="columns is-mobile my-4">
+                            <div class="column is-three-fifths is-offset-one-fifth">
+                                <!-- Change value % according to current section/page -->
+                                <!-- value={current page} max={total pages} -->
+                                <progress class="progress progress-text is-primary" value="3" max="4"></progress>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Header HTML content ends here -->
+                <div class="px-5">
+                    <!-- All question components should live inside this section bellow {foreach question}-->
+                    <!-- Text input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.labelid}" for="{control.id}">{#. Text Input Question text}</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="{placeholder text}" id="{control.id}" aria-labelledby="{control.labelid}" />
+                        </div>
+                    </div>
+                    <!-- Text input component HTML (end cut here) -->
+                    <!-- Textarea input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.labelid}" for="{control.id}">{#. Area Input Question text}</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="{placeholder text}" rows="5" id="{control.id}" aria-labelledby="{control.labelid}"></textarea>
+                        </div>
+                    </div>
+                    <!-- Textarea input component HTML (end cut here) -->
+                    <!-- Dropdown input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.labelid}" for="{control.id}">{#. Dropdown Question text}</label>
+                        <div class="control select">
+                            <select id="{control.id}" aria-labelledby="{control.labelid}">
+                                <!-- {foreach option start} -->
+                                <option>{option 1}</option>
+                                <option>{option 2}</option>
+                                <!-- {foreach option end} -->
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Dropdown input component HTML (end cut here) -->
+                    <!-- Checkbox input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">{#. Checkbox Question text}</label>
+                        <!-- {foreach option start} -->
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox.id1}" name="{control.checkbox.name}" aria-labelledby="{control.checkbox.labelid1}" value="{control.checkbox.value1}" />
+                            <label id="{control.checkbox.labelid1}" for="{control.checkbox.id1}">{option 1}</label>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox.id2}" name="{control.checkbox.name}" aria-labelledby="{control.checkbox.labelid2}" value="{control.checkbox.value2}" />
+                            <label id="{control.checkbox.labelid2}" for="{control.checkbox.id2}">{option 2}</label>
+                        </div>
+                        <!-- {foreach option end} -->
+                    </div>
+                    <!-- Checkbox input component HTML (end cut here) -->
+                    <!-- Radio input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">{#. Radio Question text}</label>
+                        <!-- {foreach option start} -->
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio.id1}" name="{control.radio.name}" aria-labelledby="{control.radio.labelid1}" value="{control.radio.value1}" />
+                            <label id="{control.radio.labelid1}" for="{control.radio.id1}">{option 1}</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio.id2}" name="{control.radio.name}" aria-labelledby="{control.radio.labelid2}" value="{control.radio.value2}" />
+                            <label id="{control.radio.labelid2}" for="{control.radio.id2}">{option 2}</label>
+                        </div>
+                        <!-- {foreach option end} -->
+                    </div>
+                    <!-- Radio input component HTML (end cut here) -->
+                    <!-- Horizontal Radio input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">{#. Horizontal Radio Question text}</label>
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th class="is-size-7"></th>
+                                    <th class="is-size-7">5 = Very Satisfied</th>
+                                    <th class="is-size-7">3 = Satisfied</th>
+                                    <th class="is-size-7">2 = Neutral</th>
+                                    <th class="is-size-7">4 = Dissatisfied</th>
+                                    <th class="is-size-7">1 = Very Dissatisfied</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered" style="max-width: 100px; width: 15%"><label class="radio" id="{control.hradio.labelid1}" for="{control.hradio.id1}">{question detail}</label></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id5}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value5}" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id4}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value4}" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id3}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value3}" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id2}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value2}" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id1}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value1}" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Horizontal Radio input component HTML (end cut here) -->
+                    <!-- Horizontal Radio input SECONDARY component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered is-2" style="max-width: 100px; width: 15%"><label class="radio" id="{control.hradio.labelid1}" for="{control.hradio.id1}">{question detail}</label></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id5}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value5}" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id4}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value4}" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id3}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value3}" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id2}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value2}" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio.id1}" name="{control.hradio.name}" aria-labelledby="{control.hradio.labelid1}" value="{control.hradio.value1}" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Horizontal Radio input SECONDARY component HTML (end cut here) -->
+                    <!-- {end foreach question} All question components should live inside above section-->
+                </div>
+                <!-- Footer HTML content starts here -->
+                <footer class="footer has-background-white">
+                    <div class="content has-text-centered">
+                        <!-- {if page > 1 show back button} -->
+                        <button type="submit" class="button is-dark is-medium" name="action" value="back">Back</button>
+                        <!-- {endif} -->
+
+                        <button type="submit" class="button is-info is-medium" name="action" value="next">Next</button>
+                    </div>
+                    <hr class="mt-1" />
+                    <div class="content level has-text-centered mt-4">
+                        <div class="level-item has-text-centered">
+                            <p class="heading">Powered by</p>
+                            <p class="title ml-2">
+                                <a target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="mt-1" style="width: 100px" /></a>
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer HTML content ends here -->
+                <!-- INNER CONTENT ENDS HERE -->
+            </form>
+        </section>
+    </body>
+</html>

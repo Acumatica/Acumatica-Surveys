@@ -16,9 +16,10 @@ namespace PX.Survey.Ext {
         public PXCancel<SurveyFilter> Cancel;
         public PXFilter<SurveyFilter> Filter;
 
-        public PXFilteredProcessing<Survey, SurveyFilter,
+        public PXFilteredProcessingJoin<Survey, SurveyFilter,
+            LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<Survey.surveyID>>>,
             Where<Survey.active, Equal<True>,
-            And<SurveyUser.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Surveys;
+            And<Survey.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Surveys;
 
         private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
@@ -49,13 +50,10 @@ namespace PX.Survey.Ext {
                 switch (action) {
                     //note: the or clauses below are intended to preserve a previous error indicator and not let 
                     //      successive iterations override a previous error detection.
-                    //case SurveyAction.RenderOnly:
-                    //    errorOccurred = Render(graph, generator, survey, filter) || errorOccurred;
-                    //    break;
                     case SurveyAction.ProcessAnswers:
                         errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
                         break;
-                    case SurveyAction.NewOnly:
+                    case SurveyAction.SendNew:
                         errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
                         break;
                     case SurveyAction.RemindOnly:
@@ -76,82 +74,66 @@ namespace PX.Survey.Ext {
             }
         }
 
-        private static bool Render(SurveyMaint graph, SurveyGenerator generator, Survey survey, SurveyFilter filter) {
-            var collectors = graph.Collectors.Select().FirstTableItems;
-            var users = graph.Users.Select().FirstTableItems;
-            foreach (var user in users) {
-                var collector = collectors.FirstOrDefault(coll => coll.UserLineNbr == user.LineNbr);
-                if (collector != null && collector.Status != CollectorStatus.New && collector.Status != CollectorStatus.Error) {
-                    continue;
-                }
-                if (collector == null) {
-                    collector = new SurveyCollector {
-                        Name =
-                            $"{survey.Name} {PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}",
-                        SurveyID = survey.SurveyID,
-                        UserLineNbr = user.LineNbr,
-                        CollectedDate = null,
-                        ExpirationDate = CalculateExpirationDate(filter.DurationTimeSpan),
-                    };
-                    var inserted = graph.Collectors.Insert(collector);
-                }
-                try {
-                    var surveySays = generator.GenerateSurvey(survey, user);
-                    collector.Rendered = surveySays;
-                    collector.Status = CollectorStatus.Rendered;
-                    collector.Message = null;
-                } catch (Exception ex) {
-                    collector.Status = CollectorStatus.Error;
-                    collector.Message = ex.Message;
-                }
-                var updated = graph.Collectors.Update(collector);
-            }
-            return false;
-        }
-
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
-            var questions = graph.Questions.Select().FirstTableItems;
-            var collectors = graph.Collectors.Select().FirstTableItems;
-            var collDataRecs = graph.CollectorDataRecords.Select().FirstTableItems;
-            foreach (var collData in collDataRecs) {
-                if (collData.Status != CollectorDataStatus.Connected && collData.Status != CollectorDataStatus.Error) {
-                    continue;
+            var allCollectors = graph.Collectors.Select().FirstTableItems;
+            var allCollectorDatas = graph.CollectorDataRecords.Select().FirstTableItems;
+            foreach (var collector in allCollectors) {
+                var collectorDatas = allCollectorDatas.Where(cd => cd.CollectorID == collector.CollectorID).ToArray();
+                foreach (var collData in collectorDatas) {
+                    if (collData.Status != CollectorDataStatus.Connected && collData.Status != CollectorDataStatus.Error) {
+                        continue;
+                    }
+                    try {
+                        DoProcessAnswers(graph, collData, collector);
+                        collData.Status = CollectorDataStatus.Processed;
+                        collData.Message = null;
+                    } catch (Exception ex) {
+                        collData.Status = CollectorDataStatus.Error;
+                        collData.Message = ex.Message;
+                        errorOccurred = true;
+                    }
+                    var updated = graph.CollectorDataRecords.Update(collData);
                 }
-                var collector = collectors.FirstOrDefault(coll => coll.CollectorID == collData.CollectorID);
-                if (collector == null) {
-                    throw new PXException(Messages.CollectorNotFound, collData.CollectorID);
+                if (allCollectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
+                    collector.Status = CollectorDataStatus.Processed;
+                    graph.Collectors.Update(collector);
                 }
-                try {
-                    DoProcessAnswers(graph, collData, collector, questions);
-                    collData.Status = CollectorStatus.Rendered;
-                    collData.Message = null;
-                } catch (Exception ex) {
-                    collData.Status = CollectorStatus.Error;
-                    collData.Message = ex.Message;
-                    errorOccurred = true;
-                }
-                var updated = graph.CollectorDataRecords.Update(collData);
             }
             return errorOccurred;
         }
 
-        private static void DoProcessAnswers(SurveyMaint graph, SurveyCollectorData collDataRec, SurveyCollector collector, IEnumerable<CSAttributeGroup> questions) {
+        private static void DoProcessAnswers(SurveyMaint graph, SurveyCollectorData collDataRec, SurveyCollector collector) {
             var queryString = collDataRec.QueryParameters;
             if (string.IsNullOrEmpty(queryString)) {
                 throw new PXException(Messages.AnswersNotfound);
             }
             var nvc = HttpUtility.ParseQueryString(queryString);
             var dict = nvc.AllKeys.ToDictionary(k => k, k => nvc[k]);
+            var token = collector.Token;
+            (var survey, var user) = SurveyUtils.GetSurveyAndUser(graph, token);
             //COVSYMPTOM=YES&COVCONTACT=YES&COVTEMP=103&COVTRAVEL=New+York
+            //{{PageNbr}}.{{QuestionNbr}}.{{LineNbr}}=Value&...
             var answers = new List<CSAnswers>();
             foreach (var kvp in dict) {
-                var attrID = kvp.Key;
-                var value = kvp.Value;
-                var question = questions.FirstOrDefault(qu => qu.AttributeID == attrID);
-                if (question == null) {
-                    throw new PXException(Messages.SurveyQuestionNotFound, attrID);
+                var answerKey = kvp.Key;
+                if (!answerKey.Contains(".")) {
+                    throw new PXException(Messages.SurveyQuestionNotFound, answerKey);
                 }
+                var parts = answerKey.Split('.');
+                var pageNbr = int.Parse(parts[0]);
+                var quesNbr = int.Parse(parts[1]);
+                var lineNbr = int.Parse(parts[2]);
+                SurveyDetail detail = SurveyDetail.PK.Find(graph, survey.SurveyID, lineNbr);
+                if (detail == null) {
+                    throw new PXException(Messages.SurveyDetailNotFound, answerKey);
+                }
+                string attrID = detail.AttributeID;
+                if (attrID == null) {
+                    // Not a question
+                    continue;
+                }
+                var value = kvp.Value;
                 var answer = new CSAnswers() {
                     AttributeID = attrID,
                     Value = value
@@ -159,6 +141,10 @@ namespace PX.Survey.Ext {
                 answers.Add(answer);
             }
             SurveyUtils.InstallAnswers(graph, collector, answers);
+        }
+
+        private static SurveyTemplate GetTemplate(string templateID) {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -176,8 +162,7 @@ namespace PX.Survey.Ext {
         /// <param name="filter"></param>
         /// <returns>Whether of not any of the processes within have an error</returns>
         private static bool DefaultRoutine(SurveyMaint graph, SurveyGenerator generator, Survey survey, SurveyFilter filter) {
-            var errorOccurred = Render(graph, generator, survey, filter);
-            errorOccurred = SetExpiredSurveys(graph, survey, filter) || errorOccurred;
+            var errorOccurred = SetExpiredSurveys(graph, survey, filter);
             errorOccurred = SendReminders(graph, survey, filter) || errorOccurred;
             errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
             return errorOccurred;
@@ -199,7 +184,7 @@ namespace PX.Survey.Ext {
                     unanswered.CollectorID = collector.CollectorID;
                     unanswered.Status = CollectorDataStatus.Connected;
                     unanswered.Message = null;
-                    collector.CollectedDate = unanswered.LastModifiedDateTime;
+                    //collector.CollectedDate = unanswered.LastModifiedDateTime;
                     collectorGraph.Collector.Update(collector);
                 } catch (Exception ex) {
                     unanswered.Status = CollectorStatus.Error;
@@ -230,7 +215,7 @@ namespace PX.Survey.Ext {
             var collectors = graph.Collectors.Select();
             foreach (var res in collectors) {
                 var collector = PXResult.Unwrap<SurveyCollector>(res);
-                if (collector.Status != CollectorStatus.Rendered) {
+                if (collector.Status != CollectorStatus.New) {
                     continue;
                 }
                 var surveyUser = PXResult.Unwrap<SurveyUser>(res);
@@ -320,7 +305,7 @@ namespace PX.Survey.Ext {
             Guid noteID = surveyCollector.NoteID.GetValueOrDefault();
             if (surveyUser.UserID != null) {
                 PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                PXTrace.WriteInformation("noteID " + noteID.ToString());
+                PXTrace.WriteInformation("NoteID " + noteID.ToString());
                 PXTrace.WriteInformation("ScreenID " + sScreenID);
                 List<Guid> userIds = new List<Guid> { surveyUser.UserID.GetValueOrDefault() };
                 pushNotificationSender.SendNotificationAsync(
@@ -333,6 +318,7 @@ namespace PX.Survey.Ext {
         }
 
         private static void SendMailNotification(SurveyUser surveyUser, SurveyCollector collector) {
+            // Acuminator disable once PX1050 HardcodedStringInLocalizationMethod [Justification]
             throw new PXException("Don't know how to send using email");
             //Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(context.MessageGraph, notificationID);
             //var sent = false;
@@ -439,18 +425,17 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXInt]
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [PXString]
         [PXUnboundDefault]
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
-                    typeof(Survey.surveyCD),
+                    typeof(Survey.surveyID),
                     typeof(Survey.target),
                     typeof(Survey.layout),
-                    typeof(Survey.name),
-                    SubstituteKey = typeof(Survey.surveyCD),
-                    DescriptionField = typeof(Survey.name))]
-        public virtual int? SurveyID { get; set; }
+                    typeof(Survey.title),
+                    DescriptionField = typeof(Survey.title))]
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region DurationTimeSpan

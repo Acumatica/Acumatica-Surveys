@@ -9,7 +9,7 @@ namespace PX.Survey.Ext {
                 new[] { 
                     DefaultAction, 
                     //RenderOnly,
-                    NewOnly, 
+                    SendNew, 
                     RemindOnly,
                     ExpireOnly, 
                     ProcessAnswers },
@@ -23,13 +23,13 @@ namespace PX.Survey.Ext {
 
         public const string DefaultAction = "D";
         //public const string RenderOnly = "H";
-        public const string NewOnly = "N";
+        public const string SendNew = "N";
         public const string RemindOnly = "R";
         public const string ExpireOnly = "E";
         public const string ProcessAnswers = "P";
 
         public class _default : BqlString.Constant<_default> { public _default() : base(DefaultAction) { } }
-        public class newOnly : BqlString.Constant<newOnly> { public newOnly() : base(NewOnly) { } }
+        public class newOnly : BqlString.Constant<newOnly> { public newOnly() : base(SendNew) { } }
         //public class renderOnly : BqlString.Constant<newOnly> { public renderOnly() : base(RenderOnly) { } }
         public class remindOnly : BqlString.Constant<remindOnly> { public remindOnly() : base(RemindOnly) { } }
         public class expireOnly : BqlString.Constant<expireOnly> { public expireOnly() : base(ExpireOnly) { } }

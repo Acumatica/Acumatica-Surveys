@@ -3,14 +3,22 @@
 ## [Current Components]
 | **Type** | **Link** | **Changes** |
 | :--- | :--- | :--- |
+|DAC|[RecipientFilter.cs](PX.Survey.Ext/DAC/RecipientFilter.cs)||
+|DAC|[RecipientLookup.cs](PX.Survey.Ext/DAC/RecipientLookup.cs)||
+|DAC|[RecipientSelected.cs](PX.Survey.Ext/DAC/RecipientSelected.cs)||
 |DAC|[Survey.cs](PX.Survey.Ext/DAC/Survey.cs)||
 |DAC|[SurveyCollector.cs](PX.Survey.Ext/DAC/SurveyCollector.cs)||
 |DAC|[SurveyCollectorData.cs](PX.Survey.Ext/DAC/SurveyCollectorData.cs)||
+|DAC|[SurveyDetail.cs](PX.Survey.Ext/DAC/SurveyDetail.cs)||
 |DAC|[SurveySetup.cs](PX.Survey.Ext/DAC/SurveySetup.cs)||
+|DAC|[SurveyTemplate.cs](PX.Survey.Ext/DAC/SurveyTemplate.cs)||
 |DAC|[SurveyUser.cs](PX.Survey.Ext/DAC/SurveyUser.cs)||
-|DACExt|[ContactSurveyExt.cs](PX.Survey.Ext/DAC/ContactSurveyExt.cs)||
-|DACExt|[CSAttributeDetailSurveyExt.cs](PX.Survey.Ext/DAC/CSAttributeDetailSurveyExt.cs)||
-|DACExt|[CSAttributeSurveyExt.cs](PX.Survey.Ext/DAC/CSAttributeSurveyExt.cs)||
+|DAC|[TemplateFilter.cs](PX.Survey.Ext/DAC/TemplateFilter.cs)||
+|DAC|[TemplateSelected.cs](PX.Survey.Ext/DAC/TemplateSelected.cs)||
+|DAC|[RecipientSelected.cs](PX.Survey.Ext/DAC/RecipientSelected.cs)||
+|DACExt|[ContactSurveyExt.cs](PX.Survey.Ext/DACExt/ContactSurveyExt.cs)||
+|DACExt|[CSAttributeDetailSurveyExt.cs](PX.Survey.Ext/DACExt/CSAttributeDetailSurveyExt.cs)||
+|DACExt|[CSAttributeSurveyExt.cs](PX.Survey.Ext/DACExt/CSAttributeSurveyExt.cs)||
 |Code|[Attributes.cs](PX.Survey.Ext/Descriptor/Attributes.cs)||
 |Code|[Messages.cs](PX.Survey.Ext/Descriptor/Messages.cs)||
 |Code|[SurveyResponseStatus.cs](PX.Survey.Ext/Descriptor/SurveyResponseStatus.cs)||
@@ -20,8 +28,8 @@
 |Graph|[SurveyMaint.cs](PX.Survey.Ext/SurveyMaint.cs)||
 |Graph|[SurveyProcess.cs](PX.Survey.Ext/SurveyProcess.cs)||
 |Graph|[SurveySetupMaint.cs](PX.Survey.Ext/SurveySetupMaint.cs)||
+|Graph|[SurveyTemplateMaint.cs](PX.Survey.Ext/SurveyTemplateMaint.cs)||
 |WebHook|[SurveyWebHookServer.cs](PX.Survey.Ext/WebHook/SurveyWebHookServer.cs)||
-
 |Screen|[SU.10.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU101000) (Survey Preferences)||
 |Screen|[SU.20.10.PL](https://try.acumatica.com/cews3/Main?ScreenId=SU2010PL) (Survey)||
 |Screen|[SU.20.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU201000) (Survey)||

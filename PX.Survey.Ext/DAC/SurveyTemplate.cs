@@ -1,5 +1,4 @@
-﻿using PX.CS;
-using PX.Data;
+﻿using PX.Data;
 using PX.Data.BQL;
 using PX.Data.EP;
 using PX.Data.ReferentialIntegrity.Attributes;
@@ -21,19 +20,9 @@ namespace PX.Survey.Ext {
 
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBIdentity(IsKey = true)]
-        [PXSelector(typeof(templateID), new Type[] { typeof(templateID) }, DescriptionField = typeof(description))]
+        [PXSelector(typeof(templateID), DescriptionField = typeof(description))]
         [PXUIField(DisplayName = "Template ID")]
         public virtual int? TemplateID { get; set; }
-
-        /// <summary>
-        /// Key field.
-        /// The user-friendly unique identifier of the Survey Template.
-        /// The structure of the identifier is determined by the <i>SURVEYTEMPLATE</i> <see cref="T:PX.Objects.CS.Dimension">Segmented Key</see>.
-        /// </summary>
-        //public abstract class templateCD : BqlString.Field<templateCD> { }
-        //[TemplateRaw(IsKey = true, DisplayName = "Template ID")]
-        //[PXDefault]
-        //public virtual string TemplateCD { get; set; }
 
         #region Active
         public abstract class active : BqlBool.Field<active> { }
@@ -52,55 +41,20 @@ namespace PX.Survey.Ext {
         public virtual string TemplateType { get; set; }
         #endregion
 
-        #region AttributeID
-        public abstract class attributeID : BqlString.Field<attributeID> { }
-        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
-        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXSelector(typeof(CSAttribute.attributeID), DescriptionField = typeof(CSAttribute.description))]
-        [PXUIField(DisplayName = "Answer Meta")]
-        [PXUIVisible(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        [PXUIEnabled(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        [PXUIRequired(typeof(Where<templateType, Equal<SUTemplateType.questionPage>>))]
-        public virtual string AttributeID { get; set; }
-        #endregion
-
+        #region Description
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
         [PXFieldDescription]
         [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string Description { get; set; }
+        #endregion
 
-        //public abstract class subject : BqlString.Field<subject> { }
-        //[PXDBLocalizableString(255, InputMask = "", IsUnicode = true)]
-        //[PXUIField(DisplayName = "Subject", Visibility = PXUIVisibility.SelectorVisible)]
-        //public virtual string Subject { get; set; }
-
+        #region Body
         public abstract class body : BqlString.Field<body> { }
         [PXDBText(IsUnicode = true)]
         [PXUIField(DisplayName = "Body")]
         public virtual string Body { get; set; }
-
-        public abstract class refNoteID : BqlGuid.Field<refNoteID> { }
-        [PXDBGuid(false)]
-        [PXUIField(DisplayName = "Entity Link")]
-        public virtual Guid? RefNoteID { get; set; }
-
-        //public abstract class screenID : BqlString.Field<screenID> { }
-        //[PXDBString(8, IsFixed = true, InputMask = "CC.CC.CC.CC")]
-        //[PXDefault]
-        //[PXUIField(DisplayName = "Screen Name", Visibility = PXUIVisibility.SelectorVisible)]
-        //public virtual string ScreenID { get; set; }
-
-        //public abstract class screenIdValue : BqlString.Field<screenIdValue> { }
-        //[PXDefault]
-        //[PXString]
-        //[PXUIField(DisplayName = "Screen ID", Enabled = false)]
-        //public string ScreenIdValue {
-        //    get {
-        //        return this.ScreenID;
-        //    }
-        //}
-
+        #endregion
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
@@ -111,6 +65,7 @@ namespace PX.Survey.Ext {
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }
         [PXDBCreatedByID]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedByID, Enabled = false)]
         public virtual Guid? CreatedByID { get; set; }
         #endregion
 
@@ -123,12 +78,14 @@ namespace PX.Survey.Ext {
         #region CreatedDateTime
         public abstract class createdDateTime : BqlDateTime.Field<createdDateTime> { }
         [PXDBCreatedDateTime]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.CreatedDateTime, Enabled = false)]
         public virtual DateTime? CreatedDateTime { get; set; }
         #endregion
 
         #region LastModifiedByID
         public abstract class lastModifiedByID : BqlGuid.Field<lastModifiedByID> { }
         [PXDBLastModifiedByID]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.LastModifiedByID, Enabled = false)]
         public virtual Guid? LastModifiedByID { get; set; }
         #endregion
 
@@ -141,6 +98,7 @@ namespace PX.Survey.Ext {
         #region LastModifiedDateTime
         public abstract class lastModifiedDateTime : BqlDateTime.Field<lastModifiedDateTime> { }
         [PXDBLastModifiedDateTime]
+        [PXUIField(DisplayName = PXDBLastModifiedByIDAttribute.DisplayFieldNames.LastModifiedDateTime, Enabled = false)]
         public virtual DateTime? LastModifiedDateTime { get; set; }
         #endregion
 

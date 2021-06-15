@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Acumatica Case Support Satisfaction Survey</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://gitcdn.link/cdn/Wikiki/bulma-checkradio/38c95578f465f4c3805f578490925f337b87404d/dist/css/bulma-checkradio.min.css" />
+        <style></style>
+    </head>
+    <body class="has-background-light" style="height: 100%; min-height: 100vh">
+        <section class="section container is-max-desktop has-background-white px-0 py-5">
+            <form name="{survey.formname}" action="{webhook.url}" method="post" enctype="multipart/form-data">
+                <!-- INNER CONTENT STARTS HERE -->
+                <!-- Header HTML content starts here -->
+                <header class="hero">
+                    <a class="px-5" target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="image" style="width: 250px" /></a>
+                    <div class="hero-body py-4 mt-4 px-0">
+                        <h1 class="title has-background-info-dark has-text-white px-4 py-4 mb-4">Acumatica Case Support Satisfaction Survey</h1>
+                        <h2 class="subtitle has-background-info has-text-white px-4 py-2 mb-2"></h2>
+                        <div class="columns is-mobile my-4">
+                            <div class="column is-three-fifths is-offset-one-fifth">
+                                <!-- Change value % according to current section/page -->
+                                <!-- value={current page} max={total pages} -->
+                                <progress class="progress progress-text is-primary" value="4" max="4"></progress>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Header HTML content ends here -->
+                <div class="px-5">
+                    <h1 class="title has-text-centered is-2">Thank you!</h1>
+                    <h2 class="subtitle has-text-centered is-5">Your feedback is very important to us.</h2>
+                </div>
+                <!-- Footer HTML content starts here -->
+                <footer class="footer has-background-white">
+                    <div class="content has-text-centered">
+                        <!-- {if page > 1 show back button} -->
+                        <button type="submit" class="button is-dark is-medium" name="action" value="back">Back</button>
+                        <!-- {endif} -->
+                    </div>
+                    <hr class="mt-1" />
+                    <div class="content level has-text-centered mt-4">
+                        <div class="level-item has-text-centered">
+                            <p class="heading">Powered by</p>
+                            <p class="title ml-2">
+                                <a target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="mt-1" style="width: 100px" /></a>
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer HTML content ends here -->
+                <!-- INNER CONTENT ENDS HERE -->
+            </form>
+        </section>
+    </body>
+</html>

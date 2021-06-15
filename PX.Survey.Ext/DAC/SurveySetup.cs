@@ -1,5 +1,6 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
+using PX.Objects.CR;
 using PX.Objects.CS;
 using System;
 
@@ -19,12 +20,152 @@ namespace PX.Survey.Ext {
         public virtual string SurveyNumberingID { get; set; }
         #endregion
 
-        #region DemoSurvey
-        public abstract class demoSurvey : BqlBool.Field<demoSurvey> { }
-        [PXDBBool]
-        [PXUIField(DisplayName = "Created Demo Survey", Enabled = false)]
-        public virtual bool? DemoSurvey { get; set; }
+        #region BadRequestID
+        public abstract class badRequestID : BqlInt.Field<badRequestID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Bad Request Template")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.badRequest>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? BadRequestID { get; set; }
         #endregion
+
+        #region TemplateID
+        public abstract class templateID : BqlInt.Field<templateID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Main Template")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? TemplateID { get; set; }
+        #endregion
+
+        #region DefHeaderID
+        public abstract class defHeaderID : BqlInt.Field<defHeaderID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Header")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.header>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefHeaderID { get; set; }
+        #endregion
+
+        #region DefPageHeaderID
+        public abstract class defPageHeaderID : BqlInt.Field<defPageHeaderID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Page Header")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageHeader>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefPageHeaderID { get; set; }
+        #endregion
+
+        #region DefQuestionID
+        public abstract class defQuestionID : BqlInt.Field<defQuestionID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Question")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.questionPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefQuestionID { get; set; }
+        #endregion
+
+        #region DefQuestAttrID
+        public abstract class defQuestAttrID : BqlString.Field<defQuestAttrID> { }
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXDefault]
+        [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
+        [PXUIField(DisplayName = "Default Question Type")]
+        public virtual string DefQuestAttrID { get; set; }
+        #endregion
+
+        #region DefCommentID
+        public abstract class defCommentID : BqlInt.Field<defCommentID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Comment")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.commentPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefCommentID { get; set; }
+        #endregion
+
+        #region DefCommAttrID
+        public abstract class defCommAttrID : BqlString.Field<defCommAttrID> { }
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXDefault]
+        [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
+        [PXUIField(DisplayName = "Default Comment Type")]
+        public virtual string DefCommAttrID { get; set; }
+        #endregion
+
+        #region DefNbrOfRows
+        public abstract class defNbrOfRows : BqlInt.Field<defNbrOfRows> { }
+        [PXDBInt]
+        [PXDefault(3, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Def. Comment Rows")]
+        public virtual int? DefNbrOfRows { get; set; }
+        #endregion
+
+        #region DefMaxLength
+        public abstract class defMaxLength : BqlInt.Field<defMaxLength> { }
+        [PXDBInt]
+        [PXDefault(20, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Def. Max Length")]
+        public virtual int? DefMaxLength { get; set; }
+        #endregion
+
+        #region DefPageFooterID
+        public abstract class defPageFooterID : BqlInt.Field<defPageFooterID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Page Footer")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageFooter>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefPageFooterID { get; set; }
+        #endregion
+
+        #region DefFooterID
+        public abstract class defFooterID : BqlInt.Field<defFooterID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Default Footer")]
+        [PXDefault]
+        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.footer>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
+            DescriptionField = typeof(SurveyTemplate.description),
+            SubstituteKey = typeof(SurveyTemplate.description))]
+        public virtual int? DefFooterID { get; set; }
+        #endregion
+
+        #region ContactID
+        public abstract class contactID : BqlInt.Field<contactID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Sample Contact")]
+        [PXSelector(typeof(Search<Contact.contactID,
+                            Where<Contact.contactType, Equal<ContactTypesAttribute.employee>,
+                            And<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>>),
+                    DescriptionField = typeof(Contact.displayName))]
+        public virtual int? ContactID { get; set; }
+        #endregion
+
+        #region WebHookID
+        public abstract class webHookID : BqlGuid.Field<webHookID> { }
+        [PXDBGuid(false)]
+        [PXDefault]
+        [PXUIField(DisplayName = "Default Web Hook")]
+        [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID), 
+            new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive), 
+                typeof(Api.Webhooks.DAC.WebHook.isSystem) },
+            DescriptionField = typeof(Api.Webhooks.DAC.WebHook.name),
+            SubstituteKey = typeof(Api.Webhooks.DAC.WebHook.name))]
+        public Guid? WebHookID { get; set; }
+        #endregion
+
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }

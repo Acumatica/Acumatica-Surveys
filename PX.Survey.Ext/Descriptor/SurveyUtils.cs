@@ -5,12 +5,55 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace PX.Survey.Ext {
 
     public static class SurveyUtils {
+
+        public static Func<SurveyDetail, bool> ALL_PAGES = (x) => { return true; };
+        public static Func<SurveyDetail, bool> ACTIVE_ONLY = (x) => { return x.Active == true; };
+        public static Func<SurveyDetail, bool> EXCEPT_HF = (x) => { return x.TemplateType != SUTemplateType.Header && x.TemplateType != SUTemplateType.Footer; };
+
+        public static int GetNextOrPrevPageNbr(HttpRequestMessage request, int pageNbr) {
+            var body = request.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(body)) {
+                return 1;
+            }
+            var qscoll = HttpUtility.ParseQueryString(body);
+            var action = qscoll.Get("action");
+            if (string.IsNullOrEmpty(action)) {
+                return 1;
+            }
+            switch (action) {
+                case "prev":
+                    return --pageNbr;
+                case "start":
+                    return 1;
+            }
+            return ++pageNbr;
+        }
+
+        public static int GetPageNumber(string page) {
+            if (string.IsNullOrEmpty(page) || !int.TryParse(page, out int pageNbr)) {
+                return 1;
+            }
+            return pageNbr;
+        }
+
+
+        public static IEnumerable<SurveyDetail> SelectPages(Survey survey, IEnumerable<SurveyDetail> details, int pageNbr) {
+            IEnumerable<SurveyDetail> pages = Enumerable.Empty<SurveyDetail>();
+            var max = details.Max(det => det.PageNbr);
+            while (!pages.Any() && pageNbr <= max) {
+                pages = details.Where(det => det.PageNbr != null && det.Active == true && det.PageNbr == pageNbr).OrderBy(pa => pa.SortOrder.Value).ToArray(); // Force eval, otherwise, we get pages for the next number
+                pageNbr++;
+            }
+            return pages;
+        }
 
         public static PXCache InstallAnswers(PXGraph graph, object row, List<CSAnswers> destAnswers) {
             var helper = new EntityHelper(graph);
@@ -80,9 +123,26 @@ namespace PX.Survey.Ext {
         //        Where<CSAttribute.attributeID, Equal<Required<CSAttribute.attributeID>>>>(graph).SelectSingle(new object[] { attributeId });
         //}
 
+        public static (Survey survey, SurveyUser user) GetSurveyAndUser(PXGraph graph, string token) {
+            var collector = SurveyCollector.UK.Find(graph, token);
+            if (collector == null) {
+                throw new PXException(Messages.TokenNoFound, token);
+            }
+            var survey = Survey.PK.Find(graph, collector.SurveyID);
+            if (survey == null) {
+                throw new PXException(Messages.TokenNoSurvey, token);
+            }
+            SurveyUser user = SurveyUser.PK.Find(graph, survey.SurveyID, collector.UserLineNbr);
+            if (user == null) {
+                throw new PXException(Messages.TokenNoUser, token);
+            }
+            return (survey, user);
+        }
+
+
         public static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {
-            return PXSelect<CSAttributeDetail, 
-                Where<CSAttributeDetail.attributeID, Equal<Required<CSAttributeDetail.attributeID>>, 
+            return PXSelect<CSAttributeDetail,
+                Where<CSAttributeDetail.attributeID, Equal<Required<CSAttributeDetail.attributeID>>,
                 And<CSAttributeDetail.disabled, NotEqual<True>>>>.Select(graph, new object[] { attributeId }).FirstTableItems;
         }
 
@@ -181,6 +241,58 @@ namespace PX.Survey.Ext {
         private static Type GetEntityTypeFromAttribute(PXGraph graph, object row) {
             var classIdField = GetClassIdField(graph, row);
             return classIdField?.DeclaringType;
+        }
+
+        public static bool HasLetter(string value) {
+            return !string.IsNullOrEmpty(value) && value.Any(char.IsLetter);
+        }
+
+        public static bool IsOnlyDigit(string value) {
+            return !string.IsNullOrEmpty(value) && value.All(char.IsDigit);
+        }
+
+        public static bool HasDigit(string value) {
+            return !string.IsNullOrEmpty(value) && value.Any(char.IsDigit);
+        }
+
+        public static bool IsGuid(string value) {
+            return !string.IsNullOrEmpty(value) && Guid.TryParse(value, out var fieldGuid);
+        }
+
+        public static string GetHash(Guid guid) {
+            using (SHA256 sha256Hash = SHA256.Create()) {
+                string hash = GetHash(sha256Hash, guid.ToString());
+                return hash;
+            }
+        }
+
+        public static bool VerifyHash(Guid guid, string hash) {
+            using (SHA256 sha256Hash = SHA256.Create()) {
+                var isSame = VerifyHash(sha256Hash, guid.ToString(), hash);
+                return isSame;
+            }
+        }
+
+        private static string GetHash(HashAlgorithm hashAlgorithm, string input) {
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            var sBuilder = new StringBuilder();
+            // Loop through each byte of the hashed data
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++) {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
+        // Verify a hash against a string.
+        private static bool VerifyHash(HashAlgorithm hashAlgorithm, string input, string hash) {
+            // Hash the input.
+            var hashOfInput = GetHash(hashAlgorithm, input);
+            return StringComparer.OrdinalIgnoreCase.Compare(hashOfInput, hash) == 0;
         }
     }
 }

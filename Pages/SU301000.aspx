@@ -27,11 +27,11 @@
 	</px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" Runat="Server">
-	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" SkinID="Inquire" Width="100%" Caption="Questions" 
+	<px:PXGrid SyncPosition="True" runat="server" ID="PXGridAnswers" SkinID="Inquire" Width="100%" Caption="Collected Answers" 
 			   MatrixMode="True" DataSourceID="ds" AutoAdjustColumns="true">
 		<Layout WrapText="true" />
 		<Levels>
-			<px:PXGridLevel DataMember="Answers" DataKeyNames="AttributeID,EntityType,EntityID">
+			<px:PXGridLevel DataMember="CollectedAnswers" DataKeyNames="AttributeID,EntityType,EntityID">
 				<RowTemplate>
 					<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
 					<px:PXTextEdit runat="server" ID="edParameterID" DataField="AttributeID" TextMode="MultiLine"></px:PXTextEdit>
