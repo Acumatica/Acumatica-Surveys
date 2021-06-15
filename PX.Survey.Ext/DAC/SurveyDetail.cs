@@ -13,7 +13,7 @@ namespace PX.Survey.Ext {
 
         #region Keys
         public class PK : PrimaryKeyOf<SurveyDetail>.By<surveyID, lineNbr> {
-            public static SurveyDetail Find(PXGraph graph, int? surveyID, int? lineNbr) => FindBy(graph, surveyID, lineNbr);
+            public static SurveyDetail Find(PXGraph graph, string surveyID, int? lineNbr) => FindBy(graph, surveyID, lineNbr);
         }
 
         public static class FK {
@@ -23,11 +23,12 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXDBInt(IsKey = true)]
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [SurveyID(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
         [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<surveyID>>>>))]
-        public virtual int? SurveyID { get; set; }
+        [PXSelector(typeof(surveyID))]
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region LineNbr

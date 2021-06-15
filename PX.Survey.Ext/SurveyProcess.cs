@@ -425,18 +425,17 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXInt]
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [PXString]
         [PXUnboundDefault]
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
-                    typeof(Survey.surveyCD),
+                    typeof(Survey.surveyID),
                     typeof(Survey.target),
                     typeof(Survey.layout),
                     typeof(Survey.title),
-                    SubstituteKey = typeof(Survey.surveyCD),
                     DescriptionField = typeof(Survey.title))]
-        public virtual int? SurveyID { get; set; }
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region DurationTimeSpan

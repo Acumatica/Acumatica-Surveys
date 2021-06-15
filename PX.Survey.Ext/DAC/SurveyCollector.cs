@@ -58,28 +58,21 @@ namespace PX.Survey.Ext {
         /// </summary>
         [PXDBString(60, IsUnicode = true)]
         //[PXDefault]
-        [PXFormula(typeof(SmartJoin<Dash, Survey.surveyCD, displayName>), Persistent = true)]
+        [PXFormula(typeof(SmartJoin<Dash, Survey.surveyID, displayName>), Persistent = true)]
         [PXUIField(DisplayName = "Name", Enabled = false)]
         public virtual string Name { get; set; }
         #endregion
 
-        #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
-        [PXDBInt]
+        #region SurveyID
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [SurveyID]
         [PXDBDefault(typeof(Survey.surveyID), DefaultForUpdate = false)]
         [PXParent(typeof(FK.SUSurvey))]
-        [PXUIField(DisplayName = "Survey ID", IsReadOnly = true)]
-        [PXSelector(typeof(Search<Survey.surveyID>),
-                    typeof(Survey.surveyCD),
-                    typeof(Survey.title),
-                    typeof(Survey.target),
-                    typeof(Survey.layout),
-            SubstituteKey = typeof(Survey.surveyCD),
-            DescriptionField = typeof(Survey.title))]
-        public virtual int? SurveyID { get; set; }
+        [PXSelector(typeof(surveyID), DescriptionField = typeof(Survey.title))]
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region UserLineNbr

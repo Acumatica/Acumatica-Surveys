@@ -12,6 +12,7 @@ using System.Text;
 namespace PX.Survey.Ext {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
 
+        //[PXCopyPasteHiddenFields(typeof(Survey.surveyID))]
         public SelectFrom<Survey>.View Survey;
 
         public SurveyDetailSelect Details;
@@ -273,7 +274,7 @@ namespace PX.Survey.Ext {
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
                 var pageContent = generator.GenerateSurveyPage(collector.Token, pageNbr);
-                SaveContentToAttachment($"Survey-{survey.SurveyCD}-Page-{pageNbr}.html", pageContent);
+                SaveContentToAttachment($"Survey-{survey.SurveyID}-Page-{pageNbr}.html", pageContent);
             }
             Actions.PressSave();
         }
@@ -318,7 +319,7 @@ namespace PX.Survey.Ext {
 
         public SurveyUser InsertOrFindUser(Survey survey, int? contactID) {
             SurveyUser user = SelectFrom<SurveyUser>.
-                Where<SurveyUser.surveyID.IsEqual<@P.AsInt>.
+                Where<SurveyUser.surveyID.IsEqual<@P.AsString>.
                 And<SurveyUser.contactID.IsEqual<@P.AsInt>>>.
                 View.SelectWindowed(this, 0, 1, survey.SurveyID, contactID);
             if (user == null) {
@@ -388,7 +389,7 @@ namespace PX.Survey.Ext {
             Survey row = e.Row;
             if (row == null) { return; }
             using (new PXConnectionScope()) {
-                var collectors = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsInt>>.
+                var collectors = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsString>>.
                                         View.SelectWindowed(this, 0, 1, row.SurveyID);
                 row.IsSurveyInUse = collectors.Any();
             }
@@ -401,6 +402,11 @@ namespace PX.Survey.Ext {
             e.Cache.AllowDelete = unlockedSurvey;
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
+        }
+
+        protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
+            var row = e.Row;
+            if (row == null) { return; }
         }
 
         //protected virtual void _(Events.RowPersisted<Survey> e) {
@@ -453,20 +459,20 @@ namespace PX.Survey.Ext {
             Details.Update(page);
         }
 
-        private SurveyDetail GetPage(int? surveyID, string templateType) {
+        private SurveyDetail GetPage(string surveyID, string templateType) {
             return PXSelect<SurveyDetail,
                     Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
                     And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>.Select(this, surveyID, templateType);
         }
 
-        private SurveyDetail GetPage(int? surveyID, int? pageNbr, string templateType) {
+        private SurveyDetail GetPage(string surveyID, int? pageNbr, string templateType) {
             return PXSelect<SurveyDetail,
                     Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
                     And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
                     And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>>.Select(this, surveyID, pageNbr, templateType);
         }
 
-        private PXResultset<SurveyDetail> GetRegularPages(int? surveyID) {
+        private PXResultset<SurveyDetail> GetRegularPages(string surveyID) {
             return PXSelect<SurveyDetail,
                     Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
                     And<SurveyDetail.templateType, In3<SUTemplateType.pageHeader, SUTemplateType.questionPage, SUTemplateType.contentPage, SUTemplateType.pageFooter>>>,
@@ -581,7 +587,7 @@ namespace PX.Survey.Ext {
         //    e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
         //}
 
-        private int GetMaxPage(int? surveyID) {
+        private int GetMaxPage(string surveyID) {
             var maxPage = PXSelect<SurveyDetail, Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>>>.Select(this, surveyID).FirstTableItems.Select(sd => sd.PageNbr).Max();
             return maxPage ?? 0;
         }
@@ -600,7 +606,7 @@ namespace PX.Survey.Ext {
                 return;
             }
             var survey = Survey.Current;
-            e.NewValue = $"{survey.SurveyCD}-{PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
+            e.NewValue = $"{survey.SurveyID}-{PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
             e.Cancel = true;
         }
 

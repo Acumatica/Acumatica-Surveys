@@ -40,16 +40,10 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXDBInt]
-        //[PXDefault]
-        [PXSelector(typeof(Search<Survey.surveyID>),
-            typeof(Survey.active),
-            typeof(Survey.title),
-            SubstituteKey = typeof(Survey.title),
-            DescriptionField = typeof(Survey.title))]
-        [PXUIField(DisplayName = "Survey", Visibility = PXUIVisibility.SelectorVisible)]
-        public virtual int? SurveyID { get; set; }
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [SurveyID]
+        [PXSelector(typeof(surveyID), DescriptionField = typeof(Survey.title))]
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region NoteID

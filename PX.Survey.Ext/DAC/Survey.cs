@@ -17,40 +17,40 @@ namespace PX.Survey.Ext {
 
         #region Keys
         public class PK : PrimaryKeyOf<Survey>.By<surveyID> {
-            public static Survey Find(PXGraph graph, int? surveyID) => FindBy(graph, surveyID);
-            public static Survey FindDirty(PXGraph graph, int? surveyID)
-                => (Survey)PXSelect<Survey, Where<surveyID, Equal<Required<surveyID>>>>.SelectWindowed(graph, 0, 1, surveyID);
+            public static Survey Find(PXGraph graph, string surveyID) => FindBy(graph, surveyID);
+            public static Survey FindDirty(PXGraph graph, string surveyID)
+                => PXSelect<Survey, Where<surveyID, Equal<Required<surveyID>>>>.SelectWindowed(graph, 0, 1, surveyID);
         }
-        public class UK : PrimaryKeyOf<Survey>.By<surveyCD> {
-            public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
-        }
+        //public class UK : PrimaryKeyOf<Survey>.By<surveyID> {
+        //    public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
+        //}
         public static class FK {
             public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<templateID> { }
             //public class WebHook : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<webHookID> { }
         }
         #endregion
 
-        #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXDBIdentity]
-        public virtual int? SurveyID { get; set; }
-        #endregion
+        //#region OldSurveyID
+        //public abstract class oldSurveyID : BqlInt.Field<oldSurveyID> { }
+        //[PXDBIdentity]
+        //public virtual int? OldSurveyID { get; set; }
+        //#endregion
 
         #region SurveyCD
-        public abstract class surveyCD : BqlString.Field<surveyCD> { }
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [SurveyID(IsKey = true, Required = true, Visibility = PXUIVisibility.SelectorVisible)]
+        [PXReferentialIntegrityCheck]
         [PXDefault]
-        [PXDBString(15, IsUnicode = true, IsKey = true, InputMask = ">CCCCCCCCCCCCCCC")]
-        [PXUIField(DisplayName = "Survey ID")]
-        [PXSelector(typeof(surveyCD))]
+        [PXSelector(typeof(surveyID))]
         [AutoNumber(typeof(SurveySetup.surveyNumberingID), typeof(AccessInfo.businessDate))]
-        public virtual string SurveyCD { get; set; }
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region Title
         public abstract class title : BqlString.Field<title> { }
         [PXDefault]
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
-        [PXUIField(DisplayName = "Title")]
+        [PXUIField(DisplayName = "Title", Visibility = PXUIVisibility.SelectorVisible)]
         [PXFieldDescription]
         public virtual string Title { get; set; }
         #endregion
@@ -81,7 +81,7 @@ namespace PX.Survey.Ext {
         public abstract class target : BqlString.Field<target> { }
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(SurveyTarget.User)]
-        [PXUIField(DisplayName = "Target")]
+        [PXUIField(DisplayName = "Target", Visibility = PXUIVisibility.SelectorVisible)]
         [SurveyTarget.List]
         public virtual string Target { get; set; }
         #endregion
@@ -90,7 +90,7 @@ namespace PX.Survey.Ext {
         public abstract class layout : BqlString.Field<layout> { }
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(SurveyLayout.SinglePage)]
-        [PXUIField(DisplayName = "Layout")]
+        [PXUIField(DisplayName = "Layout", Visibility = PXUIVisibility.SelectorVisible)]
         [SurveyLayout.List]
         public virtual string Layout { get; set; }
         #endregion
@@ -147,8 +147,8 @@ namespace PX.Survey.Ext {
         #region EntityType
         public abstract class entityType : BqlString.Field<entityType> { }
         [PXDBString(256, IsUnicode = true)]
-        [PXDefault(PersistingCheck = PXPersistingCheck.NullOrBlank)]
         [PXEntityTypeList]
+        [PXUIField(DisplayName = "Entity Type", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string EntityType { get; set; }
         #endregion
 

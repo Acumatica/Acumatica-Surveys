@@ -12,10 +12,10 @@ namespace PX.Survey.Ext {
 
         #region Keys
         public class PK : PrimaryKeyOf<SurveyUser>.By<surveyID, lineNbr> {
-            public static SurveyUser Find(PXGraph graph, int? surveyID, int? lineNbr) => FindBy(graph, surveyID, lineNbr);
+            public static SurveyUser Find(PXGraph graph, string surveyID, int? lineNbr) => FindBy(graph, surveyID, lineNbr);
         }
         public class UK : PrimaryKeyOf<SurveyUser>.By<surveyID, contactID> {
-            public static SurveyUser Find(PXGraph graph, int? surveyID, int? contactID) => FindBy(graph, surveyID, contactID);
+            public static SurveyUser Find(PXGraph graph, string surveyID, int? contactID) => FindBy(graph, surveyID, contactID);
         }
         public static class FK {
             public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyDetail>.By<surveyID> { }
@@ -32,19 +32,12 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXDBInt(IsKey = true)]
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [SurveyID(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
-        [PXUIField(DisplayName = "Survey ID", IsReadOnly = true)]
-        [PXSelector(typeof(Search<Survey.surveyID>),
-                    typeof(Survey.surveyCD),
-                    typeof(Survey.title),
-                    typeof(Survey.target),
-                    typeof(Survey.layout),
-            SubstituteKey = typeof(Survey.surveyCD),
-            DescriptionField = typeof(Survey.title))]
         [PXParent(typeof(FK.SUSurvey))]
-        public virtual int? SurveyID { get; set; }
+        [PXSelector(typeof(surveyID), DescriptionField = typeof(Survey.title))]
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region LineNbr

@@ -96,10 +96,11 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region SurveyID
-        public abstract class surveyID : BqlInt.Field<surveyID> { }
-        [PXDBInt]
+        public abstract class surveyID : BqlString.Field<surveyID> { }
+        [SurveyID]
         [PXForeignReference(typeof(FK.SUSurvey))]
-        public virtual int? SurveyID { get; set; }
+        [PXSelector(typeof(surveyID))]
+        public virtual string SurveyID { get; set; }
         #endregion
 
         #region Status
