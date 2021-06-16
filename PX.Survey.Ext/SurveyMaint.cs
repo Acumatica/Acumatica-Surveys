@@ -3,11 +3,14 @@ using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Data.EP;
+using PX.Objects.CS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace PX.Survey.Ext {
     public class SurveyMaint : PXGraph<SurveyMaint, Survey> {
@@ -35,6 +38,11 @@ namespace PX.Survey.Ext {
             Where<SurveyCollectorData.surveyID, Equal<Current<Survey.surveyID>>,
             And<SurveyCollectorData.token, Equal<Current<SurveyCollector.token>>>>,
             OrderBy<Asc<SurveyCollectorData.createdDateTime>>> CollectorDataRecords;
+
+        [PXCopyPasteHiddenView]
+        public PXSelect<SurveyAnswer,
+            Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>>,
+            OrderBy<Asc<SurveyCollectorData.createdDateTime>>> Answers;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
@@ -239,7 +247,7 @@ namespace PX.Survey.Ext {
             if (page != null) {
                 UpdatePageNbr(page, 9999, 0); // PageNbr = 9999, SortOrder = 99990;
             }
-            var currentPageNumbers = GetPageNumbers(survey, SurveyUtils.EXCEPT_HF);
+            var currentPageNumbers = GetPageNumbers(survey, SurveyUtils.EXCEPT_HF_PAGES);
             var newPageNumbers = Enumerable.Range(2, currentPageNumbers.Length);
             var mappings = currentPageNumbers.Zip(newPageNumbers, (currPage, newPage) => new Tuple<int, int>(currPage, newPage));
             var pages = GetRegularPages(surveyID);
@@ -290,7 +298,7 @@ namespace PX.Survey.Ext {
             Survey.Current = survey;
             var user = DoInsertSampleUser(survey);
             var collector = DoInsertCollector(survey, user, null);
-            var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_ONLY);
+            var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
                 var pageContent = generator.GenerateSurveyPage(collector.Token, pageNbr);
@@ -311,14 +319,22 @@ namespace PX.Survey.Ext {
         }
 
         public int[] GetPageNumbers(Survey survey, Func<SurveyDetail, bool> predicate) {
+            return GetDetailInfo(survey, predicate, SurveyUtils.GET_PAGE_NBR);
+        }
+
+        public int[] GetQuestionNumbers(Survey survey, Func<SurveyDetail, bool> predicate) {
+            return GetDetailInfo(survey, predicate, SurveyUtils.GET_QUES_NBR);
+        }
+
+        public DetailType[] GetDetailInfo<DetailType>(Survey survey, Func<SurveyDetail, bool> predicate, Func<SurveyDetail, DetailType> retriever) {
             Survey.Current = survey;
             var details = Details.Select().
                 FirstTableItems.
-                Where(pd => predicate(pd) && pd.PageNbr != null && pd.PageNbr > 0);
-            var pages = details.
-                Select(sd => sd.PageNbr.Value).
-                Distinct().OrderBy(pageNbr => pageNbr).ToArray();
-            return pages;
+                Where(pd => predicate(pd) && retriever(pd) != null);
+            var infos = details.
+                Select(pd => retriever(pd)).
+                Distinct().OrderBy(val => val).ToArray();
+            return infos;
         }
 
         private void SaveContentToAttachment(string name, string content) {
@@ -404,6 +420,123 @@ namespace PX.Survey.Ext {
             }
             (new EntityHelper(this)).NavigateToRow(current.RefNoteID, PXRedirectHelper.WindowMode.New);
         }
+
+        public PXAction<Survey> processAnswers;
+        [PXUIField(DisplayName = "Process Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXLookupButton]
+        public virtual IEnumerable ProcessAnswers(PXAdapter adapter) {
+            var list = adapter.Get<Survey>().ToList();
+            Save.Press();
+            var graph = CreateInstance<SurveyMaint>();
+            foreach (var survey in list) {
+                var row = PXCache<Survey>.CreateCopy(survey);
+                graph.DoProcessAnswers(row);
+            }
+            return adapter.Get();
+        }
+
+        public bool DoProcessAnswers(Survey survey) {
+            Survey.Current = survey;
+            var pageNbrs = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
+            var quesNbrs = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY);
+            var allCollectors = Collectors.Select().FirstTableItems;
+            bool errorOccurred = false;
+            foreach (var collector in allCollectors) {
+                Collectors.Current = collector;
+                var token = collector.Token;
+                (var _, var user) = SurveyUtils.GetSurveyAndUser(this, token);
+                var collectorDatas = CollectorDataRecords.Select().FirstTableItems;
+                foreach (var collData in collectorDatas) {
+                    if (collData.Status == CollectorDataStatus.Processed) {
+                        continue;
+                    }
+                    try {
+                        DoProcessAnswers(survey, collData, collector);
+                        collData.Status = CollectorDataStatus.Processed;
+                        collData.Message = null;
+                    } catch (Exception ex) {
+                        collData.Status = CollectorDataStatus.Error;
+                        collData.Message = ex.Message;
+                        errorOccurred = true;
+                    }
+                    var updated = CollectorDataRecords.Update(collData);
+                }
+                // Handle missing answers
+                //if (collectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
+                //    collector.Status = CollectorDataStatus.Processed;
+                //    Collectors.Update(collector);
+                //}
+            }
+            Actions.PressSave();
+            return errorOccurred;
+        }
+
+        private void DoProcessAnswers(Survey survey, SurveyCollectorData collDataRec, SurveyCollector collector) {
+            var answerData = collDataRec.Payload;
+            if (string.IsNullOrEmpty(answerData)) {
+                throw new PXException(Messages.AnswersNotfound);
+            }
+            var nvc = HttpUtility.ParseQueryString(answerData);
+            var dict = nvc.AllKeys.ToDictionary(k => k, k => nvc[k]);
+            //{{PageNbr}}.{{QuestionNbr}}.{{LineNbr}}=Value&...
+            //var answers = new List<CSAnswers>();
+            foreach (var kvp in dict) {
+                var answerKey = kvp.Key;
+                var matches = SurveyUtils.ANSWER_CODE.Matches(answerKey);
+                if (matches.Count > 0) {
+                    for (int m = 0; m < matches.Count; m++) {
+                        var match = matches[m];
+                        var groups = match.Groups;
+                        var pageNbr = int.Parse(groups[SurveyUtils.PAGE_NBR].Value);
+                        var quesNbr = int.Parse(groups[SurveyUtils.QUES_NBR].Value);
+                        var lineNbr = int.Parse(groups[SurveyUtils.LINE_NBR].Value);
+                        SurveyDetail detail = SurveyDetail.PK.Find(this, survey.SurveyID, lineNbr);
+                        if (detail == null) {
+                            throw new PXException(Messages.SurveyDetailNotFound, answerKey);
+                        }
+                        if (pageNbr != detail.PageNbr) {
+                            throw new PXException(Messages.SurveyDetailPageNbrDoesNotMatch, detail.PageNbr, pageNbr);
+                        }
+                        if (quesNbr != detail.QuestionNbr) {
+                            throw new PXException(Messages.SurveyDetailQuesNbrDoesNotMatch, detail.QuestionNbr, quesNbr);
+                        }
+                        string attrID = detail.AttributeID;
+                        if (attrID == null) {
+                            // Not a question
+                            continue;
+                        }
+                        var value = kvp.Value;
+                        //var answer = new CSAnswers() {
+                        //    AttributeID = attrID,
+                        //    Value = value
+                        //};
+                        //answers.Add(answer);
+                        // TODO Look for existing answer
+                        SurveyAnswer answer = SelectFrom<SurveyAnswer>.
+                        Where<SurveyAnswer.surveyID.IsEqual<@P.AsString>.
+                        And<SurveyAnswer.collectorID.IsEqual<@P.AsInt>.
+                        And<SurveyAnswer.detailLineNbr.IsEqual<@P.AsInt>>>>.
+                        View.SelectWindowed(this, 0, 1, survey.SurveyID, collector.CollectorID, detail.LineNbr);
+                        if (answer == null) {
+                            answer = new SurveyAnswer() {
+                                SurveyID = survey.SurveyID,
+                                CollectorID = collector.CollectorID,
+                                DetailLineNbr = detail.LineNbr,
+                                Value = value,
+                            };
+                            Answers.Insert(answer);
+                        } else {
+                            // Update Answer ??
+                        }
+
+                    }
+                } else {
+                    continue;
+                }
+            }
+            //SurveyUtils.InstallAnswers(this, collector, answers);
+        }
+
 
         protected virtual void _(Events.RowSelecting<Survey> e) {
             Survey row = e.Row;

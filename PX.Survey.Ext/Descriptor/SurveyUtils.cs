@@ -1,4 +1,5 @@
 ﻿using PX.Data;
+using PX.Data.BQL;
 using PX.Objects.CR;
 using PX.Objects.CS;
 using System;
@@ -8,15 +9,27 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace PX.Survey.Ext {
 
     public static class SurveyUtils {
 
-        public static Func<SurveyDetail, bool> ALL_PAGES = (x) => { return true; };
-        public static Func<SurveyDetail, bool> ACTIVE_ONLY = (x) => { return x.Active == true; };
-        public static Func<SurveyDetail, bool> EXCEPT_HF = (x) => { return x.TemplateType != SUTemplateType.Header && x.TemplateType != SUTemplateType.Footer; };
+        public const string PAGE_NBR = "pageNbr";
+        public const string QUES_NBR = "questionNbr";
+        public const string LINE_NBR = "lineNbr";
+        public const string DIGITS = "\\d+";
+        public static Regex ANSWER_CODE = new Regex($"(?<{PAGE_NBR}>{DIGITS})\\.(?<{QUES_NBR}>{DIGITS})\\.(?<{LINE_NBR}>{DIGITS})");
+
+        public static Func<SurveyDetail, bool> ALL_PAGES = (pd) => { return pd.PageNbr != null && pd.PageNbr > 0; };
+        public static Func<SurveyDetail, bool> ACTIVE_PAGES_ONLY = (pd) => { return ALL_PAGES(pd) && pd.Active == true; };
+        public static Func<SurveyDetail, bool> EXCEPT_HF_PAGES = (pd) => { return ALL_PAGES(pd) && pd.TemplateType != SUTemplateType.Header && pd.TemplateType != SUTemplateType.Footer; };
+        public static Func<SurveyDetail, bool> ALL_QUESTIONS = (pd) => { return pd.QuestionNbr != null && pd.QuestionNbr > 0; };
+        public static Func<SurveyDetail, bool> ACTIVE_QUESTIONS_ONLY = (pd) => { return ALL_QUESTIONS(pd) && pd.Active == true; };
+        public static Func<SurveyDetail, int> GET_PAGE_NBR = (pd) => { return pd.PageNbr.Value; };
+        public static Func<SurveyDetail, int> GET_QUES_NBR = (pd) => { return pd.QuestionNbr.Value; };
+
         public class surveyScreen : BqlString.Constant<surveyScreen> {
             public surveyScreen() : base("SU201000") { }
         }
@@ -58,68 +71,68 @@ namespace PX.Survey.Ext {
             return pages;
         }
 
-        public static PXCache InstallAnswers(PXGraph graph, object row, List<CSAnswers> destAnswers) {
-            var helper = new EntityHelper(graph);
-            var destNoteId = helper.GetEntityNoteID(row);
-            if (!destNoteId.HasValue) {
-                throw new PXException(Messages.NoteIDNotFound, row.GetType());
-            }
-            var destClassId = GetClassId(graph, row);
-            var destEntityType = GetEntityTypeFromAttribute(graph, row);
-            var classAttrs = new CRAttribute.ClassAttributeList();
-            if (destEntityType != null && destClassId != null) {
-                classAttrs = CRAttribute.EntityAttributes(destEntityType, destClassId);
-            }
-            var destOnlyNames = destAnswers.Select(x => x.AttributeID).Except(classAttrs.Select(x => x.ID)).Distinct().ToList();
-            foreach (var name in destOnlyNames) {
-                // searchValue can be either AttributeId or Description
-                var attributeDefinition = CRAttribute.Attributes[name] ?? CRAttribute.AttributesByDescr[name];
-                if (attributeDefinition == null) {
-                    throw new PXSetPropertyException(PX.Objects.CR.Messages.AttributeNotValid);
-                }
-                // avoid duplicates
-                if (classAttrs[attributeDefinition.ToString()] == null) {
-                    classAttrs.Add(new CRAttribute.AttributeExt(attributeDefinition, null, false, true));
-                }
-            }
-            var answerCache = graph.Caches[typeof(CSAnswers)];
-            var cacheIsDirty = answerCache.IsDirty;
-            var output = new List<CSAnswers>();
-            var originAnswers = GetCurrentAnswerList(graph, row);
-            foreach (var destAnswer in destAnswers) {
-                var attributeId = destAnswer.AttributeID;
-                var originAttrExt = classAttrs[attributeId];
-                if (!originAttrExt.IsActive) {
-                    continue;
-                }
-                var answer = (CSAnswers)answerCache.CreateInstance();
-                answer.AttributeID = originAttrExt.ID;
-                answer.RefNoteID = destNoteId;
-                answer = (CSAnswers)(answerCache.Insert(answer) ?? answerCache.Locate(answer));
-                // Start with default value
-                answer.Value = originAttrExt.DefaultValue;
-                // Continue with current value if available
-                if (TryGetOriginAttributeValue(answer, originAnswers, out var originValue)) {
-                    answer.Value = originValue;
-                }
-                var newValue = CheckValue(graph, destAnswer, originAttrExt);
-                // Try with new value if available
-                if (newValue != null) {
-                    answer.Value = newValue;
-                }
-                answer.IsRequired = originAttrExt.Required;
-                answerCache.Update(answer);
-                output.Add(answer);
-            }
-            answerCache.IsDirty = cacheIsDirty;
-            output = output.OrderBy(x => classAttrs.Contains(x.AttributeID) ? classAttrs.IndexOf(x.AttributeID) : (x.Order ?? 0)).ThenBy(x => x.AttributeID).ToList();
-            short attributeOrder = 0;
-            // Re-order before saving
-            foreach (var answer in output) {
-                answer.Order = attributeOrder++;
-            }
-            return answerCache;
-        }
+        //public static PXCache InstallAnswers(PXGraph graph, object row, List<CSAnswers> destAnswers) {
+        //    var helper = new EntityHelper(graph);
+        //    var destNoteId = helper.GetEntityNoteID(row);
+        //    if (!destNoteId.HasValue) {
+        //        throw new PXException(Messages.NoteIDNotFound, row.GetType());
+        //    }
+        //    var destClassId = GetClassId(graph, row);
+        //    var destEntityType = GetEntityTypeFromAttribute(graph, row);
+        //    var classAttrs = new CRAttribute.ClassAttributeList();
+        //    if (destEntityType != null && destClassId != null) {
+        //        classAttrs = CRAttribute.EntityAttributes(destEntityType, destClassId);
+        //    }
+        //    var destOnlyNames = destAnswers.Select(x => x.AttributeID).Except(classAttrs.Select(x => x.ID)).Distinct().ToList();
+        //    foreach (var name in destOnlyNames) {
+        //        // searchValue can be either AttributeId or Description
+        //        var attributeDefinition = CRAttribute.Attributes[name] ?? CRAttribute.AttributesByDescr[name];
+        //        if (attributeDefinition == null) {
+        //            throw new PXSetPropertyException(PX.Objects.CR.Messages.AttributeNotValid);
+        //        }
+        //        // avoid duplicates
+        //        if (classAttrs[attributeDefinition.ToString()] == null) {
+        //            classAttrs.Add(new CRAttribute.AttributeExt(attributeDefinition, null, false, true));
+        //        }
+        //    }
+        //    var answerCache = graph.Caches[typeof(CSAnswers)];
+        //    var cacheIsDirty = answerCache.IsDirty;
+        //    var output = new List<CSAnswers>();
+        //    var originAnswers = GetCurrentAnswerList(graph, row);
+        //    foreach (var destAnswer in destAnswers) {
+        //        var attributeId = destAnswer.AttributeID;
+        //        var originAttrExt = classAttrs[attributeId];
+        //        if (!originAttrExt.IsActive) {
+        //            continue;
+        //        }
+        //        var answer = (CSAnswers)answerCache.CreateInstance();
+        //        answer.AttributeID = originAttrExt.ID;
+        //        answer.RefNoteID = destNoteId;
+        //        answer = (CSAnswers)(answerCache.Insert(answer) ?? answerCache.Locate(answer));
+        //        // Start with default value
+        //        answer.Value = originAttrExt.DefaultValue;
+        //        // Continue with current value if available
+        //        if (TryGetOriginAttributeValue(answer, originAnswers, out var originValue)) {
+        //            answer.Value = originValue;
+        //        }
+        //        var newValue = CheckValue(graph, destAnswer, originAttrExt);
+        //        // Try with new value if available
+        //        if (newValue != null) {
+        //            answer.Value = newValue;
+        //        }
+        //        answer.IsRequired = originAttrExt.Required;
+        //        answerCache.Update(answer);
+        //        output.Add(answer);
+        //    }
+        //    answerCache.IsDirty = cacheIsDirty;
+        //    output = output.OrderBy(x => classAttrs.Contains(x.AttributeID) ? classAttrs.IndexOf(x.AttributeID) : (x.Order ?? 0)).ThenBy(x => x.AttributeID).ToList();
+        //    short attributeOrder = 0;
+        //    // Re-order before saving
+        //    foreach (var answer in output) {
+        //        answer.Order = attributeOrder++;
+        //    }
+        //    return answerCache;
+        //}
 
         //private static CSAttribute GetAttribute(PXGraph graph, string attributeId) {
         //    return new PXSelect<CSAttribute, 
@@ -192,26 +205,26 @@ namespace PX.Survey.Ext {
             return null;
         }
 
-        private static bool TryGetOriginAttributeValue(CSAnswers classAnswer, List<CSAnswers> originAnswers, out string originDefault) {
-            originDefault = null;
-            if (classAnswer == null || originAnswers == null) {
-                return false;
-            }
-            foreach (var originAttribute in originAnswers) {
-                if (originAttribute.AttributeID != classAnswer.AttributeID) {
-                    continue;
-                }
-                originDefault = originAttribute.Value;
-                return true;
-            }
-            return false;
-        }
+        //private static bool TryGetOriginAttributeValue(CSAnswers classAnswer, List<CSAnswers> originAnswers, out string originDefault) {
+        //    originDefault = null;
+        //    if (classAnswer == null || originAnswers == null) {
+        //        return false;
+        //    }
+        //    foreach (var originAttribute in originAnswers) {
+        //        if (originAttribute.AttributeID != classAnswer.AttributeID) {
+        //            continue;
+        //        }
+        //        originDefault = originAttribute.Value;
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
-        private static List<CSAnswers> GetCurrentAnswerList(PXGraph graph, object row) {
-            var helper = new EntityHelper(graph);
-            var noteId = helper.GetEntityNoteID(row);
-            return PXSelect<CSAnswers, Where<CSAnswers.refNoteID, Equal<Required<CSAnswers.refNoteID>>>>.Select(graph, noteId).FirstTableItems.ToList();
-        }
+        //private static List<CSAnswers> GetCurrentAnswerList(PXGraph graph, object row) {
+        //    var helper = new EntityHelper(graph);
+        //    var noteId = helper.GetEntityNoteID(row);
+        //    return PXSelect<CSAnswers, Where<CSAnswers.refNoteID, Equal<Required<CSAnswers.refNoteID>>>>.Select(graph, noteId).FirstTableItems.ToList();
+        //}
 
         //private static List<CSAnswers> DeleteCurrentAnswerList(PXGraph graph, object row) {
         //    var helper = new EntityHelper(graph);
@@ -224,27 +237,27 @@ namespace PX.Survey.Ext {
         //    return answers;
         //}
 
-        private static string GetClassId(PXGraph graph, object row) {
-            var classIdField = GetClassIdField(graph, row);
-            if (classIdField == null) {
-                return null;
-            }
-            var cache = graph.Caches[row.GetType()];
-            return cache.GetValueExt(row, classIdField.Name)?.ToString()?.Trim();
-        }
+        //private static string GetClassId(PXGraph graph, object row) {
+        //    var classIdField = GetClassIdField(graph, row);
+        //    if (classIdField == null) {
+        //        return null;
+        //    }
+        //    var cache = graph.Caches[row.GetType()];
+        //    return cache.GetValueExt(row, classIdField.Name)?.ToString()?.Trim();
+        //}
 
-        private static Type GetClassIdField(PXGraph graph, object row) {
-            if (row == null) {
-                return null;
-            }
-            var cache = graph.Caches[row.GetType()];
-            return cache.GetAttributes(row, null).OfType<CRAttributesFieldAttribute>().FirstOrDefault()?.ClassIdField;
-        }
+        //private static Type GetClassIdField(PXGraph graph, object row) {
+        //    if (row == null) {
+        //        return null;
+        //    }
+        //    var cache = graph.Caches[row.GetType()];
+        //    return cache.GetAttributes(row, null).OfType<CRAttributesFieldAttribute>().FirstOrDefault()?.ClassIdField;
+        //}
 
-        private static Type GetEntityTypeFromAttribute(PXGraph graph, object row) {
-            var classIdField = GetClassIdField(graph, row);
-            return classIdField?.DeclaringType;
-        }
+        //private static Type GetEntityTypeFromAttribute(PXGraph graph, object row) {
+        //    var classIdField = GetClassIdField(graph, row);
+        //    return classIdField?.DeclaringType;
+        //}
 
         public static bool HasLetter(string value) {
             return !string.IsNullOrEmpty(value) && value.Any(char.IsLetter);

@@ -75,76 +75,8 @@ namespace PX.Survey.Ext {
         }
 
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
-            bool errorOccurred = false;
-            var allCollectors = graph.Collectors.Select().FirstTableItems;
-            var allCollectorDatas = graph.CollectorDataRecords.Select().FirstTableItems;
-            foreach (var collector in allCollectors) {
-                var collectorDatas = allCollectorDatas.Where(cd => cd.CollectorID == collector.CollectorID).ToArray();
-                foreach (var collData in collectorDatas) {
-                    if (collData.Status != CollectorDataStatus.Connected && collData.Status != CollectorDataStatus.Error) {
-                        continue;
-                    }
-                    try {
-                        DoProcessAnswers(graph, collData, collector);
-                        collData.Status = CollectorDataStatus.Processed;
-                        collData.Message = null;
-                    } catch (Exception ex) {
-                        collData.Status = CollectorDataStatus.Error;
-                        collData.Message = ex.Message;
-                        errorOccurred = true;
-                    }
-                    var updated = graph.CollectorDataRecords.Update(collData);
-                }
-                if (allCollectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
-                    collector.Status = CollectorDataStatus.Processed;
-                    graph.Collectors.Update(collector);
-                }
-            }
+            bool errorOccurred = graph.DoProcessAnswers(survey);
             return errorOccurred;
-        }
-
-        private static void DoProcessAnswers(SurveyMaint graph, SurveyCollectorData collDataRec, SurveyCollector collector) {
-            var queryString = collDataRec.QueryParameters;
-            if (string.IsNullOrEmpty(queryString)) {
-                throw new PXException(Messages.AnswersNotfound);
-            }
-            var nvc = HttpUtility.ParseQueryString(queryString);
-            var dict = nvc.AllKeys.ToDictionary(k => k, k => nvc[k]);
-            var token = collector.Token;
-            (var survey, var user) = SurveyUtils.GetSurveyAndUser(graph, token);
-            //COVSYMPTOM=YES&COVCONTACT=YES&COVTEMP=103&COVTRAVEL=New+York
-            //{{PageNbr}}.{{QuestionNbr}}.{{LineNbr}}=Value&...
-            var answers = new List<CSAnswers>();
-            foreach (var kvp in dict) {
-                var answerKey = kvp.Key;
-                if (!answerKey.Contains(".")) {
-                    throw new PXException(Messages.SurveyQuestionNotFound, answerKey);
-                }
-                var parts = answerKey.Split('.');
-                var pageNbr = int.Parse(parts[0]);
-                var quesNbr = int.Parse(parts[1]);
-                var lineNbr = int.Parse(parts[2]);
-                SurveyDetail detail = SurveyDetail.PK.Find(graph, survey.SurveyID, lineNbr);
-                if (detail == null) {
-                    throw new PXException(Messages.SurveyDetailNotFound, answerKey);
-                }
-                string attrID = detail.AttributeID;
-                if (attrID == null) {
-                    // Not a question
-                    continue;
-                }
-                var value = kvp.Value;
-                var answer = new CSAnswers() {
-                    AttributeID = attrID,
-                    Value = value
-                };
-                answers.Add(answer);
-            }
-            SurveyUtils.InstallAnswers(graph, collector, answers);
-        }
-
-        private static SurveyTemplate GetTemplate(string templateID) {
-            throw new NotImplementedException();
         }
 
         /// <summary>

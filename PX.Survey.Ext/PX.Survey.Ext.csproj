@@ -42,6 +42,9 @@
       <HintPath>..\lib\PX.Data.BQL.Fluent.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="PX.DbServices">
+      <HintPath>..\lib\PX.DbServices.dll</HintPath>
+    </Reference>
     <Reference Include="PX.Objects">
       <HintPath>..\lib\PX.Objects.dll</HintPath>
       <Private>false</Private>
