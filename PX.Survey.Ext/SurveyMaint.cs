@@ -2,14 +2,13 @@
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
-using PX.Data.EP;
-using PX.Objects.CS;
+using PX.Objects.CR;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
 
 namespace PX.Survey.Ext {
@@ -537,7 +536,6 @@ namespace PX.Survey.Ext {
             //SurveyUtils.InstallAnswers(this, collector, answers);
         }
 
-
         protected virtual void _(Events.RowSelecting<Survey> e) {
             Survey row = e.Row;
             if (row == null) { return; }
@@ -772,6 +770,187 @@ namespace PX.Survey.Ext {
         //    e.NewValue = Net_Utils.ComputeMd5(row.CollectorID.ToString(), true);
         //    e.Cancel = true;
         //}
+
+        protected virtual void _(Events.FieldSelecting<SurveyAnswer, SurveyAnswer.value> e) {
+            var row = e.Row;
+            if (row == null || row.AttributeID == null) {
+                return;
+            }
+            int? controlType;
+            int num1;
+            List<CRAttribute.AttributeValue> values;
+            object value;
+            CRAttribute.Attribute item = CRAttribute.Attributes[row.AttributeID];
+            if (item != null) {
+                values = item.Values;
+            } else {
+                values = null;
+            }
+            List<CRAttribute.AttributeValue> attributeValues = values;
+            bool? isRequired = true;// row.IsRequired;
+            int num2 = (isRequired.GetValueOrDefault() & isRequired.HasValue ? 1 : -1);
+            if (attributeValues != null && attributeValues.Count > 0) {
+                List<string> strs = new List<string>();
+                List<string> strs1 = new List<string>();
+                foreach (CRAttribute.AttributeValue attributeValue in attributeValues) {
+                    if (attributeValue.Disabled && row.Value != attributeValue.ValueID) {
+                        continue;
+                    }
+                    strs.Add(attributeValue.ValueID);
+                    strs1.Add(attributeValue.Description);
+                }
+                e.ReturnState = PXStringState.CreateInstance(e.ReturnState, new int?(10), new bool?(true), typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, strs.ToArray(), strs1.ToArray(), new bool?(true), null, null);
+                controlType = item.ControlType;
+                if (controlType.GetValueOrDefault() == 6 & controlType.HasValue) {
+                    ((PXStringState)e.ReturnState).MultiSelect = true;
+                    if (e.Cache.Graph.IsContractBasedAPI) {
+                        string returnValue = e.ReturnValue as string;
+                        if (returnValue != null) {
+                            e.ReturnValue = string.Join(", ", returnValue.Split(new char[] { ',' }).Select<string, string>((string i) => {
+                                int num = strs.IndexOf(i.Trim());
+                                if (num < 0) {
+                                    return i;
+                                }
+                                return strs1[num];
+                            }));
+                        }
+                    }
+                }
+            } else if (item != null) {
+                controlType = item.ControlType;
+                if (!(controlType.GetValueOrDefault() == 4 & controlType.HasValue)) {
+                    controlType = item.ControlType;
+                    if (!(controlType.GetValueOrDefault() == 5 & controlType.HasValue)) {
+                        PXStringState stateExt = e.Cache.GetStateExt<SurveyAnswer.value>(null) as PXStringState;
+                        //PXFieldSelectingEventArgs pXFieldSelectingEventArg = e;
+                        object returnState = e.ReturnState;
+                        PXStringState pXStringState = stateExt;
+                        isRequired = null;
+                        e.ReturnState = PXStringState.CreateInstance(returnState, new int?(pXStringState.With<PXStringState, int>((PXStringState _) => _.Length)), isRequired, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, null, null, new bool?(true), null, null);
+                    } else {
+                        DateTime? nullable = null;
+                        DateTime? nullable1 = nullable;
+                        nullable = null;
+                        e.ReturnState = PXDateState.CreateInstance(e.ReturnState, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, item.EntryMask, nullable1, nullable);
+                    }
+                } else {
+                    object obj = e.ReturnState;
+                    Type type = typeof(bool);
+                    bool? nullable2 = new bool?(false);
+                    bool? nullable3 = new bool?(false);
+                    int? nullable4 = new int?(num2);
+                    controlType = null;
+                    int? nullable5 = controlType;
+                    controlType = null;
+                    isRequired = null;
+                    e.ReturnState = PXFieldState.CreateInstance(obj, type, nullable2, nullable3, nullable4, nullable5, controlType, false, typeof(SurveyAnswer.value).Name, null, null, null, PXErrorLevel.Undefined, new bool?(true), new bool?(true), isRequired, PXUIVisibility.Visible, null, null, null);
+                    if (e.ReturnValue is string && int.TryParse((string)e.ReturnValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out num1)) {
+                        e.ReturnValue = Convert.ToBoolean(num1);
+                    }
+                }
+            }
+            if (e.ReturnState is PXFieldState) {
+                PXFieldState errorText = (PXFieldState)e.ReturnState;
+                IPXInterfaceField pXInterfaceField = e.Cache.GetAttributes(row, typeof(SurveyAnswer.value).Name).OfType<IPXInterfaceField>().FirstOrDefault<IPXInterfaceField>();
+                if (pXInterfaceField != null && pXInterfaceField.ErrorLevel != PXErrorLevel.Undefined && !string.IsNullOrEmpty(pXInterfaceField.ErrorText)) {
+                    errorText.Error = pXInterfaceField.ErrorText;
+                    errorText.ErrorLevel = pXInterfaceField.ErrorLevel;
+                }
+                //PXFieldState valueExt = sender.GetValueExt<SurveyAnswer.attributeCategory>(row) as PXFieldState;
+                //if (valueExt != null) {
+                //    value = valueExt.Value;
+                //} else {
+                value = null;
+                //}
+                errorText.Enabled = (string)value != "V";
+                if (IsContractBasedAPI) {
+                    errorText.ErrorLevel = PXErrorLevel.Undefined;
+                    errorText.Error = null;
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        protected virtual void _(Events.FieldUpdating<SurveyAnswer, SurveyAnswer.value> e) {
+            var row = e.Row;
+            if (row == null || row.AttributeID == null) {
+                return;
+            }
+            int? controlType;
+            bool flag;
+            int num;
+            DateTime dateTime;
+            CRAttribute.Attribute item = CRAttribute.Attributes[row.AttributeID];
+            if (item == null) {
+                return;
+            }
+            object newValue = e.NewValue;
+            if (newValue is DateTime) {
+                DateTime dateTime1 = (DateTime)newValue;
+                controlType = item.ControlType;
+                if (controlType.GetValueOrDefault() == 5 & controlType.HasValue) {
+                    e.NewValue = dateTime1.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                    return;
+                }
+            }
+            newValue = e.NewValue;
+            string str = newValue as string;
+            if (str == null) {
+                return;
+            }
+            controlType = item.ControlType;
+            if (controlType.HasValue) {
+                switch (controlType.GetValueOrDefault()) {
+                    case 2:
+                        CRAttribute.AttributeValue attributeValue = item.Values.Find((CRAttribute.AttributeValue a) => string.Equals(a.ValueID, str, StringComparison.OrdinalIgnoreCase)) ?? item.Values.Find((CRAttribute.AttributeValue a) => string.Equals(a.Description, str, StringComparison.OrdinalIgnoreCase));
+                        if (attributeValue != null) {
+                            e.NewValue = attributeValue.ValueID;
+                            return;
+                        }
+                        e.Cache.RaiseExceptionHandling<SurveyAnswer.value>(row, str, new PXSetPropertyException("The specified value is not valid for the {0} attribute that has the Combo type.", new object[] { row.AttributeID }));
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        if (bool.TryParse(str, out flag)) {
+                            num = Convert.ToInt32(flag);
+                            e.NewValue = num.ToString(CultureInfo.InvariantCulture);
+                            return;
+                        }
+                        if (!(str != "0") || !(str != "1")) {
+                            break;
+                        }
+                        e.Cache.RaiseExceptionHandling<SurveyAnswer.value>(row, str, new PXSetPropertyException("The specified value is not valid for the {0} attribute that has the Checkbox type because it cannot be converted to a boolean value.", new object[] { row.AttributeID }));
+                        return;
+                    case 5:
+                        if (e.Cache.Graph.IsMobile) {
+                            str = str.Replace("Z", "");
+                        }
+                        if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime)) {
+                            e.NewValue = dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                            return;
+                        }
+                        e.Cache.RaiseExceptionHandling<SurveyAnswer.value>(row, str, new PXSetPropertyException("The specified value is not valid for the {0} attribute that has the Datetime type because it cannot be converted to a DateTime value.", new object[] { row.AttributeID }));
+                        return;
+                    case 6:
+                        if (string.IsNullOrEmpty(str)) {
+                            break;
+                        }
+                        string[] strArrays = str.Split(new char[] { ',' });
+                        for (num = 0; num < (int)strArrays.Length; num++) {
+                            string str1 = strArrays[num];
+                            if (item.Values.Find((CRAttribute.AttributeValue a) => string.Equals(a.ValueID, str1, StringComparison.OrdinalIgnoreCase)) == null) {
+                                e.Cache.RaiseExceptionHandling<SurveyAnswer.value>(row, str, new PXSetPropertyException("One of the specified values is not valid for the {0} attribute that has the Multi Select Combo type. Note that the Multi Select Combo type supports identifiers and does not support descriptions.", new object[] { row.AttributeID }));
+                                return;
+                            }
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
+
 
         [PXCacheName("CreateSurveyFilter")]
         [Serializable]
