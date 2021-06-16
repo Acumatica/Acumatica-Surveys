@@ -132,16 +132,22 @@ namespace PX.Survey.Ext {
         public virtual int? OwnerID { get; set; }
         #endregion
 
-        public class thisScreen : BqlString.Constant<thisScreen> {
-            public thisScreen() : base("SU201000") { }
-        }
-
         #region NotificationID
         public abstract class notificationID : BqlInt.Field<notificationID> { }
         [PXDBInt]
-        [PXSelector(typeof(Search<SM.Notification.notificationID, Where<SM.Notification.screenID, Equal<thisScreen>>>), SubstituteKey = typeof(SM.Notification.name))]
-        [PXUIField(DisplayName = "Notification")]
+        [PXDefault(typeof(SurveySetup.notificationID))]
+        [PXSelector(typeof(Search<SM.Notification.notificationID, Where<SM.Notification.screenID, Equal<SurveyUtils.surveyScreen>>>), SubstituteKey = typeof(SM.Notification.name))]
+        [PXUIField(DisplayName = "New Notification")]
         public virtual int? NotificationID { get; set; }
+        #endregion
+
+        #region RemindNotificationID
+        public abstract class remindNotificationID : BqlInt.Field<remindNotificationID> { }
+        [PXDBInt]
+        [PXDefault(typeof(SurveySetup.remindNotificationID))]
+        [PXSelector(typeof(Search<SM.Notification.notificationID, Where<SM.Notification.screenID, Equal<SurveyUtils.surveyScreen>>>), SubstituteKey = typeof(SM.Notification.name))]
+        [PXUIField(DisplayName = "Reminder Notification")]
+        public virtual int? RemindNotificationID { get; set; }
         #endregion
 
         #region EntityType

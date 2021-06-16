@@ -17,6 +17,9 @@ namespace PX.Survey.Ext {
         public static Func<SurveyDetail, bool> ALL_PAGES = (x) => { return true; };
         public static Func<SurveyDetail, bool> ACTIVE_ONLY = (x) => { return x.Active == true; };
         public static Func<SurveyDetail, bool> EXCEPT_HF = (x) => { return x.TemplateType != SUTemplateType.Header && x.TemplateType != SUTemplateType.Footer; };
+        public class surveyScreen : BqlString.Constant<surveyScreen> {
+            public surveyScreen() : base("SU201000") { }
+        }
 
         public static int GetNextOrPrevPageNbr(HttpRequestMessage request, int pageNbr) {
             var body = request.Content.ReadAsStringAsync().Result;

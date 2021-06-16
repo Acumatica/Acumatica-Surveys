@@ -142,6 +142,22 @@ namespace PX.Survey.Ext {
         public virtual int? DefFooterID { get; set; }
         #endregion
 
+        #region NotificationID
+        public abstract class notificationID : BqlInt.Field<notificationID> { }
+        [PXDBInt]
+        [PXSelector(typeof(Search<SM.Notification.notificationID, Where<SM.Notification.screenID, Equal<SurveyUtils.surveyScreen>>>), SubstituteKey = typeof(SM.Notification.name))]
+        [PXUIField(DisplayName = "New Notification")]
+        public virtual int? NotificationID { get; set; }
+        #endregion
+
+        #region RemindNotificationID
+        public abstract class remindNotificationID : BqlInt.Field<remindNotificationID> { }
+        [PXDBInt]
+        [PXSelector(typeof(Search<SM.Notification.notificationID, Where<SM.Notification.screenID, Equal<SurveyUtils.surveyScreen>>>), SubstituteKey = typeof(SM.Notification.name))]
+        [PXUIField(DisplayName = "Reminder Notification")]
+        public virtual int? RemindNotificationID { get; set; }
+        #endregion
+
         #region ContactID
         public abstract class contactID : BqlInt.Field<contactID> { }
         [PXDBInt]
