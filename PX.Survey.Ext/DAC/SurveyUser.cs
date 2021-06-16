@@ -51,7 +51,7 @@ namespace PX.Survey.Ext {
         #region ContactID
         public abstract class contactID : BqlInt.Field<contactID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Recipient")]
+        [PXUIField(DisplayName = "Contact")]
         [PXRestrictor(typeof(Where<Contact.isActive, Equal<True>>), "Contact '{0}' is inactive or closed.", new Type[] { typeof(Contact.displayName) })]
         [PXSelector(typeof(Search2<Contact.contactID, LeftJoin<BAccount, On<BAccount.bAccountID, Equal<Contact.bAccountID>>>>),
             DescriptionField = typeof(Contact.displayName), Filterable = true)]

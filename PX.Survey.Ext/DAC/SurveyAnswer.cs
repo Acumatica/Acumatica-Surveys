@@ -150,7 +150,7 @@ namespace PX.Survey.Ext {
         #region ContactID
         public abstract class contactID : BqlInt.Field<contactID> { }
         [PXInt]
-        [PXUIField(DisplayName = "Recipient Name")]
+        [PXUIField(DisplayName = "Contact", IsReadOnly = true)]
         [PXFormula(typeof(Selector<collectorID, Selector<SurveyCollector.userLineNbr, SurveyUser.contactID>>))]
         public virtual int? ContactID { get; set; }
         #endregion
