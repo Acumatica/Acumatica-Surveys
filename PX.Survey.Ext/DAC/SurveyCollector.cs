@@ -81,6 +81,7 @@ namespace PX.Survey.Ext {
         [PXDBDefault(typeof(SurveyUser.lineNbr), DefaultForUpdate = false)]
         [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
         [PXParent(typeof(FK.SUSurveyUser))]
+        [PXSelector(typeof(Search<SurveyUser.lineNbr, Where<SurveyUser.surveyID, Equal<Current<surveyID>>>>))]
         public virtual int? UserLineNbr { get; set; }
         #endregion
 
@@ -99,9 +100,9 @@ namespace PX.Survey.Ext {
         /// <see cref="M:PX.Data.EntityHelper.GetEntityDescription(System.Nullable{System.Guid},System.Type)" /> method.
         /// </value>
         public abstract class source : BqlString.Field<source> { }
-        [PXFormula(typeof(EntityDescription<refNoteID>))]
         [PXString(IsUnicode = true)]
         [PXUIField(DisplayName = "Related Entity Description", Enabled = false)]
+        [PXFormula(typeof(EntityDescription<refNoteID>))]
         public virtual string Source { get; set; }
 
         #region ContactID
@@ -111,6 +112,7 @@ namespace PX.Survey.Ext {
         [PXSelector(typeof(Search<Contact.contactID,
                             Where<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>),
                     DescriptionField = typeof(Contact.displayName))]
+        [PXFormula(typeof(Selector<userLineNbr, SurveyUser.contactID>))]
         public virtual int? ContactID { get; set; }
         #endregion
 

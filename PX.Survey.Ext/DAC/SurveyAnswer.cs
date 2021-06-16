@@ -160,6 +160,8 @@ namespace PX.Survey.Ext {
         [PXInt]
         [PXUIField(DisplayName = "Contact", IsReadOnly = true)]
         [PXFormula(typeof(Selector<collectorID, Selector<SurveyCollector.userLineNbr, SurveyUser.contactID>>))]
+        [PXSelector(typeof(Search2<Contact.contactID, LeftJoin<BAccount, On<BAccount.bAccountID, Equal<Contact.bAccountID>>>>),
+            DescriptionField = typeof(Contact.displayName))]
         public virtual int? ContactID { get; set; }
         #endregion
 
