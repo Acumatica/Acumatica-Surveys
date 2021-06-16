@@ -41,7 +41,7 @@ namespace PX.Survey.Ext {
         [SurveyID(IsKey = true, Required = true, Visibility = PXUIVisibility.SelectorVisible)]
         [PXReferentialIntegrityCheck]
         [PXDefault]
-        [PXSelector(typeof(surveyID))]
+        [PXSelector(typeof(Search<surveyID>), DescriptionField = typeof(title))]
         [AutoNumber(typeof(SurveySetup.surveyNumberingID), typeof(AccessInfo.businessDate))]
         public virtual string SurveyID { get; set; }
         #endregion

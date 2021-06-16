@@ -42,7 +42,7 @@ namespace PX.Survey.Ext {
         #region SurveyID
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [SurveyID]
-        [PXSelector(typeof(surveyID), DescriptionField = typeof(Survey.title))]
+        [PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 

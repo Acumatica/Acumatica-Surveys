@@ -99,7 +99,7 @@ namespace PX.Survey.Ext {
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [SurveyID]
         [PXForeignReference(typeof(FK.SUSurvey))]
-        [PXSelector(typeof(surveyID))]
+        [PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 

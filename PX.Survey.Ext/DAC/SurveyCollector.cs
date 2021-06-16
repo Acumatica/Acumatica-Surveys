@@ -71,7 +71,7 @@ namespace PX.Survey.Ext {
         [SurveyID]
         [PXDBDefault(typeof(Survey.surveyID), DefaultForUpdate = false)]
         [PXParent(typeof(FK.SUSurvey))]
-        [PXSelector(typeof(surveyID), DescriptionField = typeof(Survey.title))]
+        [PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 
