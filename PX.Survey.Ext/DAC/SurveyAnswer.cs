@@ -66,7 +66,7 @@ namespace PX.Survey.Ext {
         /// once the processing page kicks in.
         /// </remarks>
         [PXDBInt]
-        [PXUIField(DisplayName = "Collector ID")]
+        [PXUIField(DisplayName = "Collector ID", IsReadOnly = true)]
         [PXSelector(typeof(Search<SurveyCollector.collectorID, Where<SurveyCollector.surveyID, Equal<Current<surveyID>>>>))]
         public virtual int? CollectorID { get; set; }
         #endregion
@@ -76,23 +76,31 @@ namespace PX.Survey.Ext {
         [PXString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
         [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
         [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.attributeID>))]
-        [PXUIField(DisplayName = "Answer Type")]
+        [PXUIField(DisplayName = "Answer Type", IsReadOnly = true)]
         public virtual string AttributeID { get; set; }
         #endregion
 
         #region Value
         public abstract class value : BqlString.Field<value> { }
         [SUAttributeValue]
-        [PXUIField(DisplayName = "Value")]
+        [PXUIField(DisplayName = "Value", IsReadOnly = true)]
         [CSAttributeValueValidation(typeof(attributeID))]
         [PXPersonalDataFieldAttribute.Value]
         public virtual string Value { get; set; }
         #endregion
 
+        #region Description
+        public abstract class description : BqlString.Field<description> { }
+        [PXString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Description", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
+        [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.description>))]
+        public virtual string Description { get; set; }
+        #endregion
+
         #region PageNbr
         public abstract class pageNbr : BqlInt.Field<pageNbr> { }
         [PXInt]
-        [PXUIField(DisplayName = "Page Nbr.")]
+        [PXUIField(DisplayName = "Page Nbr.", IsReadOnly = true)]
         [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.pageNbr>))]
         public virtual int? PageNbr { get; set; }
         #endregion
@@ -100,7 +108,7 @@ namespace PX.Survey.Ext {
         #region QuestionNbr
         public abstract class questionNbr : BqlInt.Field<questionNbr> { }
         [PXInt]
-        [PXUIField(DisplayName = "Question Nbr.")]
+        [PXUIField(DisplayName = "Question Nbr.", IsReadOnly = true)]
         [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.questionNbr>))]
         public virtual int? QuestionNbr { get; set; }
         #endregion
@@ -108,7 +116,7 @@ namespace PX.Survey.Ext {
         #region TemplateType
         public abstract class templateType : BqlString.Field<templateType> { }
         [PXString(2, IsUnicode = false, IsFixed = true)]
-        [PXUIField(DisplayName = "Template Type")]
+        [PXUIField(DisplayName = "Template Type", IsReadOnly = true)]
         [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.templateType>))]
         [SUTemplateType.DetailList]
         public virtual string TemplateType { get; set; }
@@ -159,7 +167,7 @@ namespace PX.Survey.Ext {
         public abstract class userID : BqlGuid.Field<userID> { }
         [PXGuid]
         [PXFormula(typeof(Selector<contactID, Contact.userID>))]
-        [PXUIField(DisplayName = "User ID")]
+        [PXUIField(DisplayName = "User ID", IsReadOnly = true)]
         public virtual Guid? UserID { get; set; }
         #endregion
 
@@ -167,7 +175,7 @@ namespace PX.Survey.Ext {
         public abstract class firstName : BqlString.Field<firstName> { }
         [PXString(IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.firstName>))]
-        [PXUIField(DisplayName = "First Name", Enabled = false)]
+        [PXUIField(DisplayName = "First Name", IsReadOnly = true)]
         public virtual string FirstName { get; set; }
         #endregion
 
@@ -175,7 +183,7 @@ namespace PX.Survey.Ext {
         public abstract class lastName : BqlString.Field<lastName> { }
         [PXString(IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.lastName>))]
-        [PXUIField(DisplayName = "Last Name", Enabled = false)]
+        [PXUIField(DisplayName = "Last Name", IsReadOnly = true)]
         public virtual string LastName { get; set; }
         #endregion
 
@@ -183,7 +191,7 @@ namespace PX.Survey.Ext {
         public abstract class displayName : BqlString.Field<displayName> { }
         [PXString(IsUnicode = true)]
         [PXFormula(typeof(Selector<contactID, Contact.displayName>))]
-        [PXUIField(DisplayName = "Display Name", Enabled = false)]
+        [PXUIField(DisplayName = "Display Name", IsReadOnly = true)]
         public virtual string DisplayName { get; set; }
         #endregion
 
