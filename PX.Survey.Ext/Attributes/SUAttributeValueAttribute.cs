@@ -1,11 +1,10 @@
 ﻿using PX.Common;
 using PX.Data;
+using PX.Objects.CS;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using PX.Objects.CS;
 
 namespace PX.Survey.Ext {
     public class SUAttributeValueAttribute : PXDBStringAttribute {
@@ -30,7 +29,7 @@ namespace PX.Survey.Ext {
             if (e.NewValue is DateTime) {
                 e.NewValue = Convert.ToString(e.NewValue, CultureInfo.InvariantCulture);
             }
-            CSAnswers row = e.Row as CSAnswers;
+            SurveyAnswer row = e.Row as SurveyAnswer;
             if (row != null) {
                 attributeID = row.AttributeID;
             } else {
