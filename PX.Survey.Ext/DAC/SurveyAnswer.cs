@@ -9,6 +9,7 @@ namespace PX.Survey.Ext {
 
     [Serializable]
     [PXCacheName("SurveyAnswer")]
+    [PXPossibleRowsList(typeof(CSAttribute.description), typeof(attributeID), typeof(value))]
     public partial class SurveyAnswer : IBqlTable, ISortOrder, INotable {
 
         #region Keys
