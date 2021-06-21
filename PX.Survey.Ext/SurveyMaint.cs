@@ -505,35 +505,54 @@ namespace PX.Survey.Ext {
                             continue;
                         }
                         var value = kvp.Value;
-                        //var answer = new CSAnswers() {
-                        //    AttributeID = attrID,
-                        //    Value = value
-                        //};
-                        //answers.Add(answer);
-                        // TODO Look for existing answer
-                        SurveyAnswer answer = SelectFrom<SurveyAnswer>.
-                        Where<SurveyAnswer.surveyID.IsEqual<@P.AsString>.
-                        And<SurveyAnswer.collectorID.IsEqual<@P.AsInt>.
-                        And<SurveyAnswer.detailLineNbr.IsEqual<@P.AsInt>>>>.
-                        View.SelectWindowed(this, 0, 1, survey.SurveyID, collector.CollectorID, detail.LineNbr);
-                        if (answer == null) {
-                            answer = new SurveyAnswer() {
-                                SurveyID = survey.SurveyID,
-                                CollectorID = collector.CollectorID,
-                                DetailLineNbr = detail.LineNbr,
-                                Value = value,
-                            };
-                            Answers.Insert(answer);
-                        } else {
-                            // Update Answer ??
+                        if (value == null) {
+                            // No answer
+                            continue;
                         }
-
+                        var controlType = detail.ControlType;
+                        if (controlType == SUControlType.Multi) {
+                            var allValues = value.Split(',');
+                            foreach (var singleValue in allValues) {
+                                UpsertAnswer(survey, collector, detail, singleValue, true);
+                            }
+                        } else {
+                            UpsertAnswer(survey, collector, detail, value, false);
+                        }
                     }
                 } else {
                     continue;
                 }
             }
-            //SurveyUtils.InstallAnswers(this, collector, answers);
+        }
+
+        private void UpsertAnswer(Survey survey, SurveyCollector collector, SurveyDetail detail, string value, bool searchByValue) {
+            SurveyAnswer answer;
+            if (searchByValue) {
+                answer = SelectFrom<SurveyAnswer>.
+                Where<SurveyAnswer.surveyID.IsEqual<@P.AsString>.
+                And<SurveyAnswer.collectorID.IsEqual<@P.AsInt>.
+                And<SurveyAnswer.detailLineNbr.IsEqual<@P.AsInt>.
+                And<SurveyAnswer.value.IsEqual<@P.AsString>>>>>.
+                View.SelectWindowed(this, 0, 1, survey.SurveyID, collector.CollectorID, detail.LineNbr, value);
+            } else {
+                answer = SelectFrom<SurveyAnswer>.
+                Where<SurveyAnswer.surveyID.IsEqual<@P.AsString>.
+                And<SurveyAnswer.collectorID.IsEqual<@P.AsInt>.
+                And<SurveyAnswer.detailLineNbr.IsEqual<@P.AsInt>>>>.
+                View.SelectWindowed(this, 0, 1, survey.SurveyID, collector.CollectorID, detail.LineNbr);
+            }
+            if (answer == null) {
+                answer = new SurveyAnswer() {
+                    SurveyID = survey.SurveyID,
+                    CollectorID = collector.CollectorID,
+                    DetailLineNbr = detail.LineNbr,
+                    Value = value,
+                };
+                Answers.Insert(answer);
+            } else {
+                answer.Value = value;
+                Answers.Update(answer);
+            }
         }
 
         protected virtual void _(Events.RowSelecting<Survey> e) {
