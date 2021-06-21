@@ -23,18 +23,17 @@ namespace PX.Survey.Ext {
         [PXDBString(256, IsKey = true, IsUnicode = true)]
         [PXDefault]
         [PXEntityTypeList]
-        [PXUIField(DisplayName = "Entity Type", Required = true)]
+        [PXUIField(DisplayName = "Entity Type", IsReadOnly = true)]
         public virtual string EntityType { get; set; }
         #endregion
 
         #region ContactField
         public abstract class contactField : BqlString.Field<contactField> { }
-        //[PXDefault]
         ////[SUFieldList(typeof(entityType))]
         //[PXUIField(DisplayName = "Contact Field", Required = true)]
         //[PrimaryViewFieldsList(typeof(screenID), ShowDisplayNameAsLabel = true)]
         [PXDBString(64, InputMask = "", IsUnicode = true)]
-        //[PXDefault]
+        [PXDefault]
         [PXUIField(DisplayName = "Contact Field")]
         public virtual string ContactField { get; set; }
         #endregion
@@ -42,7 +41,7 @@ namespace PX.Survey.Ext {
         #region SurveyID
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [SurveyID]
-        [PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
+        [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.entityType, Equal<Current<entityType>>>>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 
