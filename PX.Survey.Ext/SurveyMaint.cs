@@ -41,7 +41,7 @@ namespace PX.Survey.Ext {
         [PXCopyPasteHiddenView]
         public PXSelect<SurveyAnswer,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>>,
-            OrderBy<Asc<SurveyCollectorData.createdDateTime>>> Answers;
+            OrderBy<Asc<SurveyAnswer.createdDateTime>>> Answers;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
