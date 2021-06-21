@@ -300,7 +300,7 @@ namespace PX.Survey.Ext {
             var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
-                var pageContent = generator.GenerateSurveyPage(collector.Token, pageNbr);
+                var (pageContent, _) = generator.GenerateSurveyPage(collector.Token, pageNbr);
                 SaveContentToAttachment($"Survey-{survey.SurveyID}-Page-{pageNbr}.html", pageContent);
             }
             Actions.PressSave();
@@ -443,7 +443,7 @@ namespace PX.Survey.Ext {
             foreach (var collector in allCollectors) {
                 Collectors.Current = collector;
                 var token = collector.Token;
-                (var _, var user) = SurveyUtils.GetSurveyAndUser(this, token);
+                var (_, user, _) = SurveyUtils.GetSurveyAndUser(this, token);
                 var collectorDatas = CollectorDataRecords.Select().FirstTableItems;
                 foreach (var collData in collectorDatas) {
                     if (collData.Status == CollectorDataStatus.Processed) {

@@ -61,7 +61,7 @@ namespace PX.Survey.Ext {
         }
 
 
-        public static IEnumerable<SurveyDetail> SelectPages(Survey survey, IEnumerable<SurveyDetail> details, int pageNbr) {
+        public static IEnumerable<SurveyDetail> SelectPages(IEnumerable<SurveyDetail> details, int pageNbr) {
             IEnumerable<SurveyDetail> pages = Enumerable.Empty<SurveyDetail>();
             var max = details.Max(det => det.PageNbr);
             while (!pages.Any() && pageNbr <= max) {
@@ -139,12 +139,28 @@ namespace PX.Survey.Ext {
         //        Where<CSAttribute.attributeID, Equal<Required<CSAttribute.attributeID>>>>(graph).SelectSingle(new object[] { attributeId });
         //}
 
-        public static (Survey survey, SurveyUser user) GetSurveyAndUser(PXGraph graph, string token) {
-            var collector = SurveyCollector.UK.Find(graph, token);
+        public static (Survey survey, SurveyUser user, SurveyCollector collector) GetSurveyAndUser(SurveyMaint graph, string token) {
+            SurveyCollector collector;
+            Survey survey;
+            token = token?.Trim();
+            if (token.Length <= 15) {
+                // Anonymous survey, token is SurveyID
+                survey = Survey.PK.Find(graph, token);
+                SurveySetup setup = PXSelect<SurveySetup>.SelectWindowed(graph, 0, 1);
+                var contactID = setup.AnonContactID;
+                if (contactID == null) {
+                    throw new PXException("An Anonnymous user may be setup in the Survey Preferences");
+                }
+                var anonUser = graph.InsertOrFindUser(survey, contactID);
+                collector = graph.DoInsertCollector(survey, anonUser, null);
+                token = collector.Token;
+            } else {
+                collector = SurveyCollector.UK.Find(graph, token);
+                survey = Survey.PK.Find(graph, collector.SurveyID);
+            }
             if (collector == null) {
                 throw new PXException(Messages.TokenNoFound, token);
             }
-            var survey = Survey.PK.Find(graph, collector.SurveyID);
             if (survey == null) {
                 throw new PXException(Messages.TokenNoSurvey, token);
             }
@@ -152,9 +168,8 @@ namespace PX.Survey.Ext {
             if (user == null) {
                 throw new PXException(Messages.TokenNoUser, token);
             }
-            return (survey, user);
+            return (survey, user, collector);
         }
-
 
         public static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {
             return PXSelect<CSAttributeDetail,

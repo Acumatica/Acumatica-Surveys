@@ -169,6 +169,15 @@ namespace PX.Survey.Ext {
         public virtual int? ContactID { get; set; }
         #endregion
 
+        #region AnonContactID
+        public abstract class anonContactID : BqlInt.Field<anonContactID> { }
+        [PXDBInt]
+        [PXUIField(DisplayName = "Anonymous Contact")]
+        [PXSelector(typeof(Search<Contact.contactID, Where<Contact.isActive, Equal<True>>>),
+                    DescriptionField = typeof(Contact.displayName))]
+        public virtual int? AnonContactID { get; set; }
+        #endregion
+
         #region WebHookID
         public abstract class webHookID : BqlGuid.Field<webHookID> { }
         [PXDBGuid(false)]

@@ -5,6 +5,7 @@ using PX.Survey.Ext.WebHook;
 using Scriban;
 using Scriban.Runtime;
 using Scriban.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -53,8 +54,12 @@ namespace PX.Survey.Ext {
             return rendered;
         }
 
-        public string GenerateSurveyPage(string token, int pageNbr) {
-            (var survey, var user) = SurveyUtils.GetSurveyAndUser(graph, token);
+        public (string content, string token) GenerateSurveyPage(string token, int pageNbr) {
+            (var survey, var user, var collector) = SurveyUtils.GetSurveyAndUser(graph, token);
+            // Redirect with new token as anonymous surveys will pass the SurveyID as a token
+            if (collector.Token != token) {
+                return (null, collector.Token);
+            }
             graph.Survey.Current = survey;
             var mainTemplateID = survey.TemplateID;
             var mainTemplate = SurveyTemplate.PK.Find(graph, mainTemplateID);
@@ -67,7 +72,7 @@ namespace PX.Survey.Ext {
             var renderedPage = GetRenderedPage(survey, user, mainContext, pageNbr);
             FillRenderedPages(mainContext, renderedPage);
             var rendered = template.Render(mainContext);
-            return rendered;
+            return (rendered, null);
         }
 
         public string GetUrl(TemplateContext context, int pageNbr) {
@@ -78,7 +83,7 @@ namespace PX.Survey.Ext {
         }
 
         public string GetUrl(string token, int pageNbr) {
-            (var survey, var user) = SurveyUtils.GetSurveyAndUser(graph, token);
+            var (survey, user, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
             return GetUrl(survey, user, token, pageNbr);
         }
 
@@ -129,11 +134,11 @@ namespace PX.Survey.Ext {
         private IEnumerable<string> GetRenderedPage(Survey survey, SurveyUser user, TemplateContext context, int pageNbr) {
             graph.Survey.Current = survey;
             var activePages = graph.Details.Select().FirstTableItems.Where(det => det.Active == true);
-            var selectedPages = SurveyUtils.SelectPages(survey, activePages, pageNbr);
+            var selectedPages = SurveyUtils.SelectPages(activePages, pageNbr);
             var firstOfSelected = selectedPages.FirstOrDefault();
             var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
             var allRendered = new List<string>();
-            var nextPages = SurveyUtils.SelectPages(survey, activePages, ++selectedPageNbr);
+            var nextPages = SurveyUtils.SelectPages(activePages, ++selectedPageNbr);
             FillPageInfoLookAhead(context, activePages, nextPages);
             var url = GetUrl(context, firstOfSelected.PageNbr.Value);
             context.SetValue(new ScriptVariableGlobal(URL), url);

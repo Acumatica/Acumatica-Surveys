@@ -19,9 +19,7 @@ namespace PX.Survey.Ext.WebHook {
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
             using (var scope = GetUserScope()) {
-                string message;
                 string collectorToken = "NO_TOKEN";
-                HttpStatusCode status = HttpStatusCode.OK;
                 try {
                     var _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
                     collectorToken = _queryParameters.Get(TOKEN_PARAM);
@@ -36,12 +34,16 @@ namespace PX.Survey.Ext.WebHook {
                         SubmitSurvey(collectorToken, request, pageNbr);
                         pageNbr = SurveyUtils.GetNextOrPrevPageNbr(request, pageNbr);
                     }
-                    message = GetSurveyPage(collectorToken, pageNbr);
+                    var (content, newToken) = GetSurveyPage(collectorToken, pageNbr);
+                    if (newToken != collectorToken) {
+                        return new RedirectResult(request.RequestUri, newToken, "Was anonymous");
+                    } else {
+                        return new HtmlActionResult(content, HttpStatusCode.OK);
+                    }
                 } catch (Exception ex) {
-                    status = HttpStatusCode.BadRequest;
-                    message = GetBadRequestPage(collectorToken, ex.Message);
+                    var content = GetBadRequestPage(collectorToken, ex.Message);
+                    return new HtmlActionResult(content, HttpStatusCode.BadRequest);
                 }
-                return new HtmlActionResult(message, status);
             }
         }
 
@@ -59,8 +61,9 @@ namespace PX.Survey.Ext.WebHook {
         }
 
         private void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
-            var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-            var (survey, user) = SurveyUtils.GetSurveyAndUser(graph, token);
+            //var graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
+            var graph = PXGraph.CreateInstance<SurveyMaint>();
+            var (survey, user, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
             //var queryParams = props != null ? JsonConvert.SerializeObject(props) : null;
             var data = new SurveyCollectorData {
                 Token = token,
@@ -70,14 +73,15 @@ namespace PX.Survey.Ext.WebHook {
                 PageNbr = pageNbr
                 //QueryParameters = queryParams
             };
-            var inserted = graph.CollectedAnswers.Insert(data);
+            //var inserted = graph.CollectedAnswers.Insert(data);
+            var inserted = graph.CollectorDataRecords.Insert(data);
             graph.Persist();
         }
 
-        private string GetSurveyPage(string collectorToken, int pageNbr) {
+        private (string content, string token) GetSurveyPage(string collectorToken, int pageNbr) {
             var generator = new SurveyGenerator();
-            var content = generator.GenerateSurveyPage(collectorToken, pageNbr);
-            return content;
+            var (content, token) = generator.GenerateSurveyPage(collectorToken, pageNbr);
+            return (content, token);
         }
 
         /// <summary>
@@ -99,23 +103,45 @@ namespace PX.Survey.Ext.WebHook {
             return new PXLoginScope(userName);
         }
 
-    }
 
-    public class HtmlActionResult : IHttpActionResult {
+        public class HtmlActionResult : IHttpActionResult {
 
-        private string _message;
-        private HttpStatusCode _status;
+            private string _message;
+            private HttpStatusCode _status;
 
-        public HtmlActionResult(string message, HttpStatusCode status) {
-            _message = message;
-            _status = status;
+            public HtmlActionResult(string message, HttpStatusCode status) {
+                _message = message;
+                _status = status;
+            }
+
+            public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
+                var response = new HttpResponseMessage(_status);
+                response.Content = new StringContent(_message);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+                return Task.FromResult(response);
+            }
         }
 
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
-            var response = new HttpResponseMessage(_status);
-            response.Content = new StringContent(_message);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-            return Task.FromResult(response);
+        public class RedirectResult : IHttpActionResult {
+
+            private Uri _location;
+            private string _reason;
+
+            public RedirectResult(Uri uri, string newToken, string reason) {
+                var ub = new UriBuilder(uri);
+                var qs = HttpUtility.ParseQueryString(ub.Query);
+                qs.Set(TOKEN_PARAM, newToken);
+                ub.Query = qs.ToString();
+                _location = ub.Uri;
+                _reason = reason;
+            }
+
+            public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
+                var redirect = new HttpResponseMessage(HttpStatusCode.Redirect);
+                redirect.Headers.Location = _location;
+                redirect.ReasonPhrase = _reason;
+                return Task.FromResult(redirect);
+            }
         }
     }
 }
