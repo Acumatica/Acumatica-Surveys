@@ -29,6 +29,12 @@ namespace PX.Survey.Ext {
         private static string NEXT_IS_LAST = "NextIsLast";
         private static string NEXT_IS_QUES = "NextIsQuestion";
         private static string NEXT_IS_FOOT = "NextIsFooter";
+        private static string ENTITY_ROW = "EntityRow";
+        private static string ENTITY_TYPE = "EntityType";
+        private static string ENTITY_NAME = "EntityName";
+        private static string ENTITY_DESC = "EntityDesc";
+        private static string ENTITY_FIELDS = "EntityFields";
+
 
         public SurveyGenerator() : this(PXGraph.CreateInstance<SurveyMaint>()) {
         }
@@ -69,10 +75,30 @@ namespace PX.Survey.Ext {
             }
             var template = Template.Parse(mainTemplateText);
             var mainContext = GetSurveyContext(survey, user, token);
+            FillReferenceInfo(collector, graph, mainContext);
             var renderedPage = GetRenderedPage(survey, user, mainContext, pageNbr);
             FillRenderedPages(mainContext, renderedPage);
             var rendered = template.Render(mainContext);
             return (rendered, null);
+        }
+
+        private void FillReferenceInfo(SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
+            if (collector.RefNoteID == null) {
+                return;
+            }
+            var noteID = collector.RefNoteID;
+            var eh = new EntityHelper(graph);
+            var entityRow = eh.GetEntityRow(noteID);
+            var entityType = entityRow.GetType();
+            var entityName = eh.GetFriendlyEntityName(noteID);
+            var fl = eh.GetFieldList(entityType);
+            var fvp = eh.GetFieldValuePairs(entityRow, entityType);
+            var desc = eh.GetEntityDescription(noteID, entityType);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_ROW), entityRow);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_TYPE), entityType);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_NAME), entityName);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_DESC), desc);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_FIELDS), fvp);
         }
 
         public string GetUrl(TemplateContext context, int pageNbr) {
