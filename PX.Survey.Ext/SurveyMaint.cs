@@ -473,11 +473,6 @@ namespace PX.Survey.Ext {
                     }
                     var updated = CollectorDataRecords.Update(collData);
                 }
-                // Handle missing answers
-                //if (collectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
-                //    collector.Status = CollectorDataStatus.Processed;
-                //    Collectors.Update(collector);
-                //}
             }
             Actions.PressSave();
             return errorOccurred;
