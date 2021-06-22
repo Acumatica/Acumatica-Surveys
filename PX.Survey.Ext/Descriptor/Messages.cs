@@ -21,9 +21,9 @@ namespace PX.Survey.Ext {
 
         public class CollectorStatus {
             public const string New = "New";
-            //public const string Rendered = "Rendered";
             public const string Sent = "Awaiting Response";
-            public const string Responded = "Responded";
+            public const string Partially = "Partially";
+            public const string Completed = "Completed";
             public const string Reminded = "Reminded";
             public const string Expired = "Expired";
             public const string Error = "Error";
@@ -32,7 +32,8 @@ namespace PX.Survey.Ext {
 
         public class CollectorDataStatus {
             public const string New = "New";
-            public const string Connected = "Connected";
+            public const string Updated = "Updated";
+            public const string Ignored = "Ignored";
             public const string Processed = "Processed";
             public const string Error = "Error";
         }
