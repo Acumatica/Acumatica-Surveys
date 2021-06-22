@@ -65,5 +65,23 @@ namespace PX.Survey.Ext {
         //        }
         //    }
         //}
+
+        protected virtual void _(Events.FieldUpdated<SurveySetupEntity, SurveySetupEntity.screenID> e) {
+            e.Cache.SetDefaultExt<SurveySetupEntity.entityType>(e.Row);
+        }
+
+        protected virtual void _(Events.FieldDefaulting<SurveySetupEntity, SurveySetupEntity.entityType> e) {
+            var row = e.Row;
+            if (row == null || row.ScreenID == null) {
+                return;
+            }
+            var smn = PXSiteMap.Provider.FindSiteMapNodeByScreenID(row.ScreenID);
+            if (smn != null) {
+                var graphType = smn.GraphType;
+                var primaryCacheInfo = GraphHelper.GetPrimaryCache(graphType);
+                e.NewValue = primaryCacheInfo?.CacheType.FullName;
+                e.Cancel = e.NewValue != null;
+            }
+        }
     }
 }
