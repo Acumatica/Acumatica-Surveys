@@ -5,6 +5,7 @@ using PX.Data;
 using PX.Data.BQL;
 using PX.Objects.CS;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,16 +17,13 @@ namespace PX.Survey.Ext {
         public PXCancel<SurveyFilter> Cancel;
         public PXFilter<SurveyFilter> Filter;
 
-        public PXFilteredProcessingJoin<Survey, SurveyFilter,
-            LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<Survey.surveyID>>>,
-            Where<Survey.active, Equal<True>,
-            And<Survey.surveyID, Equal<Current<SurveyFilter.surveyID>>>>> Surveys;
+        public PXFilteredProcessing<SurveyCollector, SurveyFilter> Documents;
 
-        private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
+        //private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
         public SurveyProcess() {
-            Surveys.SetProcessCaption(Messages.Send);
-            Surveys.SetProcessAllCaption(Messages.SendAll);
+            Documents.SetProcessCaption(Messages.Send);
+            Documents.SetProcessAllCaption(Messages.SendAll);
         }
 
         protected virtual void _(Events.RowSelected<SurveyFilter> e) {
@@ -33,41 +31,68 @@ namespace PX.Survey.Ext {
             if (row == null) {
                 return;
             }
-            var action = row.SurveyAction;
+            var action = row.Action;
             var doProcessAnswers = action == SurveyAction.ProcessAnswers;
             PXUIFieldAttribute.SetRequired<SurveyFilter.surveyID>(e.Cache, !doProcessAnswers);
             PXDefaultAttribute.SetPersistingCheck<SurveyFilter.surveyID>(e.Cache, null, !doProcessAnswers ? PXPersistingCheck.NullOrBlank : PXPersistingCheck.Nothing);
-            Surveys.SetProcessDelegate(list => ProcessSurvey(list, row));
+            Documents.SetProcessDelegate(list => ProcessSurvey(list, row));
         }
 
-        public static void ProcessSurvey(List<Survey> surveys, SurveyFilter filter) {
+        public virtual IEnumerable documents() {
+            SurveyFilter filter = Filter.Current;
+            var action = filter.Action;
+            var cmd = new PXSelectJoin<SurveyCollector,
+                LeftJoin<Survey, On<Survey.surveyID, Equal<SurveyCollector.surveyID>>,
+                LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<SurveyCollector.surveyID>, And<SurveyUser.lineNbr, Equal<SurveyCollector.userLineNbr>>>>>,
+                Where<SurveyFilter.showInactive, Equal<True>, Or<Survey.active, Equal<True>,
+                And<SurveyFilter.surveyID, IsNull, Or<Survey.surveyID, Equal<Current<SurveyFilter.surveyID>>>>>>>(this);
+            switch (action) {
+                case SurveyAction.DefaultAction:
+                    //cmd.WhereAnd<Where<B2Message.status, B2Status.notProcessed>>();
+                    break;
+                case SurveyAction.SendNew:
+                    cmd.WhereAnd<Where<SurveyCollector.status, Equal<CollectorStatus._new>>>();
+                    break;
+                case SurveyAction.ExpireOnly:
+                    //cmd.WhereAnd<Where<SurveyCollector.status, SurveyCollector.notProcessed>>();
+                    break;
+                case SurveyAction.RemindOnly:
+                    cmd.WhereAnd<Where<SurveyCollector.status, Equal<CollectorStatus.sent>>>();
+                    break;
+            }
+            var rows = cmd.Select();
+            return rows;
+        }
+
+        public static void ProcessSurvey(List<SurveyCollector> surveyCollectors, SurveyFilter filter) {
             var graph = CreateInstance<SurveyMaint>();
-            var action = filter.SurveyAction;
+            var action = filter.Action;
             var generator = new SurveyGenerator(graph);
-            var errorOccurred = ConnectAnswers();
-            foreach (var survey in surveys) {
-                graph.Survey.Current = survey;
-                switch (action) {
-                    //note: the or clauses below are intended to preserve a previous error indicator and not let 
-                    //      successive iterations override a previous error detection.
-                    case SurveyAction.ProcessAnswers:
-                        errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
-                        break;
-                    case SurveyAction.SendNew:
-                        errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
-                        break;
-                    case SurveyAction.RemindOnly:
-                        errorOccurred = SendReminders(graph, survey, filter) || errorOccurred;
-                        break;
-                    case SurveyAction.ExpireOnly:
-                        errorOccurred = SetExpiredSurveys(graph, survey, filter) || errorOccurred;
-                        break;
-                    case SurveyAction.DefaultAction:
-                        errorOccurred = DefaultRoutine(graph, generator, survey, filter) || errorOccurred;
-                        break;
-                    default:
-                        throw new PXException(Messages.SurveyActionNotRecognised);
-                }
+            var errorOccurred = false;// ConnectAnswers();
+            foreach (var survey in surveyCollectors) {
+                // TODO Redo this by SurveyCollector and with SurveyCollectorMaint
+                //graph.Survey.Current = survey;
+                //switch (action) {
+                //    //note: the or clauses below are intended to preserve a previous error indicator and not let 
+                //    //      successive iterations override a previous error detection.
+                //    case SurveyAction.ProcessAnswers:
+                //        errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
+                //        break;
+                //    case SurveyAction.SendNew:
+                //        errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
+                //        break;
+                //    case SurveyAction.RemindOnly:
+                //        errorOccurred = SendReminders(graph, survey, filter) || errorOccurred;
+                //        break;
+                //    case SurveyAction.ExpireOnly:
+                //        errorOccurred = SetExpiredSurveys(graph, survey, filter) || errorOccurred;
+                //        break;
+                //    case SurveyAction.DefaultAction:
+                //        errorOccurred = DefaultRoutine(graph, generator, survey, filter) || errorOccurred;
+                //        break;
+                //    default:
+                //        throw new PXException(Messages.SurveyActionNotRecognised);
+                //}
             }
             if (errorOccurred) {
                 throw new PXException(Messages.SurveyError);
@@ -100,34 +125,34 @@ namespace PX.Survey.Ext {
             return errorOccurred;
         }
 
-        private static bool ConnectAnswers() {
-            bool errorOccurred = false;
-            var collectorGraph = CreateInstance<SurveyCollectorMaint>();
-            collectorGraph.Clear();
-            var allUnanswered = collectorGraph.UnprocessedCollectedAnswers.Select();
-            foreach (SurveyCollectorData unanswered in allUnanswered) {
-                try {
-                    var collectorToken = unanswered.Token;
-                    SurveyCollector collector = collectorGraph.Collector.Search<SurveyCollector.token>(collectorToken);
-                    if (collector == null) {
-                        throw new PXException(Messages.CollectorNotFound, collectorToken);
-                    }
-                    unanswered.SurveyID = collector.SurveyID;
-                    unanswered.CollectorID = collector.CollectorID;
-                    unanswered.Status = CollectorDataStatus.Connected;
-                    unanswered.Message = null;
-                    //collector.CollectedDate = unanswered.LastModifiedDateTime;
-                    collectorGraph.Collector.Update(collector);
-                } catch (Exception ex) {
-                    unanswered.Status = CollectorStatus.Error;
-                    unanswered.Message = ex.Message;
-                    errorOccurred = true;
-                }
-                collectorGraph.UnprocessedCollectedAnswers.Update(unanswered);
-                collectorGraph.Actions.PressSave();
-            }
-            return errorOccurred;
-        }
+        //private static bool ConnectAnswers() {
+        //    bool errorOccurred = false;
+        //    var collectorGraph = CreateInstance<SurveyCollectorMaint>();
+        //    collectorGraph.Clear();
+        //    var allUnanswered = collectorGraph.UnprocessedCollectedAnswers.Select();
+        //    foreach (SurveyCollectorData collData in allUnanswered) {
+        //        try {
+        //            var collectorToken = collData.Token;
+        //            SurveyCollector collector = collectorGraph.Collector.Search<SurveyCollector.token>(collectorToken);
+        //            if (collector == null) {
+        //                throw new PXException(Messages.CollectorNotFound, collectorToken);
+        //            }
+        //            collData.SurveyID = collector.SurveyID;
+        //            collData.CollectorID = collector.CollectorID;
+        //            collData.Status = CollectorDataStatus.Connected;
+        //            collData.Message = null;
+        //            //collector.CollectedDate = unanswered.LastModifiedDateTime;
+        //            collectorGraph.Collector.Update(collector);
+        //        } catch (Exception ex) {
+        //            collData.Status = CollectorStatus.Error;
+        //            collData.Message = ex.Message;
+        //            errorOccurred = true;
+        //        }
+        //        collectorGraph.UnprocessedCollectedAnswers.Update(collData);
+        //        collectorGraph.Actions.PressSave();
+        //    }
+        //    return errorOccurred;
+        //}
 
         /// <summary>
         /// This method will create a new collector record and invoke a notification on it.
@@ -144,23 +169,14 @@ namespace PX.Survey.Ext {
         /// </returns>
         private static bool SendNew(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
+            var collGraph = PXGraph.CreateInstance<SurveyCollectorMaint>();
             var collectors = graph.Collectors.Select();
             foreach (var res in collectors) {
                 var collector = PXResult.Unwrap<SurveyCollector>(res);
                 if (collector.Status != CollectorStatus.New) {
                     continue;
                 }
-                var surveyUser = PXResult.Unwrap<SurveyUser>(res);
-                try {
-                    SendNotification(surveyUser, collector);
-                    collector.Status = CollectorStatus.Sent;
-                    collector.Message = null;
-                } catch (Exception ex) {
-                    collector.Status = CollectorStatus.Error;
-                    collector.Message = ex.Message;
-                    errorOccurred = true;
-                }
-                var updated = graph.Collectors.Update(collector);
+                errorOccurred = collGraph.DoSendNewNotification(collector);
             }
             return errorOccurred;
         }
@@ -175,10 +191,10 @@ namespace PX.Survey.Ext {
         ///     If the durationTimeSpan is either null or zero we explicitly need to set a
         ///     null value as the expiration date.
         /// </remarks>
-        private static DateTime? CalculateExpirationDate(int? durationTimeSpan) {
-            if (durationTimeSpan.GetValueOrDefault() == 0) return null;
-            return DateTime.UtcNow.AddMinutes(durationTimeSpan.GetValueOrDefault());
-        }
+        //private static DateTime? CalculateExpirationDate(int? durationTimeSpan) {
+        //    if (durationTimeSpan.GetValueOrDefault() == 0) return null;
+        //    return DateTime.UtcNow.AddMinutes(durationTimeSpan.GetValueOrDefault());
+        //}
 
 
         /// <summary>
@@ -199,86 +215,16 @@ namespace PX.Survey.Ext {
         /// </remarks>
         private static bool SendReminders(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
+            var collGraph = PXGraph.CreateInstance<SurveyCollectorMaint>();
             var collectors = graph.Collectors.Select();
             foreach (var res in collectors) {
                 var collector = PXResult.Unwrap<SurveyCollector>(res);
-                if (collector.Status != CollectorStatus.Sent) {
+                if (collector.Status != CollectorStatus.New) {
                     continue;
                 }
-                var surveyUser = PXResult.Unwrap<SurveyUser>(res);
-                try {
-                    SendNotification(surveyUser, collector);
-                    if (collector.ExpirationDate == null && filter.DurationTimeSpan > 0) {
-                        collector.ExpirationDate = DateTime.UtcNow.AddMinutes(filter.DurationTimeSpan.GetValueOrDefault());
-                    }
-                    collector.Status = CollectorStatus.Reminded;
-                    collector.Message = null;
-                } catch (Exception ex) {
-                    collector.Status = CollectorStatus.Error;
-                    collector.Message = ex.Message;
-                    errorOccurred = true;
-                }
-                var updated = graph.Collectors.Update(collector);
+                errorOccurred = collGraph.DoSendReminder(collector, filter.DurationTimeSpan);
             }
             return errorOccurred;
-        }
-
-        private static void SendNotification(SurveyUser surveyUser, SurveyCollector collector) {
-            if (surveyUser.UsingMobileApp == true) {
-                SendPushNotification(surveyUser, collector);
-            } else {
-                SendMailNotification(surveyUser, collector);
-            }
-        }
-
-        private static void SendPushNotification(SurveyUser surveyUser, SurveyCollector surveyCollector) {
-            string sScreenID = PXSiteMap.Provider
-                .FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
-            Guid noteID = surveyCollector.NoteID.GetValueOrDefault();
-            if (surveyUser.UserID != null) {
-                PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                PXTrace.WriteInformation("NoteID " + noteID.ToString());
-                PXTrace.WriteInformation("ScreenID " + sScreenID);
-                List<Guid> userIds = new List<Guid> { surveyUser.UserID.GetValueOrDefault() };
-                pushNotificationSender.SendNotificationAsync(
-                    userIds: userIds,
-                    title: Messages.PushNotificationTitleSurvey,
-                    text: $"{Messages.PushNotificationMessageBodySurvey} # {surveyCollector.Name}.",
-                    link: (sScreenID, noteID),
-                    cancellation: CancellationToken.None);
-            }
-        }
-
-        private static void SendMailNotification(SurveyUser surveyUser, SurveyCollector collector) {
-            // Acuminator disable once PX1050 HardcodedStringInLocalizationMethod [Justification]
-            throw new PXException("Don't know how to send using email");
-            //Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(context.MessageGraph, notificationID);
-            //var sent = false;
-            //var sError = "Failed to send E-mail.";
-            //try {
-            //    var message = collector.Rendered;
-            //    var sender = TemplateNotificationGenerator.Create(message, notification);
-            //    sender.LinkToEntity = true;
-            //    sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
-            //    sender.RefNoteID = collector.NoteID;
-            //    bool asAttachment = false;
-            //    if (asAttachment) {
-            //        if (!string.IsNullOrEmpty(message)) {
-            //            sender.AddAttachment("HeaderContent.json", Encoding.UTF8.GetBytes(message));
-            //        }
-            //    } else {
-            //        sender.Body = message;
-            //        //sender.BodyFormat = PX.Objects.CS.NotificationFormat.Html;
-            //    }
-            //    //foreach (Guid? attachment in (IEnumerable<Guid?>)attachments) {
-            //    //    if (attachment.HasValue)
-            //    //        notificationGenerator.AddAttachmentLink(attachment.Value);
-            //    //}
-            //    sent |= sender.Send().Any();
-            //} catch (Exception ex) {
-            //    sent = false;
-            //    sError = ex.Message;
-            //}
         }
 
         private static bool SetExpiredSurveys(SurveyMaint graph, Survey survey, SurveyFilter filter) {
@@ -347,19 +293,19 @@ namespace PX.Survey.Ext {
     [PXCacheName(Messages.CacheNames.SurveyFilter)]
     public class SurveyFilter : IBqlTable {
 
-        #region SurveyAction
-        public abstract class surveyAction : IBqlField { }
+        #region Action
+        public abstract class action : BqlString.Field<action> { }
         [PXString(1, IsUnicode = false, IsFixed = true)]
-        [PXDefault(Ext.SurveyAction.DefaultAction, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUnboundDefault(SurveyAction.DefaultAction)]
         [PXUIField(DisplayName = "Action")]
         [SurveyAction.List]
-        public virtual string SurveyAction { get; set; }
+        public virtual string Action { get; set; }
         #endregion
 
         #region SurveyID
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [PXString]
-        [PXUnboundDefault]
+        //[PXUnboundDefault]
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
                     typeof(Survey.surveyID),
@@ -373,11 +319,18 @@ namespace PX.Survey.Ext {
         #region DurationTimeSpan
         public abstract class durationTimeSpan : BqlInt.Field<durationTimeSpan> { }
         [PXDBTimeSpanLongExt(Format = TimeSpanFormatType.DaysHoursMinites)]
-        [PXDefault(0)]
+        //[PXDefault(0)]
         [PXUIField(DisplayName = "Expire After")]
         public virtual int? DurationTimeSpan { get; set; }
         #endregion
 
+        #region ShowInactive
+        public abstract class showInactive : BqlBool.Field<showInactive> { }
+        [PXBool]
+        [PXUnboundDefault(false)]
+        [PXUIField(DisplayName = "Show Inactive")]
+        public virtual bool? ShowInactive { get; set; }
+        #endregion
     }
     #endregion
 }
