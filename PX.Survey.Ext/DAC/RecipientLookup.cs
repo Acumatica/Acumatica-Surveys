@@ -42,16 +42,16 @@ namespace PX.Survey.Ext {
         }
 
         private void InitHandlers(PXGraph graph) {
-            graph.RowSelected.AddHandler(typeof(RowFilter), new PXRowSelected(OnFilterSelected));
+            //graph.RowSelected.AddHandler(typeof(RowFilter), new PXRowSelected(OnFilterSelected));
             graph.RowSelected.AddHandler(typeof(RowToSelect), new PXRowSelected(OnRowSelected));
-            graph.FieldUpdated.AddHandler(typeof(RowToSelect), Selected, new PXFieldUpdated(OnSelectedUpdated));
+            //graph.FieldUpdated.AddHandler(typeof(RowToSelect), Selected, new PXFieldUpdated(OnSelectedUpdated));
         }
 
-        protected virtual void OnFilterSelected(PXCache sender, PXRowSelectedEventArgs e) {
-            if (e.Row is RowFilter row) {
-                //PXUIFieldAttribute.SetVisible(sender.Graph.Caches[typeof(RowToSelect)], "siteID", !row.SiteID.HasValue);
-            }
-        }
+        //protected virtual void OnFilterSelected(PXCache sender, PXRowSelectedEventArgs e) {
+        //    if (e.Row is RowFilter row) {
+        //        //PXUIFieldAttribute.SetVisible(sender.Graph.Caches[typeof(RowToSelect)], "siteID", !row.SiteID.HasValue);
+        //    }
+        //}
 
         protected virtual void OnRowSelected(PXCache sender, PXRowSelectedEventArgs e) {
             PXUIFieldAttribute.SetEnabled(sender, e.Row, false);
@@ -59,23 +59,23 @@ namespace PX.Survey.Ext {
             //PXUIFieldAttribute.SetEnabled(sender, e.Row, QtySelected, true);
         }
 
-        protected virtual void OnSelectedUpdated(PXCache sender, PXFieldUpdatedEventArgs e) {
-            var value = (bool?)sender.GetValue(e.Row, Selected);
-            //var nullable = (decimal?)sender.GetValue(e.Row, QtySelected);
-            bool? nullable1 = value;
-            if (!(nullable1.GetValueOrDefault() & nullable1.HasValue)) {
-                //sender.SetValue(e.Row, QtySelected, decimal.Zero);
-            } else {
-                //if (nullable.HasValue) {
-                //    decimal? nullable2 = nullable;
-                //    decimal num = new decimal();
-                //    if (!((nullable2.GetValueOrDefault() == num) & nullable2.HasValue)) {
-                //        return;
-                //    }
-                //}
-                //sender.SetValue(e.Row, QtySelected, decimal.One);
-            }
-        }
+        //protected virtual void OnSelectedUpdated(PXCache sender, PXFieldUpdatedEventArgs e) {
+        //    var value = (bool?)sender.GetValue(e.Row, Selected);
+        //    //var nullable = (decimal?)sender.GetValue(e.Row, QtySelected);
+        //    bool? nullable1 = value;
+        //    if (!(nullable1.GetValueOrDefault() & nullable1.HasValue)) {
+        //        //sender.SetValue(e.Row, QtySelected, decimal.Zero);
+        //    } else {
+        //        //if (nullable.HasValue) {
+        //        //    decimal? nullable2 = nullable;
+        //        //    decimal num = new decimal();
+        //        //    if (!((nullable2.GetValueOrDefault() == num) & nullable2.HasValue)) {
+        //        //        return;
+        //        //    }
+        //        //}
+        //        //sender.SetValue(e.Row, QtySelected, decimal.One);
+        //    }
+        //}
 
         protected virtual IEnumerable viewHandler() {
             if (intView == null) {
