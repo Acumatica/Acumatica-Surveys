@@ -22,7 +22,7 @@ namespace PX.Survey.Ext {
         public virtual bool? Selected { get; set; }
         #endregion
 
-        [PXDBInt(BqlField = typeof(Contact.contactID))]
+        [PXDBInt(IsKey = true, BqlField = typeof(Contact.contactID))]
         [PXUIField(DisplayName = "Contact ID", Visibility = PXUIVisibility.Invisible)]
         public virtual int? ContactID { get; set; }
 
