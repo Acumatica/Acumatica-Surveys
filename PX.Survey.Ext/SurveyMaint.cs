@@ -455,12 +455,22 @@ namespace PX.Survey.Ext {
             var allCollectors = Collectors.Select().FirstTableItems;
             bool errorOccurred = false;
             foreach (var collector in allCollectors) {
+                if (collector.Status != CollectorStatus.Completed) {
+                    continue;
+                }
+                // TODO Check if answers are missing
+                // Handle missing answers
+                //if (collectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
+                //    collector.Status = CollectorDataStatus.Processed;
+                //    Collectors.Update(collector);
+                //}
                 Collectors.Current = collector;
                 var token = collector.Token;
                 var (_, user, _) = SurveyUtils.GetSurveyAndUser(this, token);
                 var collectorDatas = CollectorDataRecords.Select().FirstTableItems;
                 foreach (var collData in collectorDatas) {
-                    if (collData.Status == CollectorDataStatus.Processed) {
+                    if (collData.Status == CollectorDataStatus.Processed ||
+                        collData.Status == CollectorDataStatus.Ignored) {
                         continue;
                     }
                     try {
