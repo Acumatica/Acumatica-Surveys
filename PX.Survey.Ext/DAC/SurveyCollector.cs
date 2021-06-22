@@ -51,18 +51,6 @@ namespace PX.Survey.Ext {
         public virtual int? CollectorID { get; set; }
         #endregion
 
-        #region Name
-        public abstract class name : BqlString.Field<name> { }
-        /// <summary>
-        /// Name of this Collector record.
-        /// </summary>
-        [PXDBString(60, IsUnicode = true)]
-        //[PXDefault]
-        [PXFormula(typeof(SmartJoin<Dash, Survey.surveyID, displayName>), Persistent = true)]
-        [PXUIField(DisplayName = "Name", Enabled = false)]
-        public virtual string Name { get; set; }
-        #endregion
-
         /// <summary>
         /// Identifies the specific Survey this collector record belongs too.
         /// </summary>
@@ -109,9 +97,7 @@ namespace PX.Survey.Ext {
         public abstract class contactID : BqlInt.Field<contactID> { }
         [PXInt]
         [PXUIField(DisplayName = "Recipient Name")]
-        [PXSelector(typeof(Search<Contact.contactID,
-                            Where<Contact.isActive, Equal<True>, And<Contact.userID, IsNotNull>>>),
-                    DescriptionField = typeof(Contact.displayName))]
+        [PXSelector(typeof(Search<Contact.contactID>), DescriptionField = typeof(Contact.displayName), ValidateValue = false)]
         [PXFormula(typeof(Selector<userLineNbr, SurveyUser.contactID>))]
         public virtual int? ContactID { get; set; }
         #endregion
@@ -146,6 +132,18 @@ namespace PX.Survey.Ext {
         [PXFormula(typeof(Selector<contactID, Contact.displayName>))]
         [PXUIField(DisplayName = "Display Name", Enabled = false)]
         public virtual string DisplayName { get; set; }
+        #endregion
+
+        #region Name
+        public abstract class name : BqlString.Field<name> { }
+        /// <summary>
+        /// Name of this Collector record.
+        /// </summary>
+        [PXDBString(60, IsUnicode = true)]
+        //[PXDefault]
+        [PXFormula(typeof(SmartJoin<Dash, Survey.surveyID, displayName>), Persistent = true)]
+        [PXUIField(DisplayName = "Name", IsReadOnly = true)]
+        public virtual string Name { get; set; }
         #endregion
 
         //public abstract class isEncrypted : BqlBool.Field<isEncrypted> { }
