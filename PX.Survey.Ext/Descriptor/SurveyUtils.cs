@@ -142,6 +142,7 @@ namespace PX.Survey.Ext {
         public static (Survey survey, SurveyUser user, SurveyCollector collector) GetSurveyAndUser(SurveyMaint graph, string token) {
             SurveyCollector collector;
             Survey survey;
+            SurveyUser user;
             token = token?.Trim();
             if (token.Length <= 15) {
                 // Anonymous survey, token is SurveyID
@@ -151,12 +152,13 @@ namespace PX.Survey.Ext {
                 if (contactID == null) {
                     throw new PXException("An Anonnymous user may be setup in the Survey Preferences");
                 }
-                var anonUser = graph.InsertOrFindUser(survey, contactID);
-                collector = graph.DoInsertCollector(survey, anonUser, null);
+                user = graph.InsertOrFindUser(survey, contactID);
+                collector = graph.DoInsertCollector(survey, user, null);
                 token = collector.Token;
             } else {
                 collector = SurveyCollector.UK.Find(graph, token);
                 survey = Survey.PK.Find(graph, collector.SurveyID);
+                user = SurveyUser.PK.Find(graph, survey.SurveyID, collector.UserLineNbr);
             }
             if (collector == null) {
                 throw new PXException(Messages.TokenNoFound, token);
@@ -164,7 +166,6 @@ namespace PX.Survey.Ext {
             if (survey == null) {
                 throw new PXException(Messages.TokenNoSurvey, token);
             }
-            SurveyUser user = SurveyUser.PK.Find(graph, survey.SurveyID, collector.UserLineNbr);
             if (user == null) {
                 throw new PXException(Messages.TokenNoUser, token);
             }
