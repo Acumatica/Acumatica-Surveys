@@ -137,6 +137,16 @@ namespace PX.Survey.Ext {
         public virtual int? ControlType { get; set; }
         #endregion
 
+        #region Required
+        public abstract class required : BqlBool.Field<required> { }
+        [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Required", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXUIEnabled(typeof(Where<isQuestion, Equal<True>, Or<isComment, Equal<True>>>))]
+        [PXUIRequired(typeof(Where<isQuestion, Equal<True>>))]
+        public virtual bool? Required { get; set; }
+        #endregion
+
         #region ReverseOrder
         public abstract class reverseOrder : BqlBool.Field<reverseOrder> { }
         [PXDBBool]
