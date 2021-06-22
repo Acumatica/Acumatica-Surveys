@@ -1,0 +1,8 @@
+<div class="px-5">
+    <h1 class="title has-text-centered is-2">{{Message}}</h1>
+</div>
+<footer class="footer has-background-white">
+    <div class="content has-text-centered">
+        <button type="submit" class="button is-info is-medium" name="action" value="start">Start Over</button>
+    </div>
+</footer>

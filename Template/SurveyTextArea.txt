@@ -1,0 +1,10 @@
+{{ PNbr = SurveyDetail.PageNbr }}
+{{ QNbr = SurveyDetail.QuestionNbr }}
+{{ LNbr = SurveyDetail.LineNbr }}
+{{ UniqueID = PNbr + '.' + QNbr + '.' + LNbr }}
+<div class="field mb-5">
+                        <label class="label" id="control.textarea.label.{{UniqueID}}" for="control.textarea.{{UniqueID}}">{{QNbr}}. {{SurveyDetail.Description}}</label>
+                        <div class="control">
+                            <textarea class="textarea" maxlength="{{SurveyDetail.MaxLength}}" placeholder="" rows="{{SurveyDetail.NbrOfRows}}" id="control.textarea.{{UniqueID}}" name="{{UniqueID}}" aria-labelledby="control.textarea.label.{{UniqueID}}" {{ if SurveyDetail.Required }}{{~ required="required" ~}}{{ end }}></textarea>
+                        </div>
+                    </div>

@@ -1,0 +1,12 @@
+<header class="hero">
+    <a class="px-5" target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="image" style="width: 250px" /></a>
+    <div class="hero-body py-4 mt-4 px-0">
+        <h1 class="title has-background-info-dark has-text-white px-4 py-4 mb-4">{{Survey.Name}}</h1>
+        <h2 class="subtitle has-background-info has-text-white px-4 py-2 mb-2"></h2>
+        <div class="columns is-mobile my-4">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <progress class="progress progress-text is-primary" value="{{CurrentPageNbr}}" max="{{Nbpages}}"></progress>
+            </div>
+        </div>
+    </div>
+</header>

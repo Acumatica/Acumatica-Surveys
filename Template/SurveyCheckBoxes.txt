@@ -1,0 +1,16 @@
+{{ PNbr = SurveyDetail.PageNbr }}
+{{ QNbr = SurveyDetail.QuestionNbr }}
+{{ LNbr = SurveyDetail.LineNbr }}
+<div class="px-5">
+                    <div class="field mb-5">
+                        <label class="label">* {{QNbr}}. {{SurveyDetail.Description}}</label>
+{{ for QDet in Question.Details }}
+    {{ IDNbr = QDet.ValueID }}
+    {{ UniqueID = PNbr + '.' + QNbr + '.' + LNbr + '.' + IDNbr }}
+                        <div class="field">
+                            <input type="checkbox" class="is-checkbox is-black" id="control.checkbox.{{UniqueID}}" name="{{PNbr}}.{{QNbr}}.{{LNbr}}" aria-labelledby="control.checkbox.label.{{UniqueID}}" value="{{IDNbr}}" {{ if SurveyDetail.Required }}{{~ required="required" ~}}" {{ end }}/>
+                            <label id="control.checkbox.label.{{UniqueID}}" for="control.checkbox.{{UniqueID}}">{{IDNbr}} = {{QDet.Description}}</label>
+                        </div>
+{{ end # for }}
+                    </div>
+                </div>

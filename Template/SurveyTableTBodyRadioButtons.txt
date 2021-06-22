@@ -1,0 +1,17 @@
+{{ PNbr = SurveyDetail.PageNbr }}
+{{ QNbr = SurveyDetail.QuestionNbr }}
+{{ LNbr = SurveyDetail.LineNbr }}
+<div class="field mb-5">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered is-2" style="max-width: 100px; width: 15%"><label class="radio" id="control.radio.label.{{UniqueID}}" for="control.radio.{{UniqueID}}">{{QNbr}}. {{SurveyDetail.Description}}</label></td>
+{{ for QDet in Question.Details }}
+    {{ IDNbr = QDet.ValueID }}
+    {{ UniqueID = PNbr + '.' + QNbr + '.' + LNbr + '.' + IDNbr }}
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="control.radio.{{UniqueID}}" name="{{PNbr}}.{{QNbr}}.{{LNbr}}" aria-labelledby="control.radio.label.{{UniqueID}}" value="{{IDNbr}}" {{ if SurveyDetail.Required }}{{~ required="required" ~}}{{ end }}/></td>
+{{ end # for }}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>

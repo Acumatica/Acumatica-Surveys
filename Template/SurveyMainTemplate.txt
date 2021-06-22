@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{{Survey.Title}}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://gitcdn.link/cdn/Wikiki/bulma-checkradio/38c95578f465f4c3805f578490925f337b87404d/dist/css/bulma-checkradio.min.css" />
+        <style></style>
+    </head>
+    <body class="has-background-light" style="height: 100%; min-height: 100vh">
+        <section class="section container is-max-desktop py-5">
+            <form class="is-max-desktop has-background-white px-0 py-5 container is-fluid" name="{{Survey.FormName}}" action="{{SurveyURL}}" method="post" enctype="application/x-www-form-urlencoded">
+                {{InnerContent}}
+            </form>
+        </section>
+    </body>
+</html>

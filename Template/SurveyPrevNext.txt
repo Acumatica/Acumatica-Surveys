@@ -1,0 +1,21 @@
+<footer class="footer has-background-white pb-4">
+    <div id="buttons" class="content has-text-centered">
+        {{if !IsFirstPage #show Previous button}}
+        <button type="submit" class="button is-info is-medium" name="action" value="prev">Previous</button>
+        {{end}}
+        {{if NextIsLast #show End button}}
+        <button type="submit" class="button is-info is-medium" name="action" value="end">End</button>
+        {{else if !IsLastPage #show Next button}}
+        <button type="submit" class="button is-info is-medium" name="action" value="next">Next</button>
+        {{end}}
+    </div>
+    <hr class="mt-1" />
+    <div class="content level has-text-centered mt-4">
+        <div class="level-item has-text-centered">
+            <p class="heading">Powered by</p>
+            <p class="title ml-2">
+                <a target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="mt-1" style="width: 100px" /></a>
+            </p>
+        </div>
+    </div>
+</footer>
