@@ -450,8 +450,7 @@ namespace PX.Survey.Ext {
                         continue;
                     }
                     try {
-                        DoProcessAnswers(survey, collData, collector);
-                        collData.Status = CollectorDataStatus.Processed;
+                        collData.Status = DoProcessAnswers(survey, collData, collector);
                         collData.Message = null;
                     } catch (Exception ex) {
                         collData.Status = CollectorDataStatus.Error;
@@ -470,7 +469,7 @@ namespace PX.Survey.Ext {
             return errorOccurred;
         }
 
-        private void DoProcessAnswers(Survey survey, SurveyCollectorData collDataRec, SurveyCollector collector) {
+        private string DoProcessAnswers(Survey survey, SurveyCollectorData collDataRec, SurveyCollector collector) {
             var answerData = collDataRec.Payload;
             if (string.IsNullOrEmpty(answerData)) {
                 throw new PXException(Messages.AnswersNotfound);
@@ -479,6 +478,7 @@ namespace PX.Survey.Ext {
             var dict = nvc.AllKeys.ToDictionary(k => k, k => nvc[k]);
             //{{PageNbr}}.{{QuestionNbr}}.{{LineNbr}}=Value&...
             //var answers = new List<CSAnswers>();
+            var status = CollectorDataStatus.Ignored;
             foreach (var kvp in dict) {
                 var answerKey = kvp.Key;
                 var matches = SurveyUtils.ANSWER_CODE.Matches(answerKey);
@@ -518,11 +518,13 @@ namespace PX.Survey.Ext {
                         } else {
                             UpsertAnswer(survey, collector, detail, value, false);
                         }
+                        status = CollectorDataStatus.Processed;
                     }
                 } else {
                     continue;
                 }
             }
+            return status;
         }
 
         private void UpsertAnswer(Survey survey, SurveyCollector collector, SurveyDetail detail, string value, bool searchByValue) {
