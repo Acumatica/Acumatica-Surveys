@@ -111,7 +111,7 @@ namespace PX.Survey.Ext {
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(CollectorDataStatus.New)]
         [PXUIField(DisplayName = "Status", Enabled = false)]
-        [CollectorStatus.List]
+        [CollectorDataStatus.List]
         public virtual string Status { get; set; }
         #endregion
 
