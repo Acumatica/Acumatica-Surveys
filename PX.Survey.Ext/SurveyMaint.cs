@@ -77,16 +77,21 @@ namespace PX.Survey.Ext {
             Users.Cache.ForceExceptionHandling = true;
             foreach (RecipientSelected recipient in recipients.Cache.Cached) {
                 if (recipient.Selected == true) {
-                    var surveyUser = new SurveyUser();
-                    surveyUser.Active = true;
-                    surveyUser.SurveyID = Survey.Current.SurveyID;
-                    surveyUser.ContactID = recipient.ContactID;
-                    Users.Update(surveyUser);
+                    var surveyUser = SurveyUser.UK.Find(this, Survey.Current.SurveyID, recipient.ContactID);
+                    if (surveyUser == null) {
+                        surveyUser = new SurveyUser();
+                        surveyUser.Active = true;
+                        surveyUser.SurveyID = Survey.Current.SurveyID;
+                        surveyUser.ContactID = recipient.ContactID;
+                        Users.Insert(surveyUser);
+                    }
                 }
             }
             recipients.Cache.Clear();
+            Users.View.RequestRefresh();
             return adapter.Get();
         }
+
         #endregion
 
         public PXAction<Survey> checkCreateParams;
