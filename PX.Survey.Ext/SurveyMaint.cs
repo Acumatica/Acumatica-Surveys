@@ -403,10 +403,24 @@ namespace PX.Survey.Ext {
             var generator = new SurveyGenerator();
             var activePages = ActivePages.Select().FirstTableItems;
             var firstPage = activePages.Min(det => det.PageNbr);
-            var url = generator.GetUrl(collector.Token, firstPage.Value);
+            var token = (collector != null) ? collector.Token : survey.SurveyID;
+            var url = generator.GetUrl(token, firstPage.Value);
             throw new PXRedirectToUrlException(url, "Survey") {
                 Mode = PXBaseRedirectException.WindowMode.NewWindow
             };
+        }
+
+        public PXAction<Survey> redirectToAnonymousSurvey;
+        [PXUIField(DisplayName = "Run Anonymous Survey", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXLookupButton]
+        public virtual IEnumerable RedirectToAnonymousSurvey(PXAdapter adapter) {
+            if (Survey.Current != null && Collectors.Current != null) {
+                Save.Press();
+                var graph = CreateInstance<SurveyMaint>();
+                var survey = PXCache<Survey>.CreateCopy(Survey.Current);
+                graph.DoRedirectToSurvey(survey, null);
+            }
+            return adapter.Get();
         }
 
         public PXAction<Survey> ViewEntity;

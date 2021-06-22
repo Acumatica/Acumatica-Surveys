@@ -2,6 +2,7 @@
 using PX.Data.Webhooks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -35,7 +36,7 @@ namespace PX.Survey.Ext.WebHook {
                         pageNbr = SurveyUtils.GetNextOrPrevPageNbr(request, pageNbr);
                     }
                     var (content, newToken) = GetSurveyPage(collectorToken, pageNbr);
-                    if (newToken != collectorToken) {
+                    if (newToken != null && newToken != collectorToken) {
                         return new RedirectResult(request.RequestUri, newToken, "Was anonymous");
                     } else {
                         return new HtmlActionResult(content, HttpStatusCode.OK);
