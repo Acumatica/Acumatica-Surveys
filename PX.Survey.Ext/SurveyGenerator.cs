@@ -110,7 +110,7 @@ namespace PX.Survey.Ext {
 
         public string GetUrl(string token, int pageNbr) {
             var (survey, user, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
-            return GetUrl(survey, user, token, pageNbr);
+            return GetUrl(survey, user, collector.Token, pageNbr);
         }
 
         public string GetUrl(Survey survey, SurveyUser user, string token, int pageNbr) {
