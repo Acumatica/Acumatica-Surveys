@@ -767,19 +767,25 @@ namespace PX.Survey.Ext {
             e.Cache.SetDefaultExt<SurveyCollector.token>(e.Row);
         }
 
-
-        protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.name> e) {
-            //var row = e.Row;
-            //if (row == null || row.SurveyID == null) {
-            //    return;
-            //}
-            if (Survey.Current == null) {
-                return;
-            }
+        public void _(Events.RowSelected<SurveyCollector> e) {
             var survey = Survey.Current;
-            e.NewValue = $"{survey.SurveyID}-{PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
-            e.Cancel = true;
+            var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
+            PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
+            PXUIFieldAttribute.SetVisible<SurveyCollector.name>(e.Cache, e.Row, !showRefNote);
         }
+
+        //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.name> e) {
+        //    //var row = e.Row;
+        //    //if (row == null || row.SurveyID == null) {
+        //    //    return;
+        //    //}
+        //    if (Survey.Current == null) {
+        //        return;
+        //    }
+        //    var survey = Survey.Current;
+        //    e.NewValue = $"{survey.SurveyID}-{PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
+        //    e.Cancel = true;
+        //}
 
         //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
         //    var row = e.Row;
