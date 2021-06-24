@@ -56,6 +56,7 @@ namespace PX.Survey.Ext {
         protected virtual void OnRowSelected(PXCache sender, PXRowSelectedEventArgs e) {
             PXUIFieldAttribute.SetEnabled(sender, e.Row, false);
             PXUIFieldAttribute.SetEnabled(sender, e.Row, Selected, true);
+            PXUIFieldAttribute.SetEnabled(sender, e.Row, nameof(RecipientSelected.ContactType), true);
             //PXUIFieldAttribute.SetEnabled(sender, e.Row, QtySelected, true);
         }
 
