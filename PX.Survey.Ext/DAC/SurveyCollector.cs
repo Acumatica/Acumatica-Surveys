@@ -134,17 +134,18 @@ namespace PX.Survey.Ext {
         public virtual string DisplayName { get; set; }
         #endregion
 
-        #region Name
-        public abstract class name : BqlString.Field<name> { }
-        /// <summary>
-        /// Name of this Collector record.
-        /// </summary>
-        [PXDBString(60, IsUnicode = true)]
-        //[PXDefault]
-        [PXFormula(typeof(SmartJoin<Dash, Survey.surveyID, displayName>), Persistent = true)]
-        [PXUIField(DisplayName = "Name", IsReadOnly = true)]
-        public virtual string Name { get; set; }
-        #endregion
+        //#region Name
+        //public abstract class name : BqlString.Field<name> { }
+        ///// <summary>
+        ///// Name of this Collector record.
+        ///// </summary>
+        //[PXDBString(60, IsUnicode = true)]
+        ////[PXDefault]
+        //[PXFormula(typeof(SmartJoin<Dash, Survey.surveyID, displayName>), Persistent = true)]
+        //[PXUIField(DisplayName = "Name", IsReadOnly = true)]
+        ////[PXUIVisible(typeof(Where<Survey.entityType, IsNull>))]
+        //public virtual string Name { get; set; }
+        //#endregion
 
         //public abstract class isEncrypted : BqlBool.Field<isEncrypted> { }
         //[PXDBBool]
