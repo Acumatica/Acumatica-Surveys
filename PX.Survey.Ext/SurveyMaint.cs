@@ -162,7 +162,7 @@ namespace PX.Survey.Ext {
 
         private void InsertMissing(Survey survey, int series, int prevSeries, string templateType, int? templateID, int offset, string attrID = null) {
             var isSingle = survey.Layout == SurveyLayout.SinglePage;
-            var pageNumber = isSingle ? 1 : series;
+            var pageNumber = isSingle ? ((templateType == SUTemplateType.Footer) ? 2 : 1) : series;
             HandleOffsets(ref offset, isSingle, series, prevSeries);
             int? questionNbr;
             // Based on a) Question comes first, b) 1 Question, 1 Comment per page
