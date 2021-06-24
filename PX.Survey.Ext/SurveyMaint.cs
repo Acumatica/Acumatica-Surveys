@@ -311,7 +311,7 @@ namespace PX.Survey.Ext {
         }
 
         public PXAction<Survey> generateSample;
-        [PXUIField(DisplayName = "Generate Sample", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = "Generate HTML", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
         public virtual IEnumerable GenerateSample(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
