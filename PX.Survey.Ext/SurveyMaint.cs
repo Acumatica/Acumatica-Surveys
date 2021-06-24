@@ -702,10 +702,10 @@ namespace PX.Survey.Ext {
                     e.NewValue = "WELCOME YOU";
                     break;
                 case SUTemplateType.QuestionPage:
-                    e.NewValue = "ASK YOU";
+                    e.NewValue = "ASK YOU " + row.QuestionNbr;
                     break;
                 case SUTemplateType.CommentPage:
-                    e.NewValue = "TELL ME MORE";
+                    e.NewValue = "TELL ME MORE " + row.QuestionNbr;
                     break;
                 case SUTemplateType.ContentPage:
                     e.NewValue = "SHOW YOU";
