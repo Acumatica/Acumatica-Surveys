@@ -822,6 +822,36 @@ namespace PX.Survey.Ext {
         //    e.Cancel = true;
         //}
 
+        protected virtual void _(Events.RowDeleted<SurveyCollectorData> e) {
+            var row = e.Row;
+            if (row == null) {
+                return;
+            }
+            var answers = GetAnswers(row);
+            foreach (var answer in answers) {
+                Answers.Delete(answer);
+            }
+            var coll = GetCollector(row);
+            if (coll != null) {
+                coll.Status = CollectorStatus.Deleted;
+                Collectors.Update(coll);
+            }
+        }
+
+        private PXResultset<SurveyAnswer> GetAnswers(SurveyCollectorData row) {
+            var answers = PXSelect<SurveyAnswer,
+                Where<SurveyAnswer.collectorID, Equal<Required<SurveyCollector.collectorID>>,
+                And<SurveyAnswer.surveyID, Equal<Required<SurveyAnswer.surveyID>>>>>.Select(this, row.CollectorID, row.SurveyID);
+            return answers;
+        }
+
+        private SurveyCollector GetCollector(SurveyCollectorData row) {
+            SurveyCollector coll = PXSelect<SurveyCollector,
+                Where<SurveyCollector.token, Equal<Required<SurveyCollector.token>>,
+                And<SurveyCollector.surveyID, Equal<Required<SurveyCollectorData.surveyID>>>>>.Select(this, row.Token, row.SurveyID);
+            return coll;
+        }
+
         protected virtual void _(Events.FieldSelecting<SurveyAnswer, SurveyAnswer.value> e) {
             var row = e.Row;
             if (row == null || row.AttributeID == null) {
