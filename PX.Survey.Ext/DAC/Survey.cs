@@ -99,7 +99,7 @@ namespace PX.Survey.Ext {
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBInt]
         [PXUIField(DisplayName = "Template")]
-        [PXDefault]
+        [PXDefault(typeof(SurveySetup.templateID))]
         [PXForeignReference(typeof(FK.SUSurveyTemplate)), ]
         [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), 
             DescriptionField = typeof(SurveyTemplate.description),
