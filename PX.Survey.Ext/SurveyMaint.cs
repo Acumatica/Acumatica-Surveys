@@ -797,21 +797,7 @@ namespace PX.Survey.Ext {
             var survey = Survey.Current;
             var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
             PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
-            PXUIFieldAttribute.SetVisible<SurveyCollector.name>(e.Cache, e.Row, !showRefNote);
         }
-
-        //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.name> e) {
-        //    //var row = e.Row;
-        //    //if (row == null || row.SurveyID == null) {
-        //    //    return;
-        //    //}
-        //    if (Survey.Current == null) {
-        //        return;
-        //    }
-        //    var survey = Survey.Current;
-        //    e.NewValue = $"{survey.SurveyID}-{PXTimeZoneInfo.Now:yyyy-MM-dd hh:mm:ss}";
-        //    e.Cancel = true;
-        //}
 
         //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
         //    var row = e.Row;
@@ -1045,22 +1031,5 @@ namespace PX.Survey.Ext {
             public virtual int? NbQuestions { get; set; }
             #endregion
         }
-
-        //[PXMergeAttributes(Method = MergeMethod.Append)]
-        //[PXFormula(typeof(MobileAppDeviceOS<Contact.userID>))]
-        //[PXDependsOnFields(typeof(Contact.contactID), typeof(Contact.userID))]
-        //[PXCustomizeBaseAttribute(typeof(PXUIFieldAttribute), "Visibility", PXUIVisibility.SelectorVisible)]
-        //protected virtual void Contact_UsrMobileAppDeviceOS_CacheAttached(PXCache sender) { }
-
-        //[PXMergeAttributes(Method = MergeMethod.Append)]
-        //[PXFormula(typeof(IIf<Where<ContactSurveyExt.usrMobileAppDeviceOS, IsNull>, False, True>))]
-        //[PXDependsOnFields(typeof(ContactSurveyExt.usrMobileAppDeviceOS))]
-        //[PXCustomizeBaseAttribute(typeof(PXUIFieldAttribute), "Visibility", PXUIVisibility.SelectorVisible)]
-        //protected virtual void Contact_UsrUsingMobileApp_CacheAttached(PXCache sender) { }
-
-        //[PXMergeAttributes]
-        //[PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<CSAttributeGroup.entityClassID>>>>), LeaveChildren = true)]
-        //[PXDBDefault(typeof(Survey.surveyIDStringID))]
-        //protected virtual void _(Events.CacheAttached<CSAttributeGroup.entityClassID> e) { }
     }
 }
