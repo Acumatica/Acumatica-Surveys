@@ -18,8 +18,8 @@ namespace PX.Survey.Ext {
         private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
         public PXSelect<SurveyCollector> Collector;
-        public PXSelect<Survey, Where<Survey.surveyID, Equal<Current<SurveyCollector.surveyID>>>> Survey;
-        public PXSelect<SurveyUser, Where<SurveyUser.lineNbr, Equal<Current<SurveyCollector.userLineNbr>>>> User;
+        public PXSelect<Survey, Where<Survey.surveyID, Equal<Current<SurveyCollector.surveyID>>>> CurrentSurvey;
+        public PXSelect<SurveyUser, Where<SurveyUser.lineNbr, Equal<Current<SurveyCollector.userLineNbr>>>> CurrentUser;
 
         public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.collectorID.IsEqual<SurveyCollector.collectorID.FromCurrent>>.View CollectedAnswers;
         public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.status.IsNotEqual<CollectorDataStatus.processed>>.View UnprocessedCollectedAnswers;
@@ -52,7 +52,7 @@ namespace PX.Survey.Ext {
         }
 
         public bool DoSendNewNotification(SurveyCollector collector) {
-            var survey = Survey.Current;
+            var survey = CurrentSurvey.Current;
             Collector.Current = collector;
             var errorOccurred = false;
             try {
@@ -83,7 +83,7 @@ namespace PX.Survey.Ext {
         }
 
         public bool DoSendReminder(SurveyCollector collector, int? delay) {
-            var survey = Survey.Current;
+            var survey = CurrentSurvey.Current;
             Collector.Current = collector;
             var errorOccurred = false;
             try {
@@ -104,7 +104,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendNotification(SurveyCollector collector, int? notificationID) {
-            SurveyUser surveyUser = User.Current;
+            SurveyUser surveyUser = CurrentUser.Current;
             if (surveyUser.UsingMobileApp == true) {
                 SendPushNotification(surveyUser, collector);
             } else {
