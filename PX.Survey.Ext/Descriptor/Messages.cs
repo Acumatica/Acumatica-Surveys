@@ -28,6 +28,7 @@ namespace PX.Survey.Ext {
             public const string Expired = "Expired";
             public const string Error = "Error";
             public const string Processed = "Processed";
+            public const string Deleted = "Deleted";
         }
 
         public class CollectorDataStatus {
