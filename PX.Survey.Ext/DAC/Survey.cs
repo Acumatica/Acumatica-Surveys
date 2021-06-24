@@ -21,22 +21,12 @@ namespace PX.Survey.Ext {
             public static Survey FindDirty(PXGraph graph, string surveyID)
                 => PXSelect<Survey, Where<surveyID, Equal<Required<surveyID>>>>.SelectWindowed(graph, 0, 1, surveyID);
         }
-        //public class UK : PrimaryKeyOf<Survey>.By<surveyID> {
-        //    public static Survey Find(PXGraph graph, string surveyCD) => FindBy(graph, surveyCD);
-        //}
         public static class FK {
             public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<templateID> { }
-            //public class WebHook : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<webHookID> { }
         }
         #endregion
 
-        //#region OldSurveyID
-        //public abstract class oldSurveyID : BqlInt.Field<oldSurveyID> { }
-        //[PXDBIdentity]
-        //public virtual int? OldSurveyID { get; set; }
-        //#endregion
-
-        #region SurveyCD
+        #region SurveyID
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [SurveyID(IsKey = true, Required = true, Visibility = PXUIVisibility.SelectorVisible)]
         [PXReferentialIntegrityCheck]
@@ -158,6 +148,16 @@ namespace PX.Survey.Ext {
         public virtual string EntityType { get; set; }
         #endregion
 
+        #region IsSurveyInUse
+        public abstract class isSurveyInUse : BqlBool.Field<isSurveyInUse> { }
+        /// <summary>
+        /// Field to identify if Survey is in use
+        /// </summary>
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXBool]
+        public virtual bool? IsSurveyInUse { get; set; }
+        #endregion
+
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
@@ -208,16 +208,6 @@ namespace PX.Survey.Ext {
         public abstract class Tstamp : BqlByteArray.Field<Tstamp> { }
         [PXDBTimestamp]
         public virtual byte[] tstamp { get; set; }
-        #endregion
-
-        #region IsSurveyInUse
-        public abstract class isSurveyInUse : BqlBool.Field<isSurveyInUse> { }
-        /// <summary>
-        /// Field to identify if Survey is in use
-        /// </summary>
-        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXBool]
-        public virtual bool? IsSurveyInUse { get; set; }
         #endregion
     }
 }

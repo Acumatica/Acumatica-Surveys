@@ -1,15 +1,9 @@
-using CommonServiceLocator;
-using PX.Api.Mobile.PushNotifications;
-using PX.Common;
 using PX.Data;
 using PX.Data.BQL;
-using PX.Objects.CS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Web;
 
 namespace PX.Survey.Ext {
     public class SurveyProcess : PXGraph<SurveyProcess> {
@@ -305,13 +299,8 @@ namespace PX.Survey.Ext {
         #region SurveyID
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [PXString]
-        //[PXUnboundDefault]
         [PXUIField(DisplayName = "Survey ID")]
         [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
-                    typeof(Survey.surveyID),
-                    typeof(Survey.target),
-                    typeof(Survey.layout),
-                    typeof(Survey.title),
                     DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
@@ -319,7 +308,6 @@ namespace PX.Survey.Ext {
         #region DurationTimeSpan
         public abstract class durationTimeSpan : BqlInt.Field<durationTimeSpan> { }
         [PXDBTimeSpanLongExt(Format = TimeSpanFormatType.DaysHoursMinites)]
-        //[PXDefault(0)]
         [PXUIField(DisplayName = "Expire After")]
         public virtual int? DurationTimeSpan { get; set; }
         #endregion

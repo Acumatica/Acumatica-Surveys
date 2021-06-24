@@ -87,15 +87,11 @@ namespace PX.Survey.Ext.WebHook {
             if (collector.Status == CollectorStatus.New || collector.Status == CollectorStatus.Sent) {
                 collector.Status = CollectorStatus.Partially;
             }
-            //var pageNbrs = graph.GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY); // TODO Cache me
-            //var lastPageNbr = pageNbrs.Max();
             var lastPageNbr = graph.GetLastQuestionPageNumber(survey);
             if (collector.Status == CollectorStatus.Partially && pageNbr >= lastPageNbr) {
                 collector.Status = CollectorStatus.Completed;
             }
-            //if (modified) { 
             graph.Collectors.Update(collector);
-            //}
             graph.Persist();
         }
 

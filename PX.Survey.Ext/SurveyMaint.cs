@@ -503,20 +503,14 @@ namespace PX.Survey.Ext {
 
         public bool DoProcessAnswers(Survey survey) {
             Survey.Current = survey;
-            var pageNbrs = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
-            var quesNbrs = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY);
+            //var pageNbrs = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
+            //var quesNbrs = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY);
             var allCollectors = Collectors.Select().FirstTableItems;
             bool errorOccurred = false;
             foreach (var collector in allCollectors) {
                 if (collector.Status != CollectorStatus.Completed) {
                     continue;
                 }
-                // TODO Check if answers are missing
-                // Handle missing answers
-                //if (collectorDatas.All(cd => cd.Status == CollectorDataStatus.Processed)) {
-                //    collector.Status = CollectorDataStatus.Processed;
-                //    Collectors.Update(collector);
-                //}
                 Collectors.Current = collector;
                 var token = collector.Token;
                 var (_, user, _) = SurveyUtils.GetSurveyAndUser(this, token);
@@ -839,10 +833,6 @@ namespace PX.Survey.Ext {
             e.Cancel = e.NewValue != null;
         }
 
-        //protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.pageNbr> e) {
-        //    e.Cache.SetDefaultExt<SurveyDetail.description>(e.Row);
-        //}
-
         private int GetMaxPage(string surveyID) {
             var maxPage = PXSelect<SurveyDetail, Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>>>.Select(this, surveyID).FirstTableItems.Select(sd => sd.PageNbr).Max();
             return maxPage ?? 0;
@@ -952,7 +942,7 @@ namespace PX.Survey.Ext {
                         object returnState = e.ReturnState;
                         PXStringState pXStringState = stateExt;
                         isRequired = null;
-                        e.ReturnState = PXStringState.CreateInstance(returnState, new int?(pXStringState.With<PXStringState, int>((PXStringState _) => _.Length)), isRequired, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, null, null, new bool?(true), null, null);
+                        e.ReturnState = PXStringState.CreateInstance(returnState, new int?(pXStringState.With((PXStringState _) => _.Length)), isRequired, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, null, null, new bool?(true), null, null);
                     } else {
                         DateTime? nullable = null;
                         DateTime? nullable1 = nullable;

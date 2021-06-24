@@ -27,16 +27,12 @@ namespace PX.Survey.Ext {
         public PXCancel<SurveyCollector> Cancel;
         public PXSave<SurveyCollector> Save;
 
-        protected void _(Events.RowSelected<SurveyCollector> e) {
-            var row = e.Row;
-            if (row == null) {
-                return;
-            }
-            bool bEnabled = (row.Status == CollectorStatus.Sent || row.Status == CollectorStatus.New);
-            //Submit.SetEnabled(bEnabled);
-            //Answers.Cache.AllowUpdate = (bEnabled);
-            //ReOpen.SetEnabled(row.Status == CollectorStatus.Responded);
-        }
+        //protected void _(Events.RowSelected<SurveyCollector> e) {
+        //    var row = e.Row;
+        //    if (row == null) {
+        //        return;
+        //    }
+        //}
 
         public PXAction<SurveyCollector> sendNewNotification;
         [PXUIField(DisplayName = "Send New Notification", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
