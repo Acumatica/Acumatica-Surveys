@@ -27,8 +27,6 @@ namespace PX.Survey.Ext.WebHook {
                     if (string.IsNullOrEmpty(collectorToken)) {
                         throw new Exception($"The {TOKEN_PARAM} Parameter was not specified in the Query String");
                     }
-                    //            //todo: if the survey has already been awnsered or expired for this collector we need to pass back an alternate to indicate so to the 
-                    //            //      user who  clicked the link.
                     var pageNbrStr = _queryParameters.Get(PAGE_PARAM);
                     var pageNbr = SurveyUtils.GetPageNumber(pageNbrStr);
                     if (pageNbrStr != null && request.Method == HttpMethod.Post) {
