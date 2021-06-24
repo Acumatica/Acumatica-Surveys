@@ -16,7 +16,7 @@
 			<px:PXSelector runat="server" ID="edCollectorID" DataField="CollectorID"></px:PXSelector>
 			<px:PXTextEdit runat="server" ID="edCollectorName" DataField="CollectorName" AlreadyLocalized="False" Size="M"></px:PXTextEdit>
 			<px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" AutoRefresh="True" CommitChanges="True" DisplayMode="Text" ></px:PXSelector>
-			<px:PXSelector runat="server" ID="edUserid" DataField="Userid" DisplayMode="Text" ></px:PXSelector>
+			<px:PXTextEdit runat="server" ID="edUserid" DataField="Userid" DisplayMode="Text" ></px:PXTextEdit>
 			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
 		    <px:PXDateTimeEdit ID="edCollectedDate" runat="server" AlreadyLocalized="False" DataField="CollectedDate" Width="150px" />
 		    <px:PXTextEdit ID="edCollectedDatePart" runat="server" DataField="CollectedDatePart" Width="150px" Visible="false" />

@@ -2,20 +2,17 @@
 <%@ MasterType VirtualPath="~/MasterPages/FormDetail.master" %>
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" Runat="Server">
-    <px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%" TypeName="PX.Survey.Ext.SurveyProcess" PrimaryView="Filter">
-	</px:PXDataSource>
+    <px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%" TypeName="PX.Survey.Ext.SurveyProcess" PrimaryView="Filter"/>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" Runat="Server">
     <px:PXFormView ID="form" runat="server" DataSourceID="ds" Style="z-index: 100" DataMember="Filter" 
 		Width="100%" TabIndex="4500">
 		<Template>
 			<px:PXLayoutRule runat="server" StartRow="True" ControlSize="M" LabelsWidth="S"/>
-		    <px:PXSelector ID="edSurveyID" runat="server" CommitChanges="True" DataField="SurveyID" DisplayMode="Hint">
-            </px:PXSelector>
-            <px:PXDropDown ID="edSurveyAction"     runat="server" CommitChanges="True" DataField="SurveyAction" >
-            </px:PXDropDown>
-            <px:PXMaskEdit ID="edDurationTimeSpan" runat="server" CommitChanges="True" DataField="DurationTimeSpan" InputMask="### d\ays ## hrs ## mins" EmptyChar="0" Text="0" >
-            </px:PXMaskEdit>
+		    <px:PXSelector ID="edSurveyID" runat="server" CommitChanges="True" DataField="SurveyID" DisplayMode="Hint"/>
+            <px:PXDropDown ID="PXDropDown1" runat="server" CommitChanges="True" DataField="Action" />
+            <px:PXMaskEdit ID="edDurationTimeSpan" runat="server" CommitChanges="True" DataField="DurationTimeSpan" InputMask="### d\ays ## hrs ## mins" EmptyChar="0" Text="0" />
+            <px:PXCheckBox ID="chkShowInactive" runat="server" CommitChanges="True" DataField="ShowInactive" />
 		</Template>
 	</px:PXFormView>
 </asp:Content>
@@ -23,16 +20,18 @@
     <px:PXGrid ID="grid" runat="server" DataSourceID="ds" Style="z-index: 100" 
 		Width="100%" Height="150px" SkinID="Details" TabIndex="7400">
 		<Levels>
-			<px:PXGridLevel DataMember="Surveys" DataKeyNames="ContactID">
+			<px:PXGridLevel DataMember="Documents" DataKeyNames="ContactID">
 			    <Columns>
+                    <px:PXGridColumn DataField="SurveyID" Width="250px" />
 					<px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true" />
 					<px:PXGridColumn DataField="SurveyUser__UserID" Width="0px" AllowFilter="false" AllowResize="false" AllowShowHide="False" />
-					<px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" />
-                    <px:PXGridColumn DataField="SurveyUser__ContactID" DisplayMode="Text"  TextAlign="Left" Width="250px" />
+                    <px:PXGridColumn DataField="Status" type="DropDownList" TextAlign="Left" Width="250px" />
+                    <px:PXGridColumn DataField="SurveyUser__ContactID" DisplayMode="Text" TextAlign="Left" Width="250px"  MatrixMode="True" />
                     <px:PXGridColumn DataField="SurveyUser__RecipientType" />
-                    <px:PXGridColumn DataField="SurveyUser__Phone" Width="180px" />
+                    <px:PXGridColumn DataField="SurveyUser__Phone1" Width="180px" />
+                    <px:PXGridColumn DataField="SurveyUser__Phone2" Width="180px" />
                     <px:PXGridColumn DataField="SurveyUser__Email" Width="280px" />
-					<px:PXGridColumn DataField="SurveyUser__MobileAppDeviceOS" Width="200px" />					
+					<px:PXGridColumn DataField="SurveyUser__MobileDeviceOS" Width="200px" />					
                     <px:PXGridColumn DataField="SurveyUser__UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
                 </Columns>
 			</px:PXGridLevel>
