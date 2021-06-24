@@ -105,38 +105,37 @@ namespace PX.Survey.Ext {
 
         public void DoSendNotification(SurveyCollector collector, int? notificationID) {
             SurveyUser surveyUser = CurrentUser.Current;
+            Survey survey = Survey.PK.Find(this, collector.SurveyID);
             if (surveyUser.UsingMobileApp == true) {
-                SendPushNotification(surveyUser, collector);
+                SendPushNotification(survey, surveyUser, collector);
             } else {
-                SendMailNotification(surveyUser, collector, notificationID);
+                SendMailNotification(survey, surveyUser, collector, notificationID);
             }
         }
 
-        private void SendPushNotification(SurveyUser surveyUser, SurveyCollector surveyCollector) {
+        private void SendPushNotification(Survey survey, SurveyUser surveyUser, SurveyCollector surveyCollector) {
             string sScreenID = PXSiteMap.Provider
                 .FindSiteMapNodeByGraphType(typeof(SurveyCollectorMaint).FullName).ScreenID;
             Guid noteID = surveyCollector.NoteID.GetValueOrDefault();
             if (surveyUser.UserID != null) {
-                //PXTrace.WriteInformation("UserID " + surveyUser.UserID.Value);
-                //PXTrace.WriteInformation("NoteID " + noteID.ToString());
-                //PXTrace.WriteInformation("ScreenID " + sScreenID);
                 List<Guid> userIds = new List<Guid> { surveyUser.UserID.GetValueOrDefault() };
                 pushNotificationSender.SendNotificationAsync(
                     userIds: userIds,
                     title: Messages.PushNotificationTitleSurvey,
-                    text: $"{Messages.PushNotificationMessageBodySurvey} # {surveyCollector.Name}.",
+                    text: $"{Messages.PushNotificationMessageBodySurvey} # {survey.Title}.",
                     link: (sScreenID, noteID),
                     cancellation: CancellationToken.None);
             }
         }
 
-        private void SendMailNotification(SurveyUser surveyUser, SurveyCollector collector, int? notificationID) {
+        private void SendMailNotification(Survey survey, SurveyUser surveyUser, SurveyCollector collector, int? notificationID) {
             Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(this, notificationID);
             //var sent = false;
             var sender = TemplateNotificationGenerator.Create(collector, notification);
             sender.LinkToEntity = collector.NoteID != null;
             sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
             sender.RefNoteID = collector.NoteID;
+            //sender.Subject = 
             //bool asAttachment = false;
             //if (asAttachment) {
             //if (!string.IsNullOrEmpty(message)) {
