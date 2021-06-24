@@ -348,6 +348,13 @@ namespace PX.Survey.Ext {
             return inserted;
         }
 
+        public int GetLastQuestionPageNumber(Survey survey) {
+            var allActiveQuestions = GetDetailInfo(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY, SurveyUtils.GET_QUES_AND_PAGE_NBR);
+            var lastQuestionNbr = allActiveQuestions.Max(tu => tu.Item1);
+            var lastPageNbr = allActiveQuestions.First(tu => tu.Item1 == lastQuestionNbr).Item2;
+            return lastPageNbr;
+        }
+
         public int[] GetPageNumbers(Survey survey, Func<SurveyDetail, bool> predicate) {
             return GetDetailInfo(survey, predicate, SurveyUtils.GET_PAGE_NBR);
         }
