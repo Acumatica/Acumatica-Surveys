@@ -629,9 +629,20 @@ namespace PX.Survey.Ext {
             if (row == null) { return; }
             bool unlockedSurvey = !(row.IsSurveyInUse == true);
             e.Cache.AllowDelete = unlockedSurvey;
+            var hasPages = ActivePages.Select().Any();
+            redirectToSurvey.SetEnabled(hasPages);
+            redirectToAnonymousSurvey.SetEnabled(hasPages);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
+            var anon = row.Target == SurveyTarget.Anonymous;
+            if (anon) {
+                Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
+                insertSampleCollector.SetEnabled(false);
+                insertSampleCollector.SetVisible(false);
+                redirectToSurvey.SetEnabled(false);
+                redirectToSurvey.SetVisible(false);
+            }
         }
 
         protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
