@@ -153,7 +153,7 @@ namespace PX.Survey.Ext {
                     throw new PXException("An Anonnymous user may be setup in the Survey Preferences");
                 }
                 user = graph.InsertOrFindUser(survey, contactID);
-                collector = graph.DoInsertCollector(survey, user, null);
+                collector = graph.DoUpsertCollector(survey, user, null);
                 token = collector.Token;
             } else {
                 collector = SurveyCollector.UK.Find(graph, token);

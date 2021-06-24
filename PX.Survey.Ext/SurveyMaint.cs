@@ -300,8 +300,8 @@ namespace PX.Survey.Ext {
 
         private void DoGenerateSample(Survey survey) {
             Survey.Current = survey;
-            var user = DoInsertSampleUser(survey);
-            var collector = DoInsertCollector(survey, user, null);
+            var user = DoInsertSampleUser(survey); // TODO Just put in cache
+            var collector = DoUpsertCollector(survey, user, null); // TODO Just put in cache
             var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
@@ -311,7 +311,7 @@ namespace PX.Survey.Ext {
             Actions.PressSave();
         }
 
-        public SurveyCollector DoInsertCollector(Survey survey, SurveyUser user, Guid? refNoteID) {
+        public SurveyCollector DoUpsertCollector(Survey survey, SurveyUser user, Guid? refNoteID) {
             var collector = new SurveyCollector {
                 SurveyID = survey.SurveyID,
                 UserLineNbr = user.LineNbr,
@@ -382,7 +382,7 @@ namespace PX.Survey.Ext {
             if (Survey.Current != null) {
                 Save.Press();
                 var user = DoInsertSampleUser(Survey.Current);
-                var collector = DoInsertCollector(Survey.Current, user, null);
+                var collector = DoUpsertCollector(Survey.Current, user, null);
                 Actions.PressSave();
                 Collectors.View.RequestRefresh();
             }
