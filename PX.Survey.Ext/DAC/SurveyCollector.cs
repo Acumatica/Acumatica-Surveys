@@ -134,19 +134,6 @@ namespace PX.Survey.Ext {
         public virtual string DisplayName { get; set; }
         #endregion
 
-        //#region Name
-        //public abstract class name : BqlString.Field<name> { }
-        ///// <summary>
-        ///// Name of this Collector record.
-        ///// </summary>
-        //[PXDBString(60, IsUnicode = true)]
-        ////[PXDefault]
-        //[PXFormula(typeof(SmartJoin<Dash, Survey.surveyID, displayName>), Persistent = true)]
-        //[PXUIField(DisplayName = "Name", IsReadOnly = true)]
-        ////[PXUIVisible(typeof(Where<Survey.entityType, IsNull>))]
-        //public virtual string Name { get; set; }
-        //#endregion
-
         //public abstract class isEncrypted : BqlBool.Field<isEncrypted> { }
         //[PXDBBool]
         //[PXDefault(false)]
@@ -172,16 +159,6 @@ namespace PX.Survey.Ext {
         //[PXDefault]
         public virtual string Token { get;  set; }
         #endregion
-
-        //#region CollectedDate
-        //public abstract class collectedDate : BqlDateTime.Field<collectedDate> { }
-        ///// <summary>
-        ///// Specifies the date that the Survey was collected
-        ///// </summary>
-        //[PXDBDate(InputMask = "g", DisplayMask = "g", PreserveTime = true)]
-        //[PXUIField(DisplayName = "Collected Date", Enabled = false)]
-        //public virtual DateTime? CollectedDate { get; set; }
-        //#endregion
 
         #region ExpirationDate
         public abstract class expirationDate : BqlDateTime.Field<expirationDate> { }
@@ -218,17 +195,6 @@ namespace PX.Survey.Ext {
         [PXNote]
         public virtual Guid? NoteID { get; set; }
         #endregion
-
-        //#region CollectedDatePart
-        //public abstract class collectedDatePart : BqlString.Field<collectedDatePart> { }
-        ///// <summary>
-        ///// Specifies the date part that the Survey was collected
-        ///// </summary>
-        //[PXString]
-        //[PXUIField(DisplayName = "Collected Date Mobile", Enabled = false)]
-        //[PXFormula(typeof(DateAsString<SurveyCollector.collectedDate, DateAsStringFormat.shortDate>))]
-        //public virtual String CollectedDatePart { get; set; }
-        //#endregion
 
         #region CreatedByID
         public abstract class createdByID : BqlGuid.Field<createdByID> { }

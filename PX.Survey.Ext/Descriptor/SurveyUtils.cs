@@ -151,7 +151,7 @@ namespace PX.Survey.Ext {
                 SurveySetup setup = PXSelect<SurveySetup>.SelectWindowed(graph, 0, 1);
                 var contactID = setup.AnonContactID;
                 if (contactID == null) {
-                    throw new PXException("An Anonnymous user may be setup in the Survey Preferences");
+                    throw new PXException("An Anonnymous user needs to be setup in the Survey Preferences");
                 }
                 user = graph.InsertOrFindUser(survey, contactID);
                 collector = graph.DoUpsertCollector(survey, user, null);
