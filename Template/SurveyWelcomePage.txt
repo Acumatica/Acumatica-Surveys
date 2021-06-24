@@ -1,3 +1,0 @@
-<div class="px-5">
-    <h1 class="title has-text-centered is-2">{{SurveyDetail.Description}}</h1>
-</div>

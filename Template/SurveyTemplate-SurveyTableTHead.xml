@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyTemplate" file-name="SurveyTemplate-(Description)" />
+  <layout>
+    <table name="SurveyTemplate" />
+  </layout>
+  <data>
+    <SurveyTemplate>
+      <row TemplateID="32" TemplateType="QU" Active="1" Description="SurveyTableTHead" Body="{{ PNbr = SurveyDetail.PageNbr }}&#xA;{{ QNbr = SurveyDetail.QuestionNbr }}&#xA;{{ LNbr = SurveyDetail.LineNbr }}&#xA;                    &lt;div class=&quot;field mb-5&quot;&gt;&#xA;                        &lt;label class=&quot;label&quot; id=&quot;control.radio.label.{{PNbr}}&quot;&gt;* {{SurveyDetail.Description}}&lt;/label&gt;&#xA;                        &lt;table class=&quot;table is-striped is-hoverable is-fullwidth&quot;&gt;&#xA;                            &lt;thead&gt;&#xA;                                &lt;tr&gt;&#xA;                                    &lt;th class=&quot;is-size-7&quot;&gt;&lt;/th&gt;&#xA;{{ for QDet in Question.Details }}&#xA;     {{ IDNbr = QDet.ValueID }}&#xA;                                    &lt;th class=&quot;is-size-7&quot;&gt;{{IDNbr}} = {{QDet.Description}}&lt;/th&gt;&#xA;{{ end # for }}&#xA;                                &lt;/tr&gt;&#xA;                            &lt;/thead&gt;&#xA;                        &lt;/table&gt;&#xA;                    &lt;/div&gt;" NoteID="a3a8851c-16c3-eb11-a38b-3c6aa7cb36ca" />
+    </SurveyTemplate>
+  </data>
+</data-set>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyTemplate" file-name="SurveyTemplate-(Description)" />
+  <layout>
+    <table name="SurveyTemplate" />
+  </layout>
+  <data>
+    <SurveyTemplate>
+      <row TemplateID="30" TemplateType="HE" Active="1" Description="SurveyWelcomePage" Body="&lt;div class=&quot;px-5&quot;&gt;&#xA;    &lt;h1 class=&quot;title has-text-centered is-2&quot;&gt;{{SurveyDetail.Description}}&lt;/h1&gt;&#xA;&lt;/div&gt;" NoteID="d7f112c2-4fc2-eb11-a38b-3c6aa7cb36ca" />
+    </SurveyTemplate>
+  </data>
+</data-set>
