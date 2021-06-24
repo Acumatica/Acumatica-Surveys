@@ -408,6 +408,21 @@ namespace PX.Survey.Ext {
             return user;
         }
 
+        public PXAction<Survey> loadCollectors;
+        [PXUIField(DisplayName = "Load Collectors", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXLookupButton]
+        public virtual IEnumerable LoadCollectors(PXAdapter adapter) {
+            if (Survey.Current != null) {
+                Save.Press();
+                foreach (var user in Users.Select()) {
+                    var collector = DoUpsertCollector(Survey.Current, user, null);
+                }
+                Actions.PressSave();
+                Collectors.View.RequestRefresh();
+            }
+            return adapter.Get();
+        }
+
         public PXAction<Survey> insertSampleCollector;
         [PXUIField(DisplayName = "Insert Sample Collector", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
