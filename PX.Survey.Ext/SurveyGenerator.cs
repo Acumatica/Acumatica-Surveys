@@ -24,6 +24,7 @@ namespace PX.Survey.Ext {
         private static string FIRST_PAGE_NBR = "FirstPageNbr";
         private static string LAST_PAGE_NBR = "LastPageNbr";
         private static string NB_PAGES = "Nbpages";
+        private static string IS_SINGLE_PAGE = "IsSinglePage";
         private static string IS_FIRST_PAGE = "IsFirstPage";
         private static string IS_LAST_PAGE = "IsLastPage";
         private static string NEXT_IS_LAST = "NextIsLast";
@@ -136,6 +137,7 @@ namespace PX.Survey.Ext {
                 {setup.GetType().Name, setup},
                 {user.GetType().Name, user},
                 {webHook.GetType().Name, webHook},
+                {IS_SINGLE_PAGE, survey.Layout == SurveyLayout.SinglePage},
                 {TOKEN, token},
             };
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
