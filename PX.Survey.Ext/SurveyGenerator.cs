@@ -166,6 +166,9 @@ namespace PX.Survey.Ext {
             var firstOfSelected = selectedPages.FirstOrDefault();
             var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
             var allRendered = new List<string>();
+            if (firstOfSelected == null) {
+                return allRendered;
+            }
             var nextPages = SurveyUtils.SelectPages(activePages, ++selectedPageNbr);
             FillPageInfoLookAhead(context, activePages, nextPages);
             var url = GetUrl(context, firstOfSelected.PageNbr.Value);
