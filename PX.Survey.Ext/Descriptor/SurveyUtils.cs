@@ -29,6 +29,7 @@ namespace PX.Survey.Ext {
         public static Func<SurveyDetail, bool> ACTIVE_QUESTIONS_ONLY = (pd) => { return ALL_QUESTIONS(pd) && pd.Active == true; };
         public static Func<SurveyDetail, int> GET_PAGE_NBR = (pd) => { return pd.PageNbr.Value; };
         public static Func<SurveyDetail, int> GET_QUES_NBR = (pd) => { return pd.QuestionNbr.Value; };
+        public static Func<SurveyDetail, Tuple<int, int>> GET_QUES_AND_PAGE_NBR = (pd) => { return Tuple.Create(pd.QuestionNbr.Value, pd.PageNbr.Value); };
 
         public class surveyScreen : BqlString.Constant<surveyScreen> {
             public surveyScreen() : base("SU201000") { }
