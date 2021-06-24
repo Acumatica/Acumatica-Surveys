@@ -81,22 +81,28 @@ namespace PX.Survey.Ext.WebHook {
                 data.Status = CollectorDataStatus.Updated;
                 data = graph.CollectorDataRecords.Update(data);
             }
+            if (collector.Status == CollectorStatus.Deleted) {
+                collector.Status = CollectorStatus.New;
+            }
             if (collector.Status == CollectorStatus.New || collector.Status == CollectorStatus.Sent) {
                 collector.Status = CollectorStatus.Partially;
             }
-            var pageNbrs = graph.GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY); // TODO Cache me
-            var lastPageNbr = pageNbrs.Max();
-            if (collector.Status == CollectorStatus.Partially && pageNbr == lastPageNbr) {
+            //var pageNbrs = graph.GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY); // TODO Cache me
+            //var lastPageNbr = pageNbrs.Max();
+            var lastPageNbr = graph.GetLastQuestionPageNumber(survey);
+            if (collector.Status == CollectorStatus.Partially && pageNbr >= lastPageNbr) {
                 collector.Status = CollectorStatus.Completed;
             }
             //if (modified) { 
-                graph.Collectors.Update(collector);
+            graph.Collectors.Update(collector);
             //}
             graph.Persist();
         }
 
         private SurveyCollectorData FindCollectorData(SurveyMaint graph, SurveyCollector collector, int? pageNbr) {
-            var collData = graph.CollectorDataRecords.Search<SurveyCollectorData.token, SurveyCollectorData.pageNbr>(collector.Token, pageNbr);
+            SurveyCollectorData collData = PXSelect<SurveyCollectorData,
+                Where<SurveyCollectorData.token, Equal<Required<SurveyCollectorData.token>>,
+                And<SurveyCollectorData.pageNbr, Equal<Required<SurveyCollectorData.pageNbr>>>>>.Select(graph, collector.Token, pageNbr);
             return collData;
         }
 
