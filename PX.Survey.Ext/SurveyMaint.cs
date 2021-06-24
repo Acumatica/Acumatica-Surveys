@@ -126,55 +126,81 @@ namespace PX.Survey.Ext {
             Survey.Current = survey;
             createSurveyFilter.Current = filter;
             var setup = SurveySetup.Current;
-            DoResetPageNumbers(survey);
+            //DoResetPageNumbers(survey);
             var nbQuestions = filter.NbQuestions ?? 10;
-            InsertMissing(survey, 1, SUTemplateType.Header, setup.DefHeaderID);
-            InsertMissing(survey, 1, SUTemplateType.PageFooter, setup.DefPageFooterID, 1);
-            var pageNumbers = Enumerable.Range(2, nbQuestions);
-            foreach (var pageNumber in pageNumbers) {
-                InsertMissings(survey, pageNumber);
+            var questionSeries = Enumerable.Range(1, nbQuestions);
+            var prevSeries = 0;
+            var offset = 0;
+            var isSingle = survey.Layout == SurveyLayout.SinglePage;
+            InsertMissing(survey, 0, prevSeries, SUTemplateType.Header, setup.DefHeaderID, offset);
+            if (!isSingle) {
+                InsertMissing(survey, 0, prevSeries, SUTemplateType.PageFooter, setup.DefPageFooterID, offset);
             }
-            InsertMissing(survey, 9999, SUTemplateType.Footer, setup.DefFooterID);
+            foreach (var series in questionSeries) {
+                InsertMissings(survey, series, prevSeries, offset);
+                prevSeries = series;
+            }
+            if (isSingle) {
+                InsertMissing(survey, nbQuestions + 1, prevSeries, SUTemplateType.PageFooter, setup.DefPageFooterID, offset);
+            }
+            InsertMissing(survey, nbQuestions + 1, prevSeries, SUTemplateType.Footer, setup.DefFooterID, offset);
             Actions.PressSave();
         }
 
-        private void InsertMissings(Survey survey, int pageNumber) {
+        private void InsertMissings(Survey survey, int series, int prevSeries, int offset) {
             var setup = SurveySetup.Current;
-            InsertMissing(survey, pageNumber, SUTemplateType.PageHeader, setup.DefPageHeaderID, 0);
-            InsertMissing(survey, pageNumber, SUTemplateType.QuestionPage, setup.DefQuestionID, 1, setup.DefQuestAttrID);
-            InsertMissing(survey, pageNumber, SUTemplateType.CommentPage, setup.DefCommentID, 2, setup.DefCommAttrID);
-            InsertMissing(survey, pageNumber, SUTemplateType.PageFooter, setup.DefPageFooterID, 3);
+            var isSingle = survey.Layout == SurveyLayout.SinglePage;
+            if (!isSingle) {
+                InsertMissing(survey, series, prevSeries, SUTemplateType.PageHeader, setup.DefPageHeaderID, offset);
+            }
+            InsertMissing(survey, series, prevSeries, SUTemplateType.QuestionPage, setup.DefQuestionID, offset, setup.DefQuestAttrID);
+            InsertMissing(survey, series, prevSeries, SUTemplateType.CommentPage, setup.DefCommentID, offset, setup.DefCommAttrID);
+            if (!isSingle) {
+                InsertMissing(survey, series, prevSeries, SUTemplateType.PageFooter, setup.DefPageFooterID, offset);
+            }
         }
 
-        private void InsertMissing(Survey survey, int pageNumber, string templateType, int? templateID, int offset = 0, string attrID = null) {
-            SurveyDetail page = PXSelect<SurveyDetail,
-                Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
-                And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
-                And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>>.Select(this, survey.SurveyID, pageNumber, templateType);
+        private void InsertMissing(Survey survey, int series, int prevSeries, string templateType, int? templateID, int offset, string attrID = null) {
+            var isSingle = survey.Layout == SurveyLayout.SinglePage;
+            var pageNumber = isSingle ? 1 : series;
+            HandleOffsets(ref offset, isSingle, series, prevSeries);
             int? questionNbr;
             // Based on a) Question comes first, b) 1 Question, 1 Comment per page
             switch (templateType) {
                 case SUTemplateType.QuestionPage:
-                    questionNbr = ((pageNumber - 1) * 2) - 1;
+                    questionNbr = (series * 2) - 1;
                     break;
                 case SUTemplateType.CommentPage:
-                    questionNbr = (pageNumber - 1) * 2;
+                    questionNbr = series * 2;
                     break;
                 default:
                     questionNbr = null;
                     break;
             }
+            SurveyDetail page = PXSelect<SurveyDetail,
+                Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
+                And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
+                And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>,
+                And<Where<SurveyDetail.questionNbr, IsNull, Or<SurveyDetail.questionNbr, Equal<Required<SurveyDetail.questionNbr>>>>>>>>>.Select(this, survey.SurveyID, pageNumber, templateType, questionNbr);
             if (page == null) {
                 page = new SurveyDetail() {
                     SurveyID = survey.SurveyID,
                     PageNbr = pageNumber,
-                    SortOrder = (pageNumber * 10) + offset,
+                    SortOrder = (series * 10) + offset,
                     TemplateType = templateType,
                     TemplateID = templateID,
                     QuestionNbr = questionNbr,
                     AttributeID = attrID
                 };
                 page = Details.Insert(page);
+            }
+        }
+
+        private static void HandleOffsets(ref int offset, bool isSingle, int series, int prevSeries) {
+            if (isSingle || series == prevSeries) {
+                offset++;
+            } else {
+                offset = 0;
             }
         }
 
