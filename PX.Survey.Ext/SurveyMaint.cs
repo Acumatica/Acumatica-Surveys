@@ -419,7 +419,7 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Run Anonymous Survey", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
         public virtual IEnumerable RedirectToAnonymousSurvey(PXAdapter adapter) {
-            if (Survey.Current != null && Collectors.Current != null) {
+            if (Survey.Current != null) {
                 Save.Press();
                 var graph = CreateInstance<SurveyMaint>();
                 var survey = PXCache<Survey>.CreateCopy(Survey.Current);
