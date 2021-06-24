@@ -76,7 +76,7 @@ namespace PX.Survey.Ext {
         #region RefNoteID
         public abstract class refNoteID : BqlGuid.Field<refNoteID> { }
         [PXDBGuid(false)]
-        [PXUIField(DisplayName = "Entity Link")]
+        [PXUIField(DisplayName = "Entity Link", Visible = false)]
         public virtual Guid? RefNoteID { get; set; }
         #endregion
 
