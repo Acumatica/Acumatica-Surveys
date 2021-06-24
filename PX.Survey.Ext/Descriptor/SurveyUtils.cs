@@ -55,7 +55,7 @@ namespace PX.Survey.Ext {
 
         public static int GetPageNumber(string page) {
             if (string.IsNullOrEmpty(page) || !int.TryParse(page, out int pageNbr)) {
-                return 1;
+                return 0;
             }
             return pageNbr;
         }
