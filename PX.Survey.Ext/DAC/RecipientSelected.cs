@@ -28,7 +28,7 @@ namespace PX.Survey.Ext {
 
         [ContactTypes]
         [PXDBString(2, IsFixed = true, BqlField = typeof(Contact.contactType))]
-        [PXUIField(DisplayName = "Type", Enabled = false, Visibility = PXUIVisibility.SelectorVisible)]
+        [PXUIField(DisplayName = "Type", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string ContactType { get; set; }
 
         [PXDBString(50, IsUnicode = true, BqlField = typeof(Contact.firstName))]
@@ -40,7 +40,7 @@ namespace PX.Survey.Ext {
         public virtual string LastName { get; set; }
 
         [PXDBString(100, IsUnicode = true, BqlField = typeof(Contact.displayName))]
-        [PXUIField(DisplayName = "Contact", Enabled = false)]
+        [PXUIField(DisplayName = "Contact")]
         public virtual string DisplayName { get; set; }
 
         [PXDBEmail(BqlField = typeof(Contact.eMail))]

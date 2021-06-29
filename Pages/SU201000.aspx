@@ -319,13 +319,11 @@
         <AutoSize Container="Window" Enabled="True" MinHeight="250" />
     </px:PXTab>
     <px:PXSmartPanel ID="PanelAddRecipients" runat="server" Key="recipients" LoadOnDemand="true" Width="1400px" Height="500px"
-        Caption="Select Recipients" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true"
-        AutoCallBack-Command="Refresh" AutoCallBack-Enabled="True" AutoCallBack-Target="recipientfilter">
+        Caption="Select Recipients" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowAfterLoad="true">
         <px:PXFormView ID="FormAddRecipients" runat="server" DataSourceID="ds" Style="z-index: 100" Width="100%"
-            DataMember="recipients" Caption="Recipient Information" TemplateContainer="" DefaultControlID="edContactType">
+            DataMember="recipientfilter" Caption="Recipient Information" TemplateContainer="" DefaultControlID="edContactType">
             <Template>
                 <px:PXLayoutRule runat="server" StartColumn="True" StartRow="True" ControlSize="XM" LabelsWidth="S" />
-                <px:PXCheckBox CommitChanges="True" ID="chkOnlyUsers" runat="server" DataField="OnlyUsers" AllowEdit="True" />
                 <px:PXDropDown CommitChanges="True" ID="edContactType" runat="server" DataField="ContactType" AllowEdit="True" />
             </Template>
         </px:PXFormView>
