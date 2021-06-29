@@ -501,10 +501,44 @@ namespace PX.Survey.Ext {
             return adapter.Get();
         }
 
+        public PXAction<Survey> reProcessAnswers;
+        [PXUIField(DisplayName = "Re-Process Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXLookupButton]
+        public virtual IEnumerable ReProcessAnswers(PXAdapter adapter) {
+            var list = adapter.Get<Survey>().ToList();
+            Save.Press();
+            var graph = CreateInstance<SurveyMaint>();
+            foreach (var survey in list) {
+                var row = PXCache<Survey>.CreateCopy(survey);
+                graph.DoReProcessAnswers(row);
+            }
+            return adapter.Get();
+        }
+
+        public void DoReProcessAnswers(Survey survey) {
+            // Delete all answers
+            foreach (var answer in Answers.Select()) {
+                Answers.Delete(answer);
+            }
+            // Reset all completed collectors
+            foreach (SurveyCollector coll in Collectors.Select()) {
+                if (coll.Status == CollectorStatus.Processed) {
+                    coll.Status = CollectorStatus.Completed;
+                    Collectors.Update(coll);
+                }
+            }
+            // Reset all collector data rows
+            foreach (SurveyCollectorData data in CollectorDataRecords.Select()) {
+                if (data.Status == CollectorDataStatus.Processed) {
+                    data.Status = CollectorDataStatus.Updated;
+                    CollectorDataRecords.Update(data);
+                }
+            }
+            //DoProcessAnswers(survey);
+        }
+
         public bool DoProcessAnswers(Survey survey) {
             Survey.Current = survey;
-            //var pageNbrs = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
-            //var quesNbrs = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY);
             var allCollectors = Collectors.Select().FirstTableItems;
             bool errorOccurred = false;
             var unanswered = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY).ToList();
@@ -726,12 +760,12 @@ namespace PX.Survey.Ext {
                     And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>.Select(this, surveyID, templateType);
         }
 
-        private SurveyDetail GetPage(string surveyID, int? pageNbr, string templateType) {
-            return PXSelect<SurveyDetail,
-                    Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
-                    And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
-                    And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>>.Select(this, surveyID, pageNbr, templateType);
-        }
+        //private SurveyDetail GetPage(string surveyID, int? pageNbr, string templateType) {
+        //    return PXSelect<SurveyDetail,
+        //            Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
+        //            And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
+        //            And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>>.Select(this, surveyID, pageNbr, templateType);
+        //}
 
         private PXResultset<SurveyDetail> GetRegularPages(string surveyID) {
             return PXSelect<SurveyDetail,
