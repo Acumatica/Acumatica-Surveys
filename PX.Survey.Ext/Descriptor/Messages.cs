@@ -29,6 +29,7 @@ namespace PX.Survey.Ext {
             public const string Error = "Error";
             public const string Processed = "Processed";
             public const string Deleted = "Deleted";
+            public const string Incomplete = "Incomplete";
         }
 
         public class CollectorDataStatus {

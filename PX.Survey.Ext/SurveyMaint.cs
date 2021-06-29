@@ -507,6 +507,7 @@ namespace PX.Survey.Ext {
             //var quesNbrs = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY);
             var allCollectors = Collectors.Select().FirstTableItems;
             bool errorOccurred = false;
+            var unanswered = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY).ToList();
             foreach (var collector in allCollectors) {
                 if (collector.Status != CollectorStatus.Completed) {
                     continue;
@@ -521,7 +522,9 @@ namespace PX.Survey.Ext {
                         continue;
                     }
                     try {
-                        collData.Status = DoProcessAnswers(survey, collData, collector);
+                        var (status, answered) = DoProcessAnswers(survey, collData, collector);
+                        unanswered.RemoveAll(unans => answered.Contains(unans));
+                        collData.Status = status;
                         collData.Message = null;
                     } catch (Exception ex) {
                         collData.Status = CollectorDataStatus.Error;
@@ -530,12 +533,18 @@ namespace PX.Survey.Ext {
                     }
                     var updated = CollectorDataRecords.Update(collData);
                 }
+                if (unanswered.Any()) {
+                    collector.Status = CollectorStatus.Incomplete;
+                } else {
+                    collector.Status = CollectorStatus.Completed;
+                }
+                Collectors.Update(collector);
             }
             Actions.PressSave();
             return errorOccurred;
         }
 
-        private string DoProcessAnswers(Survey survey, SurveyCollectorData collDataRec, SurveyCollector collector) {
+        private (string, List<int>) DoProcessAnswers(Survey survey, SurveyCollectorData collDataRec, SurveyCollector collector) {
             var answerData = collDataRec.Payload;
             if (string.IsNullOrEmpty(answerData)) {
                 throw new PXException(Messages.AnswersNotfound);
@@ -545,6 +554,7 @@ namespace PX.Survey.Ext {
             //{{PageNbr}}.{{QuestionNbr}}.{{LineNbr}}=Value&...
             //var answers = new List<CSAnswers>();
             var status = CollectorDataStatus.Ignored;
+            var answered = new List<int>();
             foreach (var kvp in dict) {
                 var answerKey = kvp.Key;
                 var matches = SurveyUtils.ANSWER_CODE.Matches(answerKey);
@@ -584,13 +594,14 @@ namespace PX.Survey.Ext {
                         } else {
                             UpsertAnswer(survey, collector, detail, value, false);
                         }
+                        answered.Add(quesNbr);
                         status = CollectorDataStatus.Processed;
                     }
                 } else {
                     continue;
                 }
             }
-            return status;
+            return (status, answered);
         }
 
         private void UpsertAnswer(Survey survey, SurveyCollector collector, SurveyDetail detail, string value, bool searchByValue) {

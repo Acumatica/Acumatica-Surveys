@@ -10,13 +10,13 @@ namespace PX.Survey.Ext {
                     Partially, Completed, 
                     Reminded, Expired, 
                     Error, Processed,
-                    Deleted},
+                    Deleted, Incomplete},
                 new string[] { 
                     Messages.CollectorStatus.New, Messages.CollectorStatus.Sent, 
                     Messages.CollectorStatus.Partially, Messages.CollectorStatus.Completed,
                     Messages.CollectorStatus.Reminded, Messages.CollectorStatus.Expired, 
                     Messages.CollectorStatus.Error, Messages.CollectorStatus.Processed,
-                    Messages.CollectorStatus.Deleted}) { }
+                    Messages.CollectorStatus.Deleted, Messages.CollectorStatus.Incomplete}) { }
         }
 
         public const string New = "N";
@@ -28,6 +28,7 @@ namespace PX.Survey.Ext {
         public const string Error = "E";
         public const string Processed = "P";
         public const string Deleted = "D";
+        public const string Incomplete = "I";
 
         public class _new : BqlString.Constant<_new> { public _new() : base(New) { } }
         public class sent : BqlString.Constant<sent> { public sent() : base(Sent) { } }
@@ -37,5 +38,6 @@ namespace PX.Survey.Ext {
         public class expired : BqlString.Constant<expired> { public expired() : base(Expired) { } }
         public class error : BqlString.Constant<error> { public error() : base(Error) { } }
         public class processed : BqlString.Constant<processed> { public processed() : base(Processed) { } }
+        public class incomplete : BqlString.Constant<incomplete> { public incomplete() : base(Incomplete) { } }
     }
 }
