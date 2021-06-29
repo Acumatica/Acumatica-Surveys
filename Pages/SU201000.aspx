@@ -20,6 +20,7 @@
             <px:PXDSCallbackCommand Name="GenerateSample" Visible="False" />
             <px:PXDSCallbackCommand Name="InsertSampleCollector" Visible="False" />
             <px:PXDSCallbackCommand Name="ProcessAnswers" Visible="False" />
+            <px:PXDSCallbackCommand Name="ReProcessAnswers" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />
             <%--<px:PXDSCallbackCommand Name="Collectors$Select_RefNote" Visible="False" />
@@ -303,6 +304,9 @@
                             <CustomItems>
                                 <px:PXToolBarButton Key="ProcessAnswers">
                                     <AutoCallBack Command="ProcessAnswers" Target="ds" />
+                                </px:PXToolBarButton>
+                                <px:PXToolBarButton Key="ReProcessAnswers">
+                                    <AutoCallBack Command="ReProcessAnswers" Target="ds" />
                                 </px:PXToolBarButton>
                             </CustomItems>
                         </ActionBar>
