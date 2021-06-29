@@ -12,16 +12,12 @@
 	<px:PXFormView Caption="SurveyResponseSummary" ID="form" runat="server" DataSourceID="ds" DataMember="Collector" 
 				   Width="100%" Height="100px" AllowAutoHide="False" TabIndex="100">
 		<Template>
-			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
-			<px:PXSelector runat="server" ID="edCollectorID" DataField="CollectorID"></px:PXSelector>
-			<px:PXTextEdit runat="server" ID="edCollectorName" DataField="CollectorName" AlreadyLocalized="False" Size="M"></px:PXTextEdit>
-			<px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" AutoRefresh="True" CommitChanges="True" DisplayMode="Text" ></px:PXSelector>
-			<px:PXTextEdit runat="server" ID="edUserid" DataField="Userid" DisplayMode="Text" ></px:PXTextEdit>
-			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"></px:PXLayoutRule>
-		    <px:PXDateTimeEdit ID="edCollectedDate" runat="server" AlreadyLocalized="False" DataField="CollectedDate" Width="150px" />
-		    <px:PXTextEdit ID="edCollectedDatePart" runat="server" DataField="CollectedDatePart" Width="150px" Visible="false" />
-            <px:PXDropDown ID="edCollectorStatus" runat="server" DataField="CollectorStatus">
-            </px:PXDropDown>
+			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"/>
+			<px:PXSelector runat="server" ID="edCollectorID" DataField="CollectorID"/>
+			<px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" Enabled="false"/>
+			<px:PXTextEdit runat="server" ID="edUserid" DataField="Userid" DisplayMode="Text" Enabled="false"/>
+			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="SM" LabelsWidth="S"/>
+            <px:PXDropDown ID="edCollectorStatus" runat="server" DataField="CollectorStatus"/>
 			<px:PXDateTimeEdit ID="edExpirationDate" runat="server" AlreadyLocalized="False" DataField="ExpirationDate" Width="150px" />
 		</Template>
 	</px:PXFormView>
