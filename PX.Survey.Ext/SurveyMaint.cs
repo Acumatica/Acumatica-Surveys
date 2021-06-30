@@ -44,6 +44,16 @@ namespace PX.Survey.Ext {
             OrderBy<Asc<SurveyAnswer.createdDateTime>>> Answers;
 
         [PXCopyPasteHiddenView]
+        public PXSelectGroupBy<SurveyAnswer,
+            Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
+            And<SurveyAnswer.templateType, Equal<SUTemplateType.questionPage>>>,
+            Aggregate<
+                GroupBy<SurveyAnswer.pageNbr,
+                GroupBy<SurveyAnswer.questionNbr,
+                Count<SurveyAnswer.lineNbr>>>>
+            > AnswerSummary;
+
+        [PXCopyPasteHiddenView]
         public PXSelect<SurveyAnswer,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
             And<SurveyAnswer.templateType, Equal<SUTemplateType.commentPage>>>,
