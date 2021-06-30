@@ -503,7 +503,7 @@ namespace PX.Survey.Ext {
         }
 
         public PXAction<Survey> reProcessAnswers;
-        [PXUIField(DisplayName = "Re-Process Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = "Clear Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
         public virtual IEnumerable ReProcessAnswers(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
@@ -517,6 +517,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoReProcessAnswers(Survey survey) {
+            Survey.Current = survey;
             // Delete all answers
             foreach (var answer in Answers.Select()) {
                 Answers.Delete(answer);
@@ -527,29 +528,32 @@ namespace PX.Survey.Ext {
                     coll.Status = CollectorStatus.Completed;
                     Collectors.Update(coll);
                 }
-            }
-            // Reset all collector data rows
-            foreach (SurveyCollectorData data in CollectorDataRecords.Select()) {
-                if (data.Status == CollectorDataStatus.Processed) {
+                Collectors.Current = coll;
+                // Reset all collector data rows
+                foreach (SurveyCollectorData data in CollectorDataRecords.Select()) {
+                    //if (data.Status == CollectorDataStatus.Processed) {
                     data.Status = CollectorDataStatus.Updated;
                     CollectorDataRecords.Update(data);
+                    //}
                 }
             }
+            Actions.PressSave();
             //DoProcessAnswers(survey);
         }
 
         public bool DoProcessAnswers(Survey survey) {
             Survey.Current = survey;
-            var allCollectors = Collectors.Select().FirstTableItems;
+            var allCollectors = Collectors.Select();
             bool errorOccurred = false;
             var unanswered = GetQuestionNumbers(survey, SurveyUtils.ACTIVE_QUESTIONS_ONLY).ToList();
-            foreach (var collector in allCollectors) {
+            foreach (var res in allCollectors) {
+                var collector = PXResult.Unwrap<SurveyCollector>(res);
                 if (collector.Status != CollectorStatus.Completed) {
                     continue;
                 }
                 Collectors.Current = collector;
                 var token = collector.Token;
-                var (_, user, _) = SurveyUtils.GetSurveyAndUser(this, token);
+                //var (_, user, _) = SurveyUtils.GetSurveyAndUser(this, token);
                 var collectorDatas = CollectorDataRecords.Select().FirstTableItems;
                 foreach (var collData in collectorDatas) {
                     if (collData.Status == CollectorDataStatus.Processed ||
