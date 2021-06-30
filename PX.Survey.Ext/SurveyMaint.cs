@@ -63,6 +63,7 @@ namespace PX.Survey.Ext {
             if (recipientfilter.Current == null) {
                 recipientfilter.Current = recipientfilter.Insert(new RecipientFilter());
             }
+            recipients.Cache.Clear();
             if (recipients.AskExt() == WebDialogResult.OK) {
                 return AddSelectedRecipients(adapter);
             }
