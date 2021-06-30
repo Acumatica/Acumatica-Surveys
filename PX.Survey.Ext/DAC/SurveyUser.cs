@@ -167,7 +167,7 @@ namespace PX.Survey.Ext {
         [PXBool]
         [PXDependsOnFields(typeof(mobileDeviceOS))]
         [PXFormula(typeof(IIf<Where<mobileDeviceOS, IsNull>, False, True>))]
-        [PXUIField(DisplayName = "Using Mobile App", Enabled = false)]
+        [PXUIField(DisplayName = "Using Mobile", Enabled = false)]
         public virtual bool? UsingMobileApp { get; set; }
         #endregion
 
