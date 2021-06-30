@@ -43,6 +43,12 @@ namespace PX.Survey.Ext {
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>>,
             OrderBy<Asc<SurveyAnswer.createdDateTime>>> Answers;
 
+        [PXCopyPasteHiddenView]
+        public PXSelect<SurveyAnswer,
+            Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
+            And<SurveyAnswer.templateType, Equal<SUTemplateType.commentPage>>>,
+            OrderBy<Asc<SurveyAnswer.pageNbr, Asc<SurveyAnswer.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
+
         [PXHidden]
         [PXCopyPasteHiddenView]
         public PXSetup<SurveySetup> SurveySetup;
