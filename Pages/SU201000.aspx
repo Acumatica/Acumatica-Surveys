@@ -21,6 +21,7 @@
             <px:PXDSCallbackCommand Name="InsertSampleCollector" Visible="False" />
             <px:PXDSCallbackCommand Name="ProcessAnswers" Visible="False" />
             <px:PXDSCallbackCommand Name="ReProcessAnswers" Visible="False" />
+            <px:PXDSCallbackCommand Name="LoadCollectors" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />
             <%--<px:PXDSCallbackCommand Name="Collectors$Select_RefNote" Visible="False" />
@@ -41,11 +42,11 @@
             <px:PXTextEdit runat="server" ID="edTitle" DataField="Title" Width="500px" CommitChanges="true" />
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" />
             <px:PXSelector runat="server" ID="edTemplateID" DataField="TemplateID" Width="300px" CommitChanges="true" AllowEdit="true" />
-            <px:PXSelector runat="server" ID="edNotificationID" DataField="NotificationID" Width="300px" CommitChanges="true" AllowEdit="true"/>
-            <px:PXSelector runat="server" ID="edRemindNotificationID" DataField="RemindNotificationID" Width="300px" CommitChanges="true" AllowEdit="true"/>
+            <px:PXSelector runat="server" ID="edNotificationID" DataField="NotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
+            <px:PXSelector runat="server" ID="edRemindNotificationID" DataField="RemindNotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true" />
             <px:PXCheckBox runat="server" ID="edActive" DataField="Active" CommitChanges="true"></px:PXCheckBox>
-            <px:PXLayoutRule runat="server" LabelsWidth="S" ControlSize="SM"/>
+            <px:PXLayoutRule runat="server" LabelsWidth="S" ControlSize="SM" />
             <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
             <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
             <px:PXDropDown runat="server" ID="edEntityType" DataField="EntityType" CommitChanges="true" />
@@ -181,10 +182,13 @@
                                     <px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" CommitChanges="true" />
                                     <px:PXGridColumn DataField="ContactID" DisplayMode="Text" CommitChanges="True" TextAlign="Left" Width="250px" />
                                     <px:PXGridColumn DataField="RecipientType" />
-                                    <px:PXGridColumn DataField="Phone" Width="180px" />
+                                    <px:PXGridColumn DataField="Phone1Type" Type="DropDownList"/>
+                                    <px:PXGridColumn DataField="Phone1"/>
+                                    <px:PXGridColumn DataField="Phone2Type" Type="DropDownList"/>
+                                    <px:PXGridColumn DataField="Phone2"/>
                                     <px:PXGridColumn DataField="Email" Width="280px" />
-                                    <px:PXGridColumn DataField="MobileAppDeviceOS" Width="200px" />
-                                    <px:PXGridColumn DataField="UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
+                                    <px:PXGridColumn DataField="MobileDeviceOS" Width="200px" />
+                                    <px:PXGridColumn DataField="UsingMobileApp" TextAlign="Center" Type="CheckBox"/>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
@@ -220,11 +224,11 @@
                                             <%--<px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center"/>--%>
                                             <%--<px:PXGridColumn DataField="Name" />--%>
                                             <px:PXGridColumn DataField="Token" DisplayMode="Text" TextAlign="Left" Width="100px" />
-                                            <px:PXGridColumn DataField="Source" Width="350px" AllowShowHide="Server" LinkCommand="viewEntity" AllowSort="false" AllowFilter="false"/>
+                                            <px:PXGridColumn DataField="Source" Width="350px" AllowShowHide="Server" LinkCommand="viewEntity" AllowSort="false" AllowFilter="false" />
                                             <px:PXGridColumn DataField="SurveyUser__DisplayName" Width="180px" />
                                             <px:PXGridColumn DataField="SurveyUser__Phone1Type" Width="110px" Type="DropDownList" />
                                             <px:PXGridColumn DataField="SurveyUser__Phone1" Width="160px" />
-                                            <px:PXGridColumn DataField="SurveyUser__Phone2Type" Width="110px" Type="DropDownList"/>
+                                            <px:PXGridColumn DataField="SurveyUser__Phone2Type" Width="110px" Type="DropDownList" />
                                             <px:PXGridColumn DataField="SurveyUser__Phone2" Width="160px" />
                                             <px:PXGridColumn DataField="SurveyUser__Email" Width="180px" />
                                             <px:PXGridColumn DataField="ExpirationDate" Width="120px" />
@@ -291,7 +295,7 @@
                                     <px:PXGridColumn DataField="ContactID" DisplayMode="Text" TextAlign="Left" Width="180px" />
                                     <px:PXGridColumn DataField="TemplateType" Width="120px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="Description" Width="350px" AllowDragDrop="true" />
-                                    <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true"/>
+                                    <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" LinkCommand="ViewAttribute" />
                                     <px:PXGridColumn DataField="AttrDesc" Width="150px" AllowDragDrop="true" />
@@ -311,6 +315,50 @@
                             </CustomItems>
                         </ActionBar>
                         <Mode InitNewRow="true" />
+                        <AutoSize Enabled="True" Container="Window" MinHeight="150" />
+                    </px:PXGrid>
+                </Template>
+            </px:PXTabItem>
+            <px:PXTabItem Text="Answer Summary">
+                <Template>
+                    <px:PXGrid ID="grdAnswerSummary" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
+                        SkinID="Inquire" SyncPosition="True" TabIndex="5100" MatrixMode="True">
+                        <Levels>
+                            <px:PXGridLevel DataMember="AnswerSummary">
+                                <RowTemplate>
+                                </RowTemplate>
+                                <Columns>
+                                    <px:PXGridColumn DataField="Description" Width="350px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" LinkCommand="ViewAttribute" />
+                                    <px:PXGridColumn DataField="AttrDesc" Width="150px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="Value" Width="400px" />
+                                </Columns>
+                            </px:PXGridLevel>
+                        </Levels>
+                        <AutoSize Enabled="True" Container="Window" MinHeight="150" />
+                    </px:PXGrid>
+                </Template>
+            </px:PXTabItem>
+            <px:PXTabItem Text="Comments">
+                <Template>
+                    <px:PXGrid ID="grdComments" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
+                        SkinID="Inquire" SyncPosition="True" TabIndex="5100" MatrixMode="True">
+                        <Levels>
+                            <px:PXGridLevel DataMember="Comments">
+                                <RowTemplate>
+                                </RowTemplate>
+                                <Columns>
+                                    <px:PXGridColumn DataField="ContactID" DisplayMode="Text" TextAlign="Left" Width="180px" />
+                                    <px:PXGridColumn DataField="Description" Width="350px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" LinkCommand="ViewAttribute" />
+                                    <px:PXGridColumn DataField="AttrDesc" Width="150px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="Value" Width="400px" />
+                                </Columns>
+                            </px:PXGridLevel>
+                        </Levels>
                         <AutoSize Enabled="True" Container="Window" MinHeight="150" />
                     </px:PXGrid>
                 </Template>
