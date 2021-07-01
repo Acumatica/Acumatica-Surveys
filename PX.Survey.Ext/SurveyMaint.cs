@@ -698,6 +698,7 @@ namespace PX.Survey.Ext {
                             continue;
                         }
                         var value = kvp.Value;
+                        // TODO Skip empty comments
                         if (value == null) {
                             // No answer
                             continue;
