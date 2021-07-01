@@ -745,7 +745,7 @@ namespace PX.Survey.Ext {
             redirectToAnonymousSurvey.SetEnabled(hasPages);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
-            PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
+            //PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
             var anon = row.Target == SurveyTarget.Anonymous;
             if (anon) {
                 Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
