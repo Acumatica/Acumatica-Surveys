@@ -15,7 +15,6 @@ namespace PX.Survey.Ext {
     public class SurveyGenerator {
 
         private SurveyMaint graph;
-        private Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
 
         private static string URL = "SurveyURL";
         private static string TOKEN = "Token";
@@ -104,9 +103,9 @@ namespace PX.Survey.Ext {
         }
 
         public string GetUrl(TemplateContext context, int? pageNbr) {
-            var survey = (Survey) context.GetValue(new ScriptVariableGlobal(typeof(Survey).Name));
+            var survey = (Survey)context.GetValue(new ScriptVariableGlobal(typeof(Survey).Name));
             //var user = (SurveyUser) context.GetValue(new ScriptVariableGlobal(typeof(SurveyUser).Name));
-            var token = (string) context.GetValue(new ScriptVariableGlobal(TOKEN));
+            var token = (string)context.GetValue(new ScriptVariableGlobal(TOKEN));
             return GetUrl(survey, token, pageNbr);
         }
 
@@ -117,7 +116,7 @@ namespace PX.Survey.Ext {
 
         public string GetUrl(Survey survey, string token, int? pageNbr) {
             graph.Survey.Current = survey;
-            string webHookUrl = GetUrl(survey); 
+            string webHookUrl = GetUrl(survey);
             var pageParam = pageNbr.HasValue ? $"{SurveyWebhookServerHandler.PAGE_PARAM}={pageNbr}&" : "";
             var url = $"{webHookUrl}?{pageParam}{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
             return url;
@@ -179,10 +178,11 @@ namespace PX.Survey.Ext {
         }
 
         private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
-            Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
-                Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
-            //whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
-            whGraph.Webhook.Current = wh;
+            Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
+            //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
+            //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
+            //whGraph.Webhook.Current = wh;
+            whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
             return whGraph.Webhook.Current;
         }
 
