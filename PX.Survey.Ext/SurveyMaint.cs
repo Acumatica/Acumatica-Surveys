@@ -950,6 +950,12 @@ namespace PX.Survey.Ext {
             return maxPage ?? 0;
         }
 
+        protected virtual void _(Events.RowSelected<SurveyUser> e) {
+            var row = e.Row;
+            if (row == null) { return; }
+            // TODO Lock Recipient for delete if collector is found
+        }
+
         public void _(Events.FieldUpdated<SurveyCollector, SurveyCollector.collectorID> e) {
             e.Cache.SetDefaultExt<SurveyCollector.token>(e.Row);
         }
