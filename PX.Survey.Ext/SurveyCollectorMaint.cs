@@ -1,5 +1,6 @@
 ﻿using CommonServiceLocator;
 using PX.Api.Mobile.PushNotifications;
+using PX.Common;
 using PX.Data;
 using PX.Data.BQL.Fluent;
 using PX.Data.EP;
@@ -42,27 +43,20 @@ namespace PX.Survey.Ext {
                 Save.Press();
                 var graph = CreateInstance<SurveyCollectorMaint>();
                 var row = PXCache<SurveyCollector>.CreateCopy(Collector.Current);
-                var errorOccurred = graph.DoSendNewNotification(row);
+                graph.DoSendNewNotification(row);
             }
             return adapter.Get();
         }
 
-        public bool DoSendNewNotification(SurveyCollector collector) {
-            var survey = CurrentSurvey.Current;
+        public void DoSendNewNotification(SurveyCollector collector) {
             Collector.Current = collector;
-            var errorOccurred = false;
-            try {
-                DoSendNotification(collector, survey.NotificationID);
-                collector.Status = CollectorStatus.Sent;
-                collector.Message = null;
-            } catch (Exception ex) {
-                collector.Status = CollectorStatus.Error;
-                collector.Message = ex.Message;
-                errorOccurred = true;
-            }
+            Survey survey = CurrentSurvey.Select();
+            DoSendNotification(collector, survey, survey.NotificationID);
+            collector.SentOn = PXTimeZoneInfo.Now;
+            collector.Status = CollectorStatus.Sent;
+            collector.Message = null;
             Collector.Update(collector);
             Actions.PressSave();
-            return errorOccurred;
         }
 
         public PXAction<SurveyCollector> sendReminder;
@@ -73,35 +67,27 @@ namespace PX.Survey.Ext {
                 Save.Press();
                 var graph = CreateInstance<SurveyCollectorMaint>();
                 var row = PXCache<SurveyCollector>.CreateCopy(Collector.Current);
-                var errorOccurred = graph.DoSendReminder(row, 90); // TODO Ask for Delay
+                graph.DoSendReminder(row, 90); // TODO Ask for Delay
             }
             return adapter.Get();
         }
 
-        public bool DoSendReminder(SurveyCollector collector, int? delay) {
-            var survey = CurrentSurvey.Current;
+        public void DoSendReminder(SurveyCollector collector, int? delay) {
             Collector.Current = collector;
-            var errorOccurred = false;
-            try {
-                DoSendNotification(collector, survey.RemindNotificationID);
-                collector.Status = CollectorStatus.Reminded;
-                collector.Message = null;
-                if (delay > 0) {
-                    collector.ExpirationDate = DateTime.UtcNow.AddMinutes(delay.Value);
-                }
-            } catch (Exception ex) {
-                collector.Status = CollectorStatus.Error;
-                collector.Message = ex.Message;
-                errorOccurred = true;
+            Survey survey = CurrentSurvey.Select();
+            DoSendNotification(collector, survey, survey.RemindNotificationID);
+            collector.SentOn = PXTimeZoneInfo.Now;
+            collector.Status = CollectorStatus.Reminded;
+            collector.Message = null;
+            if (delay > 0) {
+                collector.ExpirationDate = DateTime.UtcNow.AddMinutes(delay.Value);
             }
             Collector.Update(collector);
             Actions.PressSave();
-            return errorOccurred;
         }
 
-        public void DoSendNotification(SurveyCollector collector, int? notificationID) {
-            SurveyUser surveyUser = CurrentUser.Current;
-            Survey survey = Survey.PK.Find(this, collector.SurveyID);
+        public void DoSendNotification(SurveyCollector collector, Survey survey, int? notificationID) {
+            SurveyUser surveyUser = CurrentUser.Select();
             if (surveyUser.UsingMobileApp == true) {
                 SendPushNotification(survey, surveyUser, collector);
             } else {
@@ -127,10 +113,13 @@ namespace PX.Survey.Ext {
         private void SendMailNotification(Survey survey, SurveyUser surveyUser, SurveyCollector collector, int? notificationID) {
             Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(this, notificationID);
             //var sent = false;
-            var sender = TemplateNotificationGenerator.Create(collector, notification);
-            sender.LinkToEntity = collector.NoteID != null;
-            sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
-            sender.RefNoteID = collector.NoteID;
+            var email = TemplateNotificationGenerator.Create(collector, notification);
+            email.LinkToEntity = true;
+            email.To = surveyUser.Email;
+            email.ContactID = surveyUser.ContactID;
+            //email.Subject = email.Subject.Replace("((UserList.Password))", this.UserList.Current.Password);
+            //sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
+            //sender.RefNoteID = collector.NoteID;
             //sender.Subject = 
             //bool asAttachment = false;
             //if (asAttachment) {
@@ -145,7 +134,7 @@ namespace PX.Survey.Ext {
             //    if (attachment.HasValue)
             //        notificationGenerator.AddAttachmentLink(attachment.Value);
             //}
-            var sent = sender.Send().Any();
+            var sent = email.Send();
         }
 
         //public PXAction<SurveyCollector> Submit;

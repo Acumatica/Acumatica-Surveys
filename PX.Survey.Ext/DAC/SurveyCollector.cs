@@ -160,6 +160,13 @@ namespace PX.Survey.Ext {
         public virtual string Token { get;  set; }
         #endregion
 
+        #region SentOn
+        public abstract class sentOn : BqlDateTime.Field<sentOn> { }
+        [PXDBDate(PreserveTime = true)]
+        [PXUIField(DisplayName = "Sent On", Enabled = false)]
+        public virtual DateTime? SentOn { get; set; }
+        #endregion
+
         #region ExpirationDate
         public abstract class expirationDate : BqlDateTime.Field<expirationDate> { }
         /// <summary>
