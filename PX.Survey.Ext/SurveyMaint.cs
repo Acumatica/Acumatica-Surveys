@@ -73,7 +73,8 @@ namespace PX.Survey.Ext {
         public PXFilter<RecipientFilter> recipientfilter;
         [PXFilterable]
         [PXCopyPasteHiddenView]
-        public RecipientLookup<RecipientSelected, RecipientFilter> recipients;
+        public PXSelect<RecipientSelected> recipients;
+        //public RecipientLookup<RecipientSelected, RecipientFilter> recipients;
 
         public PXAction<Survey> addRecipients;
         [PXUIField(DisplayName = "Add Recipients", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
@@ -82,6 +83,7 @@ namespace PX.Survey.Ext {
             if (recipientfilter.Current == null) {
                 recipientfilter.Current = recipientfilter.Insert(new RecipientFilter());
             }
+            recipients.View.RequestRefresh();
             if (recipients.AskExt() == WebDialogResult.OK) {
                 return AddSelectedRecipients(adapter);
             }
@@ -102,6 +104,7 @@ namespace PX.Survey.Ext {
                     Users.Insert(surveyUser);
                 }
             }
+            recipients.View.RequestRefresh();
             Users.View.RequestRefresh();
             return adapter.Get();
         }
@@ -724,6 +727,15 @@ namespace PX.Survey.Ext {
             }
         }
 
+        protected virtual void _(Events.RowPersisted<Survey> e)
+        {
+            var row = e.Row;
+            if (row == null) { return; }
+            recipients.Cache.Clear();
+            recipients.View.RequestRefresh();
+        }
+
+
         protected virtual void _(Events.RowSelected<Survey> e) {
             var row = e.Row;
             if (row == null) { return; }
@@ -748,15 +760,6 @@ namespace PX.Survey.Ext {
         protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
             var row = e.Row;
             if (row == null) { return; }
-        }
-
-        protected virtual void _(Events.FieldUpdated<RecipientSelected, RecipientSelected.selected> e)
-        {
-            RecipientSelected row = e.Row;
-            if (row == null) { return; } else
-            {
-                recipients.View.RequestRefresh();
-            }
         }
 
         //protected virtual void _(Events.RowPersisted<Survey> e) {
