@@ -117,7 +117,9 @@ namespace PX.Survey.Ext {
             email.LinkToEntity = true;
             email.To = surveyUser.Email;
             email.ContactID = surveyUser.ContactID;
-            //email.Subject = email.Subject.Replace("((UserList.Password))", this.UserList.Current.Password);
+            var generator = new SurveyGenerator();
+            var url = generator.GetUrl(survey, collector.Token, null);
+            email.Body = email.Body.Replace("((Collector.URL))", url);
             //sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
             //sender.RefNoteID = collector.NoteID;
             //sender.Subject = 

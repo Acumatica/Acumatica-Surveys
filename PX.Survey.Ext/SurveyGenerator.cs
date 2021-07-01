@@ -5,12 +5,13 @@ using PX.Survey.Ext.WebHook;
 using Scriban;
 using Scriban.Runtime;
 using Scriban.Syntax;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 
 namespace PX.Survey.Ext {
+
     public class SurveyGenerator {
 
         private SurveyMaint graph;
@@ -102,24 +103,53 @@ namespace PX.Survey.Ext {
             context.SetValue(new ScriptVariableGlobal(ENTITY_FIELDS), fvp);
         }
 
-        public string GetUrl(TemplateContext context, int pageNbr) {
+        public string GetUrl(TemplateContext context, int? pageNbr) {
             var survey = (Survey) context.GetValue(new ScriptVariableGlobal(typeof(Survey).Name));
-            var user = (SurveyUser) context.GetValue(new ScriptVariableGlobal(typeof(SurveyUser).Name));
+            //var user = (SurveyUser) context.GetValue(new ScriptVariableGlobal(typeof(SurveyUser).Name));
             var token = (string) context.GetValue(new ScriptVariableGlobal(TOKEN));
-            return GetUrl(survey, user, token, pageNbr);
+            return GetUrl(survey, token, pageNbr);
         }
 
-        public string GetUrl(string token, int pageNbr) {
-            var (survey, user, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
-            return GetUrl(survey, user, collector.Token, pageNbr);
+        public string GetUrl(string token, int? pageNbr) {
+            var (survey, _, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
+            return GetUrl(survey, collector.Token, pageNbr);
         }
 
-        public string GetUrl(Survey survey, SurveyUser user, string token, int pageNbr) {
-            Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+        public string GetUrl(Survey survey, string token, int? pageNbr) {
             graph.Survey.Current = survey;
-            var url = $"{webHook.Url}?{SurveyWebhookServerHandler.PAGE_PARAM}={pageNbr}&{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
+            string webHookUrl = GetUrl(survey); 
+            var pageParam = pageNbr.HasValue ? $"{SurveyWebhookServerHandler.PAGE_PARAM}={pageNbr}&" : "";
+            var url = $"{webHookUrl}?{pageParam}{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
             return url;
         }
+
+        private string GetUrl(Survey survey) {
+            //string webHookUrl = "";
+            //if (survey.WebHookID.HasValue) {
+            //    string str = (graph.CompanyService.IsMultiCompany ? PXAccess.GetCompanyName() : graph.CompanyService.GetSingleCompanyLoginName());
+            //    string[] returnUrl = new string[] { ReturnUrl, "/", str, "/", null };
+            //    returnUrl[4] = survey.WebHookID.ToString();
+            //    webHookUrl = string.Concat(returnUrl);
+            //}
+            //return webHookUrl;
+            Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+            return webHook.Url;
+        }
+
+        //public static string ReturnUrl {
+        //    get {
+        //        string str;
+        //        string applicationPath = HttpContext.Current.Request.ApplicationPath;
+        //        if (applicationPath != null) {
+        //            str = applicationPath.Trim(new char[] { '/' });
+        //        } else {
+        //            str = null;
+        //        }
+        //        string str1 = str;
+        //        str1 = string.IsNullOrEmpty(str1) ? string.Empty : string.Concat(str1, "/");
+        //        return string.Concat(HttpContext.Current.Request.GetWebsiteUrl(), str1, "Webhooks");
+        //    }
+        //}
 
         private void FillRenderedPages(TemplateContext context, IEnumerable<string> renderedPage) {
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedPage);
@@ -132,6 +162,7 @@ namespace PX.Survey.Ext {
             context.MemberRenamer = MyMemberRenamerDelegate;
             context.MemberFilter = MyMemberFilterDelegate;
             Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+            var url = GetUrl(survey, token, null);
             var container = new ScriptObject {
                 {survey.GetType().Name, survey},
                 {setup.GetType().Name, setup},
@@ -139,6 +170,7 @@ namespace PX.Survey.Ext {
                 {webHook.GetType().Name, webHook},
                 {IS_SINGLE_PAGE, survey.Layout == SurveyLayout.SinglePage},
                 {TOKEN, token},
+                {URL, url},
             };
             //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
             //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
@@ -147,7 +179,10 @@ namespace PX.Survey.Ext {
         }
 
         private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
-            whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
+            Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
+                Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
+            //whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
+            whGraph.Webhook.Current = wh;
             return whGraph.Webhook.Current;
         }
 

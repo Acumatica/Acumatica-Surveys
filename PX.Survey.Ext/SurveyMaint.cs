@@ -63,6 +63,9 @@ namespace PX.Survey.Ext {
         [PXCopyPasteHiddenView]
         public PXSetup<SurveySetup> SurveySetup;
 
+        //[InjectDependency]
+        //public Api.Services.ICompanyService CompanyService { get; set; }
+
         public SurveyMaint() {
         }
 
