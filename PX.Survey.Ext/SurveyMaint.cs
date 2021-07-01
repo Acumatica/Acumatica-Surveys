@@ -46,8 +46,8 @@ namespace PX.Survey.Ext {
 
         [PXCopyPasteHiddenView]
         public PXSelectJoinGroupBy<SurveyAnswer,
-            LeftJoin<SurveyDetail, 
-                On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>, 
+            LeftJoin<SurveyDetail,
+                On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
                 And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
             And<SurveyDetail.templateType, Equal<SUTemplateType.questionPage>>>,
@@ -787,11 +787,9 @@ namespace PX.Survey.Ext {
             if (row == null) { return; }
         }
 
-        protected virtual void _(Events.FieldUpdated<RecipientSelected, RecipientSelected.selected> e)
-        {
+        protected virtual void _(Events.FieldUpdated<RecipientSelected, RecipientSelected.selected> e) {
             RecipientSelected row = e.Row;
-            if (row == null) { return; } else
-            {
+            if (row == null) { return; } else {
                 recipients.View.RequestRefresh();
             }
         }
