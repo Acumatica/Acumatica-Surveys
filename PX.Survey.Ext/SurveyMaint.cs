@@ -615,11 +615,11 @@ namespace PX.Survey.Ext {
                     }
                     var updated = CollectorDataRecords.Update(collData);
                 }
-                //if (unanswered.Any()) {
-                //    collector.Status = CollectorStatus.Incomplete;
-                //} else {
-                //    collector.Status = CollectorStatus.Completed;
-                //}
+                if (unanswered.Any()) {
+                    collector.Status = CollectorStatus.Incomplete;
+                } else {
+                    collector.Status = CollectorStatus.Completed;
+                }
                 Collectors.Update(collector);
             }
             Answers.View.RequestRefresh();
