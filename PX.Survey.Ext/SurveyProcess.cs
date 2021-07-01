@@ -26,9 +26,13 @@ namespace PX.Survey.Ext {
                 return;
             }
             var action = row.Action;
-            var doProcessAnswers = action == SurveyAction.ProcessAnswers;
-            PXUIFieldAttribute.SetRequired<SurveyFilter.surveyID>(e.Cache, !doProcessAnswers);
-            PXDefaultAttribute.SetPersistingCheck<SurveyFilter.surveyID>(e.Cache, null, !doProcessAnswers ? PXPersistingCheck.NullOrBlank : PXPersistingCheck.Nothing);
+            //var doProcessAnswers = action == SurveyAction.ProcessAnswers;
+            //PXUIFieldAttribute.SetRequired<SurveyFilter.surveyID>(e.Cache, !doProcessAnswers);
+            //PXDefaultAttribute.SetPersistingCheck<SurveyFilter.surveyID>(e.Cache, null, !doProcessAnswers ? PXPersistingCheck.NullOrBlank : PXPersistingCheck.Nothing);
+            var doExpire = (action == SurveyAction.ExpireOnly);
+            PXUIFieldAttribute.SetEnabled<SurveyFilter.durationTimeSpan>(e.Cache, row, doExpire);
+            PXUIFieldAttribute.SetRequired<SurveyFilter.durationTimeSpan>(e.Cache, doExpire);
+            PXDefaultAttribute.SetPersistingCheck<SurveyFilter.durationTimeSpan>(e.Cache, null, doExpire ? PXPersistingCheck.NullOrBlank : PXPersistingCheck.Nothing);
             Documents.SetProcessDelegate(list => ProcessSurvey(list, row));
         }
 
@@ -37,57 +41,92 @@ namespace PX.Survey.Ext {
             var action = filter.Action;
             var cmd = new PXSelectJoin<SurveyCollector,
                 LeftJoin<Survey, On<Survey.surveyID, Equal<SurveyCollector.surveyID>>,
-                LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<SurveyCollector.surveyID>, And<SurveyUser.lineNbr, Equal<SurveyCollector.userLineNbr>>>>>,
-                Where<SurveyFilter.showInactive, Equal<True>, Or<Survey.active, Equal<True>,
-                And<SurveyFilter.surveyID, IsNull, Or<Survey.surveyID, Equal<Current<SurveyFilter.surveyID>>>>>>>(this);
+                LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<SurveyCollector.surveyID>,
+                    And<SurveyUser.lineNbr, Equal<SurveyCollector.userLineNbr>>>>>>(this);
             switch (action) {
-                case SurveyAction.DefaultAction:
-                    //cmd.WhereAnd<Where<B2Message.status, B2Status.notProcessed>>();
-                    break;
+                //case SurveyAction.DefaultAction:
+                //cmd.WhereAnd<Where<B2Message.status, B2Status.notProcessed>>();
+                //break;
                 case SurveyAction.SendNew:
-                    cmd.WhereAnd<Where<SurveyCollector.status, Equal<CollectorStatus._new>>>();
+                    cmd.WhereAnd<Where<SurveyCollector.sentOn, IsNull>>();
                     break;
                 case SurveyAction.ExpireOnly:
                     //cmd.WhereAnd<Where<SurveyCollector.status, SurveyCollector.notProcessed>>();
                     break;
                 case SurveyAction.RemindOnly:
-                    cmd.WhereAnd<Where<SurveyCollector.status, Equal<CollectorStatus.sent>>>();
+                    cmd.WhereAnd<Where<SurveyCollector.sentOn, IsNotNull>>();
+                    //cmd.WhereAnd<Where<SurveyCollector.status, Equal<CollectorStatus.sent>>>();
                     break;
+            }
+            /* Filter by SurveyID */
+            if (!string.IsNullOrEmpty(filter.SurveyID)) {
+                cmd.WhereAnd<Where<SurveyCollector.surveyID, Equal<Current<SurveyFilter.surveyID>>>>();
+            }
+            /* Filter by showInactive */
+            if (filter.ShowInactive != true) {
+                cmd.WhereAnd<Where<Survey.active, Equal<True>>>();
             }
             var rows = cmd.Select();
             return rows;
         }
 
-        public static void ProcessSurvey(List<SurveyCollector> surveyCollectors, SurveyFilter filter) {
-            var graph = CreateInstance<SurveyMaint>();
+        public static void ProcessSurvey(List<SurveyCollector> recs, SurveyFilter filter) {
+            var collGraph = CreateInstance<SurveyCollectorMaint>();
             var action = filter.Action;
-            var generator = new SurveyGenerator(graph);
-            var errorOccurred = false;// ConnectAnswers();
-            foreach (var survey in surveyCollectors) {
-                // TODO Redo this by SurveyCollector and with SurveyCollectorMaint
-                //graph.Survey.Current = survey;
-                //switch (action) {
-                //    //note: the or clauses below are intended to preserve a previous error indicator and not let 
-                //    //      successive iterations override a previous error detection.
-                //    case SurveyAction.ProcessAnswers:
-                //        errorOccurred = ProcessAnswers(graph, survey, filter) || errorOccurred;
-                //        break;
-                //    case SurveyAction.SendNew:
-                //        errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
-                //        break;
-                //    case SurveyAction.RemindOnly:
-                //        errorOccurred = SendReminders(graph, survey, filter) || errorOccurred;
-                //        break;
-                //    case SurveyAction.ExpireOnly:
-                //        errorOccurred = SetExpiredSurveys(graph, survey, filter) || errorOccurred;
-                //        break;
-                //    case SurveyAction.DefaultAction:
-                //        errorOccurred = DefaultRoutine(graph, generator, survey, filter) || errorOccurred;
-                //        break;
-                //    default:
-                //        throw new PXException(Messages.SurveyActionNotRecognised);
-                //}
+            if (string.IsNullOrEmpty(action)) {
+                throw new PXException(Messages.SurveyActionNotRecognised);
             }
+            SurveyProcess surveyProcessGraph = PXGraph.CreateInstance<SurveyProcess>();
+            surveyProcessGraph.Filter.Insert(filter);
+            var collCache = collGraph.Collector.Cache;
+            var errorOccurred = false;
+            var docCount = 0;
+            foreach (var rec in recs) {
+                var row = (SurveyCollector)collCache.CreateCopy(rec);
+                try {
+                    PXProcessing<SurveyCollector>.SetCurrentItem(rec);
+                    switch (action) {
+                        case SurveyAction.SendNew:
+                            collGraph.DoSendNewNotification(row);
+                            break;
+                        case SurveyAction.RemindOnly:
+                            collGraph.DoSendReminder(row, filter.DurationTimeSpan);
+                            break;
+                        case SurveyAction.ExpireOnly:
+                            row.Status = CollectorStatus.Expired;
+                            row.Message = null;
+                            collGraph.Collector.Update(row);
+                            break;
+                    }
+                    if (++docCount % 10 == 0) {
+                        surveyProcessGraph.Actions.PressSave();
+                    }
+                    PXProcessing<SurveyCollector>.SetInfo(recs.IndexOf(rec), string.Format("The survey collector {0} has been updated", rec.CollectorID));
+                    PXProcessing<SurveyCollector>.SetProcessed();
+                } catch (Exception ex) {
+                    row.Status = CollectorStatus.Error;
+                    row.Message = ex.Message;
+                    surveyProcessGraph.Documents.Update(row);
+                    surveyProcessGraph.Actions.PressSave();
+                    PXTrace.WriteError(ex);
+                    string errorMessage = ex.Message + ": ";
+                    if (ex is PXOuterException pex && pex.InnerMessages != null) {
+                        foreach (string message in pex.InnerMessages) {
+                            errorMessage += message + ", ";
+                        }
+                    } else {
+                        while (ex.InnerException != null) {
+                            errorMessage += ex.InnerException.Message + ", ";
+                            ex = ex.InnerException;
+                        }
+                    }
+                    errorMessage = errorMessage.Trim(new char[] { ' ', ',', ':' });
+                    errorOccurred = true;
+                    PXProcessing<SurveyCollector>.SetError(recs.IndexOf(rec), "A survey collector cannot be updated:" + errorMessage);
+                }
+            }
+            surveyProcessGraph.Actions.PressSave();
+            PXProcessing<SurveyCollector>.SetCurrentItem(null);
             if (errorOccurred) {
                 throw new PXException(Messages.SurveyError);
             }
@@ -95,27 +134,6 @@ namespace PX.Survey.Ext {
 
         private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = graph.DoProcessAnswers(survey);
-            return errorOccurred;
-        }
-
-        /// <summary>
-        /// This is intended to be the primary action that this process is run that will flow through a logical sequence that will hit any of the three
-        /// process flows.
-        /// 1) the set expiration logic will be run every time
-        /// 2) a determination is made whether the user has any active open surveys after the expiration routine has run.
-        /// 3) if any active surveys are found then a Reminder is sent. A new reminder does not get sent
-        /// 4) if no active surveys are found a new one is sent. This is refereed to as a Re-Send
-        /// </summary>
-        /// <param name="surveyUser"></param>
-        /// <param name="graph"></param>
-        /// <param name="surveyCurrent"></param>
-        /// <param name="surveyUserList"></param>
-        /// <param name="filter"></param>
-        /// <returns>Whether of not any of the processes within have an error</returns>
-        private static bool DefaultRoutine(SurveyMaint graph, SurveyGenerator generator, Survey survey, SurveyFilter filter) {
-            var errorOccurred = SetExpiredSurveys(graph, survey, filter);
-            errorOccurred = SendReminders(graph, survey, filter) || errorOccurred;
-            errorOccurred = SendNew(graph, survey, filter) || errorOccurred;
             return errorOccurred;
         }
 
@@ -147,79 +165,6 @@ namespace PX.Survey.Ext {
         //    }
         //    return errorOccurred;
         //}
-
-        /// <summary>
-        /// This method will create a new collector record and invoke a notification on it.
-        /// </summary>
-        /// <param name="surveyUser"></param>
-        /// <param name="graph"></param>
-        /// <param name="surveyCurrent"></param>
-        /// <param name="surveyUserList"></param>
-        /// <param name="filter"></param>
-        /// <remarks>
-        /// </remarks>
-        /// <returns>
-        ///     Whether or not an error has occured within the process which is used by the main calling process to throw a final exception at the end of the process
-        /// </returns>
-        private static bool SendNew(SurveyMaint graph, Survey survey, SurveyFilter filter) {
-            bool errorOccurred = false;
-            var collGraph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-            var collectors = graph.Collectors.Select();
-            foreach (var res in collectors) {
-                var collector = PXResult.Unwrap<SurveyCollector>(res);
-                if (collector.Status != CollectorStatus.New) {
-                    continue;
-                }
-                errorOccurred = collGraph.DoSendNewNotification(collector);
-            }
-            return errorOccurred;
-        }
-
-        /// <summary>
-        /// This method allows the duration value to be expressed using a PXTimeSpanLong.
-        /// </summary>
-        /// <returns>
-        /// The Calculated Time Span
-        /// </returns>
-        /// <remarks>
-        ///     If the durationTimeSpan is either null or zero we explicitly need to set a
-        ///     null value as the expiration date.
-        /// </remarks>
-        //private static DateTime? CalculateExpirationDate(int? durationTimeSpan) {
-        //    if (durationTimeSpan.GetValueOrDefault() == 0) return null;
-        //    return DateTime.UtcNow.AddMinutes(durationTimeSpan.GetValueOrDefault());
-        //}
-
-
-        /// <summary>
-        /// This method sends a reminder notification for any active Collector for a given user.
-        /// </summary>
-        /// <param name="surveyUser"></param>
-        /// <param name="graph"></param>
-        /// <param name="surveyCurrent"></param>
-        /// <param name="surveyUserList"></param>
-        /// <param name="filter"></param>
-        /// <remarks>
-        /// Note:   Regarding the term to "Re-Send" and "Reminder"
-        ///         By this term resend we are creating a new Collector record sometime after the first has been
-        ///         sent. the term "Re-Send" is not the same as a reminder where a reminder is a second notification for the same collector
-        ///         record.
-        /// note:   If a collector has a null expiration date and the duration was set for this round, the expiration will be set. if,
-        ///         however, the expiration was already previously set, the expiration will never be overridden. 
-        /// </remarks>
-        private static bool SendReminders(SurveyMaint graph, Survey survey, SurveyFilter filter) {
-            bool errorOccurred = false;
-            var collGraph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-            var collectors = graph.Collectors.Select();
-            foreach (var res in collectors) {
-                var collector = PXResult.Unwrap<SurveyCollector>(res);
-                if (collector.Status != CollectorStatus.New) {
-                    continue;
-                }
-                errorOccurred = collGraph.DoSendReminder(collector, filter.DurationTimeSpan);
-            }
-            return errorOccurred;
-        }
 
         private static bool SetExpiredSurveys(SurveyMaint graph, Survey survey, SurveyFilter filter) {
             bool errorOccurred = false;
@@ -290,7 +235,7 @@ namespace PX.Survey.Ext {
         #region Action
         public abstract class action : BqlString.Field<action> { }
         [PXString(1, IsUnicode = false, IsFixed = true)]
-        [PXUnboundDefault(SurveyAction.DefaultAction)]
+        [PXUnboundDefault(SurveyAction.SendNew)]
         [PXUIField(DisplayName = "Action")]
         [SurveyAction.List]
         public virtual string Action { get; set; }

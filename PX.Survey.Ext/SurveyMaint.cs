@@ -63,6 +63,9 @@ namespace PX.Survey.Ext {
         [PXCopyPasteHiddenView]
         public PXSetup<SurveySetup> SurveySetup;
 
+        //[InjectDependency]
+        //public Api.Services.ICompanyService CompanyService { get; set; }
+
         public SurveyMaint() {
         }
 
@@ -423,15 +426,43 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Load Collectors", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
         public virtual IEnumerable LoadCollectors(PXAdapter adapter) {
-            if (Survey.Current != null) {
-                Save.Press();
-                foreach (var user in Users.Select()) {
-                    var collector = DoUpsertCollector(Survey.Current, user, null);
+            //if (Survey.Current != null) {
+            //    Save.Press();
+            //    foreach (var user in Users.Select()) {
+            //        var collector = DoUpsertCollector(Survey.Current, user, null);
+            //    }
+            //    Actions.PressSave();
+            //    Collectors.View.RequestRefresh();
+            //}
+            //return adapter.Get();
+            Save.Press();
+            var list = adapter.Get<Survey>().ToList();
+            PXLongOperation.StartOperation(this, delegate () {
+                var graph = CreateInstance<SurveyMaint>();
+                foreach (var survey in list) {
+                    try {
+                        if (adapter.MassProcess) {
+                            PXProcessing<Survey>.SetCurrentItem(survey);
+                        }
+                        graph.DoLoadCollectors(survey, adapter.MassProcess);
+                    } catch (Exception ex) {
+                        if (!adapter.MassProcess) {
+                            throw;
+                        }
+                        PXProcessing<Survey>.SetError(ex);
+                    }
                 }
-                Actions.PressSave();
-                Collectors.View.RequestRefresh();
+            });
+            return list;
+        }
+
+        private void DoLoadCollectors(Survey survey, bool massProcess) {
+            Survey.Current = survey;
+            foreach (var user in Users.Select()) {
+                var collector = DoUpsertCollector(Survey.Current, user, null);
             }
-            return adapter.Get();
+            Actions.PressSave();
+            Collectors.View.RequestRefresh();
         }
 
         public PXAction<Survey> insertSampleCollector;
