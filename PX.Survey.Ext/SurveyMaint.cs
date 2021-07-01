@@ -585,7 +585,9 @@ namespace PX.Survey.Ext {
                 }
             }
             Actions.PressSave();
-            //DoProcessAnswers(survey);
+            Answers.View.RequestRefresh();
+            Collectors.View.RequestRefresh();
+            CollectorDataRecords.View.RequestRefresh();
         }
 
         public bool DoProcessAnswers(Survey survey) {
@@ -626,6 +628,9 @@ namespace PX.Survey.Ext {
                 }
                 Collectors.Update(collector);
             }
+            Answers.View.RequestRefresh();
+            Collectors.View.RequestRefresh();
+            CollectorDataRecords.View.RequestRefresh();
             Actions.PressSave();
             return errorOccurred;
         }
