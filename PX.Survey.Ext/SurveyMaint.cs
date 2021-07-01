@@ -3,6 +3,7 @@ using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
+using PX.Objects.CS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -356,6 +357,30 @@ namespace PX.Survey.Ext {
                 SaveContentToAttachment($"Survey-{survey.SurveyID}-Page-{pageNbr}.html", pageContent);
             }
             Actions.PressSave();
+        }
+
+        public PXAction<Survey> viewTemplate;
+        [PXUIField(DisplayName = "View Template", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable ViewTemplate(PXAdapter adapter) {
+            if (Details.Current != null) {
+                var graph = CreateInstance<SurveyTemplateMaint>();
+                graph.SUTemplate.Current = graph.SUTemplate.Search<SurveyTemplate.templateID>(Details.Current.TemplateID);
+                throw new PXRedirectRequiredException(graph, true, string.Empty);
+            }
+            return adapter.Get();
+        }
+
+        public PXAction<Survey> viewAttribute;
+        [PXUIField(DisplayName = "View Attribute", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable ViewAttribute(PXAdapter adapter) {
+            if (Details.Current != null) {
+                var graph = CreateInstance<CSAttributeMaint>();
+                graph.Attributes.Current = graph.Attributes.Search<CSAttribute.attributeID>(Details.Current.AttributeID);
+                throw new PXRedirectRequiredException(graph, true, string.Empty);
+            }
+            return adapter.Get();
         }
 
         public SurveyCollector DoUpsertCollector(Survey survey, SurveyUser user, Guid? refNoteID) {
