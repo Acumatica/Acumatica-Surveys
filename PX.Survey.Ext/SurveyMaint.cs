@@ -3,6 +3,7 @@ using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CR;
+using PX.Objects.CS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,20 +45,27 @@ namespace PX.Survey.Ext {
             OrderBy<Asc<SurveyAnswer.createdDateTime>>> Answers;
 
         [PXCopyPasteHiddenView]
-        public PXSelectGroupBy<SurveyAnswer,
+        public PXSelectJoinGroupBy<SurveyAnswer,
+            LeftJoin<SurveyDetail,
+                On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
+                And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyAnswer.templateType, Equal<SUTemplateType.questionPage>>>,
+            And<SurveyDetail.templateType, Equal<SUTemplateType.questionPage>>>,
             Aggregate<
-                GroupBy<SurveyAnswer.pageNbr,
-                GroupBy<SurveyAnswer.questionNbr,
+                GroupBy<SurveyDetail.pageNbr,
+                GroupBy<SurveyDetail.questionNbr,
                 Count<SurveyAnswer.lineNbr>>>>
             > AnswerSummary;
 
         [PXCopyPasteHiddenView]
-        public PXSelect<SurveyAnswer,
+        public PXSelectJoin<SurveyAnswer,
+            LeftJoin<SurveyDetail,
+                On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
+                And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyAnswer.templateType, Equal<SUTemplateType.commentPage>>>,
-            OrderBy<Asc<SurveyAnswer.pageNbr, Asc<SurveyAnswer.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
+            And<SurveyDetail.templateType, Equal<SUTemplateType.commentPage>,
+            And<SurveyAnswer.value, IsNotNull>>>,
+            OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
@@ -354,6 +362,30 @@ namespace PX.Survey.Ext {
             Actions.PressSave();
         }
 
+        public PXAction<Survey> viewTemplate;
+        [PXUIField(DisplayName = "View Template", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable ViewTemplate(PXAdapter adapter) {
+            if (Details.Current != null) {
+                var graph = CreateInstance<SurveyTemplateMaint>();
+                graph.SUTemplate.Current = graph.SUTemplate.Search<SurveyTemplate.templateID>(Details.Current.TemplateID);
+                throw new PXRedirectRequiredException(graph, true, string.Empty);
+            }
+            return adapter.Get();
+        }
+
+        public PXAction<Survey> viewAttribute;
+        [PXUIField(DisplayName = "View Attribute", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable ViewAttribute(PXAdapter adapter) {
+            if (Details.Current != null) {
+                var graph = CreateInstance<CSAttributeMaint>();
+                graph.Attributes.Current = graph.Attributes.Search<CSAttribute.attributeID>(Details.Current.AttributeID);
+                throw new PXRedirectRequiredException(graph, true, string.Empty);
+            }
+            return adapter.Get();
+        }
+
         public SurveyCollector DoUpsertCollector(Survey survey, SurveyUser user, Guid? refNoteID) {
             var collector = new SurveyCollector {
                 SurveyID = survey.SurveyID,
@@ -582,7 +614,9 @@ namespace PX.Survey.Ext {
                 }
             }
             Actions.PressSave();
-            //DoProcessAnswers(survey);
+            Answers.View.RequestRefresh();
+            Collectors.View.RequestRefresh();
+            CollectorDataRecords.View.RequestRefresh();
         }
 
         public bool DoProcessAnswers(Survey survey) {
@@ -623,6 +657,9 @@ namespace PX.Survey.Ext {
                 }
                 Collectors.Update(collector);
             }
+            Answers.View.RequestRefresh();
+            Collectors.View.RequestRefresh();
+            CollectorDataRecords.View.RequestRefresh();
             Actions.PressSave();
             return errorOccurred;
         }
@@ -664,6 +701,7 @@ namespace PX.Survey.Ext {
                             continue;
                         }
                         var value = kvp.Value;
+                        // TODO Skip empty comments
                         if (value == null) {
                             // No answer
                             continue;
@@ -746,7 +784,7 @@ namespace PX.Survey.Ext {
             redirectToAnonymousSurvey.SetEnabled(hasPages);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
-            PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
+            //PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
             var anon = row.Target == SurveyTarget.Anonymous;
             if (anon) {
                 Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
@@ -939,6 +977,12 @@ namespace PX.Survey.Ext {
         private int GetMaxPage(string surveyID) {
             var maxPage = PXSelect<SurveyDetail, Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>>>.Select(this, surveyID).FirstTableItems.Select(sd => sd.PageNbr).Max();
             return maxPage ?? 0;
+        }
+
+        protected virtual void _(Events.RowSelected<SurveyUser> e) {
+            var row = e.Row;
+            if (row == null) { return; }
+            // TODO Lock Recipient for delete if collector is found
         }
 
         public void _(Events.FieldUpdated<SurveyCollector, SurveyCollector.collectorID> e) {

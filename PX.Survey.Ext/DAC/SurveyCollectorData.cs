@@ -20,7 +20,8 @@ namespace PX.Survey.Ext {
 
         public static class FK {
             public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyCollectorData>.By<surveyID> { }
-            public class SUCollectorToken : SurveyCollector.UK.ForeignKeyOf<SurveyCollectorData>.By<token> { }
+            //public class SUCollectorToken : SurveyCollector.UK.ForeignKeyOf<SurveyCollectorData>.By<token> { }
+            //public class SUCollector : SurveyCollector.PK.ForeignKeyOf<SurveyCollectorData>.By<collectorID> { }
         }
 
 
@@ -58,6 +59,7 @@ namespace PX.Survey.Ext {
         /// </remarks>
         [PXUIField(DisplayName = "Collector ID", IsReadOnly = true)]
         [PXDBInt]
+        //[PXParent(typeof(FK.SUCollector))] Put back after demo
         public virtual int? CollectorID { get; set; }
         #endregion
 

@@ -144,6 +144,7 @@ namespace PX.Survey.Ext {
         public abstract class entityType : BqlString.Field<entityType> { }
         [PXDBString(256, IsUnicode = true)]
         [PXEntityTypeList]
+        [PXDefault("", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Entity Type", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string EntityType { get; set; }
         #endregion
