@@ -7,17 +7,19 @@ namespace PX.Survey.Ext {
 
     [Serializable]
     [PXCacheName("RecipientSelected")]
-    [PXProjection(typeof(Select<Contact, 
+    [PXProjection(typeof(Select2<Contact,
+        LeftJoin<SurveyUser, On<SurveyUser.contactID, Equal<Contact.contactID>, And<SurveyUser.surveyID, Equal<CurrentValue<Survey.surveyID>>>>>, 
         Where<Contact.isActive, Equal<True>,
+        And<Where<SurveyUser.surveyID, IsNull,
         And<Where<CurrentValue<RecipientFilter.contactType>, IsNull, 
-            Or<Contact.contactType, Equal<CurrentValue<RecipientFilter.contactType>>>>>>,
+            Or<Contact.contactType, Equal<CurrentValue<RecipientFilter.contactType>>>>>>>>,
         OrderBy<Asc<Contact.displayName>>>))]
     public class RecipientSelected : IBqlTable, IPXSelectable {
 
         #region Selected
         public abstract class selected : BqlType<IBqlBool, bool>.Field<selected> { }
         [PXBool]
-        [PXUnboundDefault]
+        [PXUnboundDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Selected")]
         public virtual bool? Selected { get; set; }
         #endregion
