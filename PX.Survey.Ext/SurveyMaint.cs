@@ -44,20 +44,27 @@ namespace PX.Survey.Ext {
             OrderBy<Asc<SurveyAnswer.createdDateTime>>> Answers;
 
         [PXCopyPasteHiddenView]
-        public PXSelectGroupBy<SurveyAnswer,
+        public PXSelectJoinGroupBy<SurveyAnswer,
+            LeftJoin<SurveyDetail, 
+                On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>, 
+                And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyAnswer.templateType, Equal<SUTemplateType.questionPage>>>,
+            And<SurveyDetail.templateType, Equal<SUTemplateType.questionPage>>>,
             Aggregate<
-                GroupBy<SurveyAnswer.pageNbr,
-                GroupBy<SurveyAnswer.questionNbr,
+                GroupBy<SurveyDetail.pageNbr,
+                GroupBy<SurveyDetail.questionNbr,
                 Count<SurveyAnswer.lineNbr>>>>
             > AnswerSummary;
 
         [PXCopyPasteHiddenView]
-        public PXSelect<SurveyAnswer,
+        public PXSelectJoin<SurveyAnswer,
+            LeftJoin<SurveyDetail,
+                On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
+                And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyAnswer.templateType, Equal<SUTemplateType.commentPage>>>,
-            OrderBy<Asc<SurveyAnswer.pageNbr, Asc<SurveyAnswer.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
+            And<SurveyDetail.templateType, Equal<SUTemplateType.commentPage>,
+            And<SurveyAnswer.value, IsNotNull>>>,
+            OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
 
         [PXHidden]
         [PXCopyPasteHiddenView]
