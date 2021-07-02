@@ -126,6 +126,10 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Keep Answers Anonymous")]
         public virtual bool? KeepAnswersAnonymous { get; set; }
         #endregion
+        
+        //SurveyCampaign
+        //SurveyRun
+        //MarketingList
 
         #region WorkgroupID
         public abstract class workgroupID : BqlInt.Field<workgroupID> { }
