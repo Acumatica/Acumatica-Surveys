@@ -321,6 +321,7 @@
                                             <px:PXGridColumn DataField="ExpirationDate" Width="120px" />
                                             <px:PXGridColumn DataField="Status" Type="DropDownList" Width="120px" />
                                             <px:PXGridColumn DataField="Message" Width="200px" />
+                                            <px:PXGridColumn DataField="SentOn" Width="120px" />
                                             <px:PXGridColumn DataField="LastModifiedDateTime" Width="120px" />
                                         </Columns>
                                     </px:PXGridLevel>
