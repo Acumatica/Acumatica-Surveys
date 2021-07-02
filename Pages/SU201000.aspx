@@ -25,6 +25,12 @@
             <px:PXDSCallbackCommand Name="LoadCollectors" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />
+			<px:PXDSCallbackCommand Name="AddAction" Visible="False" />
+			<px:PXDSCallbackCommand Name="DeleteAction" Visible="False" />
+			<px:PXDSCallbackCommand Name="LinkToContact" Visible="False" />
+			<px:PXDSCallbackCommand Name="LinkToBAccount" Visible="False" />
+			<px:PXDSCallbackCommand Name="InnerProcess" Visible="false" />
+			<px:PXDSCallbackCommand Name="InnerProcessAll" Visible="false" />
             <%--<px:PXDSCallbackCommand Name="Collectors$Select_RefNote" Visible="False" />
             <px:PXDSCallbackCommand Name="Collectors$Navigate_ByRefNote" Visible="False" />
             <px:PXDSCallbackCommand Name="Collectors$Attach_RefNote" Visible="False" />--%>
