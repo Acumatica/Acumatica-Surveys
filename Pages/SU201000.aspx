@@ -22,6 +22,7 @@
             <px:PXDSCallbackCommand Name="ProcessAnswers" Visible="False" />
             <px:PXDSCallbackCommand Name="ReProcessAnswers" Visible="False" />
             <px:PXDSCallbackCommand Name="ViewComponent" Visible="False" />
+            <px:PXDSCallbackCommand Name="ViewAttribute" Visible="False" />
             <px:PXDSCallbackCommand Name="LoadCollectors" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />
