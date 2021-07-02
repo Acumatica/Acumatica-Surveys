@@ -96,15 +96,15 @@
                         </Levels>
                         <ActionBar>
                             <CustomItems>
-                                <px:PXToolBarButton Key="AddTemplates">
+                                <%--<px:PXToolBarButton Key="AddTemplates">
                                     <AutoCallBack Command="AddTemplates" Target="ds" />
-                                </px:PXToolBarButton>
+                                </px:PXToolBarButton>--%>
                                 <px:PXToolBarButton Key="CreateSurvey">
                                     <AutoCallBack Command="CreateSurvey" Target="ds" />
                                 </px:PXToolBarButton>
-                                <px:PXToolBarButton Key="ResetPageNumbers">
+                                <%--<px:PXToolBarButton Key="ResetPageNumbers">
                                     <AutoCallBack Command="ResetPageNumbers" Target="ds" />
-                                </px:PXToolBarButton>
+                                </px:PXToolBarButton>--%>
                                 <px:PXToolBarButton Key="GenerateSample">
                                     <AutoCallBack Command="GenerateSample" Target="ds" />
                                 </px:PXToolBarButton>
@@ -416,11 +416,12 @@
                                 <RowTemplate>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="Description" Width="350px" AllowDragDrop="true" />
-                                    <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" />
-                                    <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" LinkCommand="ViewAttribute" />
-                                    <px:PXGridColumn DataField="AttrDesc" Width="150px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="Description" Width="350px"/>
+                                    <px:PXGridColumn DataField="QuestionNbr" Width="110px"/>
+                                    <px:PXGridColumn DataField="AttributeID" Width="120px" LinkCommand="ViewAttribute" />
+                                    <px:PXGridColumn DataField="AttrDesc" Width="150px" />
                                     <px:PXGridColumn DataField="Value" Width="400px" />
+                                    <px:PXGridColumn DataField="Count" Width="100px" />
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
