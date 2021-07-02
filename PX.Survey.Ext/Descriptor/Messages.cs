@@ -64,6 +64,13 @@ namespace PX.Survey.Ext {
             public const string MultiPage = "Multi Page";
         }
 
+        public class SurveyStatus {
+            public const string Preparing = "Preparing";
+            public const string Started = "Started";
+            public const string InProgress = "InProgress";
+            public const string Closed = "Closed";
+        }
+
         public const string Send = "Process";
         public const string SendAll = "Process All";
         public const string SurveyDetailPasteLineCommand = "Survey Detail Paste Line";

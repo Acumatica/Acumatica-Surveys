@@ -39,6 +39,7 @@
             <px:PXSelector runat="server" ID="edSurveyID" DataField="SurveyID" />
             <px:PXDropDown runat="server" ID="edTarget" DataField="Target" CommitChanges="true" />
             <px:PXDropDown runat="server" ID="edLayout" DataField="Layout" CommitChanges="true" />
+            <px:PXDropDown runat="server" ID="edStatus" DataField="Status" />
             <px:PXLayoutRule runat="server" LabelsWidth="S" ColumnSpan="2" />
             <px:PXTextEdit runat="server" ID="edTitle" DataField="Title" Width="500px" CommitChanges="true" />
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" />
@@ -46,7 +47,6 @@
             <px:PXSelector runat="server" ID="edNotificationID" DataField="NotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXSelector runat="server" ID="edRemindNotificationID" DataField="RemindNotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true" />
-            <px:PXCheckBox runat="server" ID="edActive" DataField="Active" CommitChanges="true"></px:PXCheckBox>
             <px:PXLayoutRule runat="server" LabelsWidth="S" ControlSize="SM" />
             <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
             <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />

@@ -85,6 +85,15 @@ namespace PX.Survey.Ext {
         public virtual string Layout { get; set; }
         #endregion
 
+        #region Status
+        public abstract class status : BqlString.Field<status> { }
+        [PXDBString(1, IsUnicode = false, IsFixed = true)]
+        [PXDefault(SurveyStatus.Preparing)]
+        [PXUIField(DisplayName = "Status", Visibility = PXUIVisibility.SelectorVisible)]
+        [SurveyStatus.List]
+        public virtual string Status { get; set; }
+        #endregion
+
         #region TemplateID
         public abstract class templateID : BqlInt.Field<templateID> { }
         [PXDBInt]
@@ -97,8 +106,19 @@ namespace PX.Survey.Ext {
         public virtual int? TemplateID { get; set; }
         #endregion
 
-        #region Active
-        public abstract class active : BqlBool.Field<active> { }
+        //#region Active
+        //public abstract class active : BqlBool.Field<active> { }
+        //[PXDBBool]
+        //[PXUIField(DisplayName = "Active")]
+        //public virtual bool? Active { get; set; }
+        //#endregion
+
+        #region AllowAnonymous
+        public abstract class allowAnonymous : BqlBool.Field<allowAnonymous> { }
+        [PXDBBool]
+        [PXUIField(DisplayName = "Allow Anonymous")]
+        public virtual bool? AllowAnonymous { get; set; }
+        #endregion
 
         [PXDBBool]
         [PXUIField(DisplayName = "Active")]

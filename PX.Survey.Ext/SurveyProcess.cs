@@ -62,9 +62,9 @@ namespace PX.Survey.Ext {
             if (!string.IsNullOrEmpty(filter.SurveyID)) {
                 cmd.WhereAnd<Where<SurveyCollector.surveyID, Equal<Current<SurveyFilter.surveyID>>>>();
             }
-            /* Filter by showInactive */
-            if (filter.ShowInactive != true) {
-                cmd.WhereAnd<Where<Survey.active, Equal<True>>>();
+            /* Filter by ShowClosed */
+            if (filter.ShowClosed != true) {
+                cmd.WhereAnd<Where<Survey.status, NotEqual<SurveyStatus.closed>>>();
             }
             var rows = cmd.Select();
             return rows;
@@ -245,8 +245,7 @@ namespace PX.Survey.Ext {
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [PXString]
         [PXUIField(DisplayName = "Survey ID")]
-        [PXSelector(typeof(Search<Survey.surveyID, Where<Survey.active, Equal<True>>>),
-                    DescriptionField = typeof(Survey.title))]
+        [PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 
@@ -257,12 +256,12 @@ namespace PX.Survey.Ext {
         public virtual int? DurationTimeSpan { get; set; }
         #endregion
 
-        #region ShowInactive
-        public abstract class showInactive : BqlBool.Field<showInactive> { }
+        #region ShowClosed
+        public abstract class showClosed : BqlBool.Field<showClosed> { }
         [PXBool]
         [PXUnboundDefault(false)]
-        [PXUIField(DisplayName = "Show Inactive")]
-        public virtual bool? ShowInactive { get; set; }
+        [PXUIField(DisplayName = "Show Closed")]
+        public virtual bool? ShowClosed { get; set; }
         #endregion
     }
     #endregion
