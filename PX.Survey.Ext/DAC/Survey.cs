@@ -121,8 +121,6 @@ namespace PX.Survey.Ext {
         #endregion
 
         [PXDBBool]
-        [PXUIField(DisplayName = "Active")]
-        public virtual bool? Active { get; set; }
         #endregion
 
         #region WorkgroupID
