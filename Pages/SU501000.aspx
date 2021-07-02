@@ -20,19 +20,20 @@
     <px:PXGrid ID="grid" runat="server" DataSourceID="ds" Style="z-index: 100" 
 		Width="100%" Height="150px" SkinID="Details" TabIndex="7400">
 		<Levels>
-			<px:PXGridLevel DataMember="Documents" DataKeyNames="ContactID">
+			<px:PXGridLevel DataMember="Documents">
 			    <Columns>
-                    <px:PXGridColumn DataField="SurveyID" Width="250px" />
 					<px:PXGridColumn DataField="Selected" TextAlign="Center" Type="CheckBox" Width="60px" AllowCheckAll="true" />
-					<px:PXGridColumn DataField="SurveyUser__UserID" Width="0px" AllowFilter="false" AllowResize="false" AllowShowHide="False" />
-                    <px:PXGridColumn DataField="Status" type="DropDownList" TextAlign="Left" Width="250px" />
-                    <px:PXGridColumn DataField="SurveyUser__ContactID" DisplayMode="Text" TextAlign="Left" Width="250px"  MatrixMode="True" />
+                    <px:PXGridColumn DataField="SurveyID" Width="100px" />
+                    <px:PXGridColumn DataField="CollectorID" Width="100px" />
+                    <px:PXGridColumn DataField="Status" type="DropDownList" TextAlign="Left" Width="100px" />
+                    <px:PXGridColumn DataField="SurveyUser__ContactID" DisplayMode="Text" TextAlign="Left" Width="250px"/>
                     <px:PXGridColumn DataField="SurveyUser__RecipientType" />
-                    <px:PXGridColumn DataField="SurveyUser__Phone1" Width="180px" />
-                    <px:PXGridColumn DataField="SurveyUser__Phone2" Width="180px" />
-                    <px:PXGridColumn DataField="SurveyUser__Email" Width="280px" />
-					<px:PXGridColumn DataField="SurveyUser__MobileDeviceOS" Width="200px" />					
-                    <px:PXGridColumn DataField="SurveyUser__UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="200px" />
+                    <px:PXGridColumn DataField="SurveyUser__Phone1" Width="150px" />
+                    <px:PXGridColumn DataField="SurveyUser__Phone2" Width="150px" />
+                    <px:PXGridColumn DataField="SurveyUser__Email" Width="250px" />
+					<px:PXGridColumn DataField="SurveyUser__MobileDeviceOS" Width="150px" />					
+                    <px:PXGridColumn DataField="SurveyUser__UsingMobileApp" TextAlign="Center" Type="CheckBox" Width="100px" />
+                    <px:PXGridColumn DataField="Message" Width="250px" />
                 </Columns>
 			</px:PXGridLevel>
 		</Levels>
