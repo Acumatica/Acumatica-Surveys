@@ -109,6 +109,8 @@ namespace PX.Survey.Ext {
         public virtual int? QuestionNbr { get; set; }
         #endregion
 
+        //QuestionCode
+
         #region Description
         public abstract class description : BqlString.Field<description> { }
         [DBMatrixLocalizableDescription(256, IsUnicode = true)]
