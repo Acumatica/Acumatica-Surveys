@@ -25,9 +25,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Bad Request Template")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.badRequest>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.badRequest>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? BadRequestID { get; set; }
         #endregion
 
@@ -36,9 +36,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Main Template")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.survey>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? TemplateID { get; set; }
         #endregion
 
@@ -47,9 +47,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Header")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.header>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.header>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? DefHeaderID { get; set; }
         #endregion
 
@@ -58,9 +58,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Page Header")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageHeader>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.pageHeader>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? DefPageHeaderID { get; set; }
         #endregion
 
@@ -69,9 +69,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Question")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.questionPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.questionPage>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? DefQuestionID { get; set; }
         #endregion
 
@@ -89,9 +89,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Comment")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.commentPage>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.commentPage>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? DefCommentID { get; set; }
         #endregion
 
@@ -125,9 +125,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Page Footer")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.pageFooter>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.pageFooter>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? DefPageFooterID { get; set; }
         #endregion
 
@@ -136,9 +136,9 @@ namespace PX.Survey.Ext {
         [PXDBInt]
         [PXUIField(DisplayName = "Default Footer")]
         [PXDefault]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.footer>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.footer>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? DefFooterID { get; set; }
         #endregion
 

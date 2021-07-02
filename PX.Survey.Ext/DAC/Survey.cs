@@ -22,7 +22,7 @@ namespace PX.Survey.Ext {
                 => PXSelect<Survey, Where<surveyID, Equal<Required<surveyID>>>>.SelectWindowed(graph, 0, 1, surveyID);
         }
         public static class FK {
-            public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<Survey>.By<templateID> { }
+            public class SUSurveyTemplate : SurveyComponent.PK.ForeignKeyOf<Survey>.By<templateID> { }
         }
         #endregion
 
@@ -91,9 +91,9 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Template")]
         [PXDefault(typeof(SurveySetup.templateID))]
         [PXForeignReference(typeof(FK.SUSurveyTemplate)), ]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<SUTemplateType.survey>>>), 
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.survey>>>), 
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
         public virtual int? TemplateID { get; set; }
         #endregion
 

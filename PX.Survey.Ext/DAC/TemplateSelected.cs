@@ -6,13 +6,13 @@ namespace PX.Survey.Ext {
 
     [Serializable]
     [PXCacheName("TemplateSelected")]
-    [PXProjection(typeof(Select<SurveyTemplate,
-        Where<SurveyTemplate.active, Equal<True>,
-        And<SurveyTemplate.templateType, NotEqual<SUTemplateType.survey>,
-        And<SurveyTemplate.templateType, NotEqual<SUTemplateType.badRequest>,
+    [PXProjection(typeof(Select<SurveyComponent,
+        Where<SurveyComponent.active, Equal<True>,
+        And<SurveyComponent.componentType, NotEqual<SUComponentType.survey>,
+        And<SurveyComponent.componentType, NotEqual<SUComponentType.badRequest>,
         And<Where<CurrentValue<TemplateFilter.templateType>, IsNull,
-            Or<SurveyTemplate.templateType, Equal<CurrentValue<TemplateFilter.templateType>>>>>>>>,
-        OrderBy<Asc< SurveyTemplate.description>>>))]
+            Or<SurveyComponent.componentType, Equal<CurrentValue<TemplateFilter.templateType>>>>>>>>,
+        OrderBy<Asc< SurveyComponent.description>>>))]
     public class TemplateSelected : IBqlTable, IPXSelectable {
 
         #region Selected
@@ -23,16 +23,16 @@ namespace PX.Survey.Ext {
         public virtual bool? Selected { get; set; }
         #endregion
 
-        [PXDBInt(BqlField = typeof(SurveyTemplate.templateID))]
+        [PXDBInt(BqlField = typeof(SurveyComponent.componentID))]
         [PXUIField(DisplayName = "Template ID", Visibility = PXUIVisibility.Invisible)]
         public virtual int? TemplateID { get; set; }
 
-        [PXDBString(2, IsFixed = true, BqlField = typeof(SurveyTemplate.templateType))]
-        [SUTemplateType.DetailList]
+        [PXDBString(2, IsFixed = true, BqlField = typeof(SurveyComponent.componentType))]
+        [SUComponentType.DetailList]
         [PXUIField(DisplayName = "Type", Enabled = false, Visibility = PXUIVisibility.SelectorVisible)]
         public virtual string TemplateType { get; set; }
 
-        [PXDBString(256, IsUnicode = true, BqlField = typeof(SurveyTemplate.description))]
+        [PXDBString(256, IsUnicode = true, BqlField = typeof(SurveyComponent.description))]
         [PXUIField(DisplayName = "Description")]
         public virtual string Description { get; set; }
 

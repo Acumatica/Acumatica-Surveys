@@ -18,7 +18,7 @@ namespace PX.Survey.Ext {
 
         public static class FK {
             public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyDetail>.By<surveyID> { }
-            public class SUSurveyTemplate : SurveyTemplate.PK.ForeignKeyOf<SurveyDetail>.By<templateID> { }
+            public class SUSurveyTemplate : SurveyComponent.PK.ForeignKeyOf<SurveyDetail>.By<componentID> { }
         }
         #endregion
 
@@ -62,31 +62,31 @@ namespace PX.Survey.Ext {
         public virtual int? PageNbr { get; set; }
         #endregion
 
-        #region TemplateType
-        public abstract class templateType : BqlString.Field<templateType> { }
+        #region ComponentType
+        public abstract class componentType : BqlString.Field<componentType> { }
         [PXDBString(2, IsUnicode = false, IsFixed = true)]
-        [PXDefault(SUTemplateType.QuestionPage)]
-        [PXUIField(DisplayName = "Template Type")]
-        [SUTemplateType.DetailList]
-        public virtual string TemplateType { get; set; }
+        [PXDefault(SUComponentType.QuestionPage)]
+        [PXUIField(DisplayName = "Component Type")]
+        [SUComponentType.DetailList]
+        public virtual string ComponentType { get; set; }
         #endregion
 
         #region TemplateID
-        public abstract class templateID : BqlInt.Field<templateID> { }
+        public abstract class componentID : BqlInt.Field<componentID> { }
         [PXDBInt]
-        [PXUIField(DisplayName = "Template")]
+        [PXUIField(DisplayName = "Component")]
         [PXDefault]
         [PXForeignReference(typeof(FK.SUSurveyTemplate))]
-        [PXSelector(typeof(Search<SurveyTemplate.templateID, Where<SurveyTemplate.templateType, Equal<Current<templateType>>>>), new Type[] { typeof(SurveyTemplate.templateID), typeof(SurveyTemplate.description) },
-            DescriptionField = typeof(SurveyTemplate.description),
-            SubstituteKey = typeof(SurveyTemplate.description))]
-        public virtual int? TemplateID { get; set; }
+        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<Current<componentType>>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
+            DescriptionField = typeof(SurveyComponent.description),
+            SubstituteKey = typeof(SurveyComponent.description))]
+        public virtual int? ComponentID { get; set; }
         #endregion
 
         #region IsQuestion
         public abstract class isQuestion : BqlBool.Field<isQuestion> { }
         [PXBool]
-        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
+        [PXFormula(typeof(Switch<Case<Where<componentType, Equal<SUComponentType.questionPage>>, True>, False>))]
         [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
         public virtual bool? IsQuestion { get; set; }
         #endregion
@@ -94,7 +94,7 @@ namespace PX.Survey.Ext {
         #region IsComment
         public abstract class isComment : BqlBool.Field<isComment> { }
         [PXBool]
-        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.commentPage>>, True>, False>))]
+        [PXFormula(typeof(Switch<Case<Where<componentType, Equal<SUComponentType.commentPage>>, True>, False>))]
         [PXUIField(DisplayName = "Is Comment", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
         public virtual bool? IsComment { get; set; }
         #endregion

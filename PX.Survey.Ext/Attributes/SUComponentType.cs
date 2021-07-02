@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace PX.Survey.Ext {
 
-    public class SUTemplateType {
+    public class SUComponentType {
         public class ListAttribute : PXStringListAttribute {
             public ListAttribute() : base(
                 new[] { 
                     Survey, Header, PageHeader, 
                     QuestionPage, CommentPage, ContentPage, 
                     PageFooter, Footer, BadRequest },
-                new[] { Messages.SUTemplateType.Survey, Messages.SUTemplateType.Header, Messages.SUTemplateType.PageHeader, 
-                    Messages.SUTemplateType.QuestionPage, Messages.SUTemplateType.CommentPage, Messages.SUTemplateType.ContentPage,
-                    Messages.SUTemplateType.PageFooter, Messages.SUTemplateType.Footer, Messages.SUTemplateType.BadRequest}) { }
+                new[] { Messages.SUComponentType.Survey, Messages.SUComponentType.Header, Messages.SUComponentType.PageHeader, 
+                    Messages.SUComponentType.QuestionPage, Messages.SUComponentType.CommentPage, Messages.SUComponentType.ContentPage,
+                    Messages.SUComponentType.PageFooter, Messages.SUComponentType.Footer, Messages.SUComponentType.BadRequest}) { }
         }
 
         public class DetailListAttribute : PXStringListAttribute {
@@ -22,9 +22,9 @@ namespace PX.Survey.Ext {
                     Header, PageHeader,
                     QuestionPage, CommentPage, ContentPage, 
                     PageFooter, Footer },
-                new[] { Messages.SUTemplateType.Header, Messages.SUTemplateType.PageHeader,
-                    Messages.SUTemplateType.QuestionPage, Messages.SUTemplateType.CommentPage, Messages.SUTemplateType.ContentPage,
-                    Messages.SUTemplateType.PageFooter, Messages.SUTemplateType.Footer}) { }
+                new[] { Messages.SUComponentType.Header, Messages.SUComponentType.PageHeader,
+                    Messages.SUComponentType.QuestionPage, Messages.SUComponentType.CommentPage, Messages.SUComponentType.ContentPage,
+                    Messages.SUComponentType.PageFooter, Messages.SUComponentType.Footer}) { }
         }
 
         public const string Survey = "SU";

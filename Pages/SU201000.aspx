@@ -21,6 +21,7 @@
             <px:PXDSCallbackCommand Name="InsertSampleCollector" Visible="False" />
             <px:PXDSCallbackCommand Name="ProcessAnswers" Visible="False" />
             <px:PXDSCallbackCommand Name="ReProcessAnswers" Visible="False" />
+            <px:PXDSCallbackCommand Name="ViewComponent" Visible="False" />
             <px:PXDSCallbackCommand Name="LoadCollectors" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />
@@ -70,8 +71,8 @@
                                 <Columns>
                                     <px:PXGridColumn DataField="Active" AllowNull="False" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" Width="60px" />
                                     <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="TemplateType" Width="120px" AllowDragDrop="true" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="TemplateID" Width="250px" AllowDragDrop="true" CommitChanges="true" LinkCommand="ViewTemplate" />
+                                    <px:PXGridColumn DataField="ComponentType" Width="120px" AllowDragDrop="true" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="ComponentID" Width="250px" AllowDragDrop="true" CommitChanges="true" LinkCommand="ViewComponent" />
                                     <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" CommitChanges="true" />
                                     <px:PXGridColumn DataField="Description" Width="500px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" CommitChanges="true" LinkCommand="ViewAttribute" />
@@ -293,7 +294,7 @@
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="ContactID" DisplayMode="Text" TextAlign="Left" Width="180px" />
-                                    <px:PXGridColumn DataField="TemplateType" Width="120px" AllowDragDrop="true" />
+                                    <px:PXGridColumn DataField="ComponentType" Width="120px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="Description" Width="350px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="PageNbr" Width="80px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="QuestionNbr" Width="110px" AllowDragDrop="true" />
@@ -413,7 +414,7 @@
             DataMember="templates" Caption="Template Information" TemplateContainer="" DefaultControlID="edContactType">
             <Template>
                 <px:PXLayoutRule runat="server" StartColumn="True" StartRow="True" ControlSize="XM" LabelsWidth="S" />
-                <px:PXDropDown CommitChanges="True" ID="edTemplateType" runat="server" DataField="TemplateType" AllowEdit="True" />
+                <px:PXDropDown CommitChanges="True" ID="edComponentType" runat="server" DataField="ComponentType" AllowEdit="True" />
             </Template>
         </px:PXFormView>
         <px:PXGrid ID="grdTemplateContacts" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top" SkinID="Inquire"
@@ -424,7 +425,7 @@
                     </RowTemplate>
                     <Columns>
                         <px:PXGridColumn CommitChanges="true" DataField="Selected" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" />
-                        <px:PXGridColumn DataField="TemplateType" />
+                        <px:PXGridColumn DataField="ComponentType" />
                         <px:PXGridColumn DataField="Description" Width="200px" />
                     </Columns>
                 </px:PXGridLevel>

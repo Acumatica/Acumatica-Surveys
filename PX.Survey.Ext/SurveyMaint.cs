@@ -50,7 +50,7 @@ namespace PX.Survey.Ext {
                 On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
                 And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyDetail.templateType, Equal<SUTemplateType.questionPage>>>,
+            And<SurveyDetail.componentType, Equal<SUComponentType.questionPage>>>,
             Aggregate<
                 GroupBy<SurveyDetail.pageNbr,
                 GroupBy<SurveyDetail.questionNbr,
@@ -63,7 +63,7 @@ namespace PX.Survey.Ext {
                 On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
                 And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyDetail.templateType, Equal<SUTemplateType.commentPage>,
+            And<SurveyDetail.componentType, Equal<SUComponentType.commentPage>,
             And<SurveyAnswer.value, IsNotNull>>>,
             OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
 
@@ -154,18 +154,18 @@ namespace PX.Survey.Ext {
             var prevSeries = 0;
             var offset = 0;
             var isSingle = survey.Layout == SurveyLayout.SinglePage;
-            InsertMissing(survey, 0, prevSeries, SUTemplateType.Header, setup.DefHeaderID, offset);
+            InsertMissing(survey, 0, prevSeries, SUComponentType.Header, setup.DefHeaderID, offset);
             if (!isSingle) {
-                InsertMissing(survey, 0, prevSeries, SUTemplateType.PageFooter, setup.DefPageFooterID, offset);
+                InsertMissing(survey, 0, prevSeries, SUComponentType.PageFooter, setup.DefPageFooterID, offset);
             }
             foreach (var series in questionSeries) {
                 InsertMissings(survey, series, prevSeries, offset);
                 prevSeries = series;
             }
             if (isSingle) {
-                InsertMissing(survey, nbQuestions + 1, prevSeries, SUTemplateType.PageFooter, setup.DefPageFooterID, offset);
+                InsertMissing(survey, nbQuestions + 1, prevSeries, SUComponentType.PageFooter, setup.DefPageFooterID, offset);
             }
-            InsertMissing(survey, nbQuestions + 1, prevSeries, SUTemplateType.Footer, setup.DefFooterID, offset);
+            InsertMissing(survey, nbQuestions + 1, prevSeries, SUComponentType.Footer, setup.DefFooterID, offset);
             Actions.PressSave();
         }
 
@@ -173,26 +173,26 @@ namespace PX.Survey.Ext {
             var setup = SurveySetup.Current;
             var isSingle = survey.Layout == SurveyLayout.SinglePage;
             if (!isSingle) {
-                InsertMissing(survey, series, prevSeries, SUTemplateType.PageHeader, setup.DefPageHeaderID, offset);
+                InsertMissing(survey, series, prevSeries, SUComponentType.PageHeader, setup.DefPageHeaderID, offset);
             }
-            InsertMissing(survey, series, prevSeries, SUTemplateType.QuestionPage, setup.DefQuestionID, offset, setup.DefQuestAttrID);
-            InsertMissing(survey, series, prevSeries, SUTemplateType.CommentPage, setup.DefCommentID, offset, setup.DefCommAttrID);
+            InsertMissing(survey, series, prevSeries, SUComponentType.QuestionPage, setup.DefQuestionID, offset, setup.DefQuestAttrID);
+            InsertMissing(survey, series, prevSeries, SUComponentType.CommentPage, setup.DefCommentID, offset, setup.DefCommAttrID);
             if (!isSingle) {
-                InsertMissing(survey, series, prevSeries, SUTemplateType.PageFooter, setup.DefPageFooterID, offset);
+                InsertMissing(survey, series, prevSeries, SUComponentType.PageFooter, setup.DefPageFooterID, offset);
             }
         }
 
         private void InsertMissing(Survey survey, int series, int prevSeries, string templateType, int? templateID, int offset, string attrID = null) {
             var isSingle = survey.Layout == SurveyLayout.SinglePage;
-            var pageNumber = isSingle ? ((templateType == SUTemplateType.Footer) ? 2 : 1) : series;
+            var pageNumber = isSingle ? ((templateType == SUComponentType.Footer) ? 2 : 1) : series;
             HandleOffsets(ref offset, isSingle, series, prevSeries);
             int? questionNbr;
             // Based on a) Question comes first, b) 1 Question, 1 Comment per page
             switch (templateType) {
-                case SUTemplateType.QuestionPage:
+                case SUComponentType.QuestionPage:
                     questionNbr = (series * 2) - 1;
                     break;
-                case SUTemplateType.CommentPage:
+                case SUComponentType.CommentPage:
                     questionNbr = series * 2;
                     break;
                 default:
@@ -202,15 +202,15 @@ namespace PX.Survey.Ext {
             SurveyDetail page = PXSelect<SurveyDetail,
                 Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
                 And<SurveyDetail.pageNbr, Equal<Required<SurveyDetail.pageNbr>>,
-                And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>,
+                And<SurveyDetail.componentType, Equal<Required<SurveyDetail.componentType>>,
                 And<Where<SurveyDetail.questionNbr, IsNull, Or<SurveyDetail.questionNbr, Equal<Required<SurveyDetail.questionNbr>>>>>>>>>.Select(this, survey.SurveyID, pageNumber, templateType, questionNbr);
             if (page == null) {
                 page = new SurveyDetail() {
                     SurveyID = survey.SurveyID,
                     PageNbr = pageNumber,
                     SortOrder = (series * 10) + offset,
-                    TemplateType = templateType,
-                    TemplateID = templateID,
+                    ComponentType = templateType,
+                    ComponentID = templateID,
                     QuestionNbr = questionNbr,
                     AttributeID = attrID
                 };
@@ -255,9 +255,9 @@ namespace PX.Survey.Ext {
                 if (template.Selected == true) {
                     var surveyDetail = new SurveyDetail();
                     surveyDetail.SurveyID = Survey.Current.SurveyID;
-                    surveyDetail.TemplateType = template.TemplateType;
+                    surveyDetail.ComponentType = template.TemplateType;
                     surveyDetail.Description = template.Description;
-                    surveyDetail.TemplateID = template.TemplateID;
+                    surveyDetail.ComponentID = template.TemplateID;
                     Details.Update(surveyDetail);
                 }
             }
@@ -291,11 +291,11 @@ namespace PX.Survey.Ext {
             // TODO - Check if all Page 1
             Survey.Current = survey;
             var surveyID = survey.SurveyID;
-            SurveyDetail page = GetPage(surveyID, SUTemplateType.Header);
+            SurveyDetail page = GetPage(surveyID, SUComponentType.Header);
             if (page != null) {
                 UpdatePageNbr(page, 1, 0); // PageNbr = 1, SortOrder = 10;
             }
-            page = GetPage(surveyID, SUTemplateType.Footer);
+            page = GetPage(surveyID, SUComponentType.Footer);
             if (page != null) {
                 UpdatePageNbr(page, 9999, 0); // PageNbr = 9999, SortOrder = 99990;
             }
@@ -359,13 +359,13 @@ namespace PX.Survey.Ext {
             Actions.PressSave();
         }
 
-        public PXAction<Survey> viewTemplate;
-        [PXUIField(DisplayName = "View Template", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        public PXAction<Survey> viewComponent;
+        [PXUIField(DisplayName = "View Component", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton]
-        public virtual IEnumerable ViewTemplate(PXAdapter adapter) {
+        public virtual IEnumerable ViewComponent(PXAdapter adapter) {
             if (Details.Current != null) {
-                var graph = CreateInstance<SurveyTemplateMaint>();
-                graph.SUTemplate.Current = graph.SUTemplate.Search<SurveyTemplate.templateID>(Details.Current.TemplateID);
+                var graph = CreateInstance<SurveyComponentMaint>();
+                graph.SUComponent.Current = graph.SUComponent.Search<SurveyComponent.componentID>(Details.Current.ComponentID);
                 throw new PXRedirectRequiredException(graph, true, string.Empty);
             }
             return adapter.Get();
@@ -848,7 +848,7 @@ namespace PX.Survey.Ext {
         private SurveyDetail GetPage(string surveyID, string templateType) {
             return PXSelect<SurveyDetail,
                     Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
-                    And<SurveyDetail.templateType, Equal<Required<SurveyDetail.templateType>>>>>.Select(this, surveyID, templateType);
+                    And<SurveyDetail.componentType, Equal<Required<SurveyDetail.componentType>>>>>.Select(this, surveyID, templateType);
         }
 
         //private SurveyDetail GetPage(string surveyID, int? pageNbr, string templateType) {
@@ -861,7 +861,7 @@ namespace PX.Survey.Ext {
         private PXResultset<SurveyDetail> GetRegularPages(string surveyID) {
             return PXSelect<SurveyDetail,
                     Where<SurveyDetail.surveyID, Equal<Required<SurveyDetail.surveyID>>,
-                    And<SurveyDetail.templateType, In3<SUTemplateType.pageHeader, SUTemplateType.questionPage, SUTemplateType.contentPage, SUTemplateType.pageFooter>>>,
+                    And<SurveyDetail.componentType, In3<SUComponentType.pageHeader, SUComponentType.questionPage, SUComponentType.contentPage, SUComponentType.pageFooter>>>,
                     OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.sortOrder>>>>.Select(this, surveyID);
         }
 
@@ -881,59 +881,59 @@ namespace PX.Survey.Ext {
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.description> e) {
             var row = e.Row;
-            if (row == null || row.TemplateID == null || !string.IsNullOrEmpty(row.Description)) {
+            if (row == null || row.ComponentID == null || !string.IsNullOrEmpty(row.Description)) {
                 return;
             }
-            SurveyTemplate st = SurveyTemplate.PK.Find(this, row.TemplateID);
+            SurveyComponent st = SurveyComponent.PK.Find(this, row.ComponentID);
             if (st == null) {
                 return;
             }
-            switch (st.TemplateType) {
-                case SUTemplateType.PageHeader:
-                case SUTemplateType.PageFooter:
+            switch (st.ComponentType) {
+                case SUComponentType.PageHeader:
+                case SUComponentType.PageFooter:
                     break;
-                case SUTemplateType.Header:
+                case SUComponentType.Header:
                     e.NewValue = "WELCOME YOU";
                     break;
-                case SUTemplateType.QuestionPage:
+                case SUComponentType.QuestionPage:
                     e.NewValue = "ASK YOU " + row.QuestionNbr;
                     break;
-                case SUTemplateType.CommentPage:
+                case SUComponentType.CommentPage:
                     e.NewValue = "TELL ME MORE " + row.QuestionNbr;
                     break;
-                case SUTemplateType.ContentPage:
+                case SUComponentType.ContentPage:
                     e.NewValue = "SHOW YOU";
                     break;
-                case SUTemplateType.Footer:
+                case SUComponentType.Footer:
                     e.NewValue = "THANK YOU";
                     break;
             }
             e.Cancel = e.NewValue != null;
         }
 
-        protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.templateID> e) {
+        protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.componentID> e) {
             var row = e.Row;
-            if (row == null || row.TemplateType == null) {
+            if (row == null || row.ComponentType == null) {
                 return;
             }
             var setup = SurveySetup.Current;
-            switch (row.TemplateType) {
-                case SUTemplateType.Header:
+            switch (row.ComponentType) {
+                case SUComponentType.Header:
                     e.NewValue = setup.DefHeaderID;
                     break;
-                case SUTemplateType.PageHeader:
+                case SUComponentType.PageHeader:
                     e.NewValue = setup.DefPageHeaderID;
                     break;
-                case SUTemplateType.PageFooter:
+                case SUComponentType.PageFooter:
                     e.NewValue = setup.DefPageFooterID;
                     break;
-                case SUTemplateType.QuestionPage:
+                case SUComponentType.QuestionPage:
                     e.NewValue = setup.DefQuestionID;
                     break;
-                case SUTemplateType.CommentPage:
+                case SUComponentType.CommentPage:
                     e.NewValue = setup.DefCommentID;
                     break;
-                case SUTemplateType.Footer:
+                case SUComponentType.Footer:
                     e.NewValue = setup.DefFooterID;
                     break;
             }
@@ -956,7 +956,7 @@ namespace PX.Survey.Ext {
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.nbrOfRows> e) {
             var row = e.Row;
-            if (row == null || row.TemplateType == null || row.TemplateType != SUTemplateType.CommentPage) {
+            if (row == null || row.ComponentType == null || row.ComponentType != SUComponentType.CommentPage) {
                 return;
             }
             var setup = SurveySetup.Current;
@@ -966,7 +966,7 @@ namespace PX.Survey.Ext {
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.maxLength> e) {
             var row = e.Row;
-            if (row == null || row.TemplateType == null || row.TemplateType != SUTemplateType.CommentPage) {
+            if (row == null || row.ComponentType == null || row.ComponentType != SUComponentType.CommentPage) {
                 return;
             }
             var setup = SurveySetup.Current;

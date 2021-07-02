@@ -46,7 +46,7 @@ namespace PX.Survey.Ext {
 
         public string GenerateBadRequestPage(string token, string message) {
             var setup = graph.SurveySetup.Current;
-            var pageTemplate = SurveyTemplate.PK.Find(graph, setup.BadRequestID);
+            var pageTemplate = SurveyComponent.PK.Find(graph, setup.BadRequestID);
             var template = Template.Parse(pageTemplate.Body);
             var context = new TemplateContext();
             var container = new ScriptObject {
@@ -69,7 +69,7 @@ namespace PX.Survey.Ext {
             }
             graph.Survey.Current = survey;
             var mainTemplateID = survey.TemplateID;
-            var mainTemplate = SurveyTemplate.PK.Find(graph, mainTemplateID);
+            var mainTemplate = SurveyComponent.PK.Find(graph, mainTemplateID);
             string mainTemplateText = mainTemplate.Body;
             if (string.IsNullOrEmpty(mainTemplateText?.Trim())) {
                 throw new PXException(Messages.TemplateNeeded);
@@ -209,8 +209,8 @@ namespace PX.Survey.Ext {
             var url = GetUrl(context, firstOfSelected.PageNbr.Value);
             context.SetValue(new ScriptVariableGlobal(URL), url);
             foreach (var selectedPage in selectedPages) {
-                var pageTemplateID = selectedPage.TemplateID;
-                var pageTemplate = SurveyTemplate.PK.Find(graph, pageTemplateID);
+                var pageTemplateID = selectedPage.ComponentID;
+                var pageTemplate = SurveyComponent.PK.Find(graph, pageTemplateID);
                 var template = Template.Parse(pageTemplate.Body);
                 AddDetailContext(context, selectedPage, pageTemplate);
                 FillPageInfo(context, activePages, selectedPage);
@@ -223,8 +223,8 @@ namespace PX.Survey.Ext {
 
         private void FillPageInfoLookAhead(TemplateContext context, IEnumerable<SurveyDetail> details, IEnumerable<SurveyDetail> nextPages) {
             var max = details.Max(det => det.PageNbr);
-            var hasQues = nextPages.Any(det => det.TemplateType == SUTemplateType.QuestionPage);
-            var hasFoot = nextPages.Any(det => det.TemplateType == SUTemplateType.Footer);
+            var hasQues = nextPages.Any(det => det.ComponentType == SUComponentType.QuestionPage);
+            var hasFoot = nextPages.Any(det => det.ComponentType == SUComponentType.Footer);
             var nextNbr = nextPages.FirstOrDefault()?.PageNbr.Value ?? -1;
             var isLast = nextNbr == max;
             context.SetValue(new ScriptVariableGlobal(NEXT_IS_QUES), hasQues);
@@ -232,7 +232,7 @@ namespace PX.Survey.Ext {
             context.SetValue(new ScriptVariableGlobal(NEXT_IS_LAST), isLast);
         }
 
-        private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyTemplate template) {
+        private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyComponent template) {
             context.SetValue(new ScriptVariableGlobal(detail.GetType().Name), detail);
             context.SetValue(new ScriptVariableGlobal(template.GetType().Name), template);
             if (detail.IsQuestion == true) {

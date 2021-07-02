@@ -24,7 +24,7 @@ namespace PX.Survey.Ext {
 
         public static Func<SurveyDetail, bool> ALL_PAGES = (pd) => { return pd.PageNbr != null && pd.PageNbr > 0; };
         public static Func<SurveyDetail, bool> ACTIVE_PAGES_ONLY = (pd) => { return ALL_PAGES(pd) && pd.Active == true; };
-        public static Func<SurveyDetail, bool> EXCEPT_HF_PAGES = (pd) => { return ALL_PAGES(pd) && pd.TemplateType != SUTemplateType.Header && pd.TemplateType != SUTemplateType.Footer; };
+        public static Func<SurveyDetail, bool> EXCEPT_HF_PAGES = (pd) => { return ALL_PAGES(pd) && pd.ComponentType != SUComponentType.Header && pd.ComponentType != SUComponentType.Footer; };
         public static Func<SurveyDetail, bool> ALL_QUESTIONS = (pd) => { return pd.QuestionNbr != null && pd.QuestionNbr > 0; };
         public static Func<SurveyDetail, bool> ACTIVE_QUESTIONS_ONLY = (pd) => { return ALL_QUESTIONS(pd) && pd.Active == true; };
         public static Func<SurveyDetail, int> GET_PAGE_NBR = (pd) => { return pd.PageNbr.Value; };

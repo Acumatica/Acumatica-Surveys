@@ -7,22 +7,22 @@ using System;
 
 namespace PX.Survey.Ext {
 
-    [PXPrimaryGraph(typeof(SurveyTemplateMaint))]
+    [PXPrimaryGraph(typeof(SurveyComponentMaint))]
     [Serializable]
-    [PXCacheName("Survey Template")]
-    public class SurveyTemplate : IBqlTable, INotable {
+    [PXCacheName("Survey Component")]
+    public class SurveyComponent : IBqlTable, INotable {
 
-        public class PK : PrimaryKeyOf<SurveyTemplate>.By<templateID> {
-            public static SurveyTemplate Find(PXGraph graph, int? templateID) => FindBy(graph, templateID);
-            public static SurveyTemplate FindDirty(PXGraph graph, int? templateID)
-                => PXSelect<SurveyTemplate, Where<templateID, Equal<Required<templateID>>>>.SelectWindowed(graph, 0, 1, templateID);
+        public class PK : PrimaryKeyOf<SurveyComponent>.By<componentID> {
+            public static SurveyComponent Find(PXGraph graph, int? templateID) => FindBy(graph, templateID);
+            public static SurveyComponent FindDirty(PXGraph graph, int? templateID)
+                => PXSelect<SurveyComponent, Where<componentID, Equal<Required<componentID>>>>.SelectWindowed(graph, 0, 1, templateID);
         }
 
-        public abstract class templateID : BqlInt.Field<templateID> { }
+        public abstract class componentID : BqlInt.Field<componentID> { }
         [PXDBIdentity(IsKey = true)]
-        [PXSelector(typeof(templateID), DescriptionField = typeof(description))]
-        [PXUIField(DisplayName = "Template ID")]
-        public virtual int? TemplateID { get; set; }
+        [PXSelector(typeof(componentID), DescriptionField = typeof(description))]
+        [PXUIField(DisplayName = "Component ID")]
+        public virtual int? ComponentID { get; set; }
 
         #region Active
         public abstract class active : BqlBool.Field<active> { }
@@ -32,13 +32,13 @@ namespace PX.Survey.Ext {
         public virtual bool? Active { get; set; }
         #endregion
 
-        #region TemplateType
-        public abstract class templateType : BqlString.Field<templateType> { }
+        #region ComponentType
+        public abstract class componentType : BqlString.Field<componentType> { }
         [PXDBString(2, IsUnicode = false, IsFixed = true)]
         [PXDefault]
-        [PXUIField(DisplayName = "Template Type")]
-        [SUTemplateType.List]
-        public virtual string TemplateType { get; set; }
+        [PXUIField(DisplayName = "Component Type")]
+        [SUComponentType.List]
+        public virtual string ComponentType { get; set; }
         #endregion
 
         #region Description

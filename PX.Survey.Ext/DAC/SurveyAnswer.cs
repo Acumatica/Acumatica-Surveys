@@ -118,15 +118,15 @@ namespace PX.Survey.Ext {
         public abstract class templateType : BqlString.Field<templateType> { }
         [PXString(2, IsUnicode = false, IsFixed = true)]
         [PXUIField(DisplayName = "Template Type", IsReadOnly = true)]
-        [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.templateType>))]
-        [SUTemplateType.DetailList]
+        [PXFormula(typeof(Selector<detailLineNbr, SurveyDetail.componentType>))]
+        [SUComponentType.DetailList]
         public virtual string TemplateType { get; set; }
         #endregion
 
         #region IsQuestion
         public abstract class isQuestion : BqlBool.Field<isQuestion> { }
         [PXBool]
-        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.questionPage>>, True>, False>))]
+        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUComponentType.questionPage>>, True>, False>))]
         [PXUIField(DisplayName = "Is Question", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
         public virtual bool? IsQuestion { get; set; }
         #endregion
@@ -134,7 +134,7 @@ namespace PX.Survey.Ext {
         #region IsComment
         public abstract class isComment : BqlBool.Field<isComment> { }
         [PXBool]
-        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUTemplateType.commentPage>>, True>, False>))]
+        [PXFormula(typeof(Switch<Case<Where<templateType, Equal<SUComponentType.commentPage>>, True>, False>))]
         [PXUIField(DisplayName = "Is Comment", Visibility = PXUIVisibility.SelectorVisible, IsReadOnly = true)]
         public virtual bool? IsComment { get; set; }
         #endregion
