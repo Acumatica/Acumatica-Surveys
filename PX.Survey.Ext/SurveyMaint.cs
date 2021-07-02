@@ -71,11 +71,29 @@ namespace PX.Survey.Ext {
         [PXCopyPasteHiddenView]
         public PXSetup<SurveySetup> SurveySetup;
 
+        public PXFilter<OperationParam> Operations;
+
+        [PXFilterable(new Type[] { })]
+        [PXImport(typeof(Survey))]
+        [PXViewName("Survey Members")]
+        public SurveyMembersList CampaignMembers;
+
         //[InjectDependency]
         //public Api.Services.ICompanyService CompanyService { get; set; }
 
         public SurveyMaint() {
         }
+
+        [SurveyID(IsKey = true)]
+        [PXDBDefault(typeof(Survey.surveyID))]
+        [PXMergeAttributes(Method = MergeMethod.Replace)]
+        [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<SurveyMember.surveyID>>>>))]
+        [PXUIField(DisplayName = "Survey ID")]
+        protected virtual void _(Events.CacheAttached<SurveyMember.surveyID> e) { }
+
+        [PXMergeAttributes(Method = MergeMethod.Merge)]
+        [PXUIField(DisplayName = "Member Since", Enabled = false)]
+        protected virtual void _(Events.CacheAttached<SurveyMember.createdDateTime> e) {}
 
         #region RecipientSelected Lookup
         public PXFilter<RecipientFilter> recipientfilter;

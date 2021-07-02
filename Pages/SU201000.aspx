@@ -171,6 +171,80 @@
                     </px:PXSplitContainer>--%>
                 </Template>
             </px:PXTabItem>
+            <px:PXTabItem Text="Members">
+				<Template>
+					<px:PXGrid ID="grdCampaignMembers" runat="server" SkinID="DetailsInTab" Height="400px" NoteIndicator="false"
+						Width="100%" Style="z-index: 100" AllowPaging="True" AdjustPageSize="Auto" ActionsPosition="Top"
+						AllowSearch="true" DataSourceID="ds" BorderWidth="0px" SyncPosition="true" MatrixMode="true" AllowFilter="true">
+						<Levels>
+							<px:PXGridLevel DataMember="CampaignMembers">
+								<Columns>
+								    <px:PXGridColumn AllowCheckAll="True" AllowNull="False" DataField="Selected" AllowMove="False"
+								                     AllowSort="False" TextAlign="Center" Type="CheckBox" />
+									<px:PXGridColumn DataField="Contact__ContactType" />
+									<px:PXGridColumn AllowNull="False" DataField="Contact__IsActive" TextAlign="Center" Type="CheckBox" />
+									<px:PXGridColumn DataField="CampaignID" Visible="False" AllowShowHide="False" />
+									<px:PXGridColumn DataField="ContactID" TextField="Contact__MemberName"
+										AutoCallBack="true" DisplayMode="Text" CommitChanges="true" TextAlign="Left" LinkCommand="Contact_ViewDetails"/>
+									<px:PXGridColumn DataField="Contact__Salutation" AllowUpdate="False" />
+									<px:PXGridColumn DataField="Contact__EMail" AllowUpdate="False" />
+									<px:PXGridColumn DataField="Contact__Phone1" AllowUpdate="False" DisplayFormat="+# (###) ###-#### Ext:####" />
+									<px:PXGridColumn DataField="Contact__BAccountID" AllowUpdate="False" DisplayFormat="CCCCCCCCCC" DisplayMode="Value" LinkCommand="BAccount_ViewDetails"/>
+									<px:PXGridColumn DataField="Contact__FullName" />
+								    <px:PXGridColumn AllowNull="False" DataField="OpportunityCreatedCount" />
+									<px:PXGridColumn AllowNull="False" DataField="ActivitiesLogged" />
+                                    <px:PXGridColumn AllowNull="False" DataField="EmailSendCount" />
+									<px:PXGridColumn DataField="Contact__Phone2" DisplayFormat="+#(###) ###-####" Visible="false" />
+									<px:PXGridColumn DataField="Contact__Phone3" DisplayFormat="+#(###) ###-####" Visible="false" />
+									<px:PXGridColumn DataField="Contact__Fax" DisplayFormat="+#(###) ###-####" Visible="false" />
+									<px:PXGridColumn DataField="Contact__WebSite" Visible="false" />
+									<px:PXGridColumn DataField="Contact__DateOfBirth" Visible="false" />
+									<px:PXGridColumn DataField="Contact__CreatedByID" Visible="false" />
+									<px:PXGridColumn DataField="Contact__LastModifiedByID" Visible="false" />
+									<px:PXGridColumn DataField="Contact__CreatedDateTime" Visible="false" />
+									<px:PXGridColumn DataField="Contact__LastModifiedDateTime" Visible="false" />
+									<px:PXGridColumn DataField="Contact__WorkgroupID" Visible="false" />
+									<px:PXGridColumn DataField="Contact__OwnerID" />
+									<px:PXGridColumn AllowNull="False" DataField="Contact__ClassID" TextAlign="Center" Visible="false" />
+									<px:PXGridColumn DataField="Contact__Source" Visible="false" />
+									<px:PXGridColumn DataField="Contact__Title" Visible="false" />
+									<px:PXGridColumn DataField="Contact__FirstName" />
+									<px:PXGridColumn DataField="Contact__MidName" />
+									<px:PXGridColumn DataField="Contact__LastName" />
+									<px:PXGridColumn DataField="Address__AddressLine1" Visible="false" />
+									<px:PXGridColumn DataField="Address__AddressLine2" Visible="false" />
+									<px:PXGridColumn DataField="Contact__Status" />
+									<px:PXGridColumn DataField="Contact__IsNotEmployee" Width="0px" AllowShowHide="Server" />
+								    <px:PXGridColumn DataField="CreatedDateTime" AllowUpdate="False" DisplayFormat="g" Visible="false"/>
+								</Columns>
+                                <RowTemplate>
+                                    <px:PXSelector CommitChanges="True" ID="edContactID" runat="server" DataField="ContactID" FilterByAllFields="true" />                                    
+                                </RowTemplate>
+							</px:PXGridLevel>
+						</Levels>
+                        <Mode AllowUpload="True"/>
+						<ActionBar DefaultAction="cmdViewDoc">
+							<Actions>
+								<Delete Enabled = "false" />
+							</Actions>
+							<CustomItems>
+								<px:PXToolBarButton Text="Delete selected" Tooltip="Delete Selected Rows"  Key="cmdMultipleDelete" DisplayStyle="Image" ImageKey="RecordDel">
+								    <AutoCallBack Command="DeleteAction" Target="ds" />
+								</px:PXToolBarButton>
+								<px:PXToolBarButton Text="Add new members" Key="cmdMultipleInsert">
+								    <AutoCallBack Command="AddAction" Target="ds" />
+								</px:PXToolBarButton>
+								<%--<px:PXToolBarButton Key="cmdAddActivity" >
+                                    <AutoCallBack Command="NewCampaignMemberActivity" Target="ds" ></AutoCallBack>
+                                    <ActionBar />
+                                </px:PXToolBarButton>--%>
+							</CustomItems>
+						</ActionBar>
+						<AutoSize Enabled="True" MinHeight="200" />
+					</px:PXGrid>
+				</Template>
+			</px:PXTabItem>
+
             <px:PXTabItem Text="Recipients" RepaintOnDemand="False">
                 <Template>
                     <px:PXGrid ID="grdRecipients" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
@@ -456,4 +530,85 @@
             <px:PXButton ID="btnCreateSurvey" runat="server" DialogResult="OK" Text="OK" CommandName="CheckCreateParams" CommandSourceID="ds" />
         </px:PXPanel>
     </px:PXSmartPanel>
+    <px:PXSmartPanel ID="pnlCampaignMembers" runat="server" Key="CampaignMembers" LoadOnDemand="true" Width="720px" Height="500px"
+        Caption="Add Members" CaptionVisible="true" AutoRepaint="true" DesignView="Content" ShowMaximizeButton="True">
+        <px:PXFormView ID="formAddItem" runat="server" CaptionVisible="False" DataMember="Operations" DataSourceID="ds"
+            Width="100%" SkinID="Transparent">
+			<Template>
+				<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="SM" />
+				<px:PXDropDown CommitChanges="True" ID="edDataSource" runat="server" DataField="DataSource" AllowNull="false"/>
+				<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="SM" />
+				<px:PXLayoutRule runat="server" Merge="True" />
+				<px:PXSelector CommitChanges="True" ID="edContactGI" runat="server" DataField="ContactGI" AllowEdit="true" />			
+				<px:PXSelector CommitChanges="True" ID="edMarketingListID" runat="server" DataField="SourceMarketingListID" AllowEdit="true" />
+				<px:PXLabel ID="Fake" runat="server" Width="40px"/>
+				<px:PXSelector CommitChanges="True" ID="edSharedGIFilter" runat="server" DataField="SharedGIFilter" DisplayMode="Text" AutoRefresh="true" />
+			</Template>
+		</px:PXFormView>		
+		<px:PXGrid ID="grdItems" runat="server" DataSourceID="ds" Style="border-width: 1px 0px; top: 0px; left: 0px; height: 189px;"
+            AutoAdjustColumns="true" Width="100%" SkinID="Inquire" AdjustPageSize="Auto" AllowSearch="True" MatrixMode="true" SyncPosition="true" SycPositionWithGraph="true">
+			<Levels>
+				<px:PXGridLevel DataMember="Items">
+					<Columns>
+                        <px:PXGridColumn AllowNull="False" DataField="Selected" TextAlign="Center" Type="CheckBox" AutoCallBack="true"
+                            AllowCheckAll="true" CommitChanges="true" />
+						<px:PXGridColumn DataField="ContactType" />
+						<px:PXGridColumn DataField="DisplayName" LinkCommand="LinkToContact" AutoCallBack="true" CommitChanges="true" />
+						<px:PXGridColumn DataField="Title" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="FirstName" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="MidName" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="LastName" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="Salutation" />
+						<px:PXGridColumn DataField="FullName" />
+						<px:PXGridColumn DataField="IsActive" Type="CheckBox" />
+						<px:PXGridColumn DataField="EMail" />
+						<px:PXGridColumn DataField="ClassID" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="Status" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="Source" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="Phone1" DisplayFormat="+#(###) ###-####" />
+						<px:PXGridColumn DataField="BAccountID" DisplayMode="Text" AllowUpdate="False" DisplayFormat="CCCCCCCCCC" LinkCommand="LinkToBAccount"  />
+						<px:PXGridColumn DataField="Phone2" DisplayFormat="+#(###) ###-####" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="Phone3" DisplayFormat="+#(###) ###-####" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="Fax" DisplayFormat="+#(###) ###-####" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="WorkgroupID" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="OwnerID" DisplayMode="Text" Visible="false" SyncVisible="false"/>
+						<px:PXGridColumn DataField="CreatedByID_Creator_Username" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="CreatedDateTime" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="LastModifiedByID_Modifier_Username" Visible="false" SyncVisible="false" />
+						<px:PXGridColumn DataField="LastModifiedDateTime" Visible="false" SyncVisible="false" />
+					</Columns>
+				</px:PXGridLevel>
+			</Levels>
+			<AutoSize Container="Parent" Enabled="True" MinHeight="150" />
+			<ActionBar PagerVisible="False">
+                <PagerSettings Mode="NextPrevFirstLast" />
+				<CustomItems>
+					<px:PXToolBarButton Key="cmdShowDetails" Visible="false" DisplayStyle="Image">
+						<AutoCallBack Target="ds" Command="LinkToContact" />
+						<Images Normal="main@DataEntry" />
+						<ActionBar GroupIndex="0" />
+					</px:PXToolBarButton>
+					<px:PXToolBarButton Key="cmdShowBAccountDetails" Visible="false">
+						<AutoCallBack Target="ds" Command="LinkToBAccount" />
+						<Images Normal="main@DataEntry" />
+						<ActionBar GroupIndex="0" />
+					</px:PXToolBarButton>
+				</CustomItems>
+				<Actions>
+					<FilterShow Enabled="False" />
+					<FilterSet Enabled="False" />
+				</Actions>
+			</ActionBar>
+			<Mode AllowAddNew="False" AllowDelete="False" />
+			<CallbackCommands>
+				<Save PostData="Page" />
+			</CallbackCommands>
+		</px:PXGrid>
+		<px:PXPanel ID="PXPanel2" runat="server" SkinID="Buttons">
+            <px:PXButton ID="PXButton1" runat="server" CommandName="InnerProcess" CommandSourceID="ds" DialogResult="OK" Text="Process" SyncVisible="false" />
+            <px:PXButton ID="PXButton2" runat="server" CommandName="InnerProcessAll" CommandSourceID="ds" DialogResult="OK" Text="Process All" SyncVisible="false" />
+            <px:PXButton ID="PXButton3" runat="server" DialogResult="Cancel" Text="Cancel" />
+		</px:PXPanel>
+    </px:PXSmartPanel>
+
 </asp:Content>
