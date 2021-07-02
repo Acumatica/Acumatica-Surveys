@@ -93,6 +93,16 @@ namespace PX.Survey.Ext {
         [PXFormula(typeof(EntityDescription<refNoteID>))]
         public virtual string Source { get; set; }
 
+        #region AnonCollectorID
+        public abstract class anonCollectorID : BqlInt.Field<anonCollectorID> { }
+        /// <summary>
+        /// Uniquely Identifies this Anmonymous Collector record for this Collector.
+        /// </summary>
+        [PXDBInt]
+        [PXSelector(typeof(Search<SurveyCollector.collectorID>))]
+        public virtual int? AnonCollectorID { get; set; }
+        #endregion
+
         #region ContactID
         public abstract class contactID : BqlInt.Field<contactID> { }
         [PXInt]
