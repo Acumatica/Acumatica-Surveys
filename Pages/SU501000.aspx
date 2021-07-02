@@ -10,7 +10,7 @@
 		<Template>
 			<px:PXLayoutRule runat="server" StartRow="True" ControlSize="M" LabelsWidth="S"/>
 		    <px:PXSelector ID="edSurveyID" runat="server" CommitChanges="True" DataField="SurveyID" DisplayMode="Hint"/>
-            <px:PXDropDown ID="PXDropDown1" runat="server" CommitChanges="True" DataField="Action" />
+            <px:PXDropDown ID="edAction" runat="server" CommitChanges="True" DataField="Action" />
             <px:PXMaskEdit ID="edDurationTimeSpan" runat="server" CommitChanges="True" DataField="DurationTimeSpan" InputMask="### d\ays ## hrs ## mins" EmptyChar="0" Text="0" />
             <px:PXCheckBox ID="chkShowInactive" runat="server" CommitChanges="True" DataField="ShowInactive" />
 		</Template>
