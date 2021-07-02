@@ -19,7 +19,7 @@ namespace PX.Survey.Ext {
             var entitySetup = GetEntitySetup(primaryType);
             var supportsSurvey = entitySetup != null && entitySetup.SurveyID != null;
             //var showAction = b2Setup?.ShowTriggerActions == true;
-            requestSurvey.SetEnabled(supportsSurvey);
+            requestSurvey.SetEnabled(supportsSurvey); // TODO Keep enable 
             //requestSurvey.SetVisible(supportsSurvey/* && showAction*/);
         }
 
@@ -27,6 +27,7 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Request Survey")]
         [PXButton(CommitChanges = true, SpecialType = PXSpecialButtonType.Insert, Tooltip = "Insert a Survey Collector to send a survey regarding this Document", ImageKey = "AddNew")]
         public virtual IEnumerable RequestSurvey(PXAdapter adapter) {
+            // TODO - Popup message if not setup!
             var caches = Base.Caches;
             var cache = caches[typeof(EDoc)];
             var entityType = cache.GetItemType();
