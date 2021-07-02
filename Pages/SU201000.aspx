@@ -54,6 +54,8 @@
             <px:PXSelector runat="server" ID="edNotificationID" DataField="NotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXSelector runat="server" ID="edRemindNotificationID" DataField="RemindNotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true" />
+            <px:PXCheckBox runat="server" ID="chkAllowAnonymous" DataField="AllowAnonymous" CommitChanges="true"></px:PXCheckBox>
+            <px:PXCheckBox runat="server" ID="chkKeepAnswersAnonymous" DataField="KeepAnswersAnonymous" CommitChanges="true"></px:PXCheckBox>
             <px:PXLayoutRule runat="server" LabelsWidth="S" ControlSize="SM" />
             <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
             <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
