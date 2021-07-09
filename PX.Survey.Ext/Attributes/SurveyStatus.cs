@@ -22,5 +22,6 @@ namespace PX.Survey.Ext {
         public const string Closed = "C";
 
         public class closed : BqlString.Constant<closed> { public closed() : base(Closed) { } }
+        public class preparing : BqlString.Constant<preparing> { public preparing() : base(Preparing) { } }
     }
 }
