@@ -140,28 +140,28 @@ namespace PX.Survey.Ext {
         //        Where<CSAttribute.attributeID, Equal<Required<CSAttribute.attributeID>>>>(graph).SelectSingle(new object[] { attributeId });
         //}
 
-        public static (Survey survey, SurveyUser user, SurveyCollector collector) GetSurveyAndUser(SurveyMaint graph, string token) {
-            SurveyCollector collector;
+        public static (Survey survey, SurveyUser user, SurveyCollector answerCollector, SurveyCollector userCollector) GetSurveyAndUser(SurveyMaint graph, string token) {
+            SurveyCollector answerCollector;
+            SurveyCollector userCollector = null;
             Survey survey;
             SurveyUser user;
             token = token?.Trim();
             if (token.Length <= 15) {
                 // Anonymous survey, token is SurveyID
                 survey = Survey.PK.Find(graph, token);
-                SurveySetup setup = PXSelect<SurveySetup>.SelectWindowed(graph, 0, 1);
-                var contactID = setup.AnonContactID;
-                if (contactID == null) {
-                    throw new PXException("An Anonnymous user needs to be setup in the Survey Preferences");
-                }
-                user = graph.InsertOrFindUser(survey, contactID);
-                collector = graph.DoUpsertCollector(survey, user, null);
-                token = collector.Token;
+                (user, answerCollector) = InsertAnonymous(graph, survey, false, null);
+                token = answerCollector.Token;
             } else {
-                collector = SurveyCollector.UK.Find(graph, token);
-                survey = Survey.PK.Find(graph, collector.SurveyID);
-                user = SurveyUser.PK.Find(graph, survey.SurveyID, collector.UserLineNbr);
+                answerCollector = SurveyCollector.UK.Find(graph, token);
+                survey = Survey.PK.Find(graph, answerCollector.SurveyID);
+                // If answers must be kept anonymous, then retrieve the anonymous collector of the collector
+                if (survey.KeepAnswersAnonymous == true && answerCollector.AnonCollectorID != null) {
+                    userCollector = answerCollector;
+                    answerCollector = SurveyCollector.PK.Find(graph, answerCollector.AnonCollectorID);
+                }
+                user = SurveyUser.PK.Find(graph, survey.SurveyID, answerCollector.UserLineNbr);
             }
-            if (collector == null) {
+            if (answerCollector == null) {
                 throw new PXException(Messages.TokenNoFound, token);
             }
             if (survey == null) {
@@ -170,7 +170,22 @@ namespace PX.Survey.Ext {
             if (user == null) {
                 throw new PXException(Messages.TokenNoUser, token);
             }
-            return (survey, user, collector);
+            if (userCollector == null) {
+                userCollector = answerCollector;
+            }
+            return (survey, user, answerCollector, userCollector);
+        }
+
+        public static (SurveyUser user, SurveyCollector coll) InsertAnonymous(SurveyMaint graph, Survey survey, bool alwaysInsert, Guid? refNoteID) {
+            SurveySetup setup = PXSelect<SurveySetup>.SelectWindowed(graph, 0, 1);
+            var contactID = setup.AnonContactID;
+            if (contactID == null) {
+                throw new PXException("An Anonymous user needs to be setup in the Survey Preferences");
+            }
+            //var user = (alwaysInsert) ? graph.InsertUser(survey, contactID, true) : graph.InsertOrFindUser(survey, contactID, true);
+            var user = graph.InsertOrFindUser(survey, contactID, true);
+            var collector = graph.DoUpsertCollector(survey, user, refNoteID);
+            return (user, collector);
         }
 
         public static IEnumerable<CSAttributeDetail> GetAttributeDetails(PXGraph graph, string attributeId) {

@@ -4,9 +4,11 @@ using PX.Data.EP;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.IN.Matrix.Attributes;
 using System;
+using System.Diagnostics;
 
 namespace PX.Survey.Ext {
 
+    [DebuggerDisplay("SurveyDetail: SurveyID = {SurveyID}, PageNbr = {PageNbr}, QuestionNbr = {QuestionNbr}, Description = {Description}")]
     [Serializable]
     [PXCacheName("SurveyDetail")]
     public partial class SurveyDetail : IBqlTable, ISortOrder, INotable {
@@ -72,15 +74,10 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region TemplateID
-        public abstract class componentID : BqlInt.Field<componentID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Component")]
-        [PXDefault]
+        public abstract class componentID : BqlString.Field<componentID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<Current<componentType>>>), Required = true)]
         [PXForeignReference(typeof(FK.SUSurveyTemplate))]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<Current<componentType>>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? ComponentID { get; set; }
+        public virtual string ComponentID { get; set; }
         #endregion
 
         #region IsQuestion

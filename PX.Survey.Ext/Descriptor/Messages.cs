@@ -6,6 +6,7 @@ namespace PX.Survey.Ext {
         public const string Prefix = "Acumatica Survey";
         public const string ContactNotSetup = "Sample Contact is not entered in " + SUSetup;
         public const string SUSetup = "Survey Preferences";
+        public const string GraphCannotBefound = "'{0}' with a value of '{1}' cannot be found in the system.";
 
         #region CacheNames
         public class CacheNames {
@@ -44,7 +45,7 @@ namespace PX.Survey.Ext {
             public const string User = "User";
             public const string Contact = "Contact";
             public const string Anonymous = "Anonymous";
-            public const string Device = "Device";
+            public const string Entity = "Entity";
         }
 
         public class SUComponentType {

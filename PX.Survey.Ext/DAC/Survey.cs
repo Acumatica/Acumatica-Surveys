@@ -7,9 +7,11 @@ using PX.Objects.CS;
 using PX.Objects.IN.Matrix.Attributes;
 using PX.TM;
 using System;
+using System.Diagnostics;
 
 namespace PX.Survey.Ext {
 
+    [DebuggerDisplay("Survey: SurveyID = {SurveyID}, Title = {Title}")]
     [Serializable]
     [PXPrimaryGraph(typeof(SurveyMaint))]
     [PXCacheName(Messages.CacheNames.Survey)]
@@ -95,35 +97,25 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region TemplateID
-        public abstract class templateID : BqlInt.Field<templateID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Template")]
+        public abstract class templateID : BqlString.Field<templateID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.survey>>), DisplayName = "Template", Required = true)]
         [PXDefault(typeof(SurveySetup.templateID))]
-        [PXForeignReference(typeof(FK.SUSurveyTemplate)), ]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.survey>>>), 
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? TemplateID { get; set; }
+        [PXForeignReference(typeof(FK.SUSurveyTemplate))]
+        public virtual string TemplateID { get; set; }
         #endregion
-
-        //#region Active
-        //public abstract class active : BqlBool.Field<active> { }
-        //[PXDBBool]
-        //[PXUIField(DisplayName = "Active")]
-        //public virtual bool? Active { get; set; }
-        //#endregion
 
         #region AllowAnonymous
         public abstract class allowAnonymous : BqlBool.Field<allowAnonymous> { }
         [PXDBBool]
-        [PXUIField(DisplayName = "Allow Anonymous")]
+        [PXUIField(DisplayName = "Allow Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual bool? AllowAnonymous { get; set; }
         #endregion
 
         #region KeepAnswersAnonymous
         public abstract class keepAnswersAnonymous : BqlBool.Field<keepAnswersAnonymous> { }
         [PXDBBool]
-        [PXUIField(DisplayName = "Keep Answers Anonymous")]
+        [PXDefault(true, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Keep Answers Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual bool? KeepAnswersAnonymous { get; set; }
         #endregion
         
@@ -170,7 +162,11 @@ namespace PX.Survey.Ext {
         public abstract class entityType : BqlString.Field<entityType> { }
         [PXDBString(256, IsUnicode = true)]
         [SUEntityTypeList]
+        [PXDefault("", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Entity Type", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXUIEnabled(typeof(Where<target, Equal<SurveyTarget.entity>, And<status, Equal<SurveyStatus.preparing>>>))]
+        [PXUIRequired(typeof(Where<target, Equal<SurveyTarget.entity>>))]
+        [PXUIVisible(typeof(Where<target, Equal<SurveyTarget.entity>>))]
         public virtual string EntityType { get; set; }
         #endregion
 

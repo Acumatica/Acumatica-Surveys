@@ -62,10 +62,10 @@ namespace PX.Survey.Ext {
         }
 
         public (string content, string token) GenerateSurveyPage(string token, int pageNbr) {
-            (var survey, var user, var collector) = SurveyUtils.GetSurveyAndUser(graph, token);
+            var (survey, user, _, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
             // Redirect with new token as anonymous surveys will pass the SurveyID as a token
-            if (collector.Token != token) {
-                return (null, collector.Token);
+            if (userCollector.Token != token) {
+                return (null, userCollector.Token);
             }
             graph.Survey.Current = survey;
             var mainTemplateID = survey.TemplateID;
@@ -76,7 +76,7 @@ namespace PX.Survey.Ext {
             }
             var template = Template.Parse(mainTemplateText);
             var mainContext = GetSurveyContext(survey, user, token);
-            FillReferenceInfo(collector, graph, mainContext);
+            FillReferenceInfo(userCollector, graph, mainContext);
             var renderedPage = GetRenderedPage(survey, user, mainContext, pageNbr);
             FillRenderedPages(mainContext, renderedPage);
             var rendered = template.Render(mainContext);
@@ -110,8 +110,8 @@ namespace PX.Survey.Ext {
         }
 
         public string GetUrl(string token, int? pageNbr) {
-            var (survey, _, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
-            return GetUrl(survey, collector.Token, pageNbr);
+            var (survey, _, _, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
+            return GetUrl(survey, userCollector.Token, pageNbr);
         }
 
         public string GetUrl(Survey survey, string token, int? pageNbr) {
@@ -209,10 +209,10 @@ namespace PX.Survey.Ext {
             var url = GetUrl(context, firstOfSelected.PageNbr.Value);
             context.SetValue(new ScriptVariableGlobal(URL), url);
             foreach (var selectedPage in selectedPages) {
-                var pageTemplateID = selectedPage.ComponentID;
-                var pageTemplate = SurveyComponent.PK.Find(graph, pageTemplateID);
-                var template = Template.Parse(pageTemplate.Body);
-                AddDetailContext(context, selectedPage, pageTemplate);
+                var pageComponentID = selectedPage.ComponentID;
+                var pageComponent = SurveyComponent.PK.Find(graph, pageComponentID);
+                var template = Template.Parse(pageComponent.Body);
+                AddDetailContext(context, selectedPage, pageComponent);
                 FillPageInfo(context, activePages, selectedPage);
                 var rendered = template.Render(context);
                 allRendered.Add(rendered);

@@ -3,9 +3,11 @@ using PX.Data.BQL;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CR;
 using System;
+using System.Diagnostics;
 
 namespace PX.Survey.Ext {
 
+    [DebuggerDisplay("SurveyUser: SurveyID = {SurveyID}, DisplayName = {DisplayName}, ContactID = {ContactID}")]
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveyUser)]
     public class SurveyUser : IBqlTable, INotable {
@@ -58,6 +60,13 @@ namespace PX.Survey.Ext {
         [PXCheckUnique(Where = typeof(Where<SurveyUser.surveyID, Equal<Current<surveyID>>>), ClearOnDuplicate = false)]
         [PXForeignReference(typeof(FK.SUContact))]
         public virtual int? ContactID { get; set; }
+        #endregion
+
+        #region Anonymous
+        public abstract class anonymous : BqlBool.Field<anonymous> { }
+        [PXDBBool]
+        [PXUIField(DisplayName = "Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual bool? Anonymous { get; set; }
         #endregion
 
         #region RecipientType

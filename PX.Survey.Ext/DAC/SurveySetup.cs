@@ -21,58 +21,38 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region BadRequestID
-        public abstract class badRequestID : BqlInt.Field<badRequestID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Bad Request Template")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.badRequest>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? BadRequestID { get; set; }
+        public abstract class badRequestID : BqlString.Field<badRequestID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.badRequest>>), DisplayName = "Bad Request Template", Required = true)]
+        [PXDefault("SUBADREQUEST")]
+        public virtual string BadRequestID { get; set; }
         #endregion
 
         #region TemplateID
-        public abstract class templateID : BqlInt.Field<templateID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Main Template")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.survey>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? TemplateID { get; set; }
+        public abstract class templateID : BqlString.Field<templateID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.survey>>), DisplayName = "Default Main Template", Required = true)]
+        [PXDefault("SUMAIN")]
+        public virtual string TemplateID { get; set; }
         #endregion
 
         #region DefHeaderID
-        public abstract class defHeaderID : BqlInt.Field<defHeaderID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Header")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.header>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? DefHeaderID { get; set; }
+        public abstract class defHeaderID : BqlString.Field<defHeaderID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.header>>), DisplayName = "Default Header", Required = true)]
+        [PXDefault("SUWELCOME")]
+        public virtual string DefHeaderID { get; set; }
         #endregion
 
         #region DefPageHeaderID
-        public abstract class defPageHeaderID : BqlInt.Field<defPageHeaderID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Page Header")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.pageHeader>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? DefPageHeaderID { get; set; }
+        public abstract class defPageHeaderID : BqlString.Field<defPageHeaderID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.pageHeader>>), DisplayName = "Default Page Header", Required = true)]
+        [PXDefault("SUPROGRESS")]
+        public virtual string DefPageHeaderID { get; set; }
         #endregion
 
         #region DefQuestionID
-        public abstract class defQuestionID : BqlInt.Field<defQuestionID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Question")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.questionPage>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? DefQuestionID { get; set; }
+        public abstract class defQuestionID : BqlString.Field<defQuestionID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.questionPage>>), DisplayName = "Default Question", Required = true)]
+        [PXDefault("SURADIOBUTTONS")]
+        public virtual string DefQuestionID { get; set; }
         #endregion
 
         #region DefQuestAttrID
@@ -85,21 +65,17 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region DefCommentID
-        public abstract class defCommentID : BqlInt.Field<defCommentID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Comment")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.commentPage>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? DefCommentID { get; set; }
+        public abstract class defCommentID : BqlString.Field<defCommentID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.commentPage>>), DisplayName = "Default Comment", Required = true)]
+        [PXDefault("SUTEXTAREA")]
+        public virtual string DefCommentID { get; set; }
         #endregion
 
         #region DefCommAttrID
         public abstract class defCommAttrID : BqlString.Field<defCommAttrID> { }
         [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
-        [PXDefault]
-        [PXSelector(typeof(CS.CSAttribute.attributeID), DescriptionField = typeof(CS.CSAttribute.description))]
+        [PXDefault("SUCOMMENT")]
+        [PXSelector(typeof(Search<CS.CSAttribute.attributeID, Where<CS.CSAttribute.controlType, Equal<SUControlType.text>>>), DescriptionField = typeof(CS.CSAttribute.description))]
         [PXUIField(DisplayName = "Default Comment Type")]
         public virtual string DefCommAttrID { get; set; }
         #endregion
@@ -121,25 +97,17 @@ namespace PX.Survey.Ext {
         #endregion
 
         #region DefPageFooterID
-        public abstract class defPageFooterID : BqlInt.Field<defPageFooterID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Page Footer")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.pageFooter>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? DefPageFooterID { get; set; }
+        public abstract class defPageFooterID : BqlString.Field<defPageFooterID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.pageFooter>>), DisplayName = "Default Page Footer", Required = true)]
+        [PXDefault("SUPREVNEXT")]
+        public virtual string DefPageFooterID { get; set; }
         #endregion
 
         #region DefFooterID
-        public abstract class defFooterID : BqlInt.Field<defFooterID> { }
-        [PXDBInt]
-        [PXUIField(DisplayName = "Default Footer")]
-        [PXDefault]
-        [PXSelector(typeof(Search<SurveyComponent.componentID, Where<SurveyComponent.componentType, Equal<SUComponentType.footer>>>), new Type[] { typeof(SurveyComponent.componentID), typeof(SurveyComponent.description) },
-            DescriptionField = typeof(SurveyComponent.description),
-            SubstituteKey = typeof(SurveyComponent.description))]
-        public virtual int? DefFooterID { get; set; }
+        public abstract class defFooterID : BqlString.Field<defFooterID> { }
+        [ComponentID(typeof(Where<SurveyComponent.componentType, Equal<SUComponentType.footer>>), DisplayName = "Default Footer", Required = true)]
+        [PXDefault("SUTHANKYOU")]
+        public virtual string DefFooterID { get; set; }
         #endregion
 
         #region NotificationID

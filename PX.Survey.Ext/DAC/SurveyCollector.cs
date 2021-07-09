@@ -99,7 +99,7 @@ namespace PX.Survey.Ext {
         /// Uniquely Identifies this Anmonymous Collector record for this Collector.
         /// </summary>
         [PXDBInt]
-        [PXSelector(typeof(Search<SurveyCollector.collectorID>))]
+        [PXSelector(typeof(Search<collectorID, Where<userLineNbr, Equal<Current<userLineNbr>>>>))]
         public virtual int? AnonCollectorID { get; set; }
         #endregion
 
@@ -110,6 +110,14 @@ namespace PX.Survey.Ext {
         [PXSelector(typeof(Search<Contact.contactID>), DescriptionField = typeof(Contact.displayName), ValidateValue = false)]
         [PXFormula(typeof(Selector<userLineNbr, SurveyUser.contactID>))]
         public virtual int? ContactID { get; set; }
+        #endregion
+
+        #region Anonymous
+        public abstract class anonymous : BqlBool.Field<anonymous> { }
+        [PXBool]
+        [PXFormula(typeof(Selector<userLineNbr, SurveyUser.anonymous>))]
+        [PXUIField(DisplayName = "Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual bool? Anonymous { get; set; }
         #endregion
 
         #region UserID

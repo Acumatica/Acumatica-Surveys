@@ -61,18 +61,18 @@ namespace PX.Survey.Ext.WebHook {
 
         private void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
             var graph = PXGraph.CreateInstance<SurveyMaint>();
-            var (survey, user, collector) = SurveyUtils.GetSurveyAndUser(graph, token);
-            if (collector.Status == CollectorStatus.Processed) {
+            var (survey, _, answerCollector, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
+            if (answerCollector.Status == CollectorStatus.Processed) {
                 throw new Exception($"Your answers were processed, you cannot change them anymore");
             }
-            var data = FindCollectorData(graph, collector, pageNbr);
+            var data = FindCollectorData(graph, answerCollector, pageNbr);
             if (data == null) {
                 data = new SurveyCollectorData {
                     Token = token,
                     Uri = uri.ToString(),
                     Payload = payload,
                     SurveyID = survey?.SurveyID,
-                    CollectorID = collector.CollectorID,
+                    CollectorID = answerCollector.CollectorID,
                     PageNbr = pageNbr
                 };
                 data = graph.CollectorDataRecords.Insert(data);
@@ -81,17 +81,21 @@ namespace PX.Survey.Ext.WebHook {
                 data.Status = CollectorDataStatus.Updated;
                 data = graph.CollectorDataRecords.Update(data);
             }
-            if (collector.Status == CollectorStatus.Deleted) {
-                collector.Status = CollectorStatus.New;
+            if (answerCollector.Status == CollectorStatus.Deleted) {
+                answerCollector.Status = CollectorStatus.New;
             }
-            if (collector.Status == CollectorStatus.New || collector.Status == CollectorStatus.Sent) {
-                collector.Status = CollectorStatus.Partially;
+            if (answerCollector.Status == CollectorStatus.New || answerCollector.Status == CollectorStatus.Sent) {
+                answerCollector.Status = CollectorStatus.Partially;
             }
             var lastPageNbr = graph.GetLastQuestionPageNumber(survey);
-            if (collector.Status == CollectorStatus.Partially && pageNbr >= lastPageNbr) {
-                collector.Status = CollectorStatus.Completed;
+            if (answerCollector.Status == CollectorStatus.Partially && pageNbr >= lastPageNbr) {
+                answerCollector.Status = CollectorStatus.Completed;
             }
-            graph.Collectors.Update(collector);
+            graph.Collectors.Update(answerCollector);
+            if (userCollector.CollectorID != answerCollector.CollectorID) {
+                userCollector.Status = answerCollector.Status;
+                graph.Collectors.Update(userCollector);
+            }
             graph.Persist();
         }
 

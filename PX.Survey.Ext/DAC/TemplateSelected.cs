@@ -23,9 +23,8 @@ namespace PX.Survey.Ext {
         public virtual bool? Selected { get; set; }
         #endregion
 
-        [PXDBInt(BqlField = typeof(SurveyComponent.componentID))]
-        [PXUIField(DisplayName = "Template ID", Visibility = PXUIVisibility.Invisible)]
-        public virtual int? TemplateID { get; set; }
+        [ComponentID]
+        public virtual string ComponentID { get; set; }
 
         [PXDBString(2, IsFixed = true, BqlField = typeof(SurveyComponent.componentType))]
         [SUComponentType.DetailList]

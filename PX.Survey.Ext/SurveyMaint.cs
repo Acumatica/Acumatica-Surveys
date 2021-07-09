@@ -17,6 +17,7 @@ namespace PX.Survey.Ext {
 
         //[PXCopyPasteHiddenFields(typeof(Survey.surveyID))]
         public SelectFrom<Survey>.View Survey;
+        public PXSelect<Survey, Where<Survey.surveyID, Equal<Current<Survey.surveyID>>>> CurrentSurvey;
 
         public SurveyDetailSelect Details;
         public PXSelect<SurveyDetail,
@@ -93,7 +94,7 @@ namespace PX.Survey.Ext {
 
         [PXMergeAttributes(Method = MergeMethod.Merge)]
         [PXUIField(DisplayName = "Member Since", Enabled = false)]
-        protected virtual void _(Events.CacheAttached<SurveyMember.createdDateTime> e) {}
+        protected virtual void _(Events.CacheAttached<SurveyMember.createdDateTime> e) { }
 
         #region RecipientSelected Lookup
         public PXFilter<RecipientFilter> recipientfilter;
@@ -203,7 +204,7 @@ namespace PX.Survey.Ext {
             }
         }
 
-        private void InsertMissing(Survey survey, int series, int prevSeries, string templateType, int? templateID, int offset, string attrID = null) {
+        private void InsertMissing(Survey survey, int series, int prevSeries, string templateType, string templateID, int offset, string attrID = null) {
             var isSingle = survey.Layout == SurveyLayout.SinglePage;
             var pageNumber = isSingle ? ((templateType == SUComponentType.Footer) ? 2 : 1) : series;
             HandleOffsets(ref offset, isSingle, series, prevSeries);
@@ -278,7 +279,7 @@ namespace PX.Survey.Ext {
                     surveyDetail.SurveyID = Survey.Current.SurveyID;
                     surveyDetail.ComponentType = template.TemplateType;
                     surveyDetail.Description = template.Description;
-                    surveyDetail.ComponentID = template.TemplateID;
+                    surveyDetail.ComponentID = template.ComponentID;
                     Details.Update(surveyDetail);
                 }
             }
@@ -411,6 +412,7 @@ namespace PX.Survey.Ext {
                 RefNoteID = refNoteID
             };
             var inserted = Collectors.Insert(collector);
+            //var persisted = Collectors.Cache.PersistInserted(inserted);
             Actions.PressSave();
             return inserted;
         }
@@ -454,24 +456,30 @@ namespace PX.Survey.Ext {
             if (!setup.ContactID.HasValue) {
                 throw new PXSetPropertyException(Messages.ContactNotSetup, Messages.SUSetup);
             }
-            return InsertOrFindUser(survey, setup.ContactID);
+            return InsertOrFindUser(survey, setup.ContactID, false);
         }
 
-        public SurveyUser InsertOrFindUser(Survey survey, int? contactID) {
+        public SurveyUser InsertOrFindUser(Survey survey, int? contactID, bool anonymous) {
             SurveyUser user = SelectFrom<SurveyUser>.
                 Where<SurveyUser.surveyID.IsEqual<@P.AsString>.
                 And<SurveyUser.contactID.IsEqual<@P.AsInt>>>.
                 View.SelectWindowed(this, 0, 1, survey.SurveyID, contactID);
             if (user == null) {
-                user = new SurveyUser() {
-                    Active = true,
-                    ContactID = contactID,
-                    SurveyID = survey.SurveyID
-                };
-                user = Users.Insert(user);
-                //cache.SetDefaultExt<SurveyUser.lineNbr>(user);
-                Actions.PressSave();
+                user = InsertUser(survey, contactID, anonymous);
             }
+            return user;
+        }
+
+        public SurveyUser InsertUser(Survey survey, int? contactID, bool anonymous) {
+            var user = new SurveyUser() {
+                Active = true,
+                ContactID = contactID,
+                SurveyID = survey.SurveyID,
+                Anonymous = anonymous,
+            };
+            user = Users.Insert(user);
+            //var persisted = Users.Cache.PersistInserted(user);
+            Actions.PressSave();
             return user;
         }
 
@@ -783,8 +791,7 @@ namespace PX.Survey.Ext {
             }
         }
 
-        protected virtual void _(Events.RowPersisted<Survey> e)
-        {
+        protected virtual void _(Events.RowPersisted<Survey> e) {
             var row = e.Row;
             if (row == null) { return; }
             recipients.Cache.Clear();
@@ -803,9 +810,12 @@ namespace PX.Survey.Ext {
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
             //PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
-            var anon = row.Target == SurveyTarget.Anonymous;
-            if (anon) {
+            var isAnon = row.Target == SurveyTarget.Anonymous;
+            var isEntity = row.Target == SurveyTarget.Entity;
+            PXUIFieldAttribute.SetEnabled<Survey.allowAnonymous>(e.Cache, row, !isAnon);
+            if (isAnon || isEntity) {
                 Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
+                CampaignMembers.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
                 insertSampleCollector.SetEnabled(false);
                 insertSampleCollector.SetVisible(false);
                 //redirectToSurvey.SetEnabled(false);
@@ -816,6 +826,19 @@ namespace PX.Survey.Ext {
         protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
             var row = e.Row;
             if (row == null) { return; }
+        }
+
+        public void _(Events.FieldUpdated<Survey, Survey.target> e) {
+            e.Cache.SetDefaultExt<Survey.allowAnonymous>(e.Row);
+        }
+
+        protected virtual void _(Events.FieldDefaulting<Survey, Survey.allowAnonymous> e) {
+            var row = e.Row;
+            if (row == null || string.IsNullOrEmpty(row.Target)) {
+                return;
+            }
+            e.NewValue = row.Target == SurveyTarget.Anonymous;
+            e.Cancel = true;
         }
 
         //protected virtual void _(Events.RowPersisted<Survey> e) {
@@ -836,6 +859,17 @@ namespace PX.Survey.Ext {
         //        DoInsertMissing(row);
         //    }
         //}
+
+        protected virtual void _(Events.RowPersisting<SurveyCollector> e) {
+            var row = e.Row;
+            var survey = Survey.Current;
+            if (row == null || survey == null)
+                return;
+            if (survey.KeepAnswersAnonymous == true && row.AnonCollectorID == null && row.Anonymous != true) {
+                var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, true, null);
+                row.AnonCollectorID = anon?.CollectorID;
+            }
+        }
 
         //private void DoInsertMissing(SurveyDetail row) {
         //    var setup = SurveySetup.Current;
@@ -907,11 +941,11 @@ namespace PX.Survey.Ext {
             if (row == null || row.ComponentID == null || !string.IsNullOrEmpty(row.Description)) {
                 return;
             }
-            SurveyComponent st = SurveyComponent.PK.Find(this, row.ComponentID);
-            if (st == null) {
+            SurveyComponent comp = SurveyComponent.PK.Find(this, row.ComponentID);
+            if (comp == null) {
                 return;
             }
-            switch (st.ComponentType) {
+            switch (comp.ComponentType) {
                 case SUComponentType.PageHeader:
                 case SUComponentType.PageFooter:
                     break;
@@ -1016,6 +1050,7 @@ namespace PX.Survey.Ext {
             var survey = Survey.Current;
             var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
             PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
+            PXUIFieldAttribute.SetVisible<SurveyCollector.source>(e.Cache, e.Row, showRefNote);
         }
 
         //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {

@@ -40,7 +40,7 @@ namespace PX.Survey.Ext {
                 var survey = surveyGraph.Survey.Search<Survey.surveyID>(entitySetup.SurveyID);
                 if (survey != null && contactID.HasValue) {
                     surveyGraph.Survey.Current = survey;
-                    var user = surveyGraph.InsertOrFindUser(survey, contactID);
+                    var user = surveyGraph.InsertOrFindUser(survey, contactID, false);
                     var collector = surveyGraph.DoUpsertCollector(survey, user, noteID);
                 }
             }

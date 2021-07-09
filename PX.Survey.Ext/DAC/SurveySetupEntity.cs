@@ -2,29 +2,46 @@
 using PX.Data.BQL;
 using PX.Data.EP;
 using System;
+using System.Diagnostics;
 
 namespace PX.Survey.Ext {
 
+    [DebuggerDisplay("SurveySetupEntity: GraphType = {GraphType}, EntityType = {EntityType}, ContactField = {ContactField}")]
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveySetupEntity)]
-    public partial class SurveySetupEntity : IBqlTable, INotable {
+    public partial class SurveySetupEntity : IBqlTable, ISortOrder, INotable {
 
-        #region ScreenID
-        public abstract class screenID : BqlString.Field<screenID> { }
-        [PXDBString(8, IsFixed = true, InputMask = "CC.CC.CC.CC")]
+        #region GraphType
+        public abstract class graphType : BqlString.Field<graphType> { }
+        [PXDBString(256, IsUnicode = true)]
         [PXDefault]
-        [PXSiteMapNodeSelector]
-        [PXUIField(DisplayName = "Screen ID", Visibility = PXUIVisibility.SelectorVisible)]
-        public virtual string ScreenID { get; set; }
+        [SUGraphSelector]
+        [PXUIField(DisplayName = "Graph Type")]
+        public virtual string GraphType { get; set; }
         #endregion
 
         #region EntityType
         public abstract class entityType : BqlString.Field<entityType> { }
-        [PXDBString(256, IsKey = true, IsUnicode = true)]
+        [PXDBString(256, IsUnicode = true)]
         [PXDefault]
         [PXEntityTypeList]
-        [PXUIField(DisplayName = "Entity Type", IsReadOnly = true)]
+        [PXUIField(DisplayName = "Entity Type", IsReadOnly = true, Required = true)]
         public virtual string EntityType { get; set; }
+        #endregion
+
+        #region LineNbr
+        public abstract class lineNbr : BqlInt.Field<lineNbr> { }
+        [PXDBInt(IsKey = true)]
+        [PXLineNbr(typeof(Survey))]
+        [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
+        public virtual int? LineNbr { get; set; }
+        #endregion
+
+        #region SortOrder
+        public abstract class sortOrder : BqlInt.Field<sortOrder> { }
+        [PXUIField(DisplayName = "Line Order", Visible = false, Enabled = false)]
+        [PXDBInt]
+        public virtual int? SortOrder { get; set; }
         #endregion
 
         #region ContactField
