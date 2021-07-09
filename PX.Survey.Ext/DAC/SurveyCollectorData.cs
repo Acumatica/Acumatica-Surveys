@@ -80,16 +80,6 @@ namespace PX.Survey.Ext {
         public virtual string Payload { get; set; }
         #endregion
 
-        #region QueryParameters
-        public abstract class queryParameters : BqlString.Field<queryParameters> { }
-        /// <summary>
-        /// This will hold the query parameter string
-        /// </summary>
-        [PXUIField(DisplayName = "Query Parameters", IsReadOnly = true)]
-        [PXDBText(IsUnicode = true)]
-        public virtual string QueryParameters { get; set; }
-        #endregion
-
         #region PageNbr
         public abstract class pageNbr : BqlInt.Field<pageNbr> { }
         [PXDBInt]
