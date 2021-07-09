@@ -91,6 +91,7 @@ namespace PX.Survey.Ext {
         [PXString(IsUnicode = true)]
         [PXUIField(DisplayName = "Related Entity Description", Enabled = false)]
         [PXFormula(typeof(EntityDescription<refNoteID>))]
+        //[PXUIVisible(typeof(Where<refNoteID, IsNotNull>))]
         public virtual string Source { get; set; }
 
         #region AnonCollectorID

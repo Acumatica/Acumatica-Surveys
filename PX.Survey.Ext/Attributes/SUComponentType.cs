@@ -29,11 +29,11 @@ namespace PX.Survey.Ext {
 
         public const string Survey = "SU";
         public const string Header = "HE";
-        public const string PageHeader = "SA";
+        public const string PageHeader = "PH";
         public const string QuestionPage = "QU";
         public const string CommentPage = "CM";
         public const string ContentPage = "CO";
-        public const string PageFooter = "EA";
+        public const string PageFooter = "PF";
         public const string Footer = "FO";
         public const string BadRequest = "BR";
 

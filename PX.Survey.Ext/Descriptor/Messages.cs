@@ -68,7 +68,7 @@ namespace PX.Survey.Ext {
         public class SurveyStatus {
             public const string Preparing = "Preparing";
             public const string Started = "Started";
-            public const string InProgress = "InProgress";
+            public const string InProgress = "In Progress";
             public const string Closed = "Closed";
         }
 
