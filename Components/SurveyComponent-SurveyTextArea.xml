@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(Description)" />
+  <layout>
+    <table name="SurveyComponent" />
+  </layout>
+  <data>
+    <SurveyComponent>
+      <row ComponentID="SUTEXTAREA" ComponentType="CM" Active="1" Description="SurveyTextArea" Body="{{ PNbr = SurveyDetail.PageNbr }}&#xA;{{ QNbr = SurveyDetail.QuestionNbr }}&#xA;{{ LNbr = SurveyDetail.LineNbr }}&#xA;{{ UniqueID = PNbr + '.' + QNbr + '.' + LNbr }}&#xA;&lt;div class=&quot;field mb-5&quot;&gt;&#xA;                        &lt;label class=&quot;label&quot; id=&quot;control.textarea.label.{{UniqueID}}&quot; for=&quot;control.textarea.{{UniqueID}}&quot;&gt;{{QNbr}}. {{SurveyDetail.Description}}&lt;/label&gt;&#xA;                        &lt;div class=&quot;control&quot;&gt;&#xA;                            &lt;textarea class=&quot;textarea&quot; maxlength=&quot;{{SurveyDetail.MaxLength}}&quot; placeholder=&quot;&quot; rows=&quot;{{SurveyDetail.NbrOfRows}}&quot; id=&quot;control.textarea.{{UniqueID}}&quot; name=&quot;{{UniqueID}}&quot; aria-labelledby=&quot;control.textarea.label.{{UniqueID}}&quot; {{ if SurveyDetail.Required }}{{~ required=&quot;required&quot; ~}}{{ end }}&gt;&lt;/textarea&gt;&#xA;                        &lt;/div&gt;&#xA;                    &lt;/div&gt;" NoteID="c92705eb-4dc2-eb11-a38b-3c6aa7cb36ca" />
+    </SurveyComponent>
+  </data>
+</data-set>

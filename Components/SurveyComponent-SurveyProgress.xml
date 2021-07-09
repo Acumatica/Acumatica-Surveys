@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(Description)" />
+  <layout>
+    <table name="SurveyComponent" />
+  </layout>
+  <data>
+    <SurveyComponent>
+      <row ComponentID="SUPROGRESS" ComponentType="PH" Active="1" Description="SurveyProgress" Body="&lt;header class=&quot;hero&quot;&gt;&#xA;    &lt;a class=&quot;px-5&quot; target=&quot;_blank&quot; href=&quot;https://www.acumatica.com&quot;&gt;&lt;img src=&quot;https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg&quot; alt=&quot;Acumatica&quot; class=&quot;image&quot; style=&quot;width: 250px&quot; /&gt;&lt;/a&gt;&#xA;    &lt;div class=&quot;hero-body py-4 mt-4 px-0&quot;&gt;&#xA;        &lt;h1 class=&quot;title has-background-info-dark has-text-white px-4 py-4 mb-4&quot;&gt;{{Survey.Name}}&lt;/h1&gt;&#xA;        &lt;h2 class=&quot;subtitle has-background-info has-text-white px-4 py-2 mb-2&quot;&gt;&lt;/h2&gt;&#xA;        &lt;div class=&quot;columns is-mobile my-4&quot;&gt;&#xA;            &lt;div class=&quot;column is-three-fifths is-offset-one-fifth&quot;&gt;&#xA;                &lt;progress class=&quot;progress progress-text is-primary&quot; value=&quot;{{CurrentPageNbr}}&quot; max=&quot;{{Nbpages}}&quot;&gt;&lt;/progress&gt;&#xA;            &lt;/div&gt;&#xA;        &lt;/div&gt;&#xA;    &lt;/div&gt;&#xA;&lt;/header&gt;" NoteID="808815ce-6abf-eb11-a38b-3c6aa7cb36ca" />
+    </SurveyComponent>
+  </data>
+</data-set>
