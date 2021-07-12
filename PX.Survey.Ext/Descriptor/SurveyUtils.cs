@@ -32,7 +32,7 @@ namespace PX.Survey.Ext {
         public static Func<SurveyDetail, Tuple<int, int>> GET_QUES_AND_PAGE_NBR = (pd) => { return Tuple.Create(pd.QuestionNbr.Value, pd.PageNbr.Value); };
 
         public class surveyScreen : BqlString.Constant<surveyScreen> {
-            public surveyScreen() : base("SU201000") { }
+            public surveyScreen() : base("SU301000") { }
         }
 
         public static int GetNextOrPrevPageNbr(HttpRequestMessage request, int pageNbr) {

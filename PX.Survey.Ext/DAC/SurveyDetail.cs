@@ -28,8 +28,8 @@ namespace PX.Survey.Ext {
         public abstract class surveyID : BqlString.Field<surveyID> { }
         [SurveyID(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
-        [PXParent(typeof(Select<Survey, Where<Survey.surveyID, Equal<Current<surveyID>>>>))]
-        [PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
+        [PXParent(typeof(FK.SUSurvey))]
+        //[PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 
