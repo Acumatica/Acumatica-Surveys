@@ -13,7 +13,7 @@
     <px:PXFormView ID="PXFormView1" runat="server" DataSourceID="ds" DataMember="SUComponent" Width="100%" DefaultControlID="edComponentID">
         <Template>
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="L" />
-            <px:PXSelector runat="server" ID="edComponentID" DataField="ComponentID" FilterByAllFields="True" AutoRefresh="True" TextField="Description" NullText="<NEW>" DataSourceID="ds">
+            <px:PXSelector runat="server" ID="edComponentID" DataField="ComponentID" FilterByAllFields="True" NullText="<NEW>" DataSourceID="ds">
                 <GridProperties>
                     <Columns>
                         <px:PXGridColumn DataField="ComponentID" Width="60px" />
