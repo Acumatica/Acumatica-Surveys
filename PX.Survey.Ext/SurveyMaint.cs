@@ -74,10 +74,10 @@ namespace PX.Survey.Ext {
 
         public PXFilter<OperationParam> Operations;
 
-        [PXFilterable(new Type[] { })]
-        [PXImport(typeof(Survey))]
-        [PXViewName("Survey Members")]
-        public SurveyMembersList CampaignMembers;
+        //[PXFilterable(new Type[] { })]
+        //[PXImport(typeof(Survey))]
+        //[PXViewName("Survey Members")]
+        //public SurveyMembersList CampaignMembers;
 
         //[InjectDependency]
         //public Api.Services.ICompanyService CompanyService { get; set; }
@@ -815,7 +815,7 @@ namespace PX.Survey.Ext {
             PXUIFieldAttribute.SetEnabled<Survey.allowAnonymous>(e.Cache, row, !isAnon);
             if (isAnon || isEntity) {
                 Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
-                CampaignMembers.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
+                //CampaignMembers.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
                 insertSampleCollector.SetEnabled(false);
                 insertSampleCollector.SetVisible(false);
                 //redirectToSurvey.SetEnabled(false);

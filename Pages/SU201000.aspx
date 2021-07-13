@@ -177,7 +177,7 @@
                     </px:PXSplitContainer>--%>
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="Members">
+<%--            <px:PXTabItem Text="Members">
 				<Template>
 					<px:PXGrid ID="grdCampaignMembers" runat="server" SkinID="DetailsInTab" Height="400px" NoteIndicator="false"
 						Width="100%" Style="z-index: 100" AllowPaging="True" AdjustPageSize="Auto" ActionsPosition="Top"
@@ -243,14 +243,13 @@
 								<%--<px:PXToolBarButton Key="cmdAddActivity" >
                                     <AutoCallBack Command="NewCampaignMemberActivity" Target="ds" ></AutoCallBack>
                                     <ActionBar />
-                                </px:PXToolBarButton>--%>
+                                </px:PXToolBarButton>--%
 							</CustomItems>
 						</ActionBar>
 						<AutoSize Enabled="True" MinHeight="200" />
 					</px:PXGrid>
 				</Template>
-			</px:PXTabItem>
-
+			</px:PXTabItem>--%>
             <px:PXTabItem Text="Recipients" RepaintOnDemand="False">
                 <Template>
                     <px:PXGrid ID="grdRecipients" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
