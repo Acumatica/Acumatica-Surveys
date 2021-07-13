@@ -158,7 +158,7 @@ namespace PX.Survey.Ext {
         #region NbrOfRows
         public abstract class nbrOfRows : BqlInt.Field<nbrOfRows> { }
         [PXDBInt]
-        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDefault(typeof(SurveySetup.defNbrOfRows), PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Nbr. Of Rows")]
         [PXUIEnabled(typeof(Where<controlType, Equal<SUControlType.text>>))]
         [PXUIRequired(typeof(Where<controlType, Equal<SUControlType.text>>))]
@@ -168,7 +168,7 @@ namespace PX.Survey.Ext {
         #region MaxLength
         public abstract class maxLength : BqlInt.Field<maxLength> { }
         [PXDBInt]
-        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXDefault(typeof(SurveySetup.defMaxLength), PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Max Length")]
         [PXUIEnabled(typeof(Where<controlType, Equal<SUControlType.text>>))]
         [PXUIRequired(typeof(Where<controlType, Equal<SUControlType.text>>))]
