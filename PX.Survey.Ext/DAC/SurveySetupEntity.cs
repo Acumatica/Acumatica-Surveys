@@ -32,7 +32,7 @@ namespace PX.Survey.Ext {
         #region LineNbr
         public abstract class lineNbr : BqlInt.Field<lineNbr> { }
         [PXDBInt(IsKey = true)]
-        [PXLineNbr(typeof(Survey))]
+        [PXLineNbr(typeof(SurveySetup))]
         [PXUIField(DisplayName = "Line Nbr.", Visible = false)]
         public virtual int? LineNbr { get; set; }
         #endregion
