@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <data-set>
-  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(Description)" />
+  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(ComponentID)" />
   <layout>
     <table name="SurveyComponent" />
   </layout>
