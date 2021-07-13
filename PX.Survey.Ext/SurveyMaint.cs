@@ -1011,6 +1011,14 @@ namespace PX.Survey.Ext {
             e.Cancel = true;
         }
 
+        protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.required> e) {
+            var row = e.Row;
+            if (row == null) {
+                return;
+            }
+            e.NewValue = (row.ComponentType == SUComponentType.QuestionPage);
+        }
+
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.nbrOfRows> e) {
             var row = e.Row;
             if (row == null || row.ComponentType == null || row.ComponentType != SUComponentType.CommentPage) {
