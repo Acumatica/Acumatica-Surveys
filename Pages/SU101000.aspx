@@ -47,24 +47,33 @@
                             <px:PXGridLevel DataMember="DefaultSurveys">
                                 <RowTemplate>
                                     <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXSelector ID="edScreenID" runat="server" DataField="ScreenID" CommitChanges="True" />
-                                    <px:PXDropDown ID="edEntityType" runat="server" DataField="EntityType" CommitChanges="True" e />
-                                    <px:PXSelector ID="edContactField" runat="server" DataField="ContactField" CommitChanges="True" />
-                                    <%--<px:PXTreeSelector ID="edContactField" runat="server" DataField="ContactField"
+                                    <%--<px:PXSelector ID="edScreenID" runat="server" DataField="ScreenID" CommitChanges="True" />--%>
+                                    <px:PXSelector ID="edGraphType" runat="server" DataField="GraphType" CommitChanges="True" />
+                                    <px:PXDropDown ID="edEntityType" runat="server" DataField="EntityType" CommitChanges="True" />
+                                    <%--<px:PXSelector ID="edContactField" runat="server" DataField="ContactField" CommitChanges="True" />--%>
+                                    <px:PXTreeSelector ID="edContactField" runat="server" DataField="ContactField"
                                         TreeDataSourceID="ds" PopulateOnDemand="True" InitialExpandLevel="0"
                                         ShowRootNode="False" MinDropWidth="468" MaxDropWidth="600" AllowEditValue="true"
                                         AppendSelectedValue="False" AutoRefresh="true" TreeDataMember="EntityItems">
                                         <DataBindings>
                                             <px:PXTreeItemBinding DataMember="EntityItems" TextField="Name" ValueField="Path" ImageUrlField="Icon" ToolTipField="Path" />
                                         </DataBindings>
-                                    </px:PXTreeSelector>--%>
+                                    </px:PXTreeSelector>
+                                    <px:PXTreeSelector ID="edContactField2" runat="server" CommitChanges="true" DataField="ContactField" TreeDataSourceID="ds" PopulateOnDemand="True"
+										InitialExpandLevel="0" ShowRootNode="False" MinDropWidth="468" MaxDropWidth="600" AllowEditValue="True"
+										AutoRefresh="True" TreeDataMember="EntityItems">
+										<DataBindings>
+											<px:PXTreeItemBinding TextField="Name" ValueField="Path" ImageUrlField="Icon" ToolTipField="Path" />
+										</DataBindings>
+										<ButtonImages Normal="main@AddNew" Hover="main@AddNew" Pushed="main@AddNew" />
+									</px:PXTreeSelector>
                                     <px:PXSelector ID="edSurveyID" runat="server" DataField="SurveyID" CommitChanges="True" />
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="ScreenID" Width="140px" CommitChanges="true"/>
-                                    <px:PXGridColumn DataField="EntityType" Width="140px" Type="DropDownList" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="GraphType" Width="250px" CommitChanges="true" DisplayMode="Text"/>
+                                    <px:PXGridColumn DataField="EntityType" Width="150px" Type="DropDownList" CommitChanges="true" />
                                     <px:PXGridColumn DataField="ContactField" Width="200px" CommitChanges="true"/>
-                                    <px:PXGridColumn DataField="SurveyID" Width="300px" CommitChanges="true"/>
+                                    <px:PXGridColumn DataField="SurveyID" Width="120px" CommitChanges="true"/>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
