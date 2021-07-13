@@ -53,13 +53,10 @@
             <px:PXSelector runat="server" ID="edTemplateID" DataField="TemplateID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXSelector runat="server" ID="edNotificationID" DataField="NotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
             <px:PXSelector runat="server" ID="edRemindNotificationID" DataField="RemindNotificationID" Width="300px" CommitChanges="true" AllowEdit="true" />
-            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="SM" SuppressLabel="true" />
+            <px:PXDropDown runat="server" ID="edEntityType" DataField="EntityType" CommitChanges="true" />
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="SM" SuppressLabel="true" />
             <px:PXCheckBox runat="server" ID="chkAllowAnonymous" DataField="AllowAnonymous" CommitChanges="true"></px:PXCheckBox>
             <px:PXCheckBox runat="server" ID="chkKeepAnswersAnonymous" DataField="KeepAnswersAnonymous" CommitChanges="true"></px:PXCheckBox>
-            <px:PXLayoutRule runat="server" LabelsWidth="S" ControlSize="SM" />
-            <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
-            <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
-            <px:PXDropDown runat="server" ID="edEntityType" DataField="EntityType" CommitChanges="true" />
         </Template>
     </px:PXFormView>
 </asp:Content>
@@ -450,6 +447,17 @@
                         </Levels>
                         <AutoSize Enabled="True" Container="Window" MinHeight="150" />
                     </px:PXGrid>
+                </Template>
+            </px:PXTabItem>
+            <px:PXTabItem Text="Setup" RepaintOnDemand="false">
+                <Template>
+                    <px:PXFormView ID="Setup" runat="server" DataMember="CurrentSurvey" RenderStyle="Simple" SkinID="Transparent">
+                        <Template>
+                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" />
+                            <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
+                            <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
+                        </Template>
+                    </px:PXFormView>
                 </Template>
             </px:PXTabItem>
         </Items>
