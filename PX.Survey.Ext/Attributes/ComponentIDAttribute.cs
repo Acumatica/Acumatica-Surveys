@@ -4,8 +4,8 @@ using System;
 
 namespace PX.Survey.Ext {
 
-    [PXString(15, IsUnicode = true, InputMask = ">CCCCCCCCCCCCCCC")]
-    [PXDBString(15, IsUnicode = true, InputMask = ">CCCCCCCCCCCCCCC")]
+    [PXString(15, InputMask = ">CCCCCCCCCCCCCCC")]
+    [PXDBString(15, InputMask = ">CCCCCCCCCCCCCCC")]
     [PXUIField(DisplayName = "Component", Visibility = PXUIVisibility.SelectorVisible)]
     public class ComponentIDAttribute : AcctSubAttribute {
 
