@@ -7,6 +7,8 @@
         PrimaryView="surveySetup" TypeName="PX.Survey.Ext.SurveySetupMaint">
         <CallbackCommands>
             <px:PXDSCallbackCommand CommitChanges="True" Name="Save" />
+            <px:PXDSCallbackCommand Name="SetupPasteLine" Visible="False" />
+            <px:PXDSCallbackCommand Name="SetupResetOrder" Visible="False" />
         </CallbackCommands>
     </px:PXDataSource>
 </asp:Content>
@@ -39,19 +41,19 @@
                     <px:PXSelector ID="edRemindNotificationID" runat="server" DataField="RemindNotificationID" AllowEdit="True" CommitChanges="true" />
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="Survey by Screen">
+            <px:PXTabItem Text="Survey Integration">
                 <Template>
-                    <px:PXGrid ID="gridSurveys" runat="server" DataSourceID="ds" SkinID="Details" Width="100%" MatrixMode="true" KeepPosition="true" SyncPosition="true">
+                    <px:PXGrid ID="gridSurveys" runat="server" DataSourceID="ds" AllowPaging="False" SkinID="Details" Width="100%" MatrixMode="true" KeepPosition="true" SyncPosition="true" TabIndex="500">
                         <AutoSize Enabled="True" />
                         <Levels>
                             <px:PXGridLevel DataMember="DefaultSurveys">
                                 <RowTemplate>
                                     <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <%--<px:PXSelector ID="edScreenID" runat="server" DataField="ScreenID" CommitChanges="True" />--%>
-                                    <px:PXSelector ID="edGraphType" runat="server" DataField="GraphType" CommitChanges="True" />
-                                    <px:PXDropDown ID="edEntityType" runat="server" DataField="EntityType" CommitChanges="True" />
+                                    <px:PXTextEdit ID="edLineNbr" runat="server" DataField="LineNbr" Width="100" AllowDragDrop="true" CommitChanges="True" />
+                                    <px:PXSelector ID="edGraphType" runat="server" DataField="GraphType" AllowDragDrop="true" CommitChanges="True" />
+                                    <px:PXDropDown ID="edEntityType" runat="server" DataField="EntityType" AllowDragDrop="true" CommitChanges="True" />
                                     <%--<px:PXSelector ID="edContactField" runat="server" DataField="ContactField" CommitChanges="True" />--%>
-                                    <px:PXTreeSelector ID="edContactField" runat="server" DataField="ContactField"
+                                    <px:PXTreeSelector ID="edContactField" runat="server" DataField="ContactField" AllowDragDrop="true"
                                         TreeDataSourceID="ds" PopulateOnDemand="True" InitialExpandLevel="0"
                                         ShowRootNode="False" MinDropWidth="468" MaxDropWidth="600" AllowEditValue="true"
                                         AppendSelectedValue="False" AutoRefresh="true" TreeDataMember="EntityItems">
@@ -59,24 +61,26 @@
                                             <px:PXTreeItemBinding DataMember="EntityItems" TextField="Name" ValueField="Path" ImageUrlField="Icon" ToolTipField="Path" />
                                         </DataBindings>
                                     </px:PXTreeSelector>
-                                    <px:PXTreeSelector ID="edContactField2" runat="server" CommitChanges="true" DataField="ContactField" TreeDataSourceID="ds" PopulateOnDemand="True"
-										InitialExpandLevel="0" ShowRootNode="False" MinDropWidth="468" MaxDropWidth="600" AllowEditValue="True"
-										AutoRefresh="True" TreeDataMember="EntityItems">
-										<DataBindings>
-											<px:PXTreeItemBinding TextField="Name" ValueField="Path" ImageUrlField="Icon" ToolTipField="Path" />
-										</DataBindings>
-										<ButtonImages Normal="main@AddNew" Hover="main@AddNew" Pushed="main@AddNew" />
-									</px:PXTreeSelector>
+                                    <px:PXTreeSelector ID="edContactField2" runat="server" CommitChanges="true" DataField="ContactField" AllowDragDrop="true" TreeDataSourceID="ds" PopulateOnDemand="True"
+                                        InitialExpandLevel="0" ShowRootNode="False" MinDropWidth="468" MaxDropWidth="600" AllowEditValue="True"
+                                        AutoRefresh="True" TreeDataMember="EntityItems">
+                                        <DataBindings>
+                                            <px:PXTreeItemBinding TextField="Name" ValueField="Path" ImageUrlField="Icon" ToolTipField="Path" />
+                                        </DataBindings>
+                                        <ButtonImages Normal="main@AddNew" Hover="main@AddNew" Pushed="main@AddNew" />
+                                    </px:PXTreeSelector>
                                     <px:PXSelector ID="edSurveyID" runat="server" DataField="SurveyID" CommitChanges="True" />
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="GraphType" Width="250px" CommitChanges="true" DisplayMode="Text"/>
+                                    <px:PXGridColumn DataField="GraphType" Width="250px" CommitChanges="true" DisplayMode="Text" />
                                     <px:PXGridColumn DataField="EntityType" Width="150px" Type="DropDownList" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="ContactField" Width="200px" CommitChanges="true"/>
-                                    <px:PXGridColumn DataField="SurveyID" Width="120px" CommitChanges="true"/>
+                                    <px:PXGridColumn DataField="ContactField" Width="200px" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="SurveyID" Width="120px" CommitChanges="true" />
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
+                        <CallbackCommands PasteCommand="SetupPasteLine" />
+                        <Mode InitNewRow="True" AllowDragRows="true" AllowAddNew="True" />
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
