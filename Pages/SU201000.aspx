@@ -14,8 +14,8 @@
             <px:PXDSCallbackCommand Name="CheckCreateParams" Visible="False" PopupCommand="" PopupCommandTarget="" PopupPanel="" Text="" />
             <px:PXDSCallbackCommand Name="ResetPageNumbers" Visible="False" />
             <px:PXDSCallbackCommand Name="CreateSurvey" Visible="False" />
-            <px:PXDSCallbackCommand Name="SurveyDetailPasteLine" Visible="False" />
-            <px:PXDSCallbackCommand Name="SurveyDetailResetOrder" Visible="False" CommitChanges="true" />
+            <px:PXDSCallbackCommand Name="DetailPasteLine" Visible="False" />
+            <px:PXDSCallbackCommand Name="DetailResetOrder" Visible="False" CommitChanges="true" />
             <px:PXDSCallbackCommand Name="GenerateSample" Visible="False" />
             <px:PXDSCallbackCommand Name="InsertSampleCollector" Visible="False" />
             <px:PXDSCallbackCommand Name="ProcessAnswers" Visible="False" />

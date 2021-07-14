@@ -79,8 +79,8 @@ namespace PX.Survey.Ext {
 
         public const string Send = "Process";
         public const string SendAll = "Process All";
-        public const string SurveyDetailPasteLineCommand = "Survey Detail Paste Line";
-        public const string SurveyDetailResetOrderCommand = "Survey Detail Reset Order";
+        public const string DetailPasteLineCommand = "Detail Paste Line";
+        public const string DetailResetOrderCommand = "Detail Reset Order";
 
         public const string PushNotificationTitleSurvey = "Complete Survey";
         public const string PushNotificationMessageBodySurvey = "Tap to complete Survey";
