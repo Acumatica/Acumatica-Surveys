@@ -948,15 +948,16 @@ namespace PX.Survey.Ext {
             switch (comp.ComponentType) {
                 case SUComponentType.PageHeader:
                 case SUComponentType.PageFooter:
+                    e.NewValue = null;
                     break;
                 case SUComponentType.Header:
                     e.NewValue = "WELCOME YOU";
                     break;
                 case SUComponentType.QuestionPage:
-                    e.NewValue = "ASK YOU " + row.QuestionNbr;
+                    e.NewValue = (row.QuestionNbr > 0) ? "ASK YOU " + row.QuestionNbr : null;
                     break;
                 case SUComponentType.CommentPage:
-                    e.NewValue = "TELL ME MORE " + row.QuestionNbr;
+                    e.NewValue = (row.QuestionNbr > 0) ? "TELL ME MORE " + row.QuestionNbr : null;
                     break;
                 case SUComponentType.ContentPage:
                     e.NewValue = "SHOW YOU";
@@ -965,7 +966,7 @@ namespace PX.Survey.Ext {
                     e.NewValue = "THANK YOU";
                     break;
             }
-            e.Cancel = e.NewValue != null;
+            e.Cancel = true;
         }
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.componentID> e) {
@@ -1019,24 +1020,29 @@ namespace PX.Survey.Ext {
             e.NewValue = (row.ComponentType == SUComponentType.QuestionPage);
         }
 
+        protected virtual void _(Events.FieldUpdated<SurveyDetail, SurveyDetail.componentType> e) {
+            e.Cache.SetDefaultExt<SurveyDetail.nbrOfRows>(e.Row);
+            e.Cache.SetDefaultExt<SurveyDetail.maxLength>(e.Row);
+        }
+
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.nbrOfRows> e) {
             var row = e.Row;
-            if (row == null || row.ComponentType == null || row.ComponentType != SUComponentType.CommentPage) {
+            if (row == null || row.ComponentType == null) {
                 return;
             }
             var setup = SurveySetup.Current;
-            e.NewValue = setup?.DefNbrOfRows;
-            e.Cancel = e.NewValue != null;
+            e.NewValue = (row.ComponentType == SUComponentType.CommentPage) ? setup?.DefNbrOfRows : null;
+            e.Cancel = true;
         }
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.maxLength> e) {
             var row = e.Row;
-            if (row == null || row.ComponentType == null || row.ComponentType != SUComponentType.CommentPage) {
+            if (row == null || row.ComponentType == null) {
                 return;
             }
             var setup = SurveySetup.Current;
-            e.NewValue = setup?.DefMaxLength;
-            e.Cancel = e.NewValue != null;
+            e.NewValue = (row.ComponentType == SUComponentType.CommentPage) ? setup?.DefMaxLength : null;
+            e.Cancel = true;
         }
 
         private int GetMaxPage(string surveyID) {
