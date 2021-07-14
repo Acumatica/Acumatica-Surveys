@@ -97,9 +97,6 @@ namespace PX.Survey.Ext {
 
         #region Status
         public abstract class status : BqlString.Field<status> { }
-        /// <summary>
-        /// Reference to the state the collector record is in   
-        /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(CollectorDataStatus.New)]
         [PXUIField(DisplayName = "Status", Enabled = false)]
