@@ -20,6 +20,11 @@ namespace PX.Survey.Ext {
         }
         #endregion
 
+        public class Command {
+            public const string SetupPasteLine = "Setup Paste Line";
+            public const string SetupResetOrder = "Setup Reset Order";
+        }
+
         public class CollectorStatus {
             public const string New = "New";
             public const string Sent = "Awaiting Response";

@@ -17,6 +17,7 @@ namespace PX.Survey.Ext {
         [PXDefault]
         [SUGraphSelector]
         [PXUIField(DisplayName = "Graph Type")]
+        [PXParent(typeof(Select<SurveySetup>))]
         public virtual string GraphType { get; set; }
         #endregion
 

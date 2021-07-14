@@ -11,7 +11,7 @@ namespace PX.Survey.Ext {
         public PXSave<SurveySetup> Save;
         public PXCancel<SurveySetup> Cancel;
         public PXSelect<SurveySetup> surveySetup;
-        public PXSelect<SurveySetupEntity> DefaultSurveys;
+        public SurveySetupEntitySelect DefaultSurveys;
 
         public PXSelect<CacheEntityItem, Where<CacheEntityItem.path, Equal<CacheEntityItem.path>>, OrderBy<Asc<CacheEntityItem.number>>> EntityItems;
 
