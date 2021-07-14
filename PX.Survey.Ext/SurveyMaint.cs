@@ -65,7 +65,8 @@ namespace PX.Survey.Ext {
                 And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
             And<SurveyDetail.componentType, Equal<SUComponentType.commentPage>,
-            And<SurveyAnswer.value, IsNotNull>>>,
+            And<SurveyAnswer.value, IsNotNull,
+            And<SurveyAnswer.value, NotEqual<Empty>>>>>,
             OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Asc<SurveyAnswer.createdDateTime>>>>> Comments;
 
         [PXHidden]
