@@ -19,7 +19,7 @@ namespace PX.Survey.Ext {
             var entitySetup = GetEntitySetup(primaryType);
             var supportsSurvey = entitySetup != null && entitySetup.SurveyID != null;
             //var showAction = b2Setup?.ShowTriggerActions == true;
-            requestSurvey.SetEnabled(supportsSurvey); // TODO Keep enable 
+            requestSurvey.SetEnabled(supportsSurvey); // TODO Keep enabled
             //requestSurvey.SetVisible(supportsSurvey/* && showAction*/);
         }
 
