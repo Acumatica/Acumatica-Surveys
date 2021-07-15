@@ -97,9 +97,9 @@
                                 </px:PXToolBarButton>
                             </CustomItems>
                         </ActionBar>
-                        <CallbackCommands PasteCommand="SurveyDetailPasteLine">
+                        <CallbackCommands PasteCommand="DetailPasteLine">
                         </CallbackCommands>
-                        <Mode InitNewRow="True" AllowDragRows="true" />
+                        <Mode InitNewRow="True" AllowFormEdit="True" AllowUpload="True" AllowDragRows="true" />
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
