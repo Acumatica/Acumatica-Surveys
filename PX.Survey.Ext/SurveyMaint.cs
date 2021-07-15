@@ -840,9 +840,19 @@ namespace PX.Survey.Ext {
 
         public void _(Events.FieldUpdated<Survey, Survey.target> e) {
             e.Cache.SetDefaultExt<Survey.allowAnonymous>(e.Row);
+            e.Cache.SetDefaultExt<Survey.keepAnswersAnonymous>(e.Row);
         }
 
         protected virtual void _(Events.FieldDefaulting<Survey, Survey.allowAnonymous> e) {
+            var row = e.Row;
+            if (row == null || string.IsNullOrEmpty(row.Target)) {
+                return;
+            }
+            e.NewValue = row.Target == SurveyTarget.Anonymous;
+            e.Cancel = true;
+        }
+
+        protected virtual void _(Events.FieldDefaulting<Survey, Survey.keepAnswersAnonymous> e) {
             var row = e.Row;
             if (row == null || string.IsNullOrEmpty(row.Target)) {
                 return;
