@@ -786,15 +786,15 @@ namespace PX.Survey.Ext {
             }
         }
 
-        protected virtual void _(Events.RowSelecting<Survey> e) {
-            Survey row = e.Row;
-            if (row == null) { return; }
-            using (new PXConnectionScope()) {
-                var collectors = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsString>>.
-                                        View.SelectWindowed(this, 0, 1, row.SurveyID);
-                row.IsSurveyInUse = collectors.Any();
-            }
-        }
+        //protected virtual void _(Events.RowSelecting<Survey> e) {
+        //    Survey row = e.Row;
+        //    if (row == null) { return; }
+        //    using (new PXConnectionScope()) {
+        //        var collectors = SelectFrom<SurveyCollector>.Where<SurveyCollector.surveyID.IsEqual<@P.AsString>>.
+        //                                View.SelectWindowed(this, 0, 1, row.SurveyID);
+        //        row.IsSurveyInUse = collectors.Any();
+        //    }
+        //}
 
         protected virtual void _(Events.RowPersisted<Survey> e) {
             var row = e.Row;
@@ -807,17 +807,18 @@ namespace PX.Survey.Ext {
         protected virtual void _(Events.RowSelected<Survey> e) {
             var row = e.Row;
             if (row == null) { return; }
-            bool unlockedSurvey = !(row.IsSurveyInUse == true);
-            e.Cache.AllowDelete = unlockedSurvey;
+            bool lockedSurvey = IsLocked(row);
+            e.Cache.AllowDelete = !lockedSurvey;
             var hasPages = ActivePages.Select().Any();
             //redirectToSurvey.SetEnabled(hasPages);
             //redirectToAnonymousSurvey.SetEnabled(hasPages);
-            PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, unlockedSurvey);
-            PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, unlockedSurvey);
+            PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, !lockedSurvey);
+            PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, !lockedSurvey);
             //PXUIFieldAttribute.SetEnabled<Survey.entityType>(e.Cache, row, unlockedSurvey);
             var isAnon = row.Target == SurveyTarget.Anonymous;
             var isEntity = row.Target == SurveyTarget.Entity;
             PXUIFieldAttribute.SetEnabled<Survey.allowAnonymous>(e.Cache, row, !isAnon);
+            PXUIFieldAttribute.SetEnabled<Survey.keepAnswersAnonymous>(e.Cache, row, !isAnon);
             if (isAnon || isEntity) {
                 Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
                 //CampaignMembers.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
@@ -826,6 +827,10 @@ namespace PX.Survey.Ext {
                 //redirectToSurvey.SetEnabled(false);
                 //redirectToSurvey.SetVisible(false);
             }
+        }
+
+        private bool IsLocked(Survey row) {
+            return row != null && (row.Status == SurveyStatus.Started || row.Status == SurveyStatus.Preparing);
         }
 
         protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
@@ -935,10 +940,10 @@ namespace PX.Survey.Ext {
             var isMulti = Survey.Current.Layout == SurveyLayout.MultiPage;
             PXUIFieldAttribute.SetEnabled<SurveyDetail.pageNbr>(e.Cache, row, isMulti);
             var survey = Survey.Current;
-            bool unlockedSurvey = !(survey?.IsSurveyInUse == true);
-            e.Cache.AllowDelete = unlockedSurvey;
-            e.Cache.AllowUpdate = unlockedSurvey;
-            e.Cache.AllowInsert = unlockedSurvey;
+            bool lockedSurvey = IsLocked(survey);
+            e.Cache.AllowDelete = !lockedSurvey;
+            e.Cache.AllowUpdate = !lockedSurvey;
+            e.Cache.AllowInsert = !lockedSurvey;
         }
 
         protected virtual void _(Events.FieldDefaulting<SurveyDetail, SurveyDetail.description> e) {
