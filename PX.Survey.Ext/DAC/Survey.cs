@@ -81,7 +81,7 @@ namespace PX.Survey.Ext {
         #region Layout
         public abstract class layout : BqlString.Field<layout> { }
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
-        [PXDefault(SurveyLayout.SinglePage)]
+        [PXDefault(SurveyLayout.MultiPage)]
         [PXUIField(DisplayName = "Layout", Visibility = PXUIVisibility.SelectorVisible)]
         [SurveyLayout.List]
         public virtual string Layout { get; set; }
