@@ -90,6 +90,14 @@ namespace PX.Survey.Ext {
         public virtual string Value { get; set; }
         #endregion
 
+        #region NiceValue
+        public abstract class niceValue : BqlString.Field<niceValue> { }
+        [PXString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Value", Enabled = false)]
+        [PXFormula(typeof(CSNiceValue<attributeID, value>))]
+        public virtual string NiceValue { get; set; }
+        #endregion
+
         #region Description
         public abstract class description : BqlString.Field<description> { }
         [PXString(IsUnicode = true)]

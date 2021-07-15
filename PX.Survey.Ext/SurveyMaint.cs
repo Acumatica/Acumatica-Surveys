@@ -1107,105 +1107,105 @@ namespace PX.Survey.Ext {
             return coll;
         }
 
-        protected virtual void _(Events.FieldSelecting<SurveyAnswer, SurveyAnswer.value> e) {
-            var row = e.Row;
-            if (row == null || row.AttributeID == null) {
-                return;
-            }
-            int? controlType;
-            int num1;
-            List<CRAttribute.AttributeValue> values;
-            object value;
-            CRAttribute.Attribute item = CRAttribute.Attributes[row.AttributeID];
-            if (item != null) {
-                values = item.Values;
-            } else {
-                values = null;
-            }
-            List<CRAttribute.AttributeValue> attributeValues = values;
-            bool? isRequired = true;// row.IsRequired;
-            int num2 = (isRequired.GetValueOrDefault() & isRequired.HasValue ? 1 : -1);
-            if (attributeValues != null && attributeValues.Count > 0) {
-                List<string> strs = new List<string>();
-                List<string> strs1 = new List<string>();
-                foreach (CRAttribute.AttributeValue attributeValue in attributeValues) {
-                    if (attributeValue.Disabled && row.Value != attributeValue.ValueID) {
-                        continue;
-                    }
-                    strs.Add(attributeValue.ValueID);
-                    strs1.Add(attributeValue.Description);
-                }
-                e.ReturnState = PXStringState.CreateInstance(e.ReturnState, new int?(10), new bool?(true), typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, strs.ToArray(), strs1.ToArray(), new bool?(true), null, null);
-                controlType = item.ControlType;
-                if (controlType.GetValueOrDefault() == 6 & controlType.HasValue) {
-                    ((PXStringState)e.ReturnState).MultiSelect = true;
-                    if (e.Cache.Graph.IsContractBasedAPI) {
-                        string returnValue = e.ReturnValue as string;
-                        if (returnValue != null) {
-                            e.ReturnValue = string.Join(", ", returnValue.Split(new char[] { ',' }).Select<string, string>((string i) => {
-                                int num = strs.IndexOf(i.Trim());
-                                if (num < 0) {
-                                    return i;
-                                }
-                                return strs1[num];
-                            }));
-                        }
-                    }
-                }
-            } else if (item != null) {
-                controlType = item.ControlType;
-                if (!(controlType.GetValueOrDefault() == 4 & controlType.HasValue)) {
-                    controlType = item.ControlType;
-                    if (!(controlType.GetValueOrDefault() == 5 & controlType.HasValue)) {
-                        PXStringState stateExt = e.Cache.GetStateExt<SurveyAnswer.value>(null) as PXStringState;
-                        //PXFieldSelectingEventArgs pXFieldSelectingEventArg = e;
-                        object returnState = e.ReturnState;
-                        PXStringState pXStringState = stateExt;
-                        isRequired = null;
-                        e.ReturnState = PXStringState.CreateInstance(returnState, new int?(pXStringState.With((PXStringState _) => _.Length)), isRequired, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, null, null, new bool?(true), null, null);
-                    } else {
-                        DateTime? nullable = null;
-                        DateTime? nullable1 = nullable;
-                        nullable = null;
-                        e.ReturnState = PXDateState.CreateInstance(e.ReturnState, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, item.EntryMask, nullable1, nullable);
-                    }
-                } else {
-                    object obj = e.ReturnState;
-                    Type type = typeof(bool);
-                    bool? nullable2 = new bool?(false);
-                    bool? nullable3 = new bool?(false);
-                    int? nullable4 = new int?(num2);
-                    controlType = null;
-                    int? nullable5 = controlType;
-                    controlType = null;
-                    isRequired = null;
-                    e.ReturnState = PXFieldState.CreateInstance(obj, type, nullable2, nullable3, nullable4, nullable5, controlType, false, typeof(SurveyAnswer.value).Name, null, null, null, PXErrorLevel.Undefined, new bool?(true), new bool?(true), isRequired, PXUIVisibility.Visible, null, null, null);
-                    if (e.ReturnValue is string && int.TryParse((string)e.ReturnValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out num1)) {
-                        e.ReturnValue = Convert.ToBoolean(num1);
-                    }
-                }
-            }
-            if (e.ReturnState is PXFieldState) {
-                PXFieldState errorText = (PXFieldState)e.ReturnState;
-                IPXInterfaceField pXInterfaceField = e.Cache.GetAttributes(row, typeof(SurveyAnswer.value).Name).OfType<IPXInterfaceField>().FirstOrDefault<IPXInterfaceField>();
-                if (pXInterfaceField != null && pXInterfaceField.ErrorLevel != PXErrorLevel.Undefined && !string.IsNullOrEmpty(pXInterfaceField.ErrorText)) {
-                    errorText.Error = pXInterfaceField.ErrorText;
-                    errorText.ErrorLevel = pXInterfaceField.ErrorLevel;
-                }
-                //PXFieldState valueExt = sender.GetValueExt<SurveyAnswer.attributeCategory>(row) as PXFieldState;
-                //if (valueExt != null) {
-                //    value = valueExt.Value;
-                //} else {
-                value = null;
-                //}
-                errorText.Enabled = (string)value != "V";
-                if (IsContractBasedAPI) {
-                    errorText.ErrorLevel = PXErrorLevel.Undefined;
-                    errorText.Error = null;
-                    e.Cancel = true;
-                }
-            }
-        }
+        //protected virtual void _(Events.FieldSelecting<SurveyAnswer, SurveyAnswer.value> e) {
+        //    var row = e.Row;
+        //    if (row == null || row.AttributeID == null) {
+        //        return;
+        //    }
+        //    int? controlType;
+        //    int num1;
+        //    List<CRAttribute.AttributeValue> values;
+        //    object value;
+        //    CRAttribute.Attribute item = CRAttribute.Attributes[row.AttributeID];
+        //    if (item != null) {
+        //        values = item.Values;
+        //    } else {
+        //        values = null;
+        //    }
+        //    List<CRAttribute.AttributeValue> attributeValues = values;
+        //    bool? isRequired = true;// row.IsRequired;
+        //    int num2 = (isRequired.GetValueOrDefault() & isRequired.HasValue ? 1 : -1);
+        //    if (attributeValues != null && attributeValues.Count > 0) {
+        //        List<string> strs = new List<string>();
+        //        List<string> strs1 = new List<string>();
+        //        foreach (CRAttribute.AttributeValue attributeValue in attributeValues) {
+        //            if (attributeValue.Disabled && row.Value != attributeValue.ValueID) {
+        //                continue;
+        //            }
+        //            strs.Add(attributeValue.ValueID);
+        //            strs1.Add(attributeValue.Description);
+        //        }
+        //        e.ReturnState = PXStringState.CreateInstance(e.ReturnState, new int?(10), new bool?(true), typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, strs.ToArray(), strs1.ToArray(), new bool?(true), null, null);
+        //        controlType = item.ControlType;
+        //        if (controlType.GetValueOrDefault() == 6 & controlType.HasValue) {
+        //            ((PXStringState)e.ReturnState).MultiSelect = true;
+        //            if (e.Cache.Graph.IsContractBasedAPI) {
+        //                string returnValue = e.ReturnValue as string;
+        //                if (returnValue != null) {
+        //                    e.ReturnValue = string.Join(", ", returnValue.Split(new char[] { ',' }).Select<string, string>((string i) => {
+        //                        int num = strs.IndexOf(i.Trim());
+        //                        if (num < 0) {
+        //                            return i;
+        //                        }
+        //                        return strs1[num];
+        //                    }));
+        //                }
+        //            }
+        //        }
+        //    } else if (item != null) {
+        //        controlType = item.ControlType;
+        //        if (!(controlType.GetValueOrDefault() == 4 & controlType.HasValue)) {
+        //            controlType = item.ControlType;
+        //            if (!(controlType.GetValueOrDefault() == 5 & controlType.HasValue)) {
+        //                PXStringState stateExt = e.Cache.GetStateExt<SurveyAnswer.value>(null) as PXStringState;
+        //                //PXFieldSelectingEventArgs pXFieldSelectingEventArg = e;
+        //                object returnState = e.ReturnState;
+        //                PXStringState pXStringState = stateExt;
+        //                isRequired = null;
+        //                e.ReturnState = PXStringState.CreateInstance(returnState, new int?(pXStringState.With((PXStringState _) => _.Length)), isRequired, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, null, null, new bool?(true), null, null);
+        //            } else {
+        //                DateTime? nullable = null;
+        //                DateTime? nullable1 = nullable;
+        //                nullable = null;
+        //                e.ReturnState = PXDateState.CreateInstance(e.ReturnState, typeof(SurveyAnswer.value).Name, new bool?(false), new int?(num2), item.EntryMask, item.EntryMask, nullable1, nullable);
+        //            }
+        //        } else {
+        //            object obj = e.ReturnState;
+        //            Type type = typeof(bool);
+        //            bool? nullable2 = new bool?(false);
+        //            bool? nullable3 = new bool?(false);
+        //            int? nullable4 = new int?(num2);
+        //            controlType = null;
+        //            int? nullable5 = controlType;
+        //            controlType = null;
+        //            isRequired = null;
+        //            e.ReturnState = PXFieldState.CreateInstance(obj, type, nullable2, nullable3, nullable4, nullable5, controlType, false, typeof(SurveyAnswer.value).Name, null, null, null, PXErrorLevel.Undefined, new bool?(true), new bool?(true), isRequired, PXUIVisibility.Visible, null, null, null);
+        //            if (e.ReturnValue is string && int.TryParse((string)e.ReturnValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out num1)) {
+        //                e.ReturnValue = Convert.ToBoolean(num1);
+        //            }
+        //        }
+        //    }
+        //    if (e.ReturnState is PXFieldState) {
+        //        PXFieldState errorText = (PXFieldState)e.ReturnState;
+        //        IPXInterfaceField pXInterfaceField = e.Cache.GetAttributes(row, typeof(SurveyAnswer.value).Name).OfType<IPXInterfaceField>().FirstOrDefault<IPXInterfaceField>();
+        //        if (pXInterfaceField != null && pXInterfaceField.ErrorLevel != PXErrorLevel.Undefined && !string.IsNullOrEmpty(pXInterfaceField.ErrorText)) {
+        //            errorText.Error = pXInterfaceField.ErrorText;
+        //            errorText.ErrorLevel = pXInterfaceField.ErrorLevel;
+        //        }
+        //        //PXFieldState valueExt = sender.GetValueExt<SurveyAnswer.attributeCategory>(row) as PXFieldState;
+        //        //if (valueExt != null) {
+        //        //    value = valueExt.Value;
+        //        //} else {
+        //        value = null;
+        //        //}
+        //        errorText.Enabled = (string)value != "V";
+        //        if (IsContractBasedAPI) {
+        //            errorText.ErrorLevel = PXErrorLevel.Undefined;
+        //            errorText.Error = null;
+        //            e.Cancel = true;
+        //        }
+        //    }
+        //}
 
         protected virtual void _(Events.FieldUpdating<SurveyAnswer, SurveyAnswer.value> e) {
             var row = e.Row;
