@@ -23,5 +23,13 @@ namespace PX.Survey.Ext {
 
         public class closed : BqlString.Constant<closed> { public closed() : base(Closed) { } }
         public class preparing : BqlString.Constant<preparing> { public preparing() : base(Preparing) { } }
+
+        public static bool IsLocked(string status) {
+            return !IsUnlocked(status);
+        }
+
+        public static bool IsUnlocked(string status) {
+            return status == null || status == Preparing;
+        }
     }
 }

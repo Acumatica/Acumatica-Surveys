@@ -170,6 +170,13 @@ namespace PX.Survey.Ext {
         public virtual string EntityType { get; set; }
         #endregion
 
+        #region AnonSurveyURL
+        public abstract class anonSurveyURL : BqlString.Field<anonSurveyURL> { }
+        [PXString(IsUnicode = true)]
+        [PXUIField(DisplayName = "Anonymous URL")]
+        public virtual string AnonSurveyURL { get; set; }
+        #endregion
+
         //#region IsSurveyInUse
         //public abstract class isSurveyInUse : BqlBool.Field<isSurveyInUse> { }
         ///// <summary>

@@ -17,9 +17,9 @@ namespace PX.Survey.Ext {
         public const string Anonymous = "A";
         public const string Entity = "E";
 
-        //public class _new : BqlString.Constant<_new> { public _new() : base(New) { } }
-        //public class connected : BqlString.Constant<connected> { public connected() : base(Connected) { } }
-        //public class processed : BqlString.Constant<processed> { public processed() : base(Processed) { } }
+        public class user : BqlString.Constant<user> { public user() : base(User) { } }
+        public class contact : BqlString.Constant<contact> { public contact() : base(Contact) { } }
+        public class anonymous : BqlString.Constant<anonymous> { public anonymous() : base(Anonymous) { } }
         public class entity : BqlString.Constant<entity> { public entity() : base(Entity) { } }
     }
 }
