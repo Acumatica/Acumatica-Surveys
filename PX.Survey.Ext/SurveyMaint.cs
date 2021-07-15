@@ -982,10 +982,10 @@ namespace PX.Survey.Ext {
                     e.NewValue = null;
                     break;
                 case SUComponentType.Header:
-                    e.NewValue = "WELCOME YOU";
+                    e.NewValue = "HELLO YOU";
                     break;
                 case SUComponentType.QuestionPage:
-                    e.NewValue = (row.QuestionNbr > 0) ? "ASK YOU " + row.QuestionNbr : null;
+                    e.NewValue = (row.QuestionNbr > 0) ? "LET ME ASK YOU THIS " + row.QuestionNbr : null;
                     break;
                 case SUComponentType.CommentPage:
                     e.NewValue = (row.QuestionNbr > 0) ? "TELL ME MORE " + row.QuestionNbr : null;
