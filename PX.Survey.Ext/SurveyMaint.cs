@@ -51,12 +51,16 @@ namespace PX.Survey.Ext {
                 On<SurveyDetail.surveyID, Equal<SurveyAnswer.surveyID>,
                 And<SurveyDetail.lineNbr, Equal<SurveyAnswer.detailLineNbr>>>>,
             Where<SurveyAnswer.surveyID, Equal<Current<Survey.surveyID>>,
-            And<SurveyDetail.componentType, Equal<SUComponentType.questionPage>>>,
+            And<SurveyDetail.componentType, Equal<SUComponentType.questionPage>,
+            And<SurveyAnswer.value, IsNotNull,
+            And<SurveyAnswer.value, NotEqual<Empty>>>>>,
             Aggregate<
                 GroupBy<SurveyDetail.pageNbr,
                 GroupBy<SurveyDetail.questionNbr,
-                Count<SurveyAnswer.lineNbr>>>>
-            > AnswerSummary;
+                GroupBy<SurveyAnswer.value,
+                Count<SurveyAnswer.lineNbr>>>>>,
+            OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Desc<SurveyAnswer.value>>>>> AnswerSummary;
+//        public PXSelect<SurveyAnswerSummary, Where<SurveyAnswerSummary.surveyID, Equal<Current<Survey.surveyID>>>> AnswerSummary;
 
         [PXCopyPasteHiddenView]
         public PXSelectJoin<SurveyAnswer,
