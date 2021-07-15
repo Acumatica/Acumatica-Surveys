@@ -285,7 +285,7 @@
                     </px:PXSplitContainer>
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="Answers" RepaintOnDemand="False">
+            <px:PXTabItem Text="Raw Answers" RepaintOnDemand="False">
                 <Template>
                     <px:PXGrid ID="grdAnswers" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
                         SkinID="Inquire" SyncPosition="True" TabIndex="5100" MatrixMode="True">
@@ -302,7 +302,7 @@
                                     <px:PXGridColumn DataField="AttributeID" Width="120px" AllowDragDrop="true" LinkCommand="ViewAttribute" />
                                     <px:PXGridColumn DataField="AttrDesc" Width="150px" AllowDragDrop="true" />
                                     <px:PXGridColumn DataField="ControlType" Type="DropDownList" Width="100px" AllowDragDrop="true" />
-                                    <px:PXGridColumn DataField="Value" Width="400px" />
+                                    <px:PXGridColumn DataField="NiceValue" Width="400px" />
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
@@ -330,11 +330,11 @@
                                 <RowTemplate>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="Description" Width="350px"/>
+                                    <px:PXGridColumn DataField="Description" Width="700px"/>
                                     <px:PXGridColumn DataField="QuestionNbr" Width="110px"/>
                                     <px:PXGridColumn DataField="AttributeID" Width="120px" LinkCommand="ViewAttribute" />
                                     <px:PXGridColumn DataField="AttrDesc" Width="150px" />
-                                    <px:PXGridColumn DataField="Value" Width="400px" />
+                                    <px:PXGridColumn DataField="NiceValue" Width="400px" />
                                     <px:PXGridColumn DataField="Count" Width="100px" />
                                 </Columns>
                             </px:PXGridLevel>
