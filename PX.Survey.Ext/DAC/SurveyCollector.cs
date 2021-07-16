@@ -96,10 +96,10 @@ namespace PX.Survey.Ext {
         #region AnonCollectorID
         public abstract class anonCollectorID : BqlInt.Field<anonCollectorID> { }
         /// <summary>
-        /// Uniquely Identifies this Anmonymous Collector record for this Collector.
+        /// Uniquely identifies this Anonymous Collector record for this Collector.
         /// </summary>
         [PXDBInt]
-        [PXSelector(typeof(Search<collectorID, Where<userLineNbr, Equal<Current<userLineNbr>>>>))]
+        //[PXSelector(typeof(Search<collectorID, Where<userLineNbr, Equal<Current<userLineNbr>>>>))]
         public virtual int? AnonCollectorID { get; set; }
         #endregion
 
