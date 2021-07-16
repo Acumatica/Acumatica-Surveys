@@ -898,7 +898,7 @@ namespace PX.Survey.Ext {
             if (row == null || survey == null)
                 return;
             if (survey.KeepAnswersAnonymous == true && row.AnonCollectorID == null && row.Anonymous != true) {
-                var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, true, null);
+                var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, null);
                 row.AnonCollectorID = anon?.CollectorID;
             }
         }
