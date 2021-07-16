@@ -824,6 +824,7 @@ namespace PX.Survey.Ext {
             var isEntity = row.Target == SurveyTarget.Entity;
             PXUIFieldAttribute.SetEnabled<Survey.allowAnonymous>(e.Cache, row, !isAnon);
             PXUIFieldAttribute.SetEnabled<Survey.keepAnswersAnonymous>(e.Cache, row, !isAnon);
+            Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = true;
             if (isAnon || isEntity) {
                 Users.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
                 //CampaignMembers.AllowInsert = Users.AllowUpdate = Users.AllowSelect = Users.AllowDelete = false;
