@@ -42,11 +42,10 @@ namespace PX.Survey.Ext {
             var cmd = new PXSelectJoin<SurveyCollector,
                 LeftJoin<Survey, On<Survey.surveyID, Equal<SurveyCollector.surveyID>>,
                 LeftJoin<SurveyUser, On<SurveyUser.surveyID, Equal<SurveyCollector.surveyID>,
-                    And<SurveyUser.lineNbr, Equal<SurveyCollector.userLineNbr>>>>>>(this);
+                    And<SurveyUser.lineNbr, Equal<SurveyCollector.userLineNbr>>>>>,
+                Where<SurveyUser.anonymous, IsNull, Or<SurveyUser.anonymous, Equal<False>>>
+                >(this);
             switch (action) {
-                //case SurveyAction.DefaultAction:
-                //cmd.WhereAnd<Where<B2Message.status, B2Status.notProcessed>>();
-                //break;
                 case SurveyAction.SendNew:
                     cmd.WhereAnd<Where<SurveyCollector.sentOn, IsNull>>();
                     break;
