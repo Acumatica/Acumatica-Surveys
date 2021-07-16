@@ -152,12 +152,12 @@ namespace PX.Survey.Ext {
                 (user, answerCollector) = InsertAnonymous(graph, survey, false, null);
                 token = answerCollector.Token;
             } else {
-                answerCollector = SurveyCollector.UK.Find(graph, token);
+                answerCollector = SurveyCollector.UK.ByToken.Find(graph, token);
                 survey = Survey.PK.Find(graph, answerCollector.SurveyID);
                 // If answers must be kept anonymous, then retrieve the anonymous collector of the collector
                 if (survey.KeepAnswersAnonymous == true && answerCollector.AnonCollectorID != null) {
                     userCollector = answerCollector;
-                    answerCollector = SurveyCollector.PK.Find(graph, answerCollector.AnonCollectorID);
+                    answerCollector = SurveyCollector.UK.ByAnonCollectorID.Find(graph, answerCollector.AnonCollectorID);
                 }
                 user = SurveyUser.PK.Find(graph, survey.SurveyID, answerCollector.UserLineNbr);
             }
