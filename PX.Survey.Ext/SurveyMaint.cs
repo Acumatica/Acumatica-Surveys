@@ -1097,8 +1097,8 @@ namespace PX.Survey.Ext {
             var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
             PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
             PXUIFieldAttribute.SetVisible<SurveyCollector.source>(e.Cache, e.Row, showRefNote);
-            var hasPages = ActivePages.Select().Any();
-            redirectToSurvey.SetEnabled(e.Row != null && hasPages);
+            //var hasPages = ActivePages.Select().Any();
+            //redirectToSurvey.SetEnabled(e.Row != null && hasPages);
         }
 
         //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
