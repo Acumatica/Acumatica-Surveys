@@ -65,6 +65,7 @@ namespace PX.Survey.Ext {
         #region Anonymous
         public abstract class anonymous : BqlBool.Field<anonymous> { }
         [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual bool? Anonymous { get; set; }
         #endregion
