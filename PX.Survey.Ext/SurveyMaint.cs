@@ -1110,6 +1110,28 @@ namespace PX.Survey.Ext {
         //    e.Cancel = true;
         //}
 
+        protected virtual void _(Events.RowDeleted<SurveyCollector> e) {
+            var row = e.Row;
+            if (row == null) {
+                return;
+            }
+            // Deleting a row which is the anonymous collector of another resets the AnonCollectorID 
+            if (row.CollectorID != null) {
+                var realCollector = SurveyCollector.UK.ByAnonCollectorID.Find(this, row.CollectorID);
+                if (realCollector != null) {
+                    realCollector.AnonCollectorID = null;
+                    this.Collectors.Update(realCollector);
+                }
+            }
+            // Deleting a row which has an AnonCollectorID also deletes the anonymous collector
+            if (row.AnonCollectorID != null) {
+                var anonCollector = SurveyCollector.PK.Find(this, row.AnonCollectorID);
+                if (anonCollector != null) {
+                    this.Collectors.Delete(anonCollector);
+                }
+            }
+        }
+
         protected virtual void _(Events.RowDeleted<SurveyCollectorData> e) {
             var row = e.Row;
             if (row == null) {
