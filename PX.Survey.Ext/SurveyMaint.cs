@@ -863,7 +863,7 @@ namespace PX.Survey.Ext {
             e.Cancel = true;
         }
 
-        protected virtual void _(Events.FieldSelecting<Survey, Survey.anonSurveyURL> e) {
+        protected virtual void _(Events.FieldSelecting<Survey, Survey.anonURL> e) {
             var row = e.Row;
             if (row == null) {
                 return;
