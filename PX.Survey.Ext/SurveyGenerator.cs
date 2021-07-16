@@ -131,8 +131,9 @@ namespace PX.Survey.Ext {
             //    webHookUrl = string.Concat(returnUrl);
             //}
             //return webHookUrl;
-            Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
-            return webHook.Url;
+            //Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+            //return webHook.Url;
+            return survey.BaseURL;
         }
 
         //public static string ReturnUrl {
