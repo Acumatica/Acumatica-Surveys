@@ -159,6 +159,19 @@ namespace PX.Survey.Ext {
                     userCollector = answerCollector;
                     answerCollector = SurveyCollector.UK.ByAnonCollectorID.Find(graph, answerCollector.AnonCollectorID);
                 }
+                //if (survey.KeepAnswersAnonymous == true && answerCollector.Anonymous != true) {
+                //    var anonCollector = SurveyCollector.PK.Find(graph, answerCollector.AnonCollectorID);
+                //    userCollector = answerCollector;
+                //    if (anonCollector == null) {
+                //        // Rare case where AnonCollectorID points to a deleted Collector, should have been cleared.
+                //        var (_, anon) = InsertAnonymous(graph, survey, null);
+                //        answerCollector.AnonCollectorID = anon?.CollectorID;
+                //        graph.Collectors.Update(answerCollector);
+                //        answerCollector = anon;
+                //    } else {
+                //        answerCollector = anonCollector;
+                //    }
+                //}
                 user = SurveyUser.PK.Find(graph, survey.SurveyID, answerCollector.UserLineNbr);
             }
             if (answerCollector == null) {
