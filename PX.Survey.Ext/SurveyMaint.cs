@@ -65,7 +65,7 @@ namespace PX.Survey.Ext {
                 GroupBy<SurveyAnswer.value,
                 Count<SurveyAnswer.lineNbr>>>>>,
             OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Desc<SurveyAnswer.value>>>>> AnswerSummary;
-//        public PXSelect<SurveyAnswerSummary, Where<SurveyAnswerSummary.surveyID, Equal<Current<Survey.surveyID>>>> AnswerSummary;
+        //        public PXSelect<SurveyAnswerSummary, Where<SurveyAnswerSummary.surveyID, Equal<Current<Survey.surveyID>>>> AnswerSummary;
 
         [PXCopyPasteHiddenView]
         public PXSelectJoin<SurveyAnswer,
@@ -872,7 +872,7 @@ namespace PX.Survey.Ext {
             var url = generator.GetUrl(row, row.SurveyID, null);
             e.ReturnValue = url;
         }
-        
+
         //protected virtual void _(Events.RowPersisted<Survey> e) {
         //    var row = e.Row;
         //    if (row == null)
