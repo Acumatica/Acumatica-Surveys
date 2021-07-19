@@ -82,97 +82,9 @@ namespace PX.Survey.Ext {
             return (rendered, null);
         }
 
-        private void FillReferenceInfo(SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
-            if (collector.RefNoteID == null) {
-                return;
-            }
-            var noteID = collector.RefNoteID;
-            var eh = new EntityHelper(graph);
-            var entityRow = eh.GetEntityRow(noteID);
-            var entityType = entityRow.GetType();
-            var entityName = eh.GetFriendlyEntityName(noteID);
-            var fvp = eh.GetFieldValuePairs(entityRow, entityType);
-            var desc = eh.GetEntityDescription(noteID, entityType);
-            context.SetValue(new ScriptVariableGlobal(ENTITY_ROW), entityRow);
-            context.SetValue(new ScriptVariableGlobal(ENTITY_TYPE), entityType);
-            context.SetValue(new ScriptVariableGlobal(ENTITY_NAME), entityName);
-            context.SetValue(new ScriptVariableGlobal(ENTITY_DESC), desc);
-            context.SetValue(new ScriptVariableGlobal(ENTITY_FIELDS), fvp);
-        }
-
-        public string GetUrl(TemplateContext context, int? pageNbr) {
-            var survey = (Survey)context.GetValue(new ScriptVariableGlobal(typeof(Survey).Name));
-            var token = (string)context.GetValue(new ScriptVariableGlobal(TOKEN));
-            return GetUrl(survey, token, pageNbr);
-        }
-
-        public string GetUrl(string token, int? pageNbr) {
-            var (survey, _, _, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
-            return GetUrl(survey, userCollector.Token, pageNbr);
-        }
-
-        public string GetUrl(Survey survey, string token, int? pageNbr) {
-            graph.Survey.Current = survey;
-            string webHookUrl = GetUrl(survey);
-            var pageParam = pageNbr.HasValue ? $"{SurveyWebhookServerHandler.PAGE_PARAM}={pageNbr}&" : "";
-            var url = $"{webHookUrl}?{pageParam}{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
-            return url;
-        }
-
-        private string GetUrl(Survey survey) {
-            //string webHookUrl = "";
-            //if (survey.WebHookID.HasValue) {
-            //    string str = (graph.CompanyService.IsMultiCompany ? PXAccess.GetCompanyName() : graph.CompanyService.GetSingleCompanyLoginName());
-            //    string[] returnUrl = new string[] { ReturnUrl, "/", str, "/", null };
-            //    returnUrl[4] = survey.WebHookID.ToString();
-            //    webHookUrl = string.Concat(returnUrl);
-            //}
-            //return webHookUrl;
-            //Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
-            //return webHook.Url;
-            return survey.BaseURL;
-        }
-
         private void FillRenderedPages(TemplateContext context, IEnumerable<string> renderedPage) {
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedPage);
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedPage));
-        }
-
-        private TemplateContext GetSurveyContext(Survey survey, SurveyUser user, string token) {
-            var setup = graph.SurveySetup.Current;
-            var context = new TemplateContext();
-            context.MemberRenamer = MyMemberRenamerDelegate;
-            context.MemberFilter = MyMemberFilterDelegate;
-            var url = GetUrl(survey, token, null);
-            var container = new ScriptObject {
-                {survey.GetType().Name, survey},
-                {setup.GetType().Name, setup},
-                {user.GetType().Name, user},
-                {IS_SINGLE_PAGE, survey.Layout == SurveyLayout.SinglePage},
-                {TOKEN, token},
-                {URL, url},
-            };
-            //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
-            //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
-            context.PushGlobal(container);
-            return context;
-        }
-
-        //private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
-        //    Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
-        //    //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
-        //    //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
-        //    //whGraph.Webhook.Current = wh;
-        //    whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
-        //    return whGraph.Webhook.Current;
-        //}
-
-        public static string MyMemberRenamerDelegate(MemberInfo member) {
-            return member.Name;
-        }
-
-        public static bool MyMemberFilterDelegate(MemberInfo member) {
-            return true;
         }
 
         private IEnumerable<string> GetRenderedPage(Survey survey, SurveyUser user, TemplateContext context, int pageNbr) {
@@ -235,6 +147,95 @@ namespace PX.Survey.Ext {
             context.SetValue(new ScriptVariableGlobal(IS_FIRST_PAGE), current == min);
             context.SetValue(new ScriptVariableGlobal(IS_LAST_PAGE), current == max);
         }
+
+        private TemplateContext GetSurveyContext(Survey survey, SurveyUser user, string token) {
+            var setup = graph.SurveySetup.Current;
+            var context = new TemplateContext();
+            context.MemberRenamer = MyMemberRenamerDelegate;
+            context.MemberFilter = MyMemberFilterDelegate;
+            var url = GetUrl(survey, token, null);
+            var container = new ScriptObject {
+                {survey.GetType().Name, survey},
+                {setup.GetType().Name, setup},
+                {user.GetType().Name, user},
+                {IS_SINGLE_PAGE, survey.Layout == SurveyLayout.SinglePage},
+                {TOKEN, token},
+                {URL, url},
+            };
+            //container.SetValue(AcuFunctions.PREFIX, new AcuFunctions(), true);
+            //container.SetValue(JsonFunctions.PREFIX, new JsonFunctions(), true);
+            context.PushGlobal(container);
+            return context;
+        }
+
+        private void FillReferenceInfo(SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
+            if (collector.RefNoteID == null) {
+                return;
+            }
+            var noteID = collector.RefNoteID;
+            var eh = new EntityHelper(graph);
+            var entityRow = eh.GetEntityRow(noteID);
+            var entityType = entityRow.GetType();
+            var entityName = eh.GetFriendlyEntityName(noteID);
+            var fvp = eh.GetFieldValuePairs(entityRow, entityType);
+            var desc = eh.GetEntityDescription(noteID, entityType);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_ROW), entityRow);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_TYPE), entityType);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_NAME), entityName);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_DESC), desc);
+            context.SetValue(new ScriptVariableGlobal(ENTITY_FIELDS), fvp);
+        }
+
+        public string GetUrl(TemplateContext context, int? pageNbr) {
+            var survey = (Survey)context.GetValue(new ScriptVariableGlobal(typeof(Survey).Name));
+            var token = (string)context.GetValue(new ScriptVariableGlobal(TOKEN));
+            return GetUrl(survey, token, pageNbr);
+        }
+
+        public string GetUrl(string token, int? pageNbr) {
+            var (survey, _, _, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
+            return GetUrl(survey, userCollector.Token, pageNbr);
+        }
+
+        public string GetUrl(Survey survey, string token, int? pageNbr) {
+            graph.Survey.Current = survey;
+            string webHookUrl = GetUrl(survey);
+            var pageParam = pageNbr.HasValue ? $"{SurveyWebhookServerHandler.PAGE_PARAM}={pageNbr}&" : "";
+            var url = $"{webHookUrl}?{pageParam}{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
+            return url;
+        }
+
+        private string GetUrl(Survey survey) {
+            //string webHookUrl = "";
+            //if (survey.WebHookID.HasValue) {
+            //    string str = (graph.CompanyService.IsMultiCompany ? PXAccess.GetCompanyName() : graph.CompanyService.GetSingleCompanyLoginName());
+            //    string[] returnUrl = new string[] { ReturnUrl, "/", str, "/", null };
+            //    returnUrl[4] = survey.WebHookID.ToString();
+            //    webHookUrl = string.Concat(returnUrl);
+            //}
+            //return webHookUrl;
+            //Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
+            //return webHook.Url;
+            return survey.BaseURL;
+        }
+
+        //private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
+        //    Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
+        //    //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
+        //    //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
+        //    //whGraph.Webhook.Current = wh;
+        //    whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
+        //    return whGraph.Webhook.Current;
+        //}
+
+        public static string MyMemberRenamerDelegate(MemberInfo member) {
+            return member.Name;
+        }
+
+        public static bool MyMemberFilterDelegate(MemberInfo member) {
+            return true;
+        }
+
 
         public class Question {
 
