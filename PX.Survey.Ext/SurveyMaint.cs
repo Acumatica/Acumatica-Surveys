@@ -367,12 +367,12 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Generate HTML", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton]
         public virtual IEnumerable GenerateSample(PXAdapter adapter) {
-            var list = adapter.Get<Survey>().ToList();
-            Save.Press();
-            var graph = CreateInstance<SurveyMaint>();
-            foreach (var survey in list) {
-                var row = PXCache<Survey>.CreateCopy(survey);
-                graph.DoGenerateSample(row);
+            if (Survey.Current != null) {
+                Save.Press();
+                PXLongOperation.StartOperation(this, delegate () {
+                    var graph = CreateInstance<SurveyMaint>();
+                    graph.DoGenerateSample(Survey.Current);
+                });
             }
             return adapter.Get();
         }
