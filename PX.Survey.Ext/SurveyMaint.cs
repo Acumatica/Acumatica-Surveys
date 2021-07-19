@@ -788,7 +788,7 @@ namespace PX.Survey.Ext {
             if (row == null) { return; }
             bool lockedSurvey = SurveyStatus.IsLocked(row.Status);
             e.Cache.AllowDelete = !lockedSurvey;
-            var hasPages = ActivePages.Select().Any();
+            var hasPages = HasDetailRecords();
             redirectToAnonymousSurvey.SetEnabled(hasPages);
             generateSample.SetEnabled(hasPages);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, !lockedSurvey);
@@ -806,6 +806,36 @@ namespace PX.Survey.Ext {
                 //redirectToSurvey.SetEnabled(false);
                 //redirectToSurvey.SetVisible(false);
             }
+        }
+
+        public virtual bool HasDetailRecords() {
+            if (ActivePages.Current != null) {
+                return true;
+            }
+            if (Survey.Cache.GetStatus(Survey.Current) == PXEntryStatus.Inserted) {
+                return ActivePages.Cache.IsDirty;
+            }
+            return ActivePages.Select(Array.Empty<object>()).Count > 0;
+        }
+
+        public virtual bool HasAnswerRecords() {
+            if (Answers.Current != null) {
+                return true;
+            }
+            if (Survey.Cache.GetStatus(Survey.Current) == PXEntryStatus.Inserted) {
+                return Answers.Cache.IsDirty;
+            }
+            return Answers.Select(Array.Empty<object>()).Count > 0;
+        }
+
+        public virtual bool HasUnprocessedCollectors() {
+            if (UnprocessedCollectorDataRecords.Current != null) {
+                return true;
+            }
+            if (Survey.Cache.GetStatus(Survey.Current) == PXEntryStatus.Inserted) {
+                return UnprocessedCollectorDataRecords.Cache.IsDirty;
+            }
+            return UnprocessedCollectorDataRecords.Select(Array.Empty<object>()).Count > 0;
         }
 
         protected virtual void _(Events.FieldUpdated<Survey, Survey.layout> e) {
@@ -1051,8 +1081,8 @@ namespace PX.Survey.Ext {
             var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
             PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
             PXUIFieldAttribute.SetVisible<SurveyCollector.source>(e.Cache, e.Row, showRefNote);
-            //var hasPages = ActivePages.Select().Any();
-            //redirectToSurvey.SetEnabled(e.Row != null && hasPages);
+            var hasPages = HasDetailRecords();
+            redirectToSurvey.SetEnabled(e.Row != null && hasPages);
         }
 
         //protected virtual void _(Events.FieldDefaulting<SurveyCollector, SurveyCollector.token> e) {
@@ -1117,9 +1147,9 @@ namespace PX.Survey.Ext {
         }
 
         public void _(Events.RowSelected<SurveyAnswer> e) {
-            var hasAnswers = Answers.Select().Any();
+            var hasAnswers = HasAnswerRecords();
             reProcessAnswers.SetEnabled(hasAnswers);
-            var hasUnProcAnswers = UnprocessedCollectorDataRecords.Select().Any();
+            var hasUnProcAnswers = HasUnprocessedCollectors();
             processAnswers.SetEnabled(hasUnProcAnswers);
         }
 
