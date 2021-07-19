@@ -3,13 +3,11 @@ using PX.Api.Mobile.PushNotifications;
 using PX.Common;
 using PX.Data;
 using PX.Data.BQL.Fluent;
-using PX.Data.EP;
 using PX.Objects.EP;
 using PX.SM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace PX.Survey.Ext {
@@ -30,7 +28,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<SurveyCollector> sendNewNotification;
         [PXUIField(DisplayName = "Send New Notification", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable SendNewNotification(PXAdapter adapter) {
             if (Collector.Current != null) {
                 Save.Press();
@@ -54,7 +52,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<SurveyCollector> sendReminder;
         [PXUIField(DisplayName = "Send Reminder", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable SendReminder(PXAdapter adapter) {
             if (Collector.Current != null) {
                 Save.Press();

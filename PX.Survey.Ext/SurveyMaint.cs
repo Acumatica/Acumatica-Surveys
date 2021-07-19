@@ -114,7 +114,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> addRecipients;
         [PXUIField(DisplayName = "Add Recipients", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable AddRecipients(PXAdapter adapter) {
             if (recipientfilter.Current == null) {
                 recipientfilter.Current = recipientfilter.Insert(new RecipientFilter());
@@ -128,7 +128,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> addSelectedRecipients;
         [PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select, Visible = false)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable AddSelectedRecipients(PXAdapter adapter) {
             Users.Cache.ForceExceptionHandling = true;
             foreach (RecipientSelected recipient in recipients.Cache.Cached) {
@@ -149,14 +149,14 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> checkCreateParams;
         [PXUIField(DisplayName = "OK", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable CheckCreateParams(PXAdapter adapter) {
             return adapter.Get();
         }
 
         public PXFilter<CreateSurveyFilter> createSurveyFilter;
         public PXAction<Survey> createSurvey;
-        [PXUIField(DisplayName = "Load Survey Pages", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = "Load Template", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton(CommitChanges = true)]
         public virtual IEnumerable CreateSurvey(PXAdapter adapter) {
             List<Survey> list = adapter.Get<Survey>().ToList();
@@ -265,7 +265,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> addTemplates;
         [PXUIField(DisplayName = "Add Pages", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable AddTemplates(PXAdapter adapter) {
             if (templatefilter.Current == null) {
                 templatefilter.Current = templatefilter.Insert(new TemplateFilter());
@@ -279,7 +279,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> addSelectedTemplate;
         [PXUIField(DisplayName = "Add", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select, Visible = false)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable AddSelectedTemplate(PXAdapter adapter) {
             Details.Cache.ForceExceptionHandling = true;
             foreach (ComponentSelected template in templates.Cache.Cached) {
@@ -298,7 +298,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> resetPageNumbers;
         [PXUIField(DisplayName = "Reset Page Numbers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable ResetPageNumbers(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
             Save.Press();
@@ -365,7 +365,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> generateSample;
         [PXUIField(DisplayName = "Generate HTML", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable GenerateSample(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
             Save.Press();
@@ -494,7 +494,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> loadCollectors;
         [PXUIField(DisplayName = "Load Collectors", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable LoadCollectors(PXAdapter adapter) {
             Save.Press();
             var list = adapter.Get<Survey>().ToList();
@@ -528,7 +528,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> insertSampleCollector;
         [PXUIField(DisplayName = "Insert Sample Collector", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable InsertSampleCollector(PXAdapter adapter) {
             if (Survey.Current != null) {
                 Save.Press();
@@ -542,7 +542,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> redirectToSurvey;
         [PXUIField(DisplayName = "Run Survey", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable RedirectToSurvey(PXAdapter adapter) {
             if (Survey.Current != null && Collectors.Current != null) {
                 Save.Press();
@@ -580,7 +580,7 @@ namespace PX.Survey.Ext {
         }
 
         public PXAction<Survey> ViewEntity;
-        [PXLookupButton(Tooltip = "View Reference Entity", OnClosingPopup = PXSpecialButtonType.Refresh)]
+        [PXButton(Tooltip = "View Reference Entity", OnClosingPopup = PXSpecialButtonType.Refresh)]
         [PXUIField(DisplayName = "View Entity", Visible = false)]
         protected virtual void viewEntity() {
             SurveyCollector current = this.Collectors.Current;
@@ -592,7 +592,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> processAnswers;
         [PXUIField(DisplayName = "Process Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable ProcessAnswers(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
             Save.Press();
@@ -606,7 +606,7 @@ namespace PX.Survey.Ext {
 
         public PXAction<Survey> reProcessAnswers;
         [PXUIField(DisplayName = "Clear Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
-        [PXLookupButton]
+        [PXButton]
         public virtual IEnumerable ReProcessAnswers(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
             Save.Press();
