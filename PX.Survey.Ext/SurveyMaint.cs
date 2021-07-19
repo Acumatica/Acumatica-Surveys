@@ -1233,7 +1233,6 @@ namespace PX.Survey.Ext {
             }
         }
 
-
         [PXCacheName("CreateSurveyFilter")]
         [Serializable]
         public class CreateSurveyFilter : IBqlTable {
@@ -1241,8 +1240,8 @@ namespace PX.Survey.Ext {
             #region NbQuestions
             public abstract class nbQuestions : BqlInt.Field<nbQuestions> { }
             [PXInt]
-            [PXUnboundDefault(10)]
-            [PXUIField(DisplayName = "Number of Questions")]
+            [PXUnboundDefault(1)]
+            [PXUIField(DisplayName = "Nbr of Question Place Holders")]
             public virtual int? NbQuestions { get; set; }
             #endregion
         }
