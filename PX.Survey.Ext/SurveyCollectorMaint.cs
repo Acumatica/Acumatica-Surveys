@@ -28,13 +28,6 @@ namespace PX.Survey.Ext {
         public PXCancel<SurveyCollector> Cancel;
         public PXSave<SurveyCollector> Save;
 
-        //protected void _(Events.RowSelected<SurveyCollector> e) {
-        //    var row = e.Row;
-        //    if (row == null) {
-        //        return;
-        //    }
-        //}
-
         public PXAction<SurveyCollector> sendNewNotification;
         [PXUIField(DisplayName = "Send New Notification", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXLookupButton]
@@ -138,44 +131,6 @@ namespace PX.Survey.Ext {
             //}
             var sent = email.Send();
         }
-
-        //public PXAction<SurveyCollector> Submit;
-        //[PXButton(CommitChanges = true)]
-        //[PXUIField(DisplayName = Messages.Submit, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
-        //public virtual IEnumerable submit(PXAdapter adapter) {
-        //    Persist();
-        //    var currentQuestion = Collector.Current;
-        //    PXLongOperation.StartOperation(this, delegate () {
-        //        SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-        //        graph.Collector.Current = graph.Collector.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
-        //        if (graph.Answers.Select().ToList().Any(x => (x.GetItem<CSAnswers>().IsRequired.GetValueOrDefault(false) &&
-        //                                                     (String.IsNullOrEmpty(x.GetItem<CSAnswers>().Value))))) {
-        //            throw new PXException(Messages.AnswerReqiredQuestions);
-        //        }
-        //        graph.Collector.Current.Status = CollectorStatus.Responded;
-        //        graph.Collector.Current.CollectedDate = PXTimeZoneInfo.Now;
-        //        graph.Collector.Update(graph.Collector.Current);
-        //        graph.Persist();
-        //    });
-        //    return adapter.Get();
-        //}
-
-        //public PXAction<SurveyCollector> ReOpen;
-
-        //[PXButton(CommitChanges = true)]
-        //[PXUIField(DisplayName = Messages.ReOpen, MapViewRights = PXCacheRights.Select, MapEnableRights = PXCacheRights.Select)]
-        //public virtual IEnumerable reOpen(PXAdapter adapter) {
-        //    Persist();
-        //    var currentQuestion = Collector.Current;
-        //    PXLongOperation.StartOperation(this, delegate () {
-        //        SurveyCollectorMaint graph = PXGraph.CreateInstance<SurveyCollectorMaint>();
-        //        graph.Collector.Current = graph.Collector.Search<SurveyCollector.collectorID>(currentQuestion.CollectorID);
-        //        graph.Collector.Current.Status = CollectorStatus.Sent;
-        //        //graph.Collector.Current.CollectedDate = null;
-        //        graph.Collector.Update(graph.Collector.Current);
-        //        graph.Persist();
-        //    });
-        //    return adapter.Get();
         //}
     }
 }

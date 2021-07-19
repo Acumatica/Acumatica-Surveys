@@ -138,10 +138,6 @@ namespace PX.Survey.Ext {
         //    }
         //}
 
-        //protected virtual void _(Events.FieldUpdated<SurveySetupEntity, SurveySetupEntity.screenID> e) {
-        //    e.Cache.SetDefaultExt<SurveySetupEntity.entityType>(e.Row);
-        //}
-
         protected virtual void _(Events.FieldDefaulting<SurveySetupEntity, SurveySetupEntity.entityType> e) {
             var row = e.Row;
             //if (row == null || row.ScreenID == null) {

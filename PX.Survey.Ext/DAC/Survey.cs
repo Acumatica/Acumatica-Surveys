@@ -185,16 +185,6 @@ namespace PX.Survey.Ext {
         public virtual string AnonURL { get; set; }
         #endregion
 
-        //#region IsSurveyInUse
-        //public abstract class isSurveyInUse : BqlBool.Field<isSurveyInUse> { }
-        ///// <summary>
-        ///// Field to identify if Survey is in use
-        ///// </summary>
-        //[PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
-        //[PXBool]
-        //public virtual bool? IsSurveyInUse { get; set; }
-        //#endregion
-
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]

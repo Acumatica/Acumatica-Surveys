@@ -29,7 +29,6 @@ namespace PX.Survey.Ext {
         [SurveyID(IsKey = true)]
         [PXDBDefault(typeof(Survey.surveyID))]
         [PXParent(typeof(FK.SUSurvey))]
-        //[PXSelector(typeof(Search<Survey.surveyID>), DescriptionField = typeof(Survey.title))]
         public virtual string SurveyID { get; set; }
         #endregion
 
@@ -106,7 +105,7 @@ namespace PX.Survey.Ext {
         public virtual int? QuestionNbr { get; set; }
         #endregion
 
-        //QuestionCode
+        //TopicCode
 
         #region Description
         public abstract class description : BqlString.Field<description> { }

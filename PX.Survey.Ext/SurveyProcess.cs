@@ -3,7 +3,6 @@ using PX.Data.BQL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PX.Survey.Ext {
     public class SurveyProcess : PXGraph<SurveyProcess> {
@@ -12,8 +11,6 @@ namespace PX.Survey.Ext {
         public PXFilter<SurveyFilter> Filter;
 
         public PXFilteredProcessing<SurveyCollector, SurveyFilter> Documents;
-
-        //private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
         public SurveyProcess() {
             Documents.SetProcessCaption(Messages.Send);
@@ -26,9 +23,6 @@ namespace PX.Survey.Ext {
                 return;
             }
             var action = row.Action;
-            //var doProcessAnswers = action == SurveyAction.ProcessAnswers;
-            //PXUIFieldAttribute.SetRequired<SurveyFilter.surveyID>(e.Cache, !doProcessAnswers);
-            //PXDefaultAttribute.SetPersistingCheck<SurveyFilter.surveyID>(e.Cache, null, !doProcessAnswers ? PXPersistingCheck.NullOrBlank : PXPersistingCheck.Nothing);
             var doExpire = (action == SurveyAction.ExpireOnly);
             PXUIFieldAttribute.SetEnabled<SurveyFilter.durationTimeSpan>(e.Cache, row, doExpire);
             PXUIFieldAttribute.SetRequired<SurveyFilter.durationTimeSpan>(e.Cache, doExpire);
@@ -131,97 +125,34 @@ namespace PX.Survey.Ext {
             }
         }
 
-        private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
-            bool errorOccurred = graph.DoProcessAnswers(survey);
-            return errorOccurred;
-        }
+        //private static bool ProcessAnswers(SurveyMaint graph, Survey survey, SurveyFilter filter) {
+        //    bool errorOccurred = graph.DoProcessAnswers(survey);
+        //    return errorOccurred;
+        //}
 
-        //private static bool ConnectAnswers() {
+        //private static bool SetExpiredSurveys(SurveyMaint graph, Survey survey, SurveyFilter filter) {
         //    bool errorOccurred = false;
-        //    var collectorGraph = CreateInstance<SurveyCollectorMaint>();
-        //    collectorGraph.Clear();
-        //    var allUnanswered = collectorGraph.UnprocessedCollectedAnswers.Select();
-        //    foreach (SurveyCollectorData collData in allUnanswered) {
+        //    var collectors = graph.Collectors.Select().FirstTableItems;
+        //    foreach (var collector in collectors.Where(isPastExpiration)) {
         //        try {
-        //            var collectorToken = collData.Token;
-        //            SurveyCollector collector = collectorGraph.Collector.Search<SurveyCollector.token>(collectorToken);
-        //            if (collector == null) {
-        //                throw new PXException(Messages.CollectorNotFound, collectorToken);
-        //            }
-        //            collData.SurveyID = collector.SurveyID;
-        //            collData.CollectorID = collector.CollectorID;
-        //            collData.Status = CollectorDataStatus.Connected;
-        //            collData.Message = null;
-        //            //collector.CollectedDate = unanswered.LastModifiedDateTime;
-        //            collectorGraph.Collector.Update(collector);
+        //            collector.Status = CollectorStatus.Expired;
+        //            collector.Message = null;
         //        } catch (Exception ex) {
-        //            collData.Status = CollectorStatus.Error;
-        //            collData.Message = ex.Message;
+        //            collector.Status = CollectorStatus.Error;
+        //            collector.Message = ex.Message;
         //            errorOccurred = true;
         //        }
-        //        collectorGraph.UnprocessedCollectedAnswers.Update(collData);
-        //        collectorGraph.Actions.PressSave();
+        //        var updated = graph.Collectors.Update(collector);
         //    }
         //    return errorOccurred;
         //}
 
-        private static bool SetExpiredSurveys(SurveyMaint graph, Survey survey, SurveyFilter filter) {
-            bool errorOccurred = false;
-            var collectors = graph.Collectors.Select().FirstTableItems;
-            foreach (var collector in collectors.Where(isPastExpiration)) {
-                try {
-                    collector.Status = CollectorStatus.Expired;
-                    collector.Message = null;
-                } catch (Exception ex) {
-                    collector.Status = CollectorStatus.Error;
-                    collector.Message = ex.Message;
-                    errorOccurred = true;
-                }
-                var updated = graph.Collectors.Update(collector);
-            }
-            return errorOccurred;
-        }
-
-        private static bool isPastExpiration(SurveyCollector collector) {
-            //We consider collectors with a null ExpirationDate as a record that never expires
-            //This can be explicitly controlled by setting the duration to 0 which will in turn 
-            //set a null value into the table.
-            if (!collector.ExpirationDate.HasValue) return false;
-            return collector.ExpirationDate < DateTime.UtcNow;
-        }
-
-        /// <summary>
-        /// This retrieves a list of active Survey Collectors for a given user and survey 
-        /// </summary>
-        /// <param name="surveyUser"></param>
-        /// <param name="graph"></param>
-        /// <param name="surveyCurrent"></param>
-        /// <returns>
-        ///     This is intended to be used by both the expiration mechanism as well as the
-        ///     the mechanism to resend the notification.
-        /// </returns>
-        //private static List<SurveyCollector> GetActiveCollectors(SurveyUser surveyUser, SurveyCollectorMaint graph, Survey surveyCurrent) {
-        //    PXResultset<SurveyCollector> activeCollectorsResultSet =
-        //        PXSelect<SurveyCollector,
-        //                Where<SurveyCollector.userID, Equal<Required<SurveyCollector.userID>>,
-        //                        And<SurveyCollector.surveyID, Equal<Required<SurveyCollector.surveyID>>
-        //                        , And<SurveyCollector.collectorStatus, NotEqual<Required<SurveyCollector.collectorStatus>>
-        //                        , And<SurveyCollector.collectorStatus, NotEqual<Required<SurveyCollector.collectorStatus>>>>>>>
-        //            .Select(
-        //                graph,
-        //                surveyUser.UserID,
-        //                surveyCurrent.SurveyID,
-        //                CollectorStatus.Responded,
-        //                CollectorStatus.Expired);
-        //    List<SurveyCollector> activeCollectors = new List<SurveyCollector>();
-        //    foreach (var rCollector in activeCollectorsResultSet) {
-        //        var collector = (SurveyCollector)rCollector;
-        //        if (collector.Status == CollectorStatus.New ||
-        //            collector.Status == CollectorStatus.Sent) {
-        //            activeCollectors.Add(collector);
-        //        }
-        //    }
-        //    return activeCollectors;
+        //private static bool isPastExpiration(SurveyCollector collector) {
+        //    //We consider collectors with a null ExpirationDate as a record that never expires
+        //    //This can be explicitly controlled by setting the duration to 0 which will in turn 
+        //    //set a null value into the table.
+        //    if (!collector.ExpirationDate.HasValue) return false;
+        //    return collector.ExpirationDate < DateTime.UtcNow;
         //}
     }
 

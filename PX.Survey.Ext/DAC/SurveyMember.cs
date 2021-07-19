@@ -6,7 +6,7 @@ using PX.Objects.GL;
 using System;
 
 namespace PX.Survey.Ext {
-    /// <exclude />
+
     [PXCacheName("Survey Members")]
     [PXEMailSource]
     [Serializable]

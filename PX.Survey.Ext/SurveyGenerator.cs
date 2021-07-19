@@ -8,7 +8,6 @@ using Scriban.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 
 namespace PX.Survey.Ext {
 
@@ -92,7 +91,6 @@ namespace PX.Survey.Ext {
             var entityRow = eh.GetEntityRow(noteID);
             var entityType = entityRow.GetType();
             var entityName = eh.GetFriendlyEntityName(noteID);
-            var fl = eh.GetFieldList(entityType);
             var fvp = eh.GetFieldValuePairs(entityRow, entityType);
             var desc = eh.GetEntityDescription(noteID, entityType);
             context.SetValue(new ScriptVariableGlobal(ENTITY_ROW), entityRow);
@@ -104,7 +102,6 @@ namespace PX.Survey.Ext {
 
         public string GetUrl(TemplateContext context, int? pageNbr) {
             var survey = (Survey)context.GetValue(new ScriptVariableGlobal(typeof(Survey).Name));
-            //var user = (SurveyUser) context.GetValue(new ScriptVariableGlobal(typeof(SurveyUser).Name));
             var token = (string)context.GetValue(new ScriptVariableGlobal(TOKEN));
             return GetUrl(survey, token, pageNbr);
         }
@@ -136,21 +133,6 @@ namespace PX.Survey.Ext {
             return survey.BaseURL;
         }
 
-        //public static string ReturnUrl {
-        //    get {
-        //        string str;
-        //        string applicationPath = HttpContext.Current.Request.ApplicationPath;
-        //        if (applicationPath != null) {
-        //            str = applicationPath.Trim(new char[] { '/' });
-        //        } else {
-        //            str = null;
-        //        }
-        //        string str1 = str;
-        //        str1 = string.IsNullOrEmpty(str1) ? string.Empty : string.Concat(str1, "/");
-        //        return string.Concat(HttpContext.Current.Request.GetWebsiteUrl(), str1, "Webhooks");
-        //    }
-        //}
-
         private void FillRenderedPages(TemplateContext context, IEnumerable<string> renderedPage) {
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedPage);
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedPage));
@@ -161,13 +143,11 @@ namespace PX.Survey.Ext {
             var context = new TemplateContext();
             context.MemberRenamer = MyMemberRenamerDelegate;
             context.MemberFilter = MyMemberFilterDelegate;
-            Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
             var url = GetUrl(survey, token, null);
             var container = new ScriptObject {
                 {survey.GetType().Name, survey},
                 {setup.GetType().Name, setup},
                 {user.GetType().Name, user},
-                {webHook.GetType().Name, webHook},
                 {IS_SINGLE_PAGE, survey.Layout == SurveyLayout.SinglePage},
                 {TOKEN, token},
                 {URL, url},
@@ -178,14 +158,14 @@ namespace PX.Survey.Ext {
             return context;
         }
 
-        private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
-            Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
-            //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
-            //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
-            //whGraph.Webhook.Current = wh;
-            whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
-            return whGraph.Webhook.Current;
-        }
+        //private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
+        //    Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
+        //    //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
+        //    //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
+        //    //whGraph.Webhook.Current = wh;
+        //    whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
+        //    return whGraph.Webhook.Current;
+        //}
 
         public static string MyMemberRenamerDelegate(MemberInfo member) {
             return member.Name;

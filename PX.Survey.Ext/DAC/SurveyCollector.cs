@@ -19,9 +19,6 @@ namespace PX.Survey.Ext {
             public static SurveyCollector Find(PXGraph graph, int? collectorID) => FindBy(graph, collectorID);
         }
 
-        //public class UK : PrimaryKeyOf<SurveyCollector>.By<token> {
-        //    public static SurveyCollector Find(PXGraph graph, string token) => FindBy(graph, token);
-        //}
         public static class FK {
             public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyCollector>.By<surveyID> { }
             public class SUSurveyUser : SurveyUser.PK.ForeignKeyOf<SurveyCollector>.By<surveyID, userLineNbr> { }
