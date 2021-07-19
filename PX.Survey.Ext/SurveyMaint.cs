@@ -380,7 +380,7 @@ namespace PX.Survey.Ext {
         private void DoGenerateSample(Survey survey) {
             Survey.Current = survey;
             var user = DoInsertSampleUser(survey); // TODO Just put in cache
-            var collector = DoUpsertCollector(survey, user, null); // TODO Just put in cache
+            var collector = DoUpsertCollector(survey, user, null, true); // TODO Just put in cache
             var pages = GetPageNumbers(survey, SurveyUtils.ACTIVE_PAGES_ONLY);
             var generator = new SurveyGenerator();
             foreach (var pageNbr in pages) {
@@ -414,15 +414,18 @@ namespace PX.Survey.Ext {
             return adapter.Get();
         }
 
-        public SurveyCollector DoUpsertCollector(Survey survey, SurveyUser user, Guid? refNoteID) {
+        public SurveyCollector DoUpsertCollector(Survey survey, SurveyUser user, Guid? refNoteID, bool saveNow) {
             var collector = new SurveyCollector {
                 SurveyID = survey.SurveyID,
                 UserLineNbr = user.LineNbr,
-                RefNoteID = refNoteID
+                RefNoteID = refNoteID,
+                Anonymous = user.Anonymous
             };
             var inserted = Collectors.Insert(collector);
             //var persisted = Collectors.Cache.PersistInserted(inserted);
-            Actions.PressSave();
+            if (saveNow) { 
+                Actions.PressSave();
+            }
             return inserted;
         }
 
@@ -520,7 +523,7 @@ namespace PX.Survey.Ext {
         private void DoLoadCollectors(Survey survey, bool massProcess) {
             Survey.Current = survey;
             foreach (var user in Users.Select()) {
-                var collector = DoUpsertCollector(Survey.Current, user, null);
+                var collector = DoUpsertCollector(Survey.Current, user, null, false);
             }
             Actions.PressSave();
             Collectors.View.RequestRefresh();
@@ -533,7 +536,7 @@ namespace PX.Survey.Ext {
             if (Survey.Current != null) {
                 Save.Press();
                 var user = DoInsertSampleUser(Survey.Current);
-                var collector = DoUpsertCollector(Survey.Current, user, null);
+                var collector = DoUpsertCollector(Survey.Current, user, null, true);
                 Actions.PressSave();
                 Collectors.View.RequestRefresh();
             }
@@ -849,7 +852,7 @@ namespace PX.Survey.Ext {
             if (row == null || survey == null)
                 return;
             if (survey.KeepAnswersAnonymous == true && row.AnonCollectorID == null && row.Anonymous != true) {
-                var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, null);
+                var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, null, false);
                 row.AnonCollectorID = anon?.CollectorID;
             }
         }
