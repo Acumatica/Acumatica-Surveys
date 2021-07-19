@@ -268,7 +268,7 @@ namespace PX.Survey.Ext {
         [PXButton]
         public virtual IEnumerable AddTemplates(PXAdapter adapter) {
             if (templatefilter.Current == null) {
-                templatefilter.Current = templatefilter.Insert(new TemplateFilter());
+                templatefilter.Current = templatefilter.Insert(new ComponentFilter());
             }
             if (templates.AskExt() == WebDialogResult.OK) {
                 return AddSelectedTemplate(adapter);
