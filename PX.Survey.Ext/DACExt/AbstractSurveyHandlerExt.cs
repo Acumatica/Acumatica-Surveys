@@ -2,8 +2,6 @@
 using PX.Data.DependencyInjection;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PX.Survey.Ext {
 
