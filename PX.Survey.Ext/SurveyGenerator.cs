@@ -74,44 +74,39 @@ namespace PX.Survey.Ext {
                 throw new PXException(Messages.TemplateNeeded);
             }
             var template = Template.Parse(mainTemplateText);
-            var mainContext = GetSurveyContext(survey, user, token);
-            FillReferenceInfo(userCollector, graph, mainContext);
-            var renderedPage = GetRenderedPage(survey, user, mainContext, pageNbr);
-            FillRenderedPages(mainContext, renderedPage);
-            var rendered = template.Render(mainContext);
+            var context = GetSurveyContext(survey, user, token);
+            FillEntityInfo(userCollector, graph, context);
+            var renderedComps = RenderComponentsForPage(survey, user, context, pageNbr);
+            context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedComps);
+            context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedComps));
+            var rendered = template.Render(context);
             return (rendered, null);
         }
 
-        private void FillRenderedPages(TemplateContext context, IEnumerable<string> renderedPage) {
-            context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedPage);
-            context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedPage));
-        }
-
-        private IEnumerable<string> GetRenderedPage(Survey survey, SurveyUser user, TemplateContext context, int pageNbr) {
+        private IEnumerable<string> RenderComponentsForPage(Survey survey, SurveyUser user, TemplateContext context, int pageNbr) {
             graph.Survey.Current = survey;
-            var activePages = graph.Details.Select().FirstTableItems.Where(det => det.Active == true);
-            var selectedPages = SurveyUtils.SelectPages(activePages, pageNbr);
-            var firstOfSelected = selectedPages.FirstOrDefault();
-            var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
-            var allRendered = new List<string>();
+            var activeComponents = graph.Details.Select().FirstTableItems.Where(det => det.Active == true);
+            var selectedComponents = SurveyUtils.SelectPages(activeComponents, pageNbr);
+            var firstOfSelected = selectedComponents.FirstOrDefault();
+            var renderedComponents = new List<string>();
             if (firstOfSelected == null) {
-                return allRendered;
+                return renderedComponents;
             }
-            var nextPages = SurveyUtils.SelectPages(activePages, ++selectedPageNbr);
-            FillPageInfoLookAhead(context, activePages, nextPages);
+            var selectedPageNbr = firstOfSelected?.PageNbr.Value ?? 99999;
+            var nextComponents = SurveyUtils.SelectPages(activeComponents, ++selectedPageNbr);
+            FillPageInfoLookAhead(context, activeComponents, nextComponents);
             var url = GetUrl(context, firstOfSelected.PageNbr.Value);
             context.SetValue(new ScriptVariableGlobal(URL), url);
-            foreach (var selectedPage in selectedPages) {
-                var pageComponentID = selectedPage.ComponentID;
-                var pageComponent = SurveyComponent.PK.Find(graph, pageComponentID);
-                var template = Template.Parse(pageComponent.Body);
-                AddDetailContext(context, selectedPage, pageComponent);
-                FillPageInfo(context, activePages, selectedPage);
+            foreach (var detail in selectedComponents) {
+                var component = SurveyComponent.PK.Find(graph, detail.ComponentID);
+                var template = Template.Parse(component.Body);
+                AddDetailContext(context, detail, component);
+                FillPageInfo(context, activeComponents, detail);
                 var rendered = template.Render(context);
-                allRendered.Add(rendered);
+                renderedComponents.Add(rendered);
             }
             // TODO Handle nothing rendered
-            return allRendered;
+            return renderedComponents;
         }
 
         private void FillPageInfoLookAhead(TemplateContext context, IEnumerable<SurveyDetail> details, IEnumerable<SurveyDetail> nextPages) {
@@ -125,9 +120,9 @@ namespace PX.Survey.Ext {
             context.SetValue(new ScriptVariableGlobal(NEXT_IS_LAST), isLast);
         }
 
-        private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyComponent template) {
+        private void AddDetailContext(TemplateContext context, SurveyDetail detail, SurveyComponent component) {
             context.SetValue(new ScriptVariableGlobal(detail.GetType().Name), detail);
-            context.SetValue(new ScriptVariableGlobal(template.GetType().Name), template);
+            context.SetValue(new ScriptVariableGlobal(component.GetType().Name), component);
             if (detail.IsQuestion == true) {
                 var question = GetQuestion(detail.AttributeID);
                 context.SetValue(new ScriptVariableGlobal(question.GetType().Name), question);
@@ -168,7 +163,7 @@ namespace PX.Survey.Ext {
             return context;
         }
 
-        private void FillReferenceInfo(SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
+        private void FillEntityInfo(SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
             if (collector.RefNoteID == null) {
                 return;
             }
