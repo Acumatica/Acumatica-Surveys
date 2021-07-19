@@ -12,6 +12,10 @@ namespace PX.Survey.Ext {
             if (webHookID == null) {
                 return null;
             }
+            if (PXLongOperation.IsLongOperationContext()) { // Does not exist on 20.200, must upgrade
+                // Won't work in the background
+                return null;
+            }
             Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
             //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
             //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
