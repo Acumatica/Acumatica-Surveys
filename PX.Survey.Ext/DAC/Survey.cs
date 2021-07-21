@@ -118,7 +118,14 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Keep Answers Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual bool? KeepAnswersAnonymous { get; set; }
         #endregion
-        
+
+        #region AllowDuplicate
+        public abstract class allowDuplicate : BqlBool.Field<allowDuplicate> { }
+        [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Allow Duplicate", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual bool? AllowDuplicate { get; set; }
+        #endregion
         //SurveyCampaign
         //SurveyRun
         //MarketingList

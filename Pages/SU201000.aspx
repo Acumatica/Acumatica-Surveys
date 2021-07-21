@@ -53,6 +53,7 @@
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="SM" SuppressLabel="true" />
             <px:PXCheckBox runat="server" ID="chkAllowAnonymous" DataField="AllowAnonymous" CommitChanges="true"></px:PXCheckBox>
             <px:PXCheckBox runat="server" ID="chkKeepAnswersAnonymous" DataField="KeepAnswersAnonymous" CommitChanges="true"></px:PXCheckBox>
+            <px:PXCheckBox runat="server" ID="chkAllowDuplicate" DataField="AllowDuplicate" CommitChanges="true"></px:PXCheckBox>
         </Template>
     </px:PXFormView>
 </asp:Content>
