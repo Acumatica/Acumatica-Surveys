@@ -51,6 +51,12 @@
       <HintPath>..\lib\PX.Objects.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="PX.Objects.FS">
+      <HintPath>..\lib\PX.Objects.FS.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Objects.PJ">
+      <HintPath>..\lib\PX.Objects.PJ.dll</HintPath>
+    </Reference>
     <Reference Include="PX.Web.Customization">
       <HintPath>..\lib\PX.Web.Customization.dll</HintPath>
       <Private>false</Private>
