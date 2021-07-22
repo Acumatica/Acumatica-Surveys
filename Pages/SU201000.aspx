@@ -219,9 +219,9 @@
                                 <px:PXToolBarButton Key="AddRecipients">
                                     <AutoCallBack Command="AddRecipients" Target="ds" />
                                 </px:PXToolBarButton>
-                                <px:PXToolBarButton Key="LoadCollectors">
+                                <%--<px:PXToolBarButton Key="LoadCollectors">
                                     <AutoCallBack Command="LoadCollectors" Target="ds" />
-                                </px:PXToolBarButton>
+                                </px:PXToolBarButton>--%>
                             </CustomItems>
                         </ActionBar>
                         <Mode InitNewRow="true" />
