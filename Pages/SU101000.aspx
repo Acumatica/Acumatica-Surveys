@@ -76,6 +76,7 @@
                                     <px:PXGridColumn DataField="EntityType" Width="150px" Type="DropDownList" CommitChanges="true" />
                                     <px:PXGridColumn DataField="ContactField" Width="200px" CommitChanges="true" />
                                     <px:PXGridColumn DataField="SurveyID" Width="120px" CommitChanges="true" />
+                                    <px:PXGridColumn DataField="SurveyID_description" Width="400px" CommitChanges="true" />
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
