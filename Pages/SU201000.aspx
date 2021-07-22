@@ -258,6 +258,8 @@
                                             <px:PXGridColumn DataField="Message" Width="200px" />
                                             <px:PXGridColumn DataField="SentOn" Width="120px" />
                                             <px:PXGridColumn DataField="LastModifiedDateTime" Width="120px" />
+                                            <px:PXGridColumn DataField="SentOn" Width="120px" />
+                                            <px:PXGridColumn DataField="AnonCollectorID" Width="120px" />
                                         </Columns>
                                     </px:PXGridLevel>
                                 </Levels>
@@ -399,6 +401,8 @@
                             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" />
                             <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
                             <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
+                            <px:PXLinkEdit runat="server" ID="edBaseURL" DataField="BaseURL" Width="800px" Enabled="false"/>
+                            <px:PXLinkEdit runat="server" ID="edAnonURL" DataField="AnonURL" Width="800px" Enabled="false"/>
                         </Template>
                     </px:PXFormView>
                 </Template>
