@@ -107,7 +107,7 @@
                         </ActionBar>
                         <CallbackCommands PasteCommand="DetailPasteLine">
                         </CallbackCommands>
-                        <Mode InitNewRow="True" AllowFormEdit="True" AllowUpload="True" AllowDragRows="true" />
+                        <Mode InitNewRow="True" AllowUpload="True" AllowDragRows="true" />
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
