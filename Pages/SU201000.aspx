@@ -482,7 +482,7 @@
         </px:PXPanel>
     </px:PXSmartPanel>
     <%-- Create Survey --%>
-    <px:PXSmartPanel ID="panelCreateSurvey" runat="server" Caption="Create Survey" CaptionVisible="true" LoadOnDemand="true" Key="createSurveyFilter"
+    <px:PXSmartPanel ID="panelCreateSurvey" runat="server" Caption="Load Survey Template" CaptionVisible="true" LoadOnDemand="true" Key="createSurveyFilter"
         AutoCallBack-Enabled="true" AutoCallBack-Target="formCreateSurvey" AutoCallBack-Command="Refresh" CallBackMode-CommitChanges="True"
         CallBackMode-PostData="Page">
         <div style="padding: 5px">
