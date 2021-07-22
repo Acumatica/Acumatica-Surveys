@@ -24,7 +24,7 @@
             <px:PXDSCallbackCommand Name="ViewAttribute" Visible="False" />
             <%--<px:PXDSCallbackCommand Name="LoadCollectors" Visible="False" />--%>
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
-            <px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />
+            <%--<px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />--%>
 			<px:PXDSCallbackCommand Name="AddAction" Visible="False" />
 			<px:PXDSCallbackCommand Name="DeleteAction" Visible="False" />
 			<px:PXDSCallbackCommand Name="LinkToContact" Visible="False" />
@@ -271,9 +271,9 @@
                                         <px:PXToolBarButton Key="RedirectToSurvey">
                                             <AutoCallBack Command="RedirectToSurvey" Target="ds" />
                                         </px:PXToolBarButton>
-                                        <px:PXToolBarButton Key="RedirectToAnonymousSurvey">
+                                        <%--<px:PXToolBarButton Key="RedirectToAnonymousSurvey">
                                             <AutoCallBack Command="RedirectToAnonymousSurvey" Target="ds" />
-                                        </px:PXToolBarButton>
+                                        </px:PXToolBarButton>--%>
                                     </CustomItems>
                                 </ActionBar>
                                 <Mode InitNewRow="True" AllowDragRows="true" AllowAddNew="False" />
