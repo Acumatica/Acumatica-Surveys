@@ -67,6 +67,13 @@
                         <Levels>
                             <px:PXGridLevel DataMember="Details">
                                 <RowTemplate>
+                                    <px:PXCheckBox runat="server" ID="chkActive" DataField="Active" />
+                                    <px:PXDropDown runat="server" ID="edComponentType" DataField="ComponentType"/>
+                                    <px:PXSelector runat="server" ID="edComponentID" DataField="ComponentID"/>
+                                    <px:PXSelector runat="server" ID="edAttributeID" DataField="AttributeID"/>
+                                    <px:PXCheckBox runat="server" ID="chkRequired" DataField="Required" />
+                                    <px:PXDropDown runat="server" ID="edControlType" DataField="ControlType" />
+                                    <px:PXCheckBox runat="server" ID="chkReverseOrder" DataField="ReverseOrder"/>
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="Active" AllowNull="False" TextAlign="Center" Type="CheckBox" AllowCheckAll="True" Width="60px" />
@@ -179,13 +186,19 @@
 				</Template>
 			</px:PXTabItem>
             --%>
-            <px:PXTabItem Text="Recipients" RepaintOnDemand="False">
+            <px:PXTabItem Text="Recipients">
                 <Template>
                     <px:PXGrid ID="grdRecipients" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
                         SkinID="DetailsInTab" SyncPosition="True" TabIndex="5100">
                         <Levels>
                             <px:PXGridLevel DataMember="Users">
                                 <RowTemplate>
+                                    <px:PXCheckBox runat="server" DataField="Active" ID="chkActive2" />
+                                    <px:PXSelector runat="server" DataField="ContactID" ID="edContactID" />
+                                    <px:PXDropDown runat="server" DataField="RecipientType" ID="edRecipientType" />
+                                    <px:PXDropDown runat="server" DataField="Phone1Type" ID="edPhone1Type" />
+                                    <px:PXDropDown runat="server" DataField="Phone2Type" ID="edPhone2Type" />
+                                    <px:PXCheckBox runat="server" DataField="UsingMobileApp" ID="chkUsingMobileApp" />
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="Active" Type="CheckBox" TextAlign="Center" CommitChanges="true" />
@@ -226,6 +239,10 @@
                                 <Levels>
                                     <px:PXGridLevel DataMember="Collectors">
                                         <RowTemplate>
+                                            <px:PXDateTimeEdit runat="server" DataField="ExpirationDate" ID="edExpirationDate" />
+                                            <px:PXDropDown runat="server" DataField="Status" ID="edStatus2" />
+                                            <px:PXDateTimeEdit runat="server" DataField="SentOn" ID="edSentOn" />
+                                            <px:PXDateTimeEdit runat="server" DataField="LastModifiedDateTime" ID="edLastModifiedDateTime" />
                                         </RowTemplate>
                                         <Columns>
                                             <px:PXGridColumn DataField="Token" DisplayMode="Text" TextAlign="Left" Width="100px" />
@@ -266,6 +283,7 @@
                                 <Levels>
                                     <px:PXGridLevel DataMember="CollectorDataRecords">
                                         <RowTemplate>
+                                            <px:PXDropDown runat="server" DataField="Status" ID="edStatus3" />
                                         </RowTemplate>
                                         <Columns>
                                             <px:PXGridColumn DataField="PageNbr" Width="100px" />
@@ -286,13 +304,17 @@
                     </px:PXSplitContainer>
                 </Template>
             </px:PXTabItem>
-            <px:PXTabItem Text="Raw Answers" RepaintOnDemand="False">
+            <px:PXTabItem Text="Answers">
                 <Template>
                     <px:PXGrid ID="grdAnswers" runat="server" DataSourceID="ds" Height="150px" Width="100%" ActionsPosition="Top"
                         SkinID="Inquire" SyncPosition="True" TabIndex="5100" MatrixMode="True">
                         <Levels>
                             <px:PXGridLevel DataMember="Answers">
                                 <RowTemplate>
+                                    <px:PXSelector runat="server" DataField="ContactID" ID="edContactID2" />
+                                    <px:PXDropDown runat="server" DataField="ComponentType" ID="edComponentType2" />
+                                    <px:PXSelector runat="server" DataField="AttributeID" ID="edAttributeID2" />
+                                    <px:PXDropDown runat="server" DataField="ControlType" ID="edControlType2" />
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="ContactID" DisplayMode="Text" TextAlign="Left" Width="180px" />
@@ -329,6 +351,7 @@
                         <Levels>
                             <px:PXGridLevel DataMember="AnswerSummary">
                                 <RowTemplate>
+                                    <px:PXSelector runat="server" DataField="AttributeID" ID="edAttributeID3" />
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="Description" Width="700px"/>
