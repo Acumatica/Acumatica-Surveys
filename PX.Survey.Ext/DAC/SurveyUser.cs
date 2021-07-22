@@ -57,7 +57,6 @@ namespace PX.Survey.Ext {
         [PXRestrictor(typeof(Where<Contact.isActive, Equal<True>>), "Contact '{0}' is inactive or closed.", new Type[] { typeof(Contact.displayName) })]
         [PXSelector(typeof(Search2<Contact.contactID, LeftJoin<BAccount, On<BAccount.bAccountID, Equal<Contact.bAccountID>>>>),
             DescriptionField = typeof(Contact.displayName), Filterable = true)]
-        [PXCheckUnique(Where = typeof(Where<SurveyUser.surveyID, Equal<Current<surveyID>>>), ClearOnDuplicate = false)]
         [PXForeignReference(typeof(FK.SUContact))]
         public virtual int? ContactID { get; set; }
         #endregion
