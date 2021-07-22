@@ -495,20 +495,26 @@ namespace PX.Survey.Ext {
             return user;
         }
 
-        public PXAction<Survey> loadCollectors;
-        [PXUIField(DisplayName = "Load Collectors", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        public PXAction<Survey> startSurvey;
+        [PXUIField(DisplayName = "Start Survey", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton]
-        public virtual IEnumerable LoadCollectors(PXAdapter adapter) {
+        public virtual IEnumerable StartSurvey(PXAdapter adapter) {
             Save.Press();
             var list = adapter.Get<Survey>().ToList();
             PXLongOperation.StartOperation(this, delegate () {
                 var graph = CreateInstance<SurveyMaint>();
                 foreach (var survey in list) {
+                    if (survey.Status != SurveyStatus.Preparing) {
+                        continue;
+                    }
                     try {
                         if (adapter.MassProcess) {
                             PXProcessing<Survey>.SetCurrentItem(survey);
                         }
                         graph.DoLoadCollectors(survey, adapter.MassProcess);
+                        survey.Status = SurveyStatus.Started;
+                        graph.Survey.Update(survey);
+                        graph.Actions.PressSave();
                     } catch (Exception ex) {
                         if (!adapter.MassProcess) {
                             throw;
@@ -791,6 +797,8 @@ namespace PX.Survey.Ext {
             var hasPages = HasDetailRecords();
             redirectToAnonymousSurvey.SetEnabled(hasPages);
             generateSample.SetEnabled(hasPages);
+            var readyToStart = row.Status == SurveyStatus.Preparing && hasPages;
+            startSurvey.SetEnabled(readyToStart);
             PXUIFieldAttribute.SetEnabled<Survey.target>(e.Cache, row, !lockedSurvey);
             PXUIFieldAttribute.SetEnabled<Survey.layout>(e.Cache, row, !lockedSurvey);
             var isAnon = row.Target == SurveyTarget.Anonymous;
