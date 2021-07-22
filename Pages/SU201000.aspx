@@ -374,6 +374,8 @@
                         <Levels>
                             <px:PXGridLevel DataMember="Comments">
                                 <RowTemplate>
+                                    <px:PXSelector runat="server" DataField="ContactID" ID="edContactID4" />
+                                    <px:PXSelector runat="server" DataField="AttributeID" ID="edAttributeID4" />
                                 </RowTemplate>
                                 <Columns>
                                     <px:PXGridColumn DataField="ContactID" DisplayMode="Text" TextAlign="Left" Width="180px" />
