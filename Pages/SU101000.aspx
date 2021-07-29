@@ -10,6 +10,9 @@
             <px:PXDSCallbackCommand Name="SetupPasteLine" Visible="False" />
             <px:PXDSCallbackCommand Name="SetupResetOrder" Visible="False" />
         </CallbackCommands>
+        <DataTrees> 
+			<px:PXTreeDataMember TreeView="EntityItems" TreeKeys="Key"/>
+        </DataTrees>
     </px:PXDataSource>
 </asp:Content>
 <asp:Content ID="cont2" ContentPlaceHolderID="phF" runat="Server">
@@ -67,7 +70,7 @@
                                         <DataBindings>
                                             <px:PXTreeItemBinding TextField="Name" ValueField="Path" ImageUrlField="Icon" ToolTipField="Path" />
                                         </DataBindings>
-                                        <ButtonImages Normal="main@AddNew" Hover="main@AddNew" Pushed="main@AddNew" />
+                                        
                                     </px:PXTreeSelector>
                                     <px:PXSelector ID="edSurveyID" runat="server" DataField="SurveyID" CommitChanges="True" />
                                 </RowTemplate>
@@ -76,7 +79,6 @@
                                     <px:PXGridColumn DataField="EntityType" Width="150px" Type="DropDownList" CommitChanges="true" />
                                     <px:PXGridColumn DataField="ContactField" Width="200px" CommitChanges="true" />
                                     <px:PXGridColumn DataField="SurveyID" Width="120px" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="SurveyID_description" Width="400px" CommitChanges="true" />
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
