@@ -10,15 +10,13 @@ Please note that this release is in large part a "re-architecture" of the Survey
 
 **Acumatica 2020 R2 Build 20.212.0038 onward**
 
-Editor's note: I'll updarte the build after I get confirmation from Stéphane on which builds going forward are supported.
+To download the customization package for 2020R2, click [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Customizations/AcumaticaSurvey20R2.v.3.0.9.zip). *Needs updating.
 
-To download the customization package for 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Customizations/AcumaticaSurvey20R2.v.3.0.9.zip). *Needs updating.
-
-<img src="/docs/images/SS01 - Surveys Install Phase3 Customization.PNG" height="50%" width="50%">
+<img src="/docs/images/SS01 - Surveys Install Phase3 Customization.PNG" height="75%" width="75%">
 
 **Step Two:** Go to your Project Customization Screen. You may just do a quick searach by typing *"Customization"* then selecting it as follows.
 
-<img src="/docs/images/SS0-CustomizationProjects.PNG" height="50%" width="50%">
+<img src="/docs/images/SS0-CustomizationProjects.PNG" height="75%" width="75%">
 
 **Step Three:** Upload & import the package you downloaded to your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
 
