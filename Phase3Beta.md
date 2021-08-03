@@ -8,11 +8,11 @@ Please note that this release is in large part a "re-architecture" of the Survey
 
 **Step One:** Download the customization package (AcumaticaSurveyPkg.zip) appropriate for your version of Acumatica.  Curently, we support the following versions:
 
-**Acumatica 2019R2 (Build 19.208.0051 onward)**
-
 **Acumatica 2020R1 (Build 20.100.0095 onward)**
 
-To download the customization package for 2019R2, click [here](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2).  For 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1).
+Editor's note: I'll updarte the build after I get confirmation from Stéphane on which builds going forward are supported.
+
+To download the customization package for 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2). *Needs updating.
 
 <img src="/docs/images/SS1-DownloadPackage.PNG" height="50%" width="50%">
 
