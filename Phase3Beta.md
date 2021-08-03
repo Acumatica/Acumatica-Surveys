@@ -14,7 +14,7 @@ Editor's note: I'll updarte the build after I get confirmation from Stéphane on
 
 To download the customization package for 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Customizations/AcumaticaSurvey20R2.v.3.0.9.zip). *Needs updating.
 
-<img src="/docs/images/SS1-DownloadPackage.PNG" height="50%" width="50%">
+<img src="/docs/images/SS01 - Surveys Install Phase3 Customization.PNG" height="50%" width="50%">
 
 **Step Two:** Go to your Project Customization Screen. You may just do a quick searach by typing *"Customization"* then selecting it as follows.
 
