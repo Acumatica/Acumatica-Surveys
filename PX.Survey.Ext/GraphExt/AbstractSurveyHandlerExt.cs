@@ -1,5 +1,8 @@
 ﻿using PX.Data;
 using PX.Data.DependencyInjection;
+using PX.Data.Wiki.Parser;
+using PX.Objects.CN.Common.Extensions;
+using PX.PushNotifications;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -94,7 +97,7 @@ namespace PX.Survey.Ext {
             var displayName = survey.Title;
             PXButtonDelegate handler = (PXAdapter adapter) => {
                 string str1 = (string.IsNullOrEmpty(adapter.CommandArguments) ? graph.PrimaryView : adapter.CommandArguments);
-                //string primaryView = graph.PrimaryView;
+                string primaryView = graph.PrimaryView;
                 var surveyID = survey.SurveyID;
                 var caches = Base.Caches;
                 var cache = caches[typeof(EDoc)];
@@ -103,10 +106,21 @@ namespace PX.Survey.Ext {
                 var noteID = PXNoteAttribute.GetNoteIDIfExists(cache, doc);
                 //PXCache cache = graph.Views[primaryView].Cache;
                 //var current = (cache != null ? cache.Current : null);
+                //int? contactID = null;
+                //if (fieldName.StartsWith("((") && fieldName.EndsWith("))")) {
+                //    if (int.TryParse(PXTemplateContentParser.Instance.Process(fieldName, array, graph, primaryView), out var num)) {
+                //        contactID = new int?(num);
+                //    }
+                //} else {
+                //    object[] objArray = "ID".CreateArray<object>();
+                //    if (int.TryParse(PXTemplateContentParser.Instance.Process("(("+fieldName+ "))", graph, entityType, objArray), out var num)) {
+                //        contactID = new int?(num);
+                //    }
+                //}
                 var contactID = (int?)cache?.GetValue(doc, fieldName);
                 var surveyGraph = PXGraph.CreateInstance<SurveyMaint>();
                 //var survey = surveyGraph.Survey.Search<Survey.surveyID>(surveyID);
-                if (survey != null && contactID.HasValue) {
+                if (survey != null && contactID.HasValue && noteID.HasValue) {
                     surveyGraph.Survey.Current = survey;
                     var user = surveyGraph.InsertOrFindUser(survey, contactID, false);
                     var collector = surveyGraph.DoUpsertCollector(survey, user, noteID, true);
