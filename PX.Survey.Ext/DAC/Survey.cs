@@ -55,19 +55,19 @@ namespace PX.Survey.Ext {
         public virtual string FormName { get; set; }
         #endregion
 
-        #region WebHookID
-        public abstract class webHookID : BqlGuid.Field<webHookID> { }
-        [PXDBGuid(false)]
-        [PXDefault(typeof(SurveySetup.webHookID))]
-        [PXUIField(DisplayName = "Web Hook")]
-        [PXForeignReference(typeof(Field<webHookID>.IsRelatedTo<Api.Webhooks.DAC.WebHook.webHookID>)),]
-        [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID),
-            new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive),
-                typeof(Api.Webhooks.DAC.WebHook.isSystem) },
-            DescriptionField = typeof(Api.Webhooks.DAC.WebHook.name),
-            SubstituteKey = typeof(Api.Webhooks.DAC.WebHook.name))]
-        public Guid? WebHookID { get; set; }
-        #endregion
+        //#region WebHookID
+        //public abstract class webHookID : BqlGuid.Field<webHookID> { }
+        //[PXDBGuid(false)]
+        //[PXDefault(typeof(SurveySetup.webHookID))]
+        //[PXUIField(DisplayName = "Web Hook")]
+        //[PXForeignReference(typeof(Field<webHookID>.IsRelatedTo<Api.Webhooks.DAC.WebHook.webHookID>)),]
+        //[PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID),
+        //    new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive),
+        //        typeof(Api.Webhooks.DAC.WebHook.isSystem) },
+        //    DescriptionField = typeof(Api.Webhooks.DAC.WebHook.name),
+        //    SubstituteKey = typeof(Api.Webhooks.DAC.WebHook.name))]
+        //public Guid? WebHookID { get; set; }
+        //#endregion
 
         #region Target
         public abstract class target : BqlString.Field<target> { }
@@ -177,13 +177,13 @@ namespace PX.Survey.Ext {
         public virtual string EntityType { get; set; }
         #endregion
 
-        #region BaseURL
-        public abstract class baseURL : BqlString.Field<baseURL> { }
-        [PXDBString(256, IsUnicode = true)]
-        [PXUIField(DisplayName = "Base URL")]
-        [PXFormula(typeof(WebHookURL<webHookID>), Persistent = true)]
-        public virtual string BaseURL { get; set; }
-        #endregion
+        //#region BaseURL
+        //public abstract class baseURL : BqlString.Field<baseURL> { }
+        //[PXDBString(256, IsUnicode = true)]
+        //[PXUIField(DisplayName = "Base URL")]
+        //[PXFormula(typeof(WebHookURL<webHookID>), Persistent = true)]
+        //public virtual string BaseURL { get; set; }
+        //#endregion
 
         #region AnonURL
         public abstract class anonURL : BqlString.Field<anonURL> { }

@@ -8,6 +8,7 @@ using Scriban.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 
 namespace PX.Survey.Ext {
 
@@ -34,13 +35,31 @@ namespace PX.Survey.Ext {
         private static string ENTITY_NAME = "EntityName";
         private static string ENTITY_DESC = "EntityDesc";
         private static string ENTITY_FIELDS = "EntityFields";
+        private static string _returnUrl;
 
+        static SurveyGenerator() {
+            GetReturnUrl();
+        }
+
+        private static string GetReturnUrl() {
+            // Code taken from PX.Api.Webhooks.Owin.Configuration.ReturnUrl._get
+            // Added here because WebHookMaint crashes when retrieving the WebHook URL in background thread
+            // because HttpContext.Current is null
+            if (_returnUrl == null && HttpContext.Current != null) {
+                string applicationPath = HttpContext.Current.Request.ApplicationPath;
+                var str = (applicationPath != null) ? applicationPath.Trim(new char[] { '/' }) : null;
+                var str1 = string.IsNullOrEmpty(str) ? string.Empty : string.Concat(str, "/");
+                _returnUrl = string.Concat(HttpContext.Current.Request.GetWebsiteUrl(), str1, "Webhooks");
+            }
+            return _returnUrl;
+        }
 
         public SurveyGenerator() : this(PXGraph.CreateInstance<SurveyMaint>()) {
         }
 
         public SurveyGenerator(SurveyMaint graph) {
             this.graph = graph;
+            GetReturnUrl();
         }
 
         public string GenerateBadRequestPage(string token, string message) {
@@ -201,17 +220,18 @@ namespace PX.Survey.Ext {
         }
 
         private string GetUrl(Survey survey) {
-            //string webHookUrl = "";
-            //if (survey.WebHookID.HasValue) {
-            //    string str = (graph.CompanyService.IsMultiCompany ? PXAccess.GetCompanyName() : graph.CompanyService.GetSingleCompanyLoginName());
-            //    string[] returnUrl = new string[] { ReturnUrl, "/", str, "/", null };
-            //    returnUrl[4] = survey.WebHookID.ToString();
-            //    webHookUrl = string.Concat(returnUrl);
-            //}
-            //return webHookUrl;
+            string webHookUrl = "";
+            var setup = graph.SurveySetup.Current;
+            if (setup.WebHookID.HasValue) {
+                string str = (graph.CompanyService.IsMultiCompany ? PXAccess.GetCompanyName() : graph.CompanyService.GetSingleCompanyLoginName());
+                string[] returnUrl = new string[] { _returnUrl, "/", str, "/", null };
+                returnUrl[4] = setup.WebHookID.ToString();
+                webHookUrl = string.Concat(returnUrl);
+            }
+            return webHookUrl;
             //Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
             //return webHook.Url;
-            return survey.BaseURL;
+            //return survey.BaseURL;
         }
 
         //private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
@@ -223,6 +243,7 @@ namespace PX.Survey.Ext {
         //    return whGraph.Webhook.Current;
         //}
 
+        
         public static string MyMemberRenamerDelegate(MemberInfo member) {
             return member.Name;
         }

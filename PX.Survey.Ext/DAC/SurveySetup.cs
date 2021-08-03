@@ -150,7 +150,7 @@ namespace PX.Survey.Ext {
         public abstract class webHookID : BqlGuid.Field<webHookID> { }
         [PXDBGuid(false)]
         [PXDefault]
-        [PXUIField(DisplayName = "Default Web Hook")]
+        [PXUIField(DisplayName = "Web Hook")]
         [PXSelector(typeof(Api.Webhooks.DAC.WebHook.webHookID), 
             new Type[] { typeof(Api.Webhooks.DAC.WebHook.name), typeof(Api.Webhooks.DAC.WebHook.isActive), 
                 typeof(Api.Webhooks.DAC.WebHook.isSystem) },

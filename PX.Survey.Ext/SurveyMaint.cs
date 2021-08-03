@@ -88,8 +88,8 @@ namespace PX.Survey.Ext {
         //[PXViewName("Survey Members")]
         //public SurveyMembersList CampaignMembers;
 
-        //[InjectDependency]
-        //public Api.Services.ICompanyService CompanyService { get; set; }
+        [InjectDependency]
+        public Api.Services.ICompanyService CompanyService { get; set; }
 
         public SurveyMaint() {
         }
