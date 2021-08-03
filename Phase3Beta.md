@@ -12,7 +12,7 @@ Please note that this release is in large part a "re-architecture" of the Survey
 
 Editor's note: I'll updarte the build after I get confirmation from Stéphane on which builds going forward are supported.
 
-To download the customization package for 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2). *Needs updating.
+To download the customization package for 2020R1, click [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Customizations/AcumaticaSurvey20R2.v.3.0.9.zip). *Needs updating.
 
 <img src="/docs/images/SS1-DownloadPackage.PNG" height="50%" width="50%">
 
