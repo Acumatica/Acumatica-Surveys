@@ -28,17 +28,19 @@ Next, click on the **Import** tab and select *"Import New Project"* from the dro
 
 Then click on **Choose File** to open up the *File Manager* to select the **Acumatic Surveys** package.
 
-<img src="/docs/images/SS2-UploadPackage.PNG" height="50%" width="50%">
+<img src="/docs/images/SS2-UploadPackage.PNG" height="100%" width="100%">
 
 **Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish your package.  Once it's published, you are ready to create your fist Survey!
 
-<img src="/docs/images/SS3-PublishPackage.PNG" height="50%" width="50%">
+<img src="/docs/images/SS3-PublishPackage.PNG" height="100%" width="100%">
 
 ## Importing/Copying the Base Survey Components
 
 *If you have installed previous versions of Acumatica Surveys, this is a new step for you in setting up Surveys. These components are the initial building blocks you will need to use and create Acumatica Surveys.  After installing these, you will be able to make copies and alter them as you please, futher customizing any surveys you choose to create.  This can be done either yourself, or by someone else in or outside of your organization.  These components provide nearly limitless flexibility for you to control the "look and feel" - along with the functionality beyond a simple survey.  More on this later.*
 
 To install the base components, navigate to the Components folder [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Components).
+
+<img src="/docs/images/SS01 - Surveys Components.PNG" height="100%" width="100%">
 
 
 
