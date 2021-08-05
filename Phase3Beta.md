@@ -38,15 +38,17 @@ After the validation process has successfully completed, click on the "Publish" 
 
 <img src="docs/images/SS02 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
-*Initial Failure note:  The package failed to publish as follows:
+If successful, you will see that the website was updated and you can continue.
 
-<img src="docs/images/SS01 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
+<img src="docs/images/SS04 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
-Although, the system reports that the sitemap node with Screen ID "GI640094" already exists... When I searched for the item, it wasn't found in the system:
+At this point you will see that Surveys now appears at the bottom of the left pane.  Click on it and you will see all the elements for mananging and creating new Surveys.
 
-<img src="docs/images/SS02 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
+<img src="docs/images/SS05 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
-Thus, it appears to be a bug... will investigate further...
+You should see the following items:
+
+
 
 
 
