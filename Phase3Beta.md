@@ -44,7 +44,7 @@ After the validation process has successfully completed, click on the "Publish" 
 
 Although, the system reports that the sitemap node with Screen ID "GI640094" already exists... When I searched for the item, it wasn't found in the system:
 
-<img src="docs/images/SS02 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
+<img src="docs/images/SS02 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
 
 Thus, it appears to be a bug... will investigate further...
 
