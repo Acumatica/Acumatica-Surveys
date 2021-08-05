@@ -48,9 +48,9 @@ At this point you will see that Surveys now appears at the bottom of the left pa
 
 You should see the following items as seen in the screenshot above:
 
-**Surveys (Transactions)
-Survey Collectors (Transactions)
-Process Surveys (Processes)
+**Surveys** *(Transactions)*
+**Survey Collectors** *(Transactions)*
+**Process Surveys** *(Processes)*
 Survey Response View (Inquiries)
 Survey Answers (Inquiries)
 Survey Preferences (Preferences)
