@@ -70,6 +70,10 @@ We'll discuss all these items later in the documentation as appropriate.
 
 *If you have installed previous versions of Acumatica Surveys, this is a new step for you in setting up Surveys. These components are the initial building blocks you will need to use and create Acumatica Surveys.  After installing these, you will be able to make copies and alter them as you please, futher customizing any surveys you choose to create.  This can be done either yourself, or by someone else in or outside of your organization.  These components provide nearly limitless flexibility for you to control the "look and feel" - along with the functionality beyond a simple survey.  More on this later.*
 
+Assuming you were successfully published the Acumatica Surveys package, click on Surveys in the left pane and then click on Survey Components.  You will notice you don't have any components at this point.
+
+<img src="docs/images/SS02 - Surveys Components.PNG" height="100%" width="100%">
+
 To install the base components, navigate to the Components folder [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Components).
 
 <img src="docs/images/SS01 - Surveys Components.PNG" height="100%" width="100%">
