@@ -34,7 +34,7 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 <img src="/docs/images/SS3-PublishPackage.PNG" height="100%" width="100%">
 
-After the validation process has successfully completed, click on the "Publish" bottun in the Valiation window:
+After the validation process has successfully completed, click on the "Publish" button in the Compilation window:
 
 <img src="docs/images/SS02 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
