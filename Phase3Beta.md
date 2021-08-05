@@ -78,6 +78,8 @@ To install the base components, navigate to the Components folder [here](https:/
 
 <img src="docs/images/SS01 - Surveys Components.PNG" height="100%" width="100%">
 
+**End of intial edits/creation of the beta documentation...**
+
 
 
 ## Number Sequence Setup for your Surveys
