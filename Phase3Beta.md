@@ -78,6 +78,10 @@ To install the base components, download the Survey Components [here](https://gi
 
 <img src="docs/images/SS05 - Surveys Components.PNG" height="100%" width="100%">
 
+After downloading the Survey Components, you can now import each as XML as follows.
+
+
+
 **End of intial edits/creation of the beta documentation...**
 
 
