@@ -74,9 +74,9 @@ Assuming you successfully published the Acumatica Surveys package, click on Surv
 
 <img src="docs/images/SS02 - Surveys Components.PNG" height="100%" width="100%">
 
-To install the base components, navigate to the Components folder [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Components).
+To install the base components, download the Survey Components [here](https://github.com/Acumatica/Acumatica-Surveys/blob/master/Survey%20Components.zip).
 
-<img src="docs/images/SS01 - Surveys Components.PNG" height="100%" width="100%">
+<img src="docs/images/SS05 - Surveys Components.PNG" height="100%" width="100%">
 
 **End of intial edits/creation of the beta documentation...**
 
