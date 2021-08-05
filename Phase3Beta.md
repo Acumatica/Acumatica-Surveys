@@ -34,6 +34,12 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 <img src="/docs/images/SS3-PublishPackage.PNG" height="100%" width="100%">
 
+After the validation process has successfully completed, click on the "Publish" bottun in the Valiation window:
+
+<img src="docs/images/SS02 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
+
+Then...
+
 ## Importing/Copying the Base Survey Components
 
 *If you have installed previous versions of Acumatica Surveys, this is a new step for you in setting up Surveys. These components are the initial building blocks you will need to use and create Acumatica Surveys.  After installing these, you will be able to make copies and alter them as you please, futher customizing any surveys you choose to create.  This can be done either yourself, or by someone else in or outside of your organization.  These components provide nearly limitless flexibility for you to control the "look and feel" - along with the functionality beyond a simple survey.  More on this later.*
