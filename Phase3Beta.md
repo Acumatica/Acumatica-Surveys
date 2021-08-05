@@ -32,13 +32,23 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 **Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish your package.  Once it's published, you are ready to create your fist Survey!
 
-<img src="/docs/images/SS3-PublishPackage.PNG" height="100%" width="100%">
+<img src="docs/images/SS03 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
 After the validation process has successfully completed, click on the "Publish" button in the Compilation window:
 
 <img src="docs/images/SS02 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
-Then...
+*Initial Failure note:  The package failed to publish as follows:
+
+<img src="docs/images/SS02 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
+
+Although, the system reports that there is Sitemap screen name issue "GIxxxx" is already been installed... When I searched for the item, it wasn't found in the system:
+
+<img src="docs/images/SS03 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
+
+Thus, it appears to be a bug... will investigate further...
+
+
 
 ## Importing/Copying the Base Survey Components
 
