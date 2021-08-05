@@ -40,11 +40,11 @@ After the validation process has successfully completed, click on the "Publish" 
 
 *Initial Failure note:  The package failed to publish as follows:
 
-<img src="docs/images/SS02 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
+<img src="docs/images/SS01 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
 
 Although, the system reports that there is Sitemap screen name issue "GI640094" is already been installed... When I searched for the item, it wasn't found in the system:
 
-<img src="docs/images/SS03 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
+<img src="docs/images/SS02 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
 Thus, it appears to be a bug... will investigate further...
 
