@@ -54,11 +54,13 @@ You should see the following items as seen in the screenshot above:
 
 **Process Surveys** *(Processes)*
 
-Survey Response View (Inquiries)
-Survey Answers (Inquiries)
-Survey Preferences (Preferences)
-Survey Compnents (Preferences)
-Survey View (Dashboards)**
+**Survey Response View** *(Inquiries)*
+
+**Survey Answers** *(Inquiries)*
+
+**Survey Preferences** *(Preferences)*
+**Survey Compnents** *(Preferences)*
+**Survey View** *(Dashboards)*
 
 We'll discuss all these items later in the documentation as appropriate.
 
