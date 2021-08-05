@@ -20,8 +20,8 @@ To download the customization package for 2020R2, click [here](https://github.co
 
 **Step Three:** Upload & import the package you downloaded to your **Acumatica 2019R2** instance by clicking on the *Customization* menu which you will now find in the upper-righthand of the Acumatica application.  Then select **Manage Customizations** from the drop down list as illustrated below.
 
-<img src="/docs/images/SS1-ImportCustPackage.PNG" height="75%" width="75%">
+<img src="/docs/images/SS1-ImportCustPackage.PNG" height="100%" width="100%">
 
 Next, click on the **Import** tab and select *"Import New Project"* from the dropdown list as shown below.
 
-<img src="/docs/images/SS2-ImportNewProject.PNG" height="75%" width="75%">
+<img src="/docs/images/SS2-ImportNewProject.PNG" height="100%" width="100%">
