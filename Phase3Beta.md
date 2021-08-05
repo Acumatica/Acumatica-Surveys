@@ -42,7 +42,7 @@ After the validation process has successfully completed, click on the "Publish" 
 
 <img src="docs/images/SS02 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
 
-Although, the system reports that there is Sitemap screen name issue "GIxxxx" is already been installed... When I searched for the item, it wasn't found in the system:
+Although, the system reports that there is Sitemap screen name issue "GI640094" is already been installed... When I searched for the item, it wasn't found in the system:
 
 <img src="docs/images/SS03 - Surveys Install Phase3 Customization Failure.PNG" height="100%" width="100%">
 
