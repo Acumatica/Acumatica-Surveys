@@ -40,7 +40,7 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 To install the base components, navigate to the Components folder [here](https://github.com/Acumatica/Acumatica-Surveys/blob/Stephane2020R2/Components).
 
-<img src="/docs/images/SS01 - Surveys Components.PNG" height="100%" width="100%">
+<img src="/docs/images/SS01-Surveys Components.PNG" height="100%" width="100%">
 
 
 
