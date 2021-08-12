@@ -105,7 +105,8 @@ Finish completing each of the components that you have downloaded and you are fi
 
 Now that the package is installed and the components have been imported, let's take a look at some of the configuration options.  Open the Survey Preferences screen.  
 
-<img src="docs/images/SS001 - Surveys Preferences.PNG" height="100%" width="100%">
+<img src="docs/images/S001 - Survey Preferences.PNG" height="100%" width="100%">
+
 
 Click on the *Survey Preferences menu* option.
 
