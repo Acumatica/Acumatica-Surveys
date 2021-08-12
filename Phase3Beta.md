@@ -86,15 +86,15 @@ Once you unpack the zip into a folder, you can add each component one by one.  A
 
 <img src="docs/images/SS08 - Surveys Components.PNG" height="100%" width="100%">
 
-Important:  Once imported, you need to choose the correct *Component Type* In this case, you choose *Survey.*  For reference, here is a list of components and their associated *types* that you much use in order for them to function properly.
+**Important:**  Once imported, you need to choose the correct *Component Type* In this case, you choose *Survey.*  
 
 <img src="docs/images/SS07 - Surveys Components.PNG" height="100%" width="100%">
 
-blah blah
+For reference, here is a list of components and their associated *types* that you much use in order for them to function properly.
 
 <img src="docs/images/SS06 - Surveys Components.PNG" height="100%" width="100%">
 
-blah blah
+Finish completing each of the components that you have downloaded and you are finished and now can configure a variety settings and configurations to customize any surveys you wish to create.
 
 
 **End of intial edits/creation of the beta documentation...**
