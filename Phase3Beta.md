@@ -82,11 +82,11 @@ After downloading the Survey Components, you can now import each as XML as follo
 
 <img src="docs/images/SS03 - Surveys Components.PNG" height="100%" width="100%">
 
-Once you unpack the zip into a folder, you can add each component one by one.  As an example, the SUMAIN component which you import from the file **SurveyComponents-SUMain.xml**
+Once you unpack the zip into a folder, you can add each component one by one.  As an example, the SUMAIN component is imported from the file **SurveyComponents-SUMain.xml** 
 
 <img src="docs/images/SS08 - Surveys Components.PNG" height="100%" width="100%">
 
-Important:  You much choose the correct *Component Type* In this case, you choose *Survey*  For reference, here is a list of components and thier associated *types* that you much use in order for them to function properly.
+Important:  Once imported, you need to choose the correct *Component Type* In this case, you choose *Survey.*  For reference, here is a list of components and their associated *types* that you much use in order for them to function properly.
 
 <img src="docs/images/SS07 - Surveys Components.PNG" height="100%" width="100%">
 
