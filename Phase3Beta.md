@@ -86,7 +86,7 @@ Once you unpack the zip into a folder, you can add each component one by one.  A
 
 <img src="docs/images/SS08 - Surveys Components.PNG" height="100%" width="100%">
 
-**Important:**  Once imported, you need to choose the correct *Component Type* In this case, you choose *Survey.*  
+**Important:**  Once imported, you need to choose the correct *Component Type.* For this particular component, you will choose *Survey.* as it's component type. 
 
 <img src="docs/images/SS07 - Surveys Components.PNG" height="100%" width="100%">
 
