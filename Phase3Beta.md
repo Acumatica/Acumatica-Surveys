@@ -111,7 +111,7 @@ Click on the *Survey Preferences menu* option.
 
 **Survey preferences** - Surveys require a numbering sequence. Therefore, please set up a new number sequence called *“Survey ID”* and an *auto generating number,* such as: **SV10001**
 
-<img src="/docs/images/SS4-SurveyPreferencesNumberingID.PNG" height="50%" width="50%">
+<img src="docs/images/S001 - Survey Preferences.PNG" height="100%" width="100%">
 
 Select the numbering sequence you created in the **Survey Preferences** *“Survey Numbering ID:”*
 Surveys utilizes common *attributes* to create questions and answers. Therefore, please setup any new questions/answers as *attributes.*
