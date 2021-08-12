@@ -101,11 +101,11 @@ Finish completing each of the components that you have downloaded and you are fi
 
 
 
-## Number Sequence Setup for your Surveys
+## Survey Preferences (Main Configuration Screen)
 
-Once the package is installed, you should see a new workspace called *“Surveys”* as shown here below.
+Now that the package is installed and the components have been imported, let's take a look at some of the configuration options.  Open the Survey Preferences screen.  
 
-<img src="/docs/images/Survey-Workspace.PNG" height="50%" width="50%">
+<img src="docs/images/SS01 - Surveys Preferences.PNG" height="100%" width="100%">
 
 Click on the *Survey Preferences menu* option.
 
