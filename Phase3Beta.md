@@ -30,7 +30,7 @@ Then click on **Choose File** to open up the *File Manager* to select the **Acum
 
 <img src="/docs/images/SS2-UploadPackage.PNG" height="100%" width="100%">
 
-**Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish your package.  Once it's published, you are ready to create your fist Survey!
+**Step Four:** After the package is uploaded, you will need to publish it.  Select the package you just uploaded by clicking on its associated *checkbox* to the left and then click on the **Publish** tab to publish your package.  Once it's published, you are ready to create your first Survey!
 
 <img src="docs/images/SS03 - Surveys Install Phase3 Customization.PNG" height="100%" width="100%">
 
@@ -60,7 +60,7 @@ You should see the following items as seen in the screenshot above:
 
    **Survey Preferences** *(Preferences)*
 
-   **Survey Compnents** *(Preferences)*
+   **Survey Components** *(Preferences)*
    
    **Survey View** *(Dashboards)*
 
