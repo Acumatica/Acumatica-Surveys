@@ -80,6 +80,17 @@ To install the base components, download the Survey Components [here](https://gi
 
 After downloading the Survey Components, you can now import each as XML as follows.
 
+<img src="docs/images/SS03 - Surveys Components.PNG" height="100%" width="100%">
+
+blah blah
+
+<img src="docs/images/SS04 - Surveys Components.PNG" height="100%" width="100%">
+
+blah blah
+
+<img src="docs/images/SS06 - Surveys Components.PNG" height="100%" width="100%">
+
+blah blah
 
 
 **End of intial edits/creation of the beta documentation...**
