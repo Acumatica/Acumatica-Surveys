@@ -31,7 +31,8 @@ namespace PX.Survey.Ext {
             LeftJoin<SurveyUser>.
                 On<SurveyUser.surveyID.IsEqual<SurveyCollector.surveyID>.
                 And<SurveyUser.lineNbr.IsEqual<SurveyCollector.userLineNbr>>>.
-            Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.View Collectors;
+            Where<SurveyCollector.surveyID.IsEqual<Survey.surveyID.FromCurrent>>.
+            OrderBy<SurveyCollector.lastModifiedDateTime.Desc>.View Collectors;
 
         [PXCopyPasteHiddenView]
         public PXSelect<SurveyCollectorData,
