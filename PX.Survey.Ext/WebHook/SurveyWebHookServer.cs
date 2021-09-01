@@ -39,7 +39,8 @@ namespace PX.Survey.Ext.WebHook {
                         return new HtmlActionResult(content, HttpStatusCode.OK);
                     }
                 } catch (Exception ex) {
-                    var content = GetBadRequestPage(collectorToken, ex.Message);
+                    PXTrace.WriteError(ex);
+                    var content = GetBadRequestPage(collectorToken, $"{ex.Message}:\n{ex.StackTrace}");
                     return new HtmlActionResult(content, HttpStatusCode.BadRequest);
                 }
             }
