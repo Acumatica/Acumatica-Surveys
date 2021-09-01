@@ -53,6 +53,7 @@ namespace PX.Survey.Ext {
         /// </summary>
         [PXDBIdentity(IsKey = true)]
         [PXSelector(typeof(Search<SurveyCollector.collectorID>))]
+        [PXUIField(DisplayName = "Collector ID", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual int? CollectorID { get; set; }
         #endregion
 
@@ -105,6 +106,7 @@ namespace PX.Survey.Ext {
         /// </summary>
         [PXDBInt]
         //[PXSelector(typeof(Search<collectorID, Where<userLineNbr, Equal<Current<userLineNbr>>>>))]
+        [PXUIField(DisplayName = "Anon. ID")]
         public virtual int? AnonCollectorID { get; set; }
         #endregion
 
