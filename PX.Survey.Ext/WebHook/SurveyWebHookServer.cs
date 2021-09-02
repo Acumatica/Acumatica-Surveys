@@ -96,7 +96,7 @@ namespace PX.Survey.Ext.WebHook {
                 userCollector.Status = answerCollector.Status;
                 graph.Collectors.Update(userCollector);
             }
-            graph.Persist();
+            graph.Actions.PressSave();
         }
 
         private SurveyCollectorData FindCollectorData(SurveyMaint graph, SurveyCollector collector, int? pageNbr) {
