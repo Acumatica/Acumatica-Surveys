@@ -29,7 +29,7 @@ namespace PX.Survey.Ext.WebHook {
                     var pageNbrStr = _queryParameters.Get(PAGE_PARAM);
                     var pageNbr = SurveyUtils.GetPageNumber(pageNbrStr);
                     if (pageNbrStr != null && request.Method == HttpMethod.Post) {
-                        SubmitSurvey(collectorToken, request, pageNbr);
+                        SurveyUtils.SubmitSurvey(collectorToken, request, pageNbr);
                         pageNbr = SurveyUtils.GetNextOrPrevPageNbr(request, pageNbr);
                     }
                     var (content, newToken) = GetSurveyPage(collectorToken, pageNbr);
@@ -50,60 +50,6 @@ namespace PX.Survey.Ext.WebHook {
             var generator = new SurveyGenerator();
             var content = generator.GenerateBadRequestPage(token, message);
             return content;
-        }
-
-        private void SubmitSurvey(string collectorToken, HttpRequestMessage request, int? pageNbr) {
-            var body = request.Content.ReadAsStringAsync().Result;
-            var uri = request.RequestUri;
-            var props = request.Properties;
-            SaveSurveySubmission(collectorToken, body, uri, props, pageNbr);
-        }
-
-        private void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
-            var graph = PXGraph.CreateInstance<SurveyMaint>();
-            var (survey, _, answerCollector, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
-            if (answerCollector.Status == CollectorStatus.Processed) {
-                throw new Exception($"Your answers were processed, you cannot change them anymore");
-            }
-            var data = FindCollectorData(graph, answerCollector, pageNbr);
-            if (data == null) {
-                data = new SurveyCollectorData {
-                    Token = token,
-                    Uri = uri.ToString(),
-                    Payload = payload,
-                    SurveyID = survey?.SurveyID,
-                    CollectorID = answerCollector.CollectorID,
-                    PageNbr = pageNbr
-                };
-                data = graph.CollectorDataRecords.Insert(data);
-            } else {
-                data.Payload = payload;
-                data.Status = CollectorDataStatus.Updated;
-                data = graph.CollectorDataRecords.Update(data);
-            }
-            if (answerCollector.Status == CollectorStatus.Deleted) {
-                answerCollector.Status = CollectorStatus.New;
-            }
-            if (answerCollector.Status == CollectorStatus.New || answerCollector.Status == CollectorStatus.Sent) {
-                answerCollector.Status = CollectorStatus.Partially;
-            }
-            var lastPageNbr = graph.GetLastQuestionPageNumber(survey);
-            if (answerCollector.Status == CollectorStatus.Partially && pageNbr >= lastPageNbr) {
-                answerCollector.Status = CollectorStatus.Completed;
-            }
-            graph.Collectors.Update(answerCollector);
-            if (userCollector.CollectorID != answerCollector.CollectorID) {
-                userCollector.Status = answerCollector.Status;
-                graph.Collectors.Update(userCollector);
-            }
-            graph.Actions.PressSave();
-        }
-
-        private SurveyCollectorData FindCollectorData(SurveyMaint graph, SurveyCollector collector, int? pageNbr) {
-            SurveyCollectorData collData = PXSelect<SurveyCollectorData,
-                Where<SurveyCollectorData.token, Equal<Required<SurveyCollectorData.token>>,
-                And<SurveyCollectorData.pageNbr, Equal<Required<SurveyCollectorData.pageNbr>>>>>.Select(graph, collector.Token, pageNbr);
-            return collData;
         }
 
         private (string content, string token) GetSurveyPage(string collectorToken, int pageNbr) {

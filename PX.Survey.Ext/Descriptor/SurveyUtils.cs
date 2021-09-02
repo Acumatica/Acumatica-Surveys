@@ -72,6 +72,64 @@ namespace PX.Survey.Ext {
             return pages;
         }
 
+        public static void SubmitSurvey(string collectorToken, HttpRequestMessage request, int? pageNbr) {
+            var body = request.Content.ReadAsStringAsync().Result;
+            var uri = request.RequestUri;
+            var props = request.Properties;
+            SaveSurveySubmission(collectorToken, body, uri, props, pageNbr);
+        }
+
+
+        private static void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
+            var graph = PXGraph.CreateInstance<SurveyMaint>();
+            var (survey, _, answerCollector, userCollector) = GetSurveyAndUser(graph, token);
+            if (survey.Status == SurveyStatus.Closed) {
+                throw new Exception($"The survey is closed, you cannot answer anymore");
+            }
+            if (answerCollector.Status == CollectorStatus.Processed) {
+                throw new Exception($"Your answers were processed, you cannot change them anymore");
+            }
+            var data = FindCollectorData(graph, answerCollector, pageNbr);
+            if (data == null) {
+                data = new SurveyCollectorData {
+                    Token = token,
+                    Uri = uri.ToString(),
+                    Payload = payload,
+                    SurveyID = survey?.SurveyID,
+                    CollectorID = answerCollector.CollectorID,
+                    PageNbr = pageNbr
+                };
+                data = graph.CollectorDataRecords.Insert(data);
+            } else {
+                data.Payload = payload;
+                data.Status = CollectorDataStatus.Updated;
+                data = graph.CollectorDataRecords.Update(data);
+            }
+            if (answerCollector.Status == CollectorStatus.Deleted) {
+                answerCollector.Status = CollectorStatus.New;
+            }
+            if (answerCollector.Status == CollectorStatus.New || answerCollector.Status == CollectorStatus.Sent) {
+                answerCollector.Status = CollectorStatus.Partially;
+            }
+            var lastPageNbr = graph.GetLastQuestionPageNumber(survey);
+            if (answerCollector.Status == CollectorStatus.Partially && pageNbr >= lastPageNbr) {
+                answerCollector.Status = CollectorStatus.Completed;
+            }
+            graph.Collectors.Update(answerCollector);
+            if (userCollector.CollectorID != answerCollector.CollectorID) {
+                userCollector.Status = answerCollector.Status;
+                graph.Collectors.Update(userCollector);
+            }
+            graph.Actions.PressSave();
+        }
+
+        private static SurveyCollectorData FindCollectorData(SurveyMaint graph, SurveyCollector collector, int? pageNbr) {
+            SurveyCollectorData collData = PXSelect<SurveyCollectorData,
+                Where<SurveyCollectorData.token, Equal<Required<SurveyCollectorData.token>>,
+                And<SurveyCollectorData.pageNbr, Equal<Required<SurveyCollectorData.pageNbr>>>>>.Select(graph, collector.Token, pageNbr);
+            return collData;
+        }
+
         //public static PXCache InstallAnswers(PXGraph graph, object row, List<CSAnswers> destAnswers) {
         //    var helper = new EntityHelper(graph);
         //    var destNoteId = helper.GetEntityNoteID(row);
