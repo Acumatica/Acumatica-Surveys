@@ -888,12 +888,12 @@ namespace PX.Survey.Ext {
         protected virtual void _(Events.RowPersisting<SurveyCollector> e) {
             var row = e.Row;
             var survey = Survey.Current;
-            if (row == null || survey == null)
+            if (row == null || survey == null || e.Operation == PXDBOperation.Delete)
                 return;
-            if (survey.KeepAnswersAnonymous == true && row.AnonCollectorID == null && row.Anonymous != true) {
-                var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, null, false);
-                row.AnonCollectorID = anon?.CollectorID;
-            }
+            //if (survey.KeepAnswersAnonymous == true && row.AnonCollectorID == null && row.Anonymous != true) {
+            //    var (user, anon) = SurveyUtils.InsertAnonymous(this, survey, null, false);
+            //    row.AnonCollectorID = anon?.CollectorID;
+            //}
         }
 
         //private void DoInsertMissing(SurveyDetail row) {

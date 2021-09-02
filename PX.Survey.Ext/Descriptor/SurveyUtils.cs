@@ -154,24 +154,11 @@ namespace PX.Survey.Ext {
             } else {
                 answerCollector = SurveyCollector.UK.ByToken.Find(graph, token);
                 survey = Survey.PK.Find(graph, answerCollector.SurveyID);
-                // If answers must be kept anonymous, then retrieve the anonymous collector of the collector
-                if (survey.KeepAnswersAnonymous == true && answerCollector.AnonCollectorID != null) {
+                // If answers must be kept anonymous, then retrieve the anonymous collector of the user collector
+                if (survey.KeepAnswersAnonymous == true && answerCollector.Anonymous != true) {
                     userCollector = answerCollector;
-                    answerCollector = SurveyCollector.UK.ByAnonCollectorID.Find(graph, answerCollector.AnonCollectorID);
+                    answerCollector = GetAnonymousCollector(graph, survey, userCollector);
                 }
-                //if (survey.KeepAnswersAnonymous == true && answerCollector.Anonymous != true) {
-                //    var anonCollector = SurveyCollector.PK.Find(graph, answerCollector.AnonCollectorID);
-                //    userCollector = answerCollector;
-                //    if (anonCollector == null) {
-                //        // Rare case where AnonCollectorID points to a deleted Collector, should have been cleared.
-                //        var (_, anon) = InsertAnonymous(graph, survey, null);
-                //        answerCollector.AnonCollectorID = anon?.CollectorID;
-                //        graph.Collectors.Update(answerCollector);
-                //        answerCollector = anon;
-                //    } else {
-                //        answerCollector = anonCollector;
-                //    }
-                //}
                 user = SurveyUser.PK.Find(graph, survey.SurveyID, answerCollector.UserLineNbr);
             }
             if (answerCollector == null) {
@@ -187,6 +174,19 @@ namespace PX.Survey.Ext {
                 userCollector = answerCollector;
             }
             return (survey, user, answerCollector, userCollector);
+        }
+
+        private static SurveyCollector GetAnonymousCollector(SurveyMaint graph, Survey survey, SurveyCollector userCollector) {
+            var coll = SurveyCollector.PK.Find(graph, userCollector.AnonCollectorID);
+            if (coll == null) {
+                // Rare case where AnonCollectorID points to a deleted Collector, should have been cleared.
+                var (_, anon) = InsertAnonymous(graph, survey, null, true);
+                userCollector.AnonCollectorID = anon?.CollectorID;
+                graph.Collectors.Update(userCollector);
+                graph.Actions.PressSave();
+                coll = anon;
+            }
+            return coll;
         }
 
         public static (SurveyUser user, SurveyCollector coll) InsertAnonymous(SurveyMaint graph, Survey survey, Guid? refNoteID, bool saveNow) {
