@@ -20,9 +20,11 @@ namespace PX.Survey.Ext {
                 => PXSelect<SurveyComponent, Where<componentID, Equal<Required<componentID>>>>.SelectWindowed(graph, 0, 1, componentID);
         }
 
+        #region ComponentID
         public abstract class componentID : BqlString.Field<componentID> { }
         [ComponentID(IsKey = true, Required = true, DisplayName = "Component ID")]
         public virtual string ComponentID { get; set; }
+        #endregion
 
         #region Active
         public abstract class active : BqlBool.Field<active> { }
