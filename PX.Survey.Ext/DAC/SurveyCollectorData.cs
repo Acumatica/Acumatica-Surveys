@@ -2,12 +2,14 @@ using PX.Data;
 using PX.Data.BQL;
 using PX.Data.ReferentialIntegrity.Attributes;
 using System;
+using System.Diagnostics;
 
 namespace PX.Survey.Ext {
 
     /// <summary>
-    /// This entity is used to coordinate gathering and attaching Survey answers to a specific time. 
+    /// This entity is used to coordinate gathering and attaching Survey raw answers to a collector and survey. 
     /// </summary>
+    [DebuggerDisplay("SurveyCollectorData: CollectorID = {CollectorID}, Token = {Token}, SurveyID = {SurveyID}, PageNbr = {PageNbr}, Payload = {Payload}")]
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveyCollectorData)]
     [PXPrimaryGraph(typeof(SurveyCollectorMaint))]

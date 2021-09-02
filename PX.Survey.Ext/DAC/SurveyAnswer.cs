@@ -4,9 +4,11 @@ using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CR;
 using PX.Objects.CS;
 using System;
+using System.Diagnostics;
 
 namespace PX.Survey.Ext {
 
+    [DebuggerDisplay("SurveyAnswer: SurveyID = {SurveyID}, CollectorID = {CollectorID}, PageNbr = {PageNbr}, QuestionNbr = {QuestionNbr}, AttributeID = {AttributeID}, Value = {Value}")]
     [Serializable]
     [PXCacheName("SurveyAnswer")]
     [PXPossibleRowsList(typeof(CSAttribute.description), typeof(attributeID), typeof(value))]
