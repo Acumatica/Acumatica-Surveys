@@ -32,7 +32,7 @@ foreach($file in dir .\ServeyComponets)
 
 }
 
-$entitySection
+#$entitySection
 
 $class = @"
 using System;

@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace PX.Survey.Ext
 {
-    public class SurveyAutoInit
+    public partial class SurveyCustomizationPlugin
     {
+
+
 
         #region SurveyComponents
 
         #region SUBADREQUEST
-        public SurveyComponent scSUBADREQUEST = new SurveyComponent
+        public static SurveyComponent scSUBADREQUEST = new SurveyComponent
         {
             ComponentID = "SUBADREQUEST",
             Active = true,
@@ -27,7 +29,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUCHECKBOXES
-        public SurveyComponent scSUCHECKBOXES = new SurveyComponent
+        public static SurveyComponent scSUCHECKBOXES = new SurveyComponent
         {
             ComponentID = "SUCHECKBOXES",
             Active = true,
@@ -38,7 +40,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUMAIN
-        public SurveyComponent scSUMAIN = new SurveyComponent
+        public static SurveyComponent scSUMAIN = new SurveyComponent
         {
             ComponentID = "SUMAIN",
             Active = true,
@@ -49,7 +51,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUPREVNEXT
-        public SurveyComponent scSUPREVNEXT = new SurveyComponent
+        public static SurveyComponent scSUPREVNEXT = new SurveyComponent
         {
             ComponentID = "SUPREVNEXT",
             Active = true,
@@ -60,7 +62,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUPROGRESS
-        public SurveyComponent scSUPROGRESS = new SurveyComponent
+        public static SurveyComponent scSUPROGRESS = new SurveyComponent
         {
             ComponentID = "SUPROGRESS",
             Active = true,
@@ -71,7 +73,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SURADIOBUTTONS
-        public SurveyComponent scSURADIOBUTTONS = new SurveyComponent
+        public static SurveyComponent scSURADIOBUTTONS = new SurveyComponent
         {
             ComponentID = "SURADIOBUTTONS",
             Active = true,
@@ -82,7 +84,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUTABLEBODYRB
-        public SurveyComponent scSUTABLEBODYRB = new SurveyComponent
+        public static SurveyComponent scSUTABLEBODYRB = new SurveyComponent
         {
             ComponentID = "SUTABLEBODYRB",
             Active = true,
@@ -93,7 +95,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUTABLEHEAD
-        public SurveyComponent scSUTABLEHEAD = new SurveyComponent
+        public static SurveyComponent scSUTABLEHEAD = new SurveyComponent
         {
             ComponentID = "SUTABLEHEAD",
             Active = true,
@@ -104,7 +106,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUTEXTAREA
-        public SurveyComponent scSUTEXTAREA = new SurveyComponent
+        public static SurveyComponent scSUTEXTAREA = new SurveyComponent
         {
             ComponentID = "SUTEXTAREA",
             Active = true,
@@ -115,7 +117,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUTHANKYOU
-        public SurveyComponent scSUTHANKYOU = new SurveyComponent
+        public static SurveyComponent scSUTHANKYOU = new SurveyComponent
         {
             ComponentID = "SUTHANKYOU",
             Active = true,
@@ -126,7 +128,7 @@ namespace PX.Survey.Ext
         #endregion
 
         #region SUWELCOME
-        public SurveyComponent scSUWELCOME = new SurveyComponent
+        public static SurveyComponent scSUWELCOME = new SurveyComponent
         {
             ComponentID = "SUWELCOME",
             Active = true,
@@ -137,5 +139,15 @@ namespace PX.Survey.Ext
         #endregion
 
         #endregion
+
+        public static void InitializeSurveyComponents()
+        {
+            InitializeSurveyComponent(scSUBADREQUEST);
+            InitializeSurveyComponent(scSUCHECKBOXES);
+            InitializeSurveyComponent(scSUMAIN);
+            InitializeSurveyComponent(scSUPREVNEXT);
+            InitializeSurveyComponent(scSUPROGRESS);
+            InitializeSurveyComponent(scSURADIOBUTTONS);
+        }
     }
 }
