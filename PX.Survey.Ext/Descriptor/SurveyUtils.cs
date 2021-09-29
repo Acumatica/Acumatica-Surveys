@@ -1,10 +1,8 @@
 ﻿using PX.Data;
 using PX.Data.BQL;
-using PX.Objects.CR;
 using PX.Objects.CS;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -83,8 +81,14 @@ namespace PX.Survey.Ext {
         private static void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
             var graph = PXGraph.CreateInstance<SurveyMaint>();
             var (survey, _, answerCollector, userCollector) = GetSurveyAndUser(graph, token);
-            if (survey.Status == SurveyStatus.Closed) {
-                throw new Exception($"The survey is closed, you cannot answer anymore");
+            if (survey.Status == SurveyStatus.Preparing && answerCollector.IsTest != true) {
+                throw new Exception($"The survey is not opened yet, come back later.");
+            }
+            if (survey.Status == SurveyStatus.Closed && answerCollector.IsTest != true) {
+                throw new Exception($"The survey is closed, you cannot answer anymore.");
+            }
+            if (survey.AllowAnonymous != true && answerCollector.Anonymous == true && answerCollector == userCollector) {
+                throw new Exception($"The survey does not allow anonymous answers");
             }
             if (answerCollector.Status == CollectorStatus.Processed) {
                 throw new Exception($"Your answers were processed, you cannot change them anymore");
@@ -119,6 +123,10 @@ namespace PX.Survey.Ext {
             if (userCollector.CollectorID != answerCollector.CollectorID) {
                 userCollector.Status = answerCollector.Status;
                 graph.Collectors.Update(userCollector);
+            }
+            if (survey.Status == SurveyStatus.Started) {
+                survey.Status = SurveyStatus.InProgress;
+                graph.Survey.Update(survey);
             }
             graph.Actions.PressSave();
         }
@@ -207,7 +215,10 @@ namespace PX.Survey.Ext {
             if (token.Length <= 15) {
                 // Anonymous survey, token is SurveyID
                 survey = Survey.PK.Find(graph, token);
-                (user, answerCollector) = InsertAnonymous(graph, survey, null, true);
+                if (survey == null) {
+                    throw new PXException("Cannot find a survey with token {0}", token);
+                }
+                (user, answerCollector) = InsertAnonymous(graph, survey, null, true, false);
                 token = answerCollector.Token;
             } else {
                 answerCollector = SurveyCollector.UK.ByToken.Find(graph, token);
@@ -238,7 +249,7 @@ namespace PX.Survey.Ext {
             var coll = SurveyCollector.PK.Find(graph, userCollector.AnonCollectorID);
             if (coll == null) {
                 // Rare case where AnonCollectorID points to a deleted Collector, should have been cleared.
-                var (_, anon) = InsertAnonymous(graph, survey, null, true);
+                var (_, anon) = InsertAnonymous(graph, survey, null, true, coll.IsTest == true);
                 userCollector.AnonCollectorID = anon?.CollectorID;
                 graph.Collectors.Update(userCollector);
                 graph.Actions.PressSave();
@@ -247,14 +258,17 @@ namespace PX.Survey.Ext {
             return coll;
         }
 
-        public static (SurveyUser user, SurveyCollector coll) InsertAnonymous(SurveyMaint graph, Survey survey, Guid? refNoteID, bool saveNow) {
+        public static (SurveyUser user, SurveyCollector coll) InsertAnonymous(SurveyMaint graph, Survey survey, Guid? refNoteID, bool saveNow, bool isTest) {
             SurveySetup setup = PXSelect<SurveySetup>.SelectWindowed(graph, 0, 1);
             var contactID = setup.AnonContactID;
             if (contactID == null) {
                 throw new PXException("An Anonymous user needs to be setup in the Survey Preferences");
             }
+            if (survey.AllowAnonymous != true || survey.KeepAnswersAnonymous != true) {
+                throw new PXException("Survey {0} ({1}) does not allow anonymous answers", survey.SurveyID, survey.Title);
+            }
             var user = graph.InsertOrFindUser(survey, contactID, true);
-            var collector = graph.DoUpsertCollector(survey, user, refNoteID, saveNow);
+            var collector = graph.DoUpsertCollector(survey, user, refNoteID, saveNow, isTest);
             return (user, collector);
         }
 
@@ -264,48 +278,48 @@ namespace PX.Survey.Ext {
                 And<CSAttributeDetail.disabled, NotEqual<True>>>>.Select(graph, new object[] { attributeId }).FirstTableItems;
         }
 
-        private static string CheckValue(PXGraph graph, CSAnswers question, CRAttribute.AttributeExt originAttrExt) {
-            var currentVal = question.Value;
-            var controlType = originAttrExt.ControlType;
-            var attrID = question.AttributeID;
-            switch (controlType) {
-                case 1: // Text
-                    return currentVal;
-                case 2: // Combo
-                    var details = GetAttributeDetails(graph, attrID);
-                    var detail = details.FirstOrDefault(det => det.ValueID == currentVal);
-                    if (detail == null) {
+        //private static string CheckValue(PXGraph graph, CSAnswers question, CRAttribute.AttributeExt originAttrExt) {
+        //    var currentVal = question.Value;
+        //    var controlType = originAttrExt.ControlType;
+        //    var attrID = question.AttributeID;
+        //    switch (controlType) {
+        //        case 1: // Text
+        //            return currentVal;
+        //        case 2: // Combo
+        //            var details = GetAttributeDetails(graph, attrID);
+        //            var detail = details.FirstOrDefault(det => det.ValueID == currentVal);
+        //            if (detail == null) {
 
-                    }
-                    // TODO Check value
-                    return currentVal;
-                case 6: // Multi Select Combo
-                    var multiDetails = GetAttributeDetails(graph, attrID);
-                    var currentVals = currentVal.Split(';'); // ??
-                    foreach (var val in currentVals) {
-                        var multiDetail = multiDetails.FirstOrDefault(det => det.ValueID == val);
-                        if (multiDetail == null) {
+        //            }
+        //            // TODO Check value
+        //            return currentVal;
+        //        case 6: // Multi Select Combo
+        //            var multiDetails = GetAttributeDetails(graph, attrID);
+        //            var currentVals = currentVal.Split(';'); // ??
+        //            foreach (var val in currentVals) {
+        //                var multiDetail = multiDetails.FirstOrDefault(det => det.ValueID == val);
+        //                if (multiDetail == null) {
 
-                        }
-                    }
-                    // TODO Check values
-                    return currentVal;
-                case 4: // Checkbox
-                    if (bool.TryParse(currentVal, out bool boolVal)) {
-                        return Convert.ToInt32(boolVal).ToString(CultureInfo.InvariantCulture);
-                    } else if (currentVal == null) {
-                        return 0.ToString();
-                    }
-                    break;
-                case 5: // Datetime
-                    // TODO Check value
-                    return currentVal;
-                case 7: // Selector
-                    // TODO Check value
-                    return currentVal;
-            }
-            return null;
-        }
+        //                }
+        //            }
+        //            // TODO Check values
+        //            return currentVal;
+        //        case 4: // Checkbox
+        //            if (bool.TryParse(currentVal, out bool boolVal)) {
+        //                return Convert.ToInt32(boolVal).ToString(CultureInfo.InvariantCulture);
+        //            } else if (currentVal == null) {
+        //                return 0.ToString();
+        //            }
+        //            break;
+        //        case 5: // Datetime
+        //            // TODO Check value
+        //            return currentVal;
+        //        case 7: // Selector
+        //            // TODO Check value
+        //            return currentVal;
+        //    }
+        //    return null;
+        //}
 
         //private static bool TryGetOriginAttributeValue(CSAnswers classAnswer, List<CSAnswers> originAnswers, out string originDefault) {
         //    originDefault = null;

@@ -12,7 +12,7 @@ using System.Web;
 
 namespace PX.Survey.Ext {
 
-    public class SurveyGenerator {
+    public class SurveyGenerator { 
 
         private SurveyMaint graph;
 
@@ -94,7 +94,7 @@ namespace PX.Survey.Ext {
             }
             var template = Template.Parse(mainTemplateText);
             var context = GetSurveyContext(survey, user, token);
-            FillEntityInfo(userCollector, graph, context);
+            FillEntityInfo(survey, user, userCollector, graph, context);
             var renderedComps = RenderComponentsForPage(survey, user, context, pageNbr);
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT_LIST), renderedComps);
             context.SetValue(new ScriptVariableGlobal(INNER_CONTENT), string.Join("\n", renderedComps));
@@ -182,7 +182,11 @@ namespace PX.Survey.Ext {
             return context;
         }
 
-        private void FillEntityInfo(SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
+        private void FillEntityInfo(Survey survey, SurveyUser user, SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
+            // This collector might be an anonymous collector without the RefNoteID, let's find the real collector
+            if (collector.RefNoteID == null && survey.KeepAnswersAnonymous == true) {
+                collector = SurveyCollector.UK.ByAnonCollectorID.Find(graph, collector.CollectorID);
+            }
             if (collector.RefNoteID == null) {
                 return;
             }

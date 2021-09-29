@@ -129,6 +129,14 @@ namespace PX.Survey.Ext {
         public virtual bool? Anonymous { get; set; }
         #endregion
 
+        #region IsTest
+        public abstract class isTest : BqlBool.Field<isTest> { }
+        [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Is Test", Visibility = PXUIVisibility.SelectorVisible)]
+        public virtual bool? IsTest { get; set; }
+        #endregion
+
         #region UserID
         public abstract class userID : BqlGuid.Field<userID> { }
         [PXGuid]
