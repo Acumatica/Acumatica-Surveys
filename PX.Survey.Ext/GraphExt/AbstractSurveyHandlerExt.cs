@@ -14,6 +14,8 @@ namespace PX.Survey.Ext {
         where EGraph : PXGraph
         where EDoc : class, IBqlTable, new() {
 
+        private static string ACTION_PREFIX = "Survey-";
+
         public PXSetup<SurveySetup> SurveySetup;
         public PXSelect<SurveySetupEntity, Where<SurveySetupEntity.entityType, Equal<Required<SurveySetupEntity.entityType>>>> SurveySetupEntity;
         public PXSelect<SurveySetupEntity,
@@ -40,10 +42,23 @@ namespace PX.Survey.Ext {
         //    return adapter.Get();
         //}
 
+        protected void _(Events.RowSelected<EDoc> e) {
+            // TODO Enable, get all actions StartsWith ACTION_PREFIX
+            // Read survey
+            //var name = "Survey-";// + survey.SurveyID;
+            //disable all survey actions
+            //pXNamedAction.SetEnabled(status != SurveyStatus.Preparing);
+        }
+
         [PXButton(CommitChanges = true, MenuAutoOpen = true)]
         [PXUIField(DisplayName = "Surveys")]
         protected virtual void surveyFolder() {
         }
+
+        // TODO Add action under surveyFolder to Refresh survey action list (remove and add back)
+
+
+
 
         //public PXAction<EDoc> requestSurvey;
         //[PXUIField(DisplayName = "Request Survey")]
@@ -93,8 +108,6 @@ namespace PX.Survey.Ext {
         }
 
         private PXAction AddAction(PXGraph graph, Survey survey, string fieldName) {
-            var name = survey.SurveyID;
-            var displayName = survey.Title;
             PXButtonDelegate handler = (PXAdapter adapter) => {
                 string str1 = (string.IsNullOrEmpty(adapter.CommandArguments) ? graph.PrimaryView : adapter.CommandArguments);
                 string primaryView = graph.PrimaryView;
@@ -119,27 +132,27 @@ namespace PX.Survey.Ext {
                 //}
                 var contactID = (int?)cache?.GetValue(doc, fieldName);
                 var surveyGraph = PXGraph.CreateInstance<SurveyMaint>();
-                //var survey = surveyGraph.Survey.Search<Survey.surveyID>(surveyID);
                 if (survey != null && contactID.HasValue && noteID.HasValue) {
                     surveyGraph.Survey.Current = survey;
                     var user = surveyGraph.InsertOrFindUser(survey, contactID, false);
-                    var collector = surveyGraph.DoUpsertCollector(survey, user, noteID, true);
+                    var collector = surveyGraph.DoUpsertCollector(survey, user, noteID, true, false);
                 }
                 return adapter.Get();
             };
-            return AddAction(name, displayName, survey.Status, handler);
+            var actionName = ACTION_PREFIX + survey.SurveyID;
+            var displayName = survey.Title; // TODO Add " -> Ship-To Contact"
+            return AddAction(actionName, displayName, handler);
         }
 
-        private PXAction AddAction(string name, string displayName, string status, PXButtonDelegate handler) {
+        private PXAction AddAction(string actionName, string displayName, PXButtonDelegate handler) {
             PXUIFieldAttribute pXUIFieldAttribute = new PXUIFieldAttribute() {
                 DisplayName = PXMessages.LocalizeNoPrefix(displayName),
                 MapEnableRights = PXCacheRights.Select,
             };
-            PXNamedAction<EDoc> pXNamedAction = new PXNamedAction<EDoc>(Base, name, handler, (new List<PXEventSubscriberAttribute>()
+            PXNamedAction<EDoc> pXNamedAction = new PXNamedAction<EDoc>(Base, actionName, handler, (new List<PXEventSubscriberAttribute>()
             {
                 pXUIFieldAttribute
             }).ToArray());
-            pXNamedAction.SetEnabled(status != SurveyStatus.Preparing);
             //Base.Actions[name] = pXNamedAction;
             // TODO Find Inquiries or Actions and go after
             SurveyFolder.AddMenuAction(pXNamedAction);
