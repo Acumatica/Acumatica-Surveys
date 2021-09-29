@@ -130,6 +130,7 @@ namespace PX.Survey.Ext {
                 //        contactID = new int?(num);
                 //    }
                 //}
+                fieldName = Clean(fieldName);
                 var contactID = (int?)cache?.GetValue(doc, fieldName);
                 var surveyGraph = PXGraph.CreateInstance<SurveyMaint>();
                 if (survey != null && contactID.HasValue && noteID.HasValue) {
@@ -144,19 +145,33 @@ namespace PX.Survey.Ext {
             return AddAction(actionName, displayName, handler);
         }
 
+        private string Clean(string fieldName) {
+            if (string.IsNullOrEmpty(fieldName)) {
+                return fieldName;
+            }
+            if (fieldName.StartsWith("((")) {
+                fieldName = fieldName.Substring(2);
+            }
+            if (fieldName.EndsWith("))")) {
+                fieldName = fieldName.Substring(0, fieldName.Length - 2);
+            }
+            return fieldName;
+        }
+
         private PXAction AddAction(string actionName, string displayName, PXButtonDelegate handler) {
-            PXUIFieldAttribute pXUIFieldAttribute = new PXUIFieldAttribute() {
-                DisplayName = PXMessages.LocalizeNoPrefix(displayName),
-                MapEnableRights = PXCacheRights.Select,
-            };
-            PXNamedAction<EDoc> pXNamedAction = new PXNamedAction<EDoc>(Base, actionName, handler, (new List<PXEventSubscriberAttribute>()
-            {
-                pXUIFieldAttribute
-            }).ToArray());
+            //PXUIFieldAttribute pXUIFieldAttribute = new PXUIFieldAttribute() {
+            //    DisplayName = PXMessages.LocalizeNoPrefix(displayName),
+            //    MapEnableRights = PXCacheRights.Select,
+            //};
+            var action = PXNamedAction<EDoc>.AddAction(Base, actionName, displayName, handler);
+            //PXNamedAction<EDoc> pXNamedAction = new PXNamedAction<EDoc>(Base, actionName, handler, (new List<PXEventSubscriberAttribute>()
+            //{
+            //    pXUIFieldAttribute
+            //}).ToArray());
             //Base.Actions[name] = pXNamedAction;
             // TODO Find Inquiries or Actions and go after
-            SurveyFolder.AddMenuAction(pXNamedAction);
-            return pXNamedAction;
+            SurveyFolder.AddMenuAction(action);
+            return action;
         }
     }
 }
