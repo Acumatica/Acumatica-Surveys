@@ -81,7 +81,9 @@ namespace PX.Survey.Ext {
 
         public (string content, string token) GenerateSurveyPage(string token, int pageNbr) {
             var (survey, user, _, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
+
             // Redirect with new token as anonymous surveys will pass the SurveyID as a token
+            //userCollector.RefNoteID = new System.Guid();
             if (userCollector.Token != token) {
                 return (null, userCollector.Token);
             }
@@ -185,7 +187,7 @@ namespace PX.Survey.Ext {
         private void FillEntityInfo(Survey survey, SurveyUser user, SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
             // This collector might be an anonymous collector without the RefNoteID, let's find the real collector
             if (collector.RefNoteID == null && survey.KeepAnswersAnonymous == true) {
-                collector = SurveyCollector.UK.ByAnonCollectorID.Find(graph, collector.CollectorID);
+                collector = SurveyCollector.UK.ByToken.Find(graph, collector.Token);//?? collector; 
             }
             if (collector.RefNoteID == null) {
                 return;
