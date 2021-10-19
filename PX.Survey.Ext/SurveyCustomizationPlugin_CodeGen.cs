@@ -162,7 +162,6 @@ namespace PX.Survey.Ext
             InitializeSurveyComponent(scSUTEXTAREA);
             InitializeSurveyComponent(scSUTHANKYOU);
             InitializeSurveyComponent(scSUWELCOME);
-
         }
         #endregion #InitializeSurveyComponents
         #endregion #SurveyComponents
@@ -381,6 +380,16 @@ namespace PX.Survey.Ext
             };
         #endregion #SUSATISFAC
 
-        #endregion #Attributes
+        #region InitializeSurveyAttributes
+        public void InitializeSurveyAttributes()
+        {
+            InitializeSurveyAttribute(csSUSATISFAC, CsSUSATISFACDetail);
+            InitializeSurveyAttribute(csSUEASYNESS, CsSUEASYNESSDetail);
+        }
+
+       
+        #endregion //InitializeSurveyAttributes
+
+        #endregion //Attributes
     }
 }

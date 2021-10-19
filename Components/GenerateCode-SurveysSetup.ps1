@@ -26,7 +26,7 @@ foreach($file in dir .\ServeyComponets)
                 Body = @"$body",
                 NoteID = Guid.Parse("$noteId")
             };
-            #endregion #$componentId
+            #endregion //$componentId
 
 "@
     $entitySection +=  $newComponent
@@ -44,7 +44,7 @@ $InitializeSurveyComponentsMethod = @"
         {
             $InitializeSurveyComponentsSection
         }
-        #endregion #InitializeSurveyComponents
+        #endregion //InitializeSurveyComponents
 "@
 
 
@@ -102,7 +102,7 @@ foreach($file in dir .\Atributes)
             {
                 $codegenCsAttributeDetails
             };
-            #endregion #$attributeID
+            #endregion //$attributeID
 
 "@
     
@@ -133,10 +133,10 @@ namespace PX.Survey.Ext
         #region SurveyComponents
         $entitySection
         $InitializeSurveyComponentsMethod
-        #endregion #SurveyComponents
+        #endregion //SurveyComponents
         #region Attributes
         $AtributeSection
-        #endregion #Attributes
+        #endregion //Attributes
     }
 }
 "@

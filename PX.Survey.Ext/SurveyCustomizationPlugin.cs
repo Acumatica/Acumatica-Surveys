@@ -1,37 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Customization;
 using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
+using PX.Objects.CS;
+using CSAttribute = PX.CS.CSAttribute;
+using CSAttributeDetail = PX.CS.CSAttributeDetail;
 
 namespace PX.Survey.Ext
 {
+    // ReSharper disable once UnusedMember.Global
+    // ReSharper disable RedundantVerbatimPrefix
     public partial class SurveyCustomizationPlugin : CustomizationPlugin
     {
 
         public override void UpdateDatabase()
         {
-            //todo: determine if this is needed may only need OnPublish. Purge when determined not needed 
             PXTrace.WriteInformation("UpdateDatabase() entered");
             WriteLog("UpdateDatabase");
-            //calling here causes errors
             InitializeSurveyComponents();
+            InitializeSurveyAttributes();
         }
-
-        /*
-        //todo: follow up to add the auto code gen portion of this section
-        public override void OnPublished()
-        {
-            //20211005 there is no evidence of this even firing.
-            PXTrace.WriteInformation("OnPublished() entered");
-            WriteLog("OnPublished");
-            //InitializeSurveyComponents();
-        }
-        */
 
         /// <summary>
         /// Performs the logic to create a survey component.
@@ -43,18 +34,42 @@ namespace PX.Survey.Ext
             {
                 WriteLog($"Creating surveyComponent: {surveyComponent.ComponentID}");
                 var graph = PXGraph.CreateInstance<SurveyComponentMaint>();
-                WriteLog($"graph created");
                 var lookupResult = (SurveyComponent)SelectFrom<SurveyComponent>
                     .Where<SurveyComponent.componentID.IsEqual<@P.AsString>>
                     .View.Select(graph,surveyComponent.ComponentID).FirstOrDefault();
-                WriteLog($"lookup done");
                 if (lookupResult != null) return; //ignore records that already exist.
-                WriteLog($"Saving new record");
                 //graph.CurrentSUComponent.Cache.Insert(surveyComponent);
                 graph.SUComponent.Cache.Insert(surveyComponent);
-                WriteLog($"Insert done");
                 graph.Actions.PressSave();
-                WriteLog($"press save done");
+                graph.Clear();
+            }
+            catch (Exception e)
+            {
+                WriteLog($"Error: {e.Message}");
+                PXTrace.WriteError(e);
+                throw;
+            }
+        }
+
+
+        private void InitializeSurveyAttribute(CSAttribute attribute, List<CSAttributeDetail> attributeDetails)
+        {
+            try
+            {
+                WriteLog($"Creating Survey Attribute: {attribute.AttributeID}");
+                var graph = PXGraph.CreateInstance<CSAttributeMaint>();
+                WriteLog($"Graph Created");
+                var lookupResult = (CSAttribute)SelectFrom<CSAttribute>
+                    .Where<CSAttribute.attributeID.IsEqual<@P.AsString>>
+                    .View.Select(graph, attribute.AttributeID).FirstOrDefault();
+                WriteLog($"Lookup done");
+                if (lookupResult != null) return; //ignore records that already exist.
+                graph.Attributes.Cache.Insert(attribute);
+                WriteLog($"Insert Attribute header");
+                graph.AttributeDetails.Cache.Insert(attributeDetails);
+                WriteLog($"Insert Attribute detail ");
+                graph.Actions.PressSave();
+                WriteLog($"Save Pressed ");
                 graph.Clear();
             }
             catch (Exception e)
@@ -64,7 +79,7 @@ namespace PX.Survey.Ext
                 throw;
             }
            
-            
         }
+
     }
 }

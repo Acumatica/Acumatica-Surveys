@@ -4,28 +4,6 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PX.Survey.Ext", "PX.Survey.Ext\PX.Survey.Ext.csproj", "{E80F8BC3-3F0F-4D59-942A-668A21B2D602}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SUV20_215_0025_2", "http://localhost/SUV20_215_0025_2", "{557BBDF9-3E63-4E8B-BE0E-ECAB7CCA9F7E}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "false"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
-		ProjectReferences = "{e80f8bc3-3f0f-4d59-942a-668a21b2d602}|PX.Survey.Ext.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/SUV20_215_0025_2"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\Acumatica\SUV20_215_0025_2\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\SUV20_215_0025_2\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/SUV20_215_0025_2"
-		Release.AspNetCompiler.PhysicalPath = "..\..\Acumatica\SUV20_215_0025_2\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\SUV20_215_0025_2\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\Acumatica\SUV20_215_0025_2\"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,10 +14,6 @@ Global
 		{E80F8BC3-3F0F-4D59-942A-668A21B2D602}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E80F8BC3-3F0F-4D59-942A-668A21B2D602}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E80F8BC3-3F0F-4D59-942A-668A21B2D602}.Release|Any CPU.Build.0 = Release|Any CPU
-		{557BBDF9-3E63-4E8B-BE0E-ECAB7CCA9F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{557BBDF9-3E63-4E8B-BE0E-ECAB7CCA9F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{557BBDF9-3E63-4E8B-BE0E-ECAB7CCA9F7E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{557BBDF9-3E63-4E8B-BE0E-ECAB7CCA9F7E}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
