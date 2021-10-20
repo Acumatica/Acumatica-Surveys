@@ -36,7 +36,7 @@ namespace PX.Survey.Ext
                 var graph = PXGraph.CreateInstance<SurveyComponentMaint>();
                 var lookupResult = (SurveyComponent)SelectFrom<SurveyComponent>
                     .Where<SurveyComponent.componentID.IsEqual<@P.AsString>>
-                    .View.Select(graph,surveyComponent.ComponentID).FirstOrDefault();
+                    .View.Select(graph, surveyComponent.ComponentID).FirstOrDefault();
                 if (lookupResult != null) return; //ignore records that already exist.
                 //graph.CurrentSUComponent.Cache.Insert(surveyComponent);
                 graph.SUComponent.Cache.Insert(surveyComponent);
@@ -78,7 +78,7 @@ namespace PX.Survey.Ext
                 PXTrace.WriteError(e);
                 throw;
             }
-           
+
         }
 
     }

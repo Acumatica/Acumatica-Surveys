@@ -49,6 +49,7 @@ $InitializeSurveyComponentsMethod = @"
 
 
 $AtributeSection = ""
+$InitializeSurveyAttributeSection = ""
 foreach($file in dir .\Atributes)
 {
  
@@ -57,10 +58,20 @@ foreach($file in dir .\Atributes)
     [xml]$atribute =  Get-Content $file.FullName
     #[xml]$atribute =  Get-Content C:\GitKraken\Acumatica-Surveys\Components\Atributes\SUHELPRES.xml
     $attributeID = $atribute.'data-set'.data.CSAttribute.row.AttributeID
-    $Description = $atribute.'data-set'.data.CSAttribute.row.Description
+    $HeaderDescription = $atribute.'data-set'.data.CSAttribute.row.Description
     $ControlType = $atribute.'data-set'.data.CSAttribute.row.ControlType
-    $isinternal  = $atribute.'data-set'.data.CSAttribute.row.IsInternal
+    $isinternal  = ""
     $noteId = $atribute.'data-set'.data.CSAttribute.row.NoteID
+
+     if($atribute.'data-set'.data.CSAttribute.row.IsInternal -eq "1")
+      {
+            $isinternal = "true"
+      }
+      else
+      {
+            $isinternal = "false"
+      }
+
 
     $details = $atribute.'data-set'.data.CSAttribute.row.CSAttributeDetail
 
@@ -70,8 +81,17 @@ foreach($file in dir .\Atributes)
       $ValueId = $csAtributeDetail.ValueID 
       $Description = $csAtributeDetail.Description 
       $SortOrder = $csAtributeDetail.SortOrder
-      $Disabled = $csAtributeDetail.Disabled
+      $Disabled = ""
       $NoteID = $csAtributeDetail.NoteID
+
+      if($csAtributeDetail.Disabled -eq "1")
+      {
+            $Disabled = "true"
+      }
+      else
+      {
+            $Disabled = "false"
+      }
 
       $codegenCsAttributeDetails += @" 
             new CSAttributeDetail
@@ -79,7 +99,7 @@ foreach($file in dir .\Atributes)
                 ValueID = "$ValueId", 
                 Description = "$Description",
                 SortOrder = $SortOrder,
-                Disabled = bool.Parse("$Disabled"),
+                Disabled = $Disabled,
                 NoteID = Guid.Parse("$NoteID")
             },
 "@
@@ -92,13 +112,13 @@ foreach($file in dir .\Atributes)
             public CSAttribute cs$attributeID = new CSAttribute
             {
                 AttributeID = "$attributeID",
-                Description = "$Description", 
+                Description = "$HeaderDescription", 
                 ControlType = $ControlType,
-                IsInternal = bool.Parse("$isinternal"),
+                IsInternal = $isinternal,
                 NoteID = Guid.Parse("$noteId")
             };
 
-            public List<CSAttributeDetail> Cs$($attributeID)Detail = new List<CSAttributeDetail>
+            public List<CSAttributeDetail> cs$($attributeID)Detail = new List<CSAttributeDetail>
             {
                 $codegenCsAttributeDetails
             };
@@ -108,7 +128,23 @@ foreach($file in dir .\Atributes)
     
     $AtributeSection +=  $newAtribute
 
+
+
+    $InitializeSurveyAttributeSection += @"
+            InitializeSurveyAttribute(cs$attributeID,cs$($attributeID)Detail);
+              
+"@
+
 }
+
+$InitializeSurveyAttributeMethod = @"
+        #region InitializeSurveyAttributes
+        public void InitializeSurveyAttributes()
+        {
+            $InitializeSurveyAttributeSection
+        }
+        #endregion //InitializeSurveyAttributes
+"@
 
 
 #$entitySection
@@ -136,6 +172,7 @@ namespace PX.Survey.Ext
         #endregion //SurveyComponents
         #region Attributes
         $AtributeSection
+        $InitializeSurveyAttributeMethod
         #endregion //Attributes
     }
 }
