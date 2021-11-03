@@ -9,6 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using PX.Data.BQL.Fluent;
+using PX.Objects.FS;
+using PX.Api.Webhooks.DAC;
+using PX.Data.BQL;
+using PX.Objects.SO;
+
 
 namespace PX.Survey.Ext {
 
@@ -45,10 +51,13 @@ namespace PX.Survey.Ext {
             // Code taken from PX.Api.Webhooks.Owin.Configuration.ReturnUrl._get
             // Added here because WebHookMaint crashes when retrieving the WebHook URL in background thread
             // because HttpContext.Current is null
-            if (_returnUrl == null && HttpContext.Current != null) {
+            //PXTrace.WriteInformation(HttpContext.Current.Request.GetWebsiteUrl());
+            if (HttpContext.Current != null) {
                 string applicationPath = HttpContext.Current.Request.ApplicationPath;
                 var str = (applicationPath != null) ? applicationPath.Trim(new char[] { '/' }) : null;
                 var str1 = string.IsNullOrEmpty(str) ? string.Empty : string.Concat(str, "/");
+                //HttpContext.Current.Request.GetWebsiteUrl() 
+                PXTrace.WriteInformation(HttpContext.Current.Request.GetWebsiteUrl());
                 _returnUrl = string.Concat(HttpContext.Current.Request.GetWebsiteUrl(), str1, "Webhooks");
             }
             return _returnUrl;
