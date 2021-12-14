@@ -9,16 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using PX.Data.BQL.Fluent;
-using PX.Objects.FS;
-using PX.Api.Webhooks.DAC;
-using PX.Data.BQL;
-using PX.Objects.SO;
-
 
 namespace PX.Survey.Ext {
 
-    public class SurveyGenerator { 
+    public class SurveyGenerator {
 
         private SurveyMaint graph;
 
@@ -56,7 +50,7 @@ namespace PX.Survey.Ext {
                 string applicationPath = HttpContext.Current.Request.ApplicationPath;
                 var str = (applicationPath != null) ? applicationPath.Trim(new char[] { '/' }) : null;
                 var str1 = string.IsNullOrEmpty(str) ? string.Empty : string.Concat(str, "/");
-                //HttpContext.Current.Request.GetWebsiteUrl() 
+                //HttpContext.Current.Request.GetWebsiteUrl()
                 PXTrace.WriteInformation(HttpContext.Current.Request.GetWebsiteUrl());
                 _returnUrl = string.Concat(HttpContext.Current.Request.GetWebsiteUrl(), str1, "Webhooks");
             }
@@ -90,7 +84,6 @@ namespace PX.Survey.Ext {
 
         public (string content, string token) GenerateSurveyPage(string token, int pageNbr) {
             var (survey, user, _, userCollector) = SurveyUtils.GetSurveyAndUser(graph, token);
-
             // Redirect with new token as anonymous surveys will pass the SurveyID as a token
             //userCollector.RefNoteID = new System.Guid();
             if (userCollector.Token != token) {
@@ -196,7 +189,7 @@ namespace PX.Survey.Ext {
         private void FillEntityInfo(Survey survey, SurveyUser user, SurveyCollector collector, SurveyMaint graph, TemplateContext context) {
             // This collector might be an anonymous collector without the RefNoteID, let's find the real collector
             if (collector.RefNoteID == null && survey.KeepAnswersAnonymous == true) {
-                collector = SurveyCollector.UK.ByToken.Find(graph, collector.Token);//?? collector; 
+                collector = SurveyCollector.UK.ByToken.Find(graph, collector.Token);//?? collector;
             }
             if (collector.RefNoteID == null) {
                 return;
@@ -244,21 +237,8 @@ namespace PX.Survey.Ext {
                 webHookUrl = string.Concat(returnUrl);
             }
             return webHookUrl;
-            //Api.Webhooks.DAC.WebHook webHook = GetWebHook(survey);
-            //return webHook.Url;
-            //return survey.BaseURL;
         }
 
-        //private Api.Webhooks.DAC.WebHook GetWebHook(Survey survey) {
-        //    Api.Webhooks.Graph.WebhookMaint whGraph = PXGraph.CreateInstance<Api.Webhooks.Graph.WebhookMaint>();
-        //    //Api.Webhooks.DAC.WebHook wh = PXSelect<Api.Webhooks.DAC.WebHook,
-        //    //        Where<Api.Webhooks.DAC.WebHook.webHookID, Equal<Required<Api.Webhooks.DAC.WebHook.webHookID>>>>.Select(whGraph, survey.WebHookID);
-        //    //whGraph.Webhook.Current = wh;
-        //    whGraph.Webhook.Current = whGraph.Webhook.Search<Api.Webhooks.DAC.WebHook.webHookID>(survey.WebHookID);
-        //    return whGraph.Webhook.Current;
-        //}
-
-        
         public static string MyMemberRenamerDelegate(MemberInfo member) {
             return member.Name;
         }

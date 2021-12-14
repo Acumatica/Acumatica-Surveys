@@ -47,9 +47,6 @@ namespace PX.Survey.Ext {
 
         #region ContactField
         public abstract class contactField : BqlString.Field<contactField> { }
-        ////[SUFieldList(typeof(entityType))]
-        //[PXUIField(DisplayName = "Contact Field", Required = true)]
-        //[PrimaryViewFieldsList(typeof(screenID), ShowDisplayNameAsLabel = true)]
         [PXDBString(64, InputMask = "", IsUnicode = true)]
         [PXDefault]
         [PXUIField(DisplayName = "Contact Field")]

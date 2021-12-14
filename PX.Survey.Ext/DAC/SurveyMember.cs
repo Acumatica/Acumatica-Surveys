@@ -44,18 +44,6 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Name")]
         public virtual int? ContactID { get; set; }
 
-        //public abstract class emailSendCount : BqlInt.Field<emailSendCount> { }
-        //[PXDBScalar(typeof(Search5<CRActivity.noteID, InnerJoin<Contact, On<True, Equal<True>>, InnerJoin<Survey, On<True, Equal<True>>>>, Where<Survey.surveyID, Equal<surveyID>, And<Contact.contactID, Equal<contactID>, And<CRActivity.documentNoteID, Equal<Survey.noteID>, And2<Where<CRActivity.contactID, Equal<contactID>, And<Contact.contactType, NotEqual<ContactTypesAttribute.lead>, Or<CRActivity.refNoteID, Equal<Contact.noteID>, And<Contact.contactType, Equal<ContactTypesAttribute.lead>>>>>, And<CRActivity.classID, Equal<CRActivityClass.email>>>>>>, Aggregate<Count>>))]
-        //[PXInt]
-        //[PXUIField(DisplayName = "Emails Sent", Enabled = false)]
-        //public virtual int? EmailSendCount { get; set; }
-
-        //public abstract class opportunityCreatedCount : BqlInt.Field<opportunityCreatedCount> { }
-        //[PXDBScalar(typeof(Search5<CROpportunity.noteID, InnerJoin<Contact, On<True, Equal<True>>, LeftJoin<BAccount, On<BAccount.defContactID, Equal<Contact.contactID>>, InnerJoin<Survey, On<CROpportunity.campaignSourceID, Equal<Survey.surveyID>>>>>, Where<Survey.surveyID, Equal<surveyID>, And<Contact.contactID, Equal<contactID>, And<Where<CROpportunity.contactID, Equal<contactID>, And<Contact.contactType, NotEqual<ContactTypesAttribute.lead>, Or<CROpportunity.leadID, Equal<Contact.noteID>, And<Contact.contactType, Equal<ContactTypesAttribute.lead>, Or<CROpportunity.bAccountID, Equal<BAccount.bAccountID>, And<Contact.contactType, Equal<ContactTypesAttribute.bAccountProperty>>>>>>>>>>, Aggregate<Count>>))]
-        //[PXInt]
-        //[PXUIField(DisplayName = "Opportunities Created", Enabled = false)]
-        //public virtual int? OpportunityCreatedCount { get; set; }
-
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
         [PXNote]
@@ -99,7 +87,5 @@ namespace PX.Survey.Ext {
         [PXDBTimestamp]
         public virtual byte[] tstamp { get; set; }
         #endregion
-
-
     }
 }

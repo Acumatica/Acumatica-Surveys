@@ -65,7 +65,6 @@ namespace PX.Survey.Ext {
                 GroupBy<SurveyAnswer.value,
                 Count<SurveyAnswer.lineNbr>>>>>,
             OrderBy<Asc<SurveyDetail.pageNbr, Asc<SurveyDetail.questionNbr, Desc<SurveyAnswer.value>>>>> AnswerSummary;
-//        public PXSelect<SurveyAnswerSummary, Where<SurveyAnswerSummary.surveyID, Equal<Current<Survey.surveyID>>>> AnswerSummary;
 
         [PXCopyPasteHiddenView]
         public PXSelectJoin<SurveyAnswer,
@@ -111,7 +110,6 @@ namespace PX.Survey.Ext {
         [PXFilterable]
         [PXCopyPasteHiddenView]
         public PXSelect<RecipientSelected> recipients;
-        //public RecipientLookup<RecipientSelected, RecipientFilter> recipients;
 
         public PXAction<Survey> addRecipients;
         [PXUIField(DisplayName = "Add Recipients", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
@@ -180,7 +178,6 @@ namespace PX.Survey.Ext {
             Survey.Current = survey;
             createSurveyFilter.Current = filter;
             var setup = SurveySetup.Current;
-            //DoResetPageNumbers(survey);
             var nbQuestions = filter.NbQuestions ?? 10;
             var questionSeries = Enumerable.Range(1, nbQuestions);
             var prevSeries = 0;
@@ -424,8 +421,7 @@ namespace PX.Survey.Ext {
                 IsTest = isTest
             };
             var inserted = Collectors.Insert(collector);
-            //var persisted = Collectors.Cache.PersistInserted(inserted);
-            if (saveNow) { 
+            if (saveNow) {
                 Actions.PressSave();
             }
             return inserted;
@@ -492,7 +488,6 @@ namespace PX.Survey.Ext {
                 Anonymous = anonymous,
             };
             user = Users.Insert(user);
-            //var persisted = Users.Cache.PersistInserted(user);
             Actions.PressSave();
             return user;
         }
@@ -1109,7 +1104,7 @@ namespace PX.Survey.Ext {
             if (row == null) {
                 return;
             }
-            // Deleting a row which is the anonymous collector of another resets the AnonCollectorID 
+            // Deleting a row which is the anonymous collector of another resets the AnonCollectorID
             if (row.CollectorID != null) {
                 var realCollector = SurveyCollector.UK.ByAnonCollectorID.Find(this, row.CollectorID);
                 if (realCollector != null) {
