@@ -264,7 +264,7 @@ namespace PX.Survey.Ext {
             if (contactID == null) {
                 throw new PXException("An Anonymous user needs to be setup in the Survey Preferences");
             }
-            if (survey.AllowAnonymous != true || survey.KeepAnswersAnonymous != true) {
+            if (survey.AllowAnonymous != true && survey.KeepAnswersAnonymous != true) {
                 throw new PXException("Survey {0} ({1}) does not allow anonymous answers", survey.SurveyID, survey.Title);
             }
             var user = graph.InsertOrFindUser(survey, contactID, true);

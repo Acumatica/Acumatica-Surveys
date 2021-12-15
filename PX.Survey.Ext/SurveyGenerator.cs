@@ -47,21 +47,36 @@ namespace PX.Survey.Ext {
             GetReturnUrl();
         }
 
+        private static string JoinUriSegments(string uri, params string[] segments)
+        {
+            if (string.IsNullOrWhiteSpace(uri))
+                return null;
+
+            if (segments == null || segments.Length == 0)
+                return uri;
+
+            return segments.Aggregate(uri, (current, segment) => $"{current.TrimEnd('/')}/{segment.TrimStart('/')}");
+        }
+
         private static string GetReturnUrl() {
             // Code taken from PX.Api.Webhooks.Owin.Configuration.ReturnUrl._get
             // Added here because WebHookMaint crashes when retrieving the WebHook URL in background thread
             // because HttpContext.Current is null
             //PXTrace.WriteInformation(HttpContext.Current.Request.GetWebsiteUrl());
             if (HttpContext.Current != null) {
-                string applicationPath = HttpContext.Current.Request.ApplicationPath;
-                var str = (applicationPath != null) ? applicationPath.Trim(new char[] { '/' }) : null;
-                var str1 = string.IsNullOrEmpty(str) ? string.Empty : string.Concat(str, "/");
-                //HttpContext.Current.Request.GetWebsiteUrl() 
+                // Get application path from URL with no starting slash
+                string applicationPath = HttpContext.Current.Request.ApplicationPath.TrimStart('/');
+
+                // Print WebsiteUrl to trace
                 PXTrace.WriteInformation(HttpContext.Current.Request.GetWebsiteUrl());
-                _returnUrl = string.Concat(HttpContext.Current.Request.GetWebsiteUrl(), str1, "Webhooks");
+
+                // Join base with path parts
+                _returnUrl = JoinUriSegments(HttpContext.Current.Request.GetWebsiteUrl(), applicationPath, "Webhooks");
             }
             return _returnUrl;
         }
+
+
 
         public SurveyGenerator() : this(PXGraph.CreateInstance<SurveyMaint>()) {
         }

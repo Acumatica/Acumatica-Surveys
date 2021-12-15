@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<relations version="2" main-table="Survey" file-name="Survey-(SurveyID)">
+  <link from="SurveyDetail (SurveyID)" to="Survey (SurveyID)" />
+  <link from="SurveyUser (SurveyID)" to="Survey (SurveyID)" />
+  <link from="Survey (NoteID)" to="Note (NoteID)" type="Note" />
+  <link from="SurveyDetail (NoteID)" to="Note (NoteID)" type="Note" />
+  <link from="SurveyUser (NoteID)" to="Note (NoteID)" type="Note" />
+</relations>
