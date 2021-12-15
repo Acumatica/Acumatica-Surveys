@@ -6,6 +6,7 @@ using PX.Data;
 using PX.Data.BQL;
 using PX.Data.BQL.Fluent;
 using PX.Objects.CS;
+using PX.Objects.CT;
 using CSAttribute = PX.CS.CSAttribute;
 using CSAttributeDetail = PX.CS.CSAttributeDetail;
 
@@ -39,8 +40,16 @@ namespace PX.Survey.Ext
                     .View.Select(graph, surveyComponent.ComponentID).FirstOrDefault();
                 if (lookupResult != null) return; //ignore records that already exist.
                 //graph.CurrentSUComponent.Cache.Insert(surveyComponent);
-                graph.SUComponent.Cache.Insert(surveyComponent);
-                graph.Actions.PressSave();
+                var insertResult = (SurveyComponent)graph.SUComponent.Cache.Insert(surveyComponent);
+                if (insertResult != null)
+                {
+                    WriteLog($"surveyComponent: {insertResult.ComponentID} created successfully");
+                    graph.Actions.PressSave();
+                }
+                else
+                {
+                    WriteLog($"Failed to create: {surveyComponent.ComponentID}");
+                }
                 graph.Clear();
             }
             catch (Exception e)
@@ -52,24 +61,38 @@ namespace PX.Survey.Ext
         }
 
 
-        private void InitializeSurveyAttribute(CSAttribute attribute, List<CSAttributeDetail> attributeDetails)
+        private void InitializeSurveyAttribute(PX.Objects.CS.CSAttribute attribute, List<PX.Objects.CS.CSAttributeDetail> attributeDetails)
         {
             try
             {
-                WriteLog($"Creating Survey Attribute: {attribute.AttributeID}");
                 var graph = PXGraph.CreateInstance<CSAttributeMaint>();
-                WriteLog($"Graph Created");
-                var lookupResult = (CSAttribute)SelectFrom<CSAttribute>
-                    .Where<CSAttribute.attributeID.IsEqual<@P.AsString>>
+                var lookupResult = (PX.Objects.CS.CSAttribute)SelectFrom<PX.Objects.CS.CSAttribute>
+                    .Where<PX.Objects.CS.CSAttribute.attributeID.IsEqual<@P.AsString>>
                     .View.Select(graph, attribute.AttributeID).FirstOrDefault();
-                WriteLog($"Lookup done");
                 if (lookupResult != null) return; //ignore records that already exist.
-                graph.Attributes.Cache.Insert(attribute);
-                WriteLog($"Insert Attribute header");
-                graph.AttributeDetails.Cache.Insert(attributeDetails);
-                WriteLog($"Insert Attribute detail ");
-                graph.Actions.PressSave();
-                WriteLog($"Save Pressed ");
+                var insertResult =  (PX.Objects.CS.CSAttribute)graph.Attributes.Cache.Insert(attribute);
+                if (insertResult != null)
+                {
+                    WriteLog($"survey Attribute: {insertResult.AttributeID} created successfully");
+                    graph.Actions.PressSave();
+                    foreach(PX.Objects.CS.CSAttributeDetail detail in attributeDetails)
+                    {
+                        var insertedDetail = (PX.Objects.CS.CSAttributeDetail)graph.AttributeDetails.Cache.Insert(detail);
+                        if (insertedDetail != null)
+                        {
+                            WriteLog($"survey AttributeDetail: {insertedDetail.Description} created successfully");
+                        }
+                        else
+                        {
+                            WriteLog($"Failed to create Attribute detail: {detail.Description}");
+                        }
+                    }
+                    graph.Actions.PressSave();
+                }
+                else
+                {
+                    WriteLog($"Failed to create: {attribute.AttributeID}");
+                }
                 graph.Clear();
             }
             catch (Exception e)
@@ -80,6 +103,7 @@ namespace PX.Survey.Ext
             }
 
         }
+
 
     }
 }

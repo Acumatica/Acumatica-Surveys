@@ -169,7 +169,7 @@ namespace PX.Survey.Ext
         #region Attributes
 
         #region SUCOMMENT
-        public CSAttribute csSUCOMMENT = new CSAttribute
+        public PX.Objects.CS.CSAttribute csSUCOMMENT = new PX.Objects.CS.CSAttribute
         {
             AttributeID = "SUCOMMENT",
             Description = "Comment",
@@ -178,14 +178,14 @@ namespace PX.Survey.Ext
             NoteID = Guid.Parse("1046eda4-4dc2-eb11-a38b-3c6aa7cb36ca")
         };
 
-        public List<CSAttributeDetail> csSUCOMMENTDetail = new List<CSAttributeDetail>
+        public List<PX.Objects.CS.CSAttributeDetail> csSUCOMMENTDetail = new List<PX.Objects.CS.CSAttributeDetail>
         {
 
         };
         #endregion //SUCOMMENT
 
         #region SUEASYNESS
-        public CSAttribute csSUEASYNESS = new CSAttribute
+        public PX.Objects.CS.CSAttribute csSUEASYNESS = new PX.Objects.CS.CSAttribute
         {
             AttributeID = "SUEASYNESS",
             Description = "Easyness",
@@ -194,37 +194,37 @@ namespace PX.Survey.Ext
             NoteID = Guid.Parse("f067f8d8-cfc1-eb11-a38b-3c6aa7cb36ca")
         };
 
-        public List<CSAttributeDetail> csSUEASYNESSDetail = new List<CSAttributeDetail>
+        public List<PX.Objects.CS.CSAttributeDetail> csSUEASYNESSDetail = new List<PX.Objects.CS.CSAttributeDetail>
             {
-                            new CSAttributeDetail
+                            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "5",
                 Description = "Very Easy",
                 SortOrder = 1,
                 Disabled = false,
                 NoteID = Guid.Parse("e867f8d8-cfc1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "4",
                 Description = "Easy",
                 SortOrder = 2,
                 Disabled = false,
                 NoteID = Guid.Parse("ea67f8d8-cfc1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "3",
                 Description = "Neutral (Neither Easy nor Difficult)",
                 SortOrder = 3,
                 Disabled = false,
                 NoteID = Guid.Parse("ec67f8d8-cfc1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "2",
                 Description = "Difficult",
                 SortOrder = 4,
                 Disabled = false,
                 NoteID = Guid.Parse("ee67f8d8-cfc1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "1",
                 Description = "Very Difficult",
@@ -236,7 +236,7 @@ namespace PX.Survey.Ext
         #endregion //SUEASYNESS
 
         #region SUHELPRES
-        public CSAttribute csSUHELPRES = new CSAttribute
+        public PX.Objects.CS.CSAttribute csSUHELPRES = new PX.Objects.CS.CSAttribute
         {
             AttributeID = "SUHELPRES",
             Description = "Help Resources",
@@ -245,44 +245,44 @@ namespace PX.Survey.Ext
             NoteID = Guid.Parse("8c5ea96d-cec1-eb11-a38b-3c6aa7cb36ca")
         };
 
-        public List<CSAttributeDetail> csSUHELPRESDetail = new List<CSAttributeDetail>
+        public List<PX.Objects.CS.CSAttributeDetail> csSUHELPRESDetail = new List<PX.Objects.CS.CSAttributeDetail>
             {
-                            new CSAttributeDetail
+                            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "6",
                 Description = "Acumatica KB",
                 SortOrder = 6,
                 Disabled = false,
                 NoteID = Guid.Parse("d5269589-cec1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "5",
                 Description = "Acumatica Technical Support",
                 SortOrder = 5,
                 Disabled = false,
                 NoteID = Guid.Parse("d1269589-cec1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "4",
                 Description = "Training materials",
                 SortOrder = 4,
                 Disabled = false,
                 NoteID = Guid.Parse("5c732983-cec1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "3",
                 Description = "Pdf User Guides",
                 SortOrder = 3,
                 Disabled = false,
                 NoteID = Guid.Parse("84232a79-cec1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "2",
                 Description = "In-product help",
                 SortOrder = 2,
                 Disabled = false,
                 NoteID = Guid.Parse("935ea96d-cec1-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "1",
                 Description = "Help of colleagues",
@@ -294,7 +294,7 @@ namespace PX.Survey.Ext
         #endregion //SUHELPRES
 
         #region SURESOLVE
-        public CSAttribute csSURESOLVE = new CSAttribute
+        public PX.Objects.CS.CSAttribute csSURESOLVE = new PX.Objects.CS.CSAttribute
         {
             AttributeID = "SURESOLVE",
             Description = "Issue resolved",
@@ -303,23 +303,23 @@ namespace PX.Survey.Ext
             NoteID = Guid.Parse("1e015864-33c2-eb11-a38b-3c6aa7cb36ca")
         };
 
-        public List<CSAttributeDetail> csSURESOLVEDetail = new List<CSAttributeDetail>
+        public List<PX.Objects.CS.CSAttributeDetail> csSURESOLVEDetail = new List<PX.Objects.CS.CSAttributeDetail>
             {
-                            new CSAttributeDetail
+                            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "2",
                 Description = "Yes, with multiple contacts to Acumatica Support",
                 SortOrder = 2,
                 Disabled = false,
                 NoteID = Guid.Parse("1c015864-33c2-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "1",
                 Description = "Yes, with only one contact to Acumatica Support",
                 SortOrder = 1,
                 Disabled = false,
                 NoteID = Guid.Parse("1a015864-33c2-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "0",
                 Description = "No, my issue was not resolved",
@@ -331,7 +331,7 @@ namespace PX.Survey.Ext
         #endregion //SURESOLVE
 
         #region SUSATISFAC
-        public CSAttribute csSUSATISFAC = new CSAttribute
+        public PX.Objects.CS.CSAttribute csSUSATISFAC = new PX.Objects.CS.CSAttribute
         {
             AttributeID = "SUSATISFAC",
             Description = "Satisfaction",
@@ -340,37 +340,37 @@ namespace PX.Survey.Ext
             NoteID = Guid.Parse("ac725d33-70bf-eb11-a38b-3c6aa7cb36ca")
         };
 
-        public List<CSAttributeDetail> csSUSATISFACDetail = new List<CSAttributeDetail>
+        public List<PX.Objects.CS.CSAttributeDetail> csSUSATISFACDetail = new List<PX.Objects.CS.CSAttributeDetail>
             {
-                            new CSAttributeDetail
+                            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "5",
                 Description = "Very Satisfied",
                 SortOrder = 1,
                 Disabled = false,
                 NoteID = Guid.Parse("29768a51-70bf-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "4",
                 Description = "Satisfied",
                 SortOrder = 2,
                 Disabled = false,
                 NoteID = Guid.Parse("8baa2446-70bf-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "3",
                 Description = "Neutral (Neither Satisfied Nor Dissatisfied)",
                 SortOrder = 3,
                 Disabled = false,
                 NoteID = Guid.Parse("87aa2446-70bf-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "2",
                 Description = "Dissatisfied",
                 SortOrder = 4,
                 Disabled = false,
                 NoteID = Guid.Parse("aec2e83f-70bf-eb11-a38b-3c6aa7cb36ca")
-            },            new CSAttributeDetail
+            },            new PX.Objects.CS.CSAttributeDetail
             {
                 ValueID = "1",
                 Description = "Very Dissatisfied",

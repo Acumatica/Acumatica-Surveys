@@ -154,6 +154,25 @@ namespace PX.Survey.Ext {
             return adapter.Get();
         }
 
+        #region Test Record Creation
+        //todo: comment out when finished with testing
+        //note: 20211214 this exist as a means to step through CustomizationPlugin code as 
+        //      there is no means to step through and debug code during a publish.
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public PXAction<Survey> testRecordCreation;
+        [PXUIField(DisplayName = "Test", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        // ReSharper disable once UnusedMember.Global
+        public virtual IEnumerable TestRecordCreation(PXAdapter adapter)
+        {
+            SurveyCustomizationPlugin scp = new SurveyCustomizationPlugin();
+            scp.InitializeSurveyComponents();
+            scp.InitializeSurveyAttributes();
+            return adapter.Get();
+        } 
+        #endregion
+
         public PXFilter<CreateSurveyFilter> createSurveyFilter;
         public PXAction<Survey> createSurvey;
         [PXUIField(DisplayName = "Load Template", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
