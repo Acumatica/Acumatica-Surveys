@@ -99,57 +99,8 @@ namespace PX.Survey.Ext {
             yield break;
         }
 
-        //protected virtual void _(Events.FieldSelecting<CacheEntityItem.e EPRuleCondition_Entity_(PXCache sender, PXFieldSelectingEventArgs e) {
-        //    if (this.AssigmentMap.Current != null) {
-        //        e.ReturnState = this.CreateFieldStateForEntity(e.ReturnValue, this.AssigmentMap.Current.EntityType, this.AssigmentMap.Current.GraphType);
-        //    }
-        //}
-
-        //protected virtual void EPRuleCondition_Entity_FieldUpdated(PXCache sender, PXFieldUpdatedEventArgs e) {
-        //    EPRuleCondition row = e.Row as EPRuleCondition;
-        //    this.Rules.Cache.SetValue<EPRuleCondition.fieldName>(row, null);
-        //}
-
-        //protected virtual void _(Events.RowSelected<SurveySetupEntity> e) {
-        //    string screenID;
+        //protected virtual void _(Events.FieldDefaulting<SurveySetupEntity, SurveySetupEntity.entityType> e) {
         //    var row = e.Row;
-        //    string str = screenID;
-        //    if (row == null || str == null) {
-        //        return;
-        //    }
-        //    string[] strArrays = null;
-        //    string[] strArrays1 = null;
-        //    foreach (PXEventSubscriberAttribute attribute in sender.GetAttributes(row, "value")) {
-        //        PrimaryViewValueListAttribute primaryViewValueListAttribute = attribute as PrimaryViewValueListAttribute;
-        //        if (primaryViewValueListAttribute == null) {
-        //            continue;
-        //        }
-        //        bool? fromSchema = row.FromSchema;
-        //        if (!(fromSchema.GetValueOrDefault() & fromSchema.HasValue)) {
-        //            primaryViewValueListAttribute.IsActive = false;
-        //            if (strArrays != null || SMNotificationMaint.GetScreenFields(str, out strArrays, out strArrays1)) {
-        //                primaryViewValueListAttribute.SetList(sender, strArrays, strArrays1);
-        //            } else {
-        //                return;
-        //            }
-        //        } else {
-        //            primaryViewValueListAttribute.IsActive = true;
-        //        }
-        //    }
         //}
-
-        protected virtual void _(Events.FieldDefaulting<SurveySetupEntity, SurveySetupEntity.entityType> e) {
-            var row = e.Row;
-            //if (row == null || row.ScreenID == null) {
-            //    return;
-            //}
-            //var smn = PXSiteMap.Provider.FindSiteMapNodeByScreenID(row.ScreenID);
-            //if (smn != null) {
-            //    var graphType = smn.GraphType;
-            //    var primaryCacheInfo = GraphHelper.GetPrimaryCache(graphType);
-            //    e.NewValue = primaryCacheInfo?.CacheType.FullName;
-            //    e.Cancel = e.NewValue != null;
-            //}
-        }
     }
 }
