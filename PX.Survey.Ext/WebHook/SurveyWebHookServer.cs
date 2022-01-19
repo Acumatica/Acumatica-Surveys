@@ -63,7 +63,7 @@ namespace PX.Survey.Ext.WebHook {
         /// </summary>
         /// <returns></returns>
         private IDisposable GetUserScope() {
-            //todo: For now we will use admin but we will want to throttle back to a 
+            //todo: For now we will use admin but we will want to throttle back to a
             //      user with restricted access as to reduce any risk of attack.
             //      perhaps this can be configured in the Surveys Preferences/Setup page.
             var userName = "admin";
@@ -80,8 +80,8 @@ namespace PX.Survey.Ext.WebHook {
 
         public class HtmlActionResult : IHttpActionResult {
 
-            private string _message;
-            private HttpStatusCode _status;
+            private readonly string _message;
+            private readonly HttpStatusCode _status;
 
             public HtmlActionResult(string message, HttpStatusCode status) {
                 _message = message;
@@ -98,8 +98,8 @@ namespace PX.Survey.Ext.WebHook {
 
         public class RedirectResult : IHttpActionResult {
 
-            private Uri _location;
-            private string _reason;
+            private readonly Uri _location;
+            private readonly string _reason;
 
             public RedirectResult(Uri uri, string newToken, string reason) {
                 var ub = new UriBuilder(uri);
