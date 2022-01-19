@@ -38,7 +38,7 @@ namespace PX.Survey.Ext {
         public abstract class componentType : BqlString.Field<componentType> { }
         [PXDBString(2, IsUnicode = false, IsFixed = true)]
         [PXDefault]
-        [PXUIField(DisplayName = "Component Type")]
+        [PXUIField(DisplayName = "Component Type", Visibility = PXUIVisibility.SelectorVisible)]
         [SUComponentType.List]
         public virtual string ComponentType { get; set; }
         #endregion
