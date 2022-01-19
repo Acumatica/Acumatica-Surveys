@@ -103,6 +103,9 @@ namespace PX.Survey.Ext {
 
         private void SendMailNotification(Survey survey, SurveyUser surveyUser, SurveyCollector collector, int? notificationID) {
             Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(this, notificationID);
+        /*
+            notification.RefNoteID = collector.NoteID.ToString();
+        */
             //var sent = false;
             var email = TemplateNotificationGenerator.Create(collector, notification);
             email.LinkToEntity = true;
