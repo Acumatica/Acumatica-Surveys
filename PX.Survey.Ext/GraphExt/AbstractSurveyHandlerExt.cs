@@ -13,7 +13,7 @@ namespace PX.Survey.Ext {
         private static string ACTION_PREFIX = "Survey-";
 
         public PXSetup<SurveySetup> SurveySetup;
-        public PXSelect<SurveySetupEntity, Where<SurveySetupEntity.entityType, Equal<Required<SurveySetupEntity.entityType>>>> SurveySetupEntity;
+        //public PXSelect<SurveySetupEntity, Where<SurveySetupEntity.entityType, Equal<Required<SurveySetupEntity.entityType>>>> SurveySetupEntity;
         public PXSelect<SurveySetupEntity,
             Where<SurveySetupEntity.entityType, Equal<Required<SurveySetupEntity.entityType>>,
             And<SurveySetupEntity.surveyID, IsNotNull>>> SurveyIntegrations;
