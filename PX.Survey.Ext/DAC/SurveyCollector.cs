@@ -81,6 +81,14 @@ namespace PX.Survey.Ext {
         public virtual int? UserLineNbr { get; set; }
         #endregion
 
+        #region EntityType
+        public abstract class entityType : BqlString.Field<entityType> { }
+        [PXString(256, IsUnicode = true)]
+        [SUEntityTypeList]
+        [PXUnboundDefault(typeof(Selector<surveyID, Survey.entityType>))]
+        public virtual string EntityType { get; set; }
+        #endregion
+
         #region RefNoteID
         public abstract class refNoteID : BqlGuid.Field<refNoteID> { }
         [PXDBGuid(false)]

@@ -22,10 +22,9 @@ namespace PX.Survey.Ext {
 
         public static class FK {
             public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyCollectorData>.By<surveyID> { }
-            //public class SUCollectorToken : SurveyCollector.UK.ForeignKeyOf<SurveyCollectorData>.By<token> { }
-            //public class SUCollector : SurveyCollector.PK.ForeignKeyOf<SurveyCollectorData>.By<collectorID> { }
+            public class SUCollector : SurveyCollector.PK.ForeignKeyOf<SurveyCollectorData>.By<collectorID> { }
+            public class SUCollectorToken : SurveyCollector.UK.ByToken.ForeignKeyOf<SurveyCollectorData>.By<token> { }
         }
-
 
         #endregion
 

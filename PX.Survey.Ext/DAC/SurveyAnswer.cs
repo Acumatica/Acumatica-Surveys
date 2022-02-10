@@ -21,6 +21,8 @@ namespace PX.Survey.Ext {
 
         public static class FK {
             public class SUSurvey : Survey.PK.ForeignKeyOf<SurveyAnswer>.By<surveyID> { }
+            public class SUCollector : SurveyCollector.PK.ForeignKeyOf<SurveyCollectorData>.By<collectorID> { }
+
             public class SUSurveyDetail : SurveyDetail.PK.ForeignKeyOf<SurveyAnswer>.By<surveyID, detailLineNbr> { }
         }
         #endregion

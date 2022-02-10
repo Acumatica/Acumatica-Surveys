@@ -102,15 +102,17 @@ namespace PX.Survey.Ext {
         }
 
         private void SendMailNotification(Survey survey, SurveyUser surveyUser, SurveyCollector collector, int? notificationID) {
+
             Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(this, notificationID);
-        /*
+            /*
             notification.RefNoteID = collector.NoteID.ToString();
-        */
+            */
+
             //var sent = false;
             var email = TemplateNotificationGenerator.Create(collector, notification);
-            email.LinkToEntity = true;
-            email.To = surveyUser.Email;
-            email.ContactID = surveyUser.ContactID;
+            //email.LinkToEntity = true;
+            //email.To = surveyUser.Email;
+            //email.ContactID = surveyUser.ContactID;
             var generator = new SurveyGenerator();
             var url = generator.GetUrl(survey, collector.Token, null);
             email.Body = email.Body.Replace("((Collector.URL))", url);
@@ -130,7 +132,7 @@ namespace PX.Survey.Ext {
             //    if (attachment.HasValue)
             //        notificationGenerator.AddAttachmentLink(attachment.Value);
             //}
-            var sent = email.Send();
+            email.Send();
         }
         //}
     }
