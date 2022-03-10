@@ -1,4 +1,4 @@
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
 using PX.Api.Mobile.PushNotifications;
 using PX.Common;
 using PX.Data;
@@ -19,7 +19,9 @@ namespace PX.Survey.Ext {
         public PXSelect<SurveyCollector> Collector;
 
         public PXSelect<Survey, Where<Survey.surveyID, Equal<Required<SurveyCollector.surveyID>>>> FindSurvey;
-        public PXSelect<SurveyUser, Where<SurveyUser.lineNbr, Equal<Required<SurveyCollector.userLineNbr>>>> FindUser;
+        public PXSelect<SurveyUser,
+            Where<SurveyUser.surveyID, Equal<Required<SurveyUser.surveyID>>,
+            And<SurveyUser.lineNbr, Equal<Required<SurveyUser.lineNbr>>>>> FindUser;
 
         public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.collectorID.IsEqual<SurveyCollector.collectorID.FromCurrent>>.View CollectedAnswers;
         public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.status.IsNotEqual<CollectorDataStatus.processed>>.View UnprocessedCollectedAnswers;
@@ -88,7 +90,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendNotification(SurveyCollector collector, Survey survey, int? notificationID) {
-            SurveyUser surveyUser = FindUser.Select(collector.UserLineNbr);
+            SurveyUser surveyUser = FindUser.Select(collector.SurveyID, collector.UserLineNbr);
             if (surveyUser.UsingMobileApp == true) {
                 SendPushNotification(survey, surveyUser, collector);
             } else {
