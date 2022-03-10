@@ -3,3 +3,4 @@ lib/Bin/
 PX.Survey.Ext/bin/
 PX.Survey.Ext/obj/
 *.user
+packages
