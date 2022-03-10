@@ -181,7 +181,7 @@ namespace PX.Survey.Ext {
             var coll = SurveyCollector.PK.Find(graph, userCollector.AnonCollectorID);
             if (coll == null) {
                 // Rare case where AnonCollectorID points to a deleted Collector, should have been cleared.
-                var (_, anon) = InsertAnonymous(graph, survey, null, true, coll.IsTest == true);
+                var (_, anon) = InsertAnonymous(graph, survey, null, true, false);
                 userCollector.AnonCollectorID = anon?.CollectorID;
                 graph.Collectors.Update(userCollector);
                 graph.Actions.PressSave();
