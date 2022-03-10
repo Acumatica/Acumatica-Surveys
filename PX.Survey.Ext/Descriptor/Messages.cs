@@ -128,6 +128,9 @@ namespace PX.Survey.Ext {
             public const string RemindOnly = "Remind Un-Answered";
             public const string ExpireOnly = "Expire Un-Answered";
             public const string ProcessAnswers = "Process Answers";
+            public const string ClearAnswers = "Clear Answers";
+            public const string ClearAnswersHeader = "Please confirm";
+            public const string ClearAnswersPrompt = "This will clear all processed answers. Do you wish to continue?";
         }
         #endregion
 

@@ -597,7 +597,7 @@ namespace PX.Survey.Ext {
         }
 
         public PXAction<Survey> processAnswers;
-        [PXUIField(DisplayName = "Process Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = Messages.SurveyAction.ProcessAnswers, MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton]
         public virtual IEnumerable ProcessAnswers(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
@@ -611,16 +611,28 @@ namespace PX.Survey.Ext {
         }
 
         public PXAction<Survey> reProcessAnswers;
-        [PXUIField(DisplayName = "Clear Answers", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXUIField(DisplayName = Messages.SurveyAction.ClearAnswers, MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
         [PXButton]
         public virtual IEnumerable ReProcessAnswers(PXAdapter adapter) {
             var list = adapter.Get<Survey>().ToList();
             Save.Press();
-            var graph = CreateInstance<SurveyMaint>();
-            foreach (var survey in list) {
-                var row = PXCache<Survey>.CreateCopy(survey);
-                graph.DoReProcessAnswers(row);
+
+            // Return from empty list
+            if (list.Count < 1) return adapter.Get();
+
+            WebDialogResult result = adapter.View.Ask(list[0], Messages.SurveyAction.ClearAnswersHeader, Messages.SurveyAction.ClearAnswersPrompt, MessageButtons.YesNo, MessageIcon.Question);
+            if (result == WebDialogResult.Yes)
+            {
+                var graph = CreateInstance<SurveyMaint>();
+                foreach (var survey in list) {
+
+                        var row = PXCache<Survey>.CreateCopy(survey);
+                        graph.DoReProcessAnswers(row);
+
+                }
+
             }
+
             return adapter.Get();
         }
 

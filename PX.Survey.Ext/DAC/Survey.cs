@@ -93,7 +93,7 @@ namespace PX.Survey.Ext {
         #region AllowAnonymous
         public abstract class allowAnonymous : BqlBool.Field<allowAnonymous> { }
         [PXDBBool]
-        [PXUIField(DisplayName = "Allow Anonymous", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXUIField(DisplayName = "Allow Public Answers", Visibility = PXUIVisibility.SelectorVisible)]
         public virtual bool? AllowAnonymous { get; set; }
         #endregion
 
