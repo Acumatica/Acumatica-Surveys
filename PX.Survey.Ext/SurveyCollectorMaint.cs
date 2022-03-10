@@ -17,14 +17,24 @@ namespace PX.Survey.Ext {
         private static readonly IPushNotificationSender pushNotificationSender = ServiceLocator.Current.GetInstance<IPushNotificationSender>();
 
         public PXSelect<SurveyCollector> Collector;
-        public PXSelect<Survey, Where<Survey.surveyID, Equal<Current<SurveyCollector.surveyID>>>> CurrentSurvey;
-        public PXSelect<SurveyUser, Where<SurveyUser.lineNbr, Equal<Current<SurveyCollector.userLineNbr>>>> CurrentUser;
+
+        public PXSelect<Survey, Where<Survey.surveyID, Equal<Required<SurveyCollector.surveyID>>>> FindSurvey;
+        public PXSelect<SurveyUser, Where<SurveyUser.lineNbr, Equal<Required<SurveyCollector.userLineNbr>>>> FindUser;
 
         public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.collectorID.IsEqual<SurveyCollector.collectorID.FromCurrent>>.View CollectedAnswers;
         public SelectFrom<SurveyCollectorData>.Where<SurveyCollectorData.status.IsNotEqual<CollectorDataStatus.processed>>.View UnprocessedCollectedAnswers;
 
         public PXCancel<SurveyCollector> Cancel;
         public PXSave<SurveyCollector> Save;
+
+        //protected virtual void _(Events.FieldSelecting<SurveyCollector, SurveyCollector.baseURL> e) {
+        //    var row = e.Row;
+        //    if (row == null) {
+        //        return;
+        //    }
+        //    var generator = new SurveyGenerator();
+        //    e.ReturnValue = generator.GetUrl();
+        //}
 
         public PXAction<SurveyCollector> sendNewNotification;
         [PXUIField(DisplayName = "Send New Notification", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
@@ -40,8 +50,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendNewNotification(SurveyCollector collector) {
-            Collector.Current = collector;
-            Survey survey = CurrentSurvey.Select();
+            Survey survey = FindSurvey.Select(collector.SurveyID);
             DoSendNotification(collector, survey, survey.NotificationID);
             collector.SentOn = PXTimeZoneInfo.Now;
             collector.Status = CollectorStatus.Sent;
@@ -64,8 +73,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendReminder(SurveyCollector collector, int? delay) {
-            Collector.Current = collector;
-            Survey survey = CurrentSurvey.Select();
+            Survey survey = FindSurvey.Select(collector.SurveyID);
             DoSendNotification(collector, survey, survey.RemindNotificationID);
             collector.SentOn = PXTimeZoneInfo.Now;
             collector.Status = CollectorStatus.Reminded;
@@ -78,7 +86,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendNotification(SurveyCollector collector, Survey survey, int? notificationID) {
-            SurveyUser surveyUser = CurrentUser.Select();
+            SurveyUser surveyUser = FindUser.Select(collector.UserLineNbr);
             if (surveyUser.UsingMobileApp == true) {
                 SendPushNotification(survey, surveyUser, collector);
             } else {
@@ -102,23 +110,21 @@ namespace PX.Survey.Ext {
         }
 
         private void SendMailNotification(Survey survey, SurveyUser surveyUser, SurveyCollector collector, int? notificationID) {
-
             Notification notification = PXSelect<Notification, Where<Notification.notificationID, Equal<Required<Notification.notificationID>>>>.Select(this, notificationID);
             /*
             notification.RefNoteID = collector.NoteID.ToString();
             */
-
             //var sent = false;
-            var email = TemplateNotificationGenerator.Create(collector, notification);
-            //email.LinkToEntity = true;
-            //email.To = surveyUser.Email;
-            //email.ContactID = surveyUser.ContactID;
+            var emailGenerator = TemplateNotificationGenerator.Create(collector, notification);
+            emailGenerator.LinkToEntity = true;
+            emailGenerator.To = surveyUser.Email;
+            emailGenerator.ContactID = surveyUser.ContactID;
             var generator = new SurveyGenerator();
             var url = generator.GetUrl(survey, collector.Token, null);
-            email.Body = email.Body.Replace("((Collector.URL))", url);
+            emailGenerator.Body = emailGenerator.Body.Replace("((Collector.URL))", url);
             //sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
-            //sender.RefNoteID = collector.NoteID;
-            //sender.Subject = 
+            emailGenerator.RefNoteID = collector.NoteID;
+            //sender.Subject =
             //bool asAttachment = false;
             //if (asAttachment) {
             //if (!string.IsNullOrEmpty(message)) {
@@ -132,7 +138,7 @@ namespace PX.Survey.Ext {
             //    if (attachment.HasValue)
             //        notificationGenerator.AddAttachmentLink(attachment.Value);
             //}
-            email.Send();
+            var emails = emailGenerator.Send();
         }
         //}
     }

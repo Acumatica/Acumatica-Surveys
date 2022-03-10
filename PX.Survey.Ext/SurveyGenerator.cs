@@ -236,13 +236,13 @@ namespace PX.Survey.Ext {
 
         public string GetUrl(Survey survey, string token, int? pageNbr) {
             graph.Survey.Current = survey;
-            string webHookUrl = GetUrl(survey);
+            string webHookUrl = GetUrl();
             var pageParam = pageNbr.HasValue ? $"{SurveyWebhookServerHandler.PAGE_PARAM}={pageNbr}&" : "";
             var url = $"{webHookUrl}?{pageParam}{SurveyWebhookServerHandler.TOKEN_PARAM}={token}";
             return url;
         }
 
-        private string GetUrl(Survey survey) {
+        public string GetUrl() {
             string webHookUrl = "";
             var setup = graph.SurveySetup.Current;
             if (setup.WebHookID.HasValue) {

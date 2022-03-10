@@ -163,6 +163,14 @@ namespace PX.Survey.Ext {
         public virtual string EntityType { get; set; }
         #endregion
 
+        #region BaseURL
+        public abstract class baseURL : BqlString.Field<baseURL> { }
+        [PXDBString(256, IsUnicode = true)]
+        [PXUIField(DisplayName = "Base URL")]
+        //[PXFormula(typeof(Selector<SurveySetup.webHookID, WebHooks.url>), Persistent = true)]
+        public virtual string BaseURL { get; set; }
+        #endregion
+
         #region AnonURL
         public abstract class anonURL : BqlString.Field<anonURL> { }
         [PXString(IsUnicode = true)]

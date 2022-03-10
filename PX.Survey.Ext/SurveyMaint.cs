@@ -871,6 +871,16 @@ namespace PX.Survey.Ext {
             e.Cancel = true;
         }
 
+        protected virtual void _(Events.FieldDefaulting<Survey, Survey.baseURL> e) {
+            var row = e.Row;
+            if (row == null) {
+                return;
+            }
+            var generator = new SurveyGenerator();
+            var url = generator.GetUrl();
+            e.NewValue = url;
+        }
+
         protected virtual void _(Events.FieldSelecting<Survey, Survey.anonURL> e) {
             var row = e.Row;
             if (row == null) {

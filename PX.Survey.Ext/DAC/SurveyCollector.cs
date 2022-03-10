@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace PX.Survey.Ext {
 
     /// <summary>
-    /// This entity is used to coordinate gathering and attaching Survey answers to a specific time. 
+    /// This entity is used to coordinate gathering and attaching Survey answers to a specific time.
     /// </summary>
     [DebuggerDisplay("SurveyCollector: CollectorID = {CollectorID}, Token = {Token}, DisplayName = {DisplayName}, AnonCollectorID = {AnonCollectorID}")]
     [Serializable]
@@ -195,7 +195,7 @@ namespace PX.Survey.Ext {
         //[PXDefault(typeof(collectorID))]
         //[PXRSACryptStringWithConditional(255, typeof(isEncryptionRequired), typeof(isEncrypted))]
         //[PXRSACryptString(255, IsViewDecrypted = true)]
-        [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it 
+        [PXDBString(255, IsUnicode = true)]//tokens can be up to 255 chars. we could consider lessening it
         [PXUIField(DisplayName = "Token", IsReadOnly = true)]
         //[PXFormula(typeof(AccessInfo.businessDate))]
         [PXFormula(typeof(DateAsString<PXDateAndTimeAttribute.now, DateAsStringFormat.roundTrip>))]
@@ -214,7 +214,7 @@ namespace PX.Survey.Ext {
         public abstract class expirationDate : BqlDateTime.Field<expirationDate> { }
         /// <summary>
         /// Specifies the date that this Collector expires. The user has up until this date to finish the survey.
-        /// </summary>        
+        /// </summary>
         [PXDBDate(PreserveTime = true)]
         [PXUIField(DisplayName = "Expiration Date", Enabled = false)]
         public virtual DateTime? ExpirationDate { get; set; }
@@ -223,7 +223,7 @@ namespace PX.Survey.Ext {
         #region Status
         public abstract class status : BqlString.Field<status> { }
         /// <summary>
-        /// Reference to the state the collector record is in   
+        /// Reference to the state the collector record is in
         /// </summary>
         [PXDBString(1, IsUnicode = false, IsFixed = true)]
         [PXDefault(CollectorStatus.New)]
@@ -239,6 +239,14 @@ namespace PX.Survey.Ext {
         [PXUIField(DisplayName = "Processing Message", Enabled = false)]
         public virtual string Message { get; set; }
         #endregion
+
+        //#region BaseURL
+        //public abstract class baseURL : BqlString.Field<baseURL> { }
+        //[PXString(IsUnicode = true)]
+        //[PXUIField(DisplayName = "Base URL")]
+        //[PXFormula(typeof(Selector<surveyID, Survey.baseURL>))]
+        //public virtual string BaseURL { get; set; }
+        //#endregion
 
         #region NoteID
         public abstract class noteID : BqlGuid.Field<noteID> { }
@@ -279,7 +287,7 @@ namespace PX.Survey.Ext {
         public virtual DateTime? LastModifiedDateTime { get; set; }
         #endregion
 
-        #region tstamp        
+        #region tstamp
         public abstract class Tstamp : BqlByteArray.Field<Tstamp> { }
 
         [PXDBTimestamp]

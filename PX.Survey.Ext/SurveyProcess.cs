@@ -76,6 +76,7 @@ namespace PX.Survey.Ext {
             var docCount = 0;
             foreach (var rec in recs) {
                 var row = (SurveyCollector)collCache.CreateCopy(rec);
+                collGraph.Collector.Current = row;
                 try {
                     PXProcessing<SurveyCollector>.SetCurrentItem(rec);
                     switch (action) {
@@ -149,7 +150,7 @@ namespace PX.Survey.Ext {
 
         //private static bool isPastExpiration(SurveyCollector collector) {
         //    //We consider collectors with a null ExpirationDate as a record that never expires
-        //    //This can be explicitly controlled by setting the duration to 0 which will in turn 
+        //    //This can be explicitly controlled by setting the duration to 0 which will in turn
         //    //set a null value into the table.
         //    if (!collector.ExpirationDate.HasValue) return false;
         //    return collector.ExpirationDate < DateTime.UtcNow;
