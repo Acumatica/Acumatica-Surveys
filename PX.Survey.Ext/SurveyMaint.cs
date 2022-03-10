@@ -624,6 +624,32 @@ namespace PX.Survey.Ext {
             return adapter.Get();
         }
 
+        public PXAction<Survey> sendNewNotification;
+        [PXUIField(DisplayName = "Send Notification", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable SendNewNotification(PXAdapter adapter) {
+            if (Collectors.Current != null) {
+                Save.Press();
+                var graph = CreateInstance<SurveyCollectorMaint>();
+                var coll = PXCache<SurveyCollector>.CreateCopy(Collectors.Current);
+                graph.DoSendNewNotification(coll);
+            }
+            return adapter.Get();
+        }
+
+        public PXAction<Survey> sendReminder;
+        [PXUIField(DisplayName = "Send Reminder", MapEnableRights = PXCacheRights.Select, MapViewRights = PXCacheRights.Select)]
+        [PXButton]
+        public virtual IEnumerable SendReminder(PXAdapter adapter) {
+            if (Collectors.Current != null) {
+                Save.Press();
+                var graph = CreateInstance<SurveyCollectorMaint>();
+                var coll = PXCache<SurveyCollector>.CreateCopy(Collectors.Current);
+                graph.DoSendReminder(coll, null);
+            }
+            return adapter.Get();
+        }
+
         public void DoReProcessAnswers(Survey survey) {
             Survey.Current = survey;
             // Delete all answers
@@ -1094,6 +1120,12 @@ namespace PX.Survey.Ext {
         public void _(Events.RowSelected<SurveyCollector> e) {
             var survey = Survey.Current;
             var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
+            var row = e.Row;
+            if (row == null) { return; }
+            var isClosed = survey.Status == SurveyStatus.Closed;
+            var notifSent = row.SentOn.HasValue;
+            sendNewNotification.SetEnabled(!notifSent && !isClosed);
+            sendReminder.SetEnabled(notifSent && !isClosed);
             PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
             PXUIFieldAttribute.SetVisible<SurveyCollector.source>(e.Cache, e.Row, showRefNote);
             var hasPages = HasDetailRecords();

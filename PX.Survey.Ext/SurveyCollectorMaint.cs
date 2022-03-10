@@ -1,4 +1,4 @@
-﻿using CommonServiceLocator;
+using CommonServiceLocator;
 using PX.Api.Mobile.PushNotifications;
 using PX.Common;
 using PX.Data;
@@ -50,6 +50,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendNewNotification(SurveyCollector collector) {
+            Collector.Current = collector;
             Survey survey = FindSurvey.Select(collector.SurveyID);
             DoSendNotification(collector, survey, survey.NotificationID);
             collector.SentOn = PXTimeZoneInfo.Now;
@@ -73,6 +74,7 @@ namespace PX.Survey.Ext {
         }
 
         public void DoSendReminder(SurveyCollector collector, int? delay) {
+            Collector.Current = collector;
             Survey survey = FindSurvey.Select(collector.SurveyID);
             DoSendNotification(collector, survey, survey.RemindNotificationID);
             collector.SentOn = PXTimeZoneInfo.Now;
