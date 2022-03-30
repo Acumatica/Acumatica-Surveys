@@ -212,6 +212,10 @@ namespace PX.Survey.Ext {
             var noteID = collector.RefNoteID;
             var eh = new EntityHelper(graph);
             var entityRow = eh.GetEntityRow(noteID);
+            // Due to Acumatica
+            if (entityRow == null) {
+                return;
+            }
             var entityType = entityRow.GetType();
             var entityName = eh.GetFriendlyEntityName(noteID);
             var fvp = eh.GetFieldValuePairs(entityRow, entityType);
