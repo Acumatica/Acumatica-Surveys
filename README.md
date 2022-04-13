@@ -1,40 +1,33 @@
 # PX.Survey.Ext
 
-## [Current Components]
-| **Type** | **Link** | **Changes** |
-| :--- | :--- | :--- |
-|DAC|[RecipientFilter.cs](PX.Survey.Ext/DAC/RecipientFilter.cs)||
-|DAC|[RecipientLookup.cs](PX.Survey.Ext/DAC/RecipientLookup.cs)||
-|DAC|[RecipientSelected.cs](PX.Survey.Ext/DAC/RecipientSelected.cs)||
-|DAC|[Survey.cs](PX.Survey.Ext/DAC/Survey.cs)||
-|DAC|[SurveyCollector.cs](PX.Survey.Ext/DAC/SurveyCollector.cs)||
-|DAC|[SurveyCollectorData.cs](PX.Survey.Ext/DAC/SurveyCollectorData.cs)||
-|DAC|[SurveyDetail.cs](PX.Survey.Ext/DAC/SurveyDetail.cs)||
-|DAC|[SurveySetup.cs](PX.Survey.Ext/DAC/SurveySetup.cs)||
-|DAC|[SurveyTemplate.cs](PX.Survey.Ext/DAC/SurveyTemplate.cs)||
-|DAC|[SurveyUser.cs](PX.Survey.Ext/DAC/SurveyUser.cs)||
-|DAC|[TemplateFilter.cs](PX.Survey.Ext/DAC/TemplateFilter.cs)||
-|DAC|[TemplateSelected.cs](PX.Survey.Ext/DAC/TemplateSelected.cs)||
-|DAC|[RecipientSelected.cs](PX.Survey.Ext/DAC/RecipientSelected.cs)||
-|DACExt|[ContactSurveyExt.cs](PX.Survey.Ext/DACExt/ContactSurveyExt.cs)||
-|DACExt|[CSAttributeDetailSurveyExt.cs](PX.Survey.Ext/DACExt/CSAttributeDetailSurveyExt.cs)||
-|DACExt|[CSAttributeSurveyExt.cs](PX.Survey.Ext/DACExt/CSAttributeSurveyExt.cs)||
-|Code|[Attributes.cs](PX.Survey.Ext/Descriptor/Attributes.cs)||
-|Code|[Messages.cs](PX.Survey.Ext/Descriptor/Messages.cs)||
-|Code|[SurveyResponseStatus.cs](PX.Survey.Ext/Descriptor/SurveyResponseStatus.cs)||
-|Attribute|[PXDBTimeSpanLongExtAttribute.cs](PX.Survey.Ext/PXDBTimeSpanLongExtAttribute.cs)||
-|Graph|[SurveyCollectorDataMaint.cs](PX.Survey.Ext/SurveyCollectorDataMaint.cs)||
-|Graph|[SurveyCollectorMaint.cs](PX.Survey.Ext/SurveyCollectorMaint.cs)||
-|Graph|[SurveyMaint.cs](PX.Survey.Ext/SurveyMaint.cs)||
-|Graph|[SurveyProcess.cs](PX.Survey.Ext/SurveyProcess.cs)||
-|Graph|[SurveySetupMaint.cs](PX.Survey.Ext/SurveySetupMaint.cs)||
-|Graph|[SurveyTemplateMaint.cs](PX.Survey.Ext/SurveyTemplateMaint.cs)||
-|WebHook|[SurveyWebHookServer.cs](PX.Survey.Ext/WebHook/SurveyWebHookServer.cs)||
-|Screen|[SU.10.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU101000) (Survey Preferences)||
-|Screen|[SU.20.10.PL](https://try.acumatica.com/cews3/Main?ScreenId=SU2010PL) (Survey)||
-|Screen|[SU.20.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU201000) (Survey)||
-|Screen|[SU.30.10.PL](https://try.acumatica.com/cews3/Main?ScreenId=SU3010PL) (Survey Response)||
-|Screen|[SU.30.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU301000) (Survey Response)||
-|Screen|[SU.40.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU401000) (Survey Response View)||
-|Screen|[SU.40.10.20](https://try.acumatica.com/cews3/Main?ScreenId=SU401020) (Survey User Devices)||
-|Screen|[SU.50.10.00](https://try.acumatica.com/cews3/Main?ScreenId=SU501000) (???)||
+*This README document will serve as an index or table of contents for the reader to more easily navigate the various documenation that has been created as well as point to the versions of the customization package built for different versions of Acumatica to download - which at present is versions 2019R2 and 2020R1.  Future versions will be listed as well as they become available.*
+
+
+## Content Index ##
+
+[Installation & Setup Guide](https://github.com/Acumatica/Acumatica-Surveys/blob/master/Installation%20&%20Setup%20Guide.md)
+
+[Acumatica Surveys for Version 2019R2](https://github.com/Acumatica/Acumatica-Surveys/tree/2019R2)
+
+[Acumatica Surveys for Version 2020R1](https://github.com/Acumatica/Acumatica-Surveys/tree/2020R1)
+
+[Known Issues](https://github.com/Acumatica/Acumatica-Surveys/issues)
+
+
+## Prerequisites | Supported Versions & Builds ##
+
+***Acumatica 2019R2 (Build 19.208.0051 onward)***
+
+***Acumatica 2020R1 (Build 20.100.0095 onward)***
+
+
+## Support ##
+
+If you have any questions or need assistance, you can post your questions in our [Stackoverflow forum](https://stackoverflow.com/questions/tagged/acumatica).
+
+## More Information
+To see a demonstration of *Acumatica Surveys*, click on the following link: https://youtu.be/RV7jsTgsVNE.
+
+Learn more about how Acumatica Surveys was concieved, read Ali Jani's blog post:
+
+[Acumatica Surveys: A COVID-19 Wellness Tracker of Employees](https://www.acumatica.com/blog/acumatica-surveys-covid-19-wellness-tracker/)
