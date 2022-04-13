@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Acumatica Case Support Satisfaction Survey</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://gitcdn.link/cdn/Wikiki/bulma-checkradio/38c95578f465f4c3805f578490925f337b87404d/dist/css/bulma-checkradio.min.css" />
+        <style></style>
+    </head>
+    <body class="has-background-light" style="height: 100%; min-height: 100vh">
+        <section class="section container is-max-desktop has-background-white px-0 py-5">
+            <form name="{survey.formname}" action="{webhook.url}" method="post" enctype="multipart/form-data">
+                <!-- INNER CONTENT STARTS HERE -->
+                <!-- Header HTML content starts here -->
+                <header class="hero">
+                    <a class="px-5" target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="image" style="width: 250px" /></a>
+                    <div class="hero-body py-4 mt-4 px-0">
+                        <h1 class="title has-background-info-dark has-text-white px-4 py-4 mb-4">Acumatica Case Support Satisfaction Survey</h1>
+                        <h2 class="subtitle has-background-info has-text-white px-4 py-2 mb-2"></h2>
+                        <div class="columns is-mobile my-4">
+                            <div class="column is-three-fifths is-offset-one-fifth">
+                                <!-- Change value % according to current section/page -->
+                                <!-- value={current page} max={total pages} -->
+                                <progress class="progress progress-text is-primary" value="3" max="4"></progress>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Header HTML content ends here -->
+            <div class="px-5">
+                <form name="{survey.formname}" action="{webhook.url}" method="post" enctype="multipart/form-data">
+                    <!-- All question components should live inside this section bellow {foreach question}-->
+                    <!-- Horizontal Radio input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">* 3. In this interaction with agent, on a 5-point scale how satisfied you are with</label>
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th class="is-size-7"></th>
+                                    <th class="is-size-7">5 = Very Satisfied</th>
+                                    <th class="is-size-7">3 = Satisfied</th>
+                                    <th class="is-size-7">2 = Neutral</th>
+                                    <th class="is-size-7">4 = Dissatisfied</th>
+                                    <th class="is-size-7">1 = Very Dissatisfied</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered" style="max-width: 100px; width: 15%"><label class="radio" id="{control.hradio1.labelid1}" for="{control.hradio1.id1}">Agent's ability to communicate with you in a clear and understandable manner</label></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio1.id5}" name="{control.hradio1.name}" aria-labelledby="{control.hradio1.labelid1}" value="5" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio1.id4}" name="{control.hradio1.name}" aria-labelledby="{control.hradio1.labelid1}" value="4" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio1.id3}" name="{control.hradio1.name}" aria-labelledby="{control.hradio1.labelid1}" value="3" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio1.id2}" name="{control.hradio1.name}" aria-labelledby="{control.hradio1.labelid1}" value="2" /></td>
+                                    <td class="has-text-centered is-vcentered" style="width: 17%"><input class="radio" type="radio" id="{control.hradio1.id1}" name="{control.hradio1.name}" aria-labelledby="{control.hradio1.labelid1}" value="1" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Horizontal Radio input component HTML (end cut here) -->
+                    <!-- Horizontal Radio input SECONDARY component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered is-2" style="max-width: 100px; width: 15%"><label class="radio" id="{control.hradio2.labelid1}" for="{control.hradio2.id1}">Agent's knowledge of the product and any other factors that were needed to assist you</label></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio2.id5}" name="{control.hradio2.name}" aria-labelledby="{control.hradio2.labelid1}" value="5" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio2.id4}" name="{control.hradio2.name}" aria-labelledby="{control.hradio2.labelid1}" value="4" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio2.id3}" name="{control.hradio2.name}" aria-labelledby="{control.hradio2.labelid1}" value="3" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio2.id2}" name="{control.hradio2.name}" aria-labelledby="{control.hradio2.labelid1}" value="2" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio2.id1}" name="{control.hradio2.name}" aria-labelledby="{control.hradio2.labelid1}" value="1" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Horizontal Radio input SECONDARY component HTML (end cut here) -->
+                    <!-- Horizontal Radio input SECONDARY component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered is-2" style="max-width: 100px; width: 15%"><label class="radio" id="{control.hradio3.labelid1}" for="{control.hradio3.id1}">Agent's understanding of your question or issue</label></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio3.id5}" name="{control.hradio3.name}" aria-labelledby="{control.hradio3.labelid1}" value="5" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio3.id4}" name="{control.hradio3.name}" aria-labelledby="{control.hradio3.labelid1}" value="4" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio3.id3}" name="{control.hradio3.name}" aria-labelledby="{control.hradio3.labelid1}" value="3" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio3.id2}" name="{control.hradio3.name}" aria-labelledby="{control.hradio3.labelid1}" value="2" /></td>
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="{control.hradio3.id1}" name="{control.hradio3.name}" aria-labelledby="{control.hradio3.labelid1}" value="1" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Horizontal Radio input SECONDARY component HTML (end cut here) -->
+                    <!-- Textarea input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.area1.labelid}" for="{control.area1.id}">Optional comments on agent's professionalism:</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="" rows="2" id="{control.area1.id}" aria-labelledby="{control.area1.labelid}"></textarea>
+                        </div>
+                    </div>
+                    <!-- Textarea input component HTML (end cut here) -->
+                    <!-- Radio input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">* 4. Please rate how easy or difficult it was for you to contact Acumatica Support on a 5-point scale (that includes website, email, chat or phone system experience):</label>
+                        <!-- {foreach option start} -->
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio3.id5}" name="{control.radio3.name}" aria-labelledby="{control.radio3.labelid5}" value="5" />
+                            <label id="{control.radio3.labelid5}" for="{control.radio3.id5}">5 = Very Easy</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio3.id4}" name="{control.radio3.name}" aria-labelledby="{control.radio3.labelid4}" value="4" />
+                            <label id="{control.radio3.labelid4}" for="{control.radio3.id4}">4 = Easy</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio3.id3}" name="{control.radio3.name}" aria-labelledby="{control.radio3.labelid3}" value="3" />
+                            <label id="{control.radio3.labelid3}" for="{control.radio3.id3}">3 = Neutral (Neither Easy nor Difficult)</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio3.id2}" name="{control.radio3.name}" aria-labelledby="{control.radio3.labelid2}" value="2" />
+                            <label id="{control.radio3.labelid2}" for="{control.radio3.id2}">2 = Difficult</label>
+                        </div>
+                        <div class="field">
+                            <input type="radio" class="is-checkradio is-black" id="{control.radio3.id1}" name="{control.radio3.name}" aria-labelledby="{control.radio3.labelid1}" value="1" />
+                            <label id="{control.radio3.labelid1}" for="{control.radio3.id1}">1 = Very Difficult</label>
+                        </div>
+                        <!-- {foreach option end} -->
+                    </div>
+                    <!-- Radio input component HTML (end cut here) -->
+                    <!-- Textarea input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.area2.labelid}" for="{control.area2.id}">5. Optional comments on ease of contacting Acumatica Support:</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="" rows="3" id="{control.area2.id}" aria-labelledby="{control.area2.labelid}"></textarea>
+                        </div>
+                    </div>
+                    <!-- Textarea input component HTML (end cut here) -->
+                    <!-- Checkbox input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label">6. Which of the following resources do you use when you have a problem with Acumatica ERP (optional):</label>
+                        <!-- {foreach option start} -->
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox1.id1}" name="{control.checkbox1.name}" aria-labelledby="{control.checkbox1.labelid1}" value="Help of colleagues" />
+                            <label id="{control.checkbox1.labelid1}" for="{control.checkbox1.id1}">Help of colleagues</label>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox1.id2}" name="{control.checkbox1.name}" aria-labelledby="{control.checkbox1.labelid2}" value="In-product help" />
+                            <label id="{control.checkbox1.labelid2}" for="{control.checkbox1.id2}">In-product help</label>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox1.id3}" name="{control.checkbox1.name}" aria-labelledby="{control.checkbox1.labelid3}" value="Pdf User Guides" />
+                            <label id="{control.checkbox1.labelid3}" for="{control.checkbox1.id3}">Pdf User Guides</label>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox1.id4}" name="{control.checkbox1.name}" aria-labelledby="{control.checkbox1.labelid4}" value="Training materials" />
+                            <label id="{control.checkbox1.labelid4}" for="{control.checkbox1.id4}">Training materials</label>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox1.id5}" name="{control.checkbox1.name}" aria-labelledby="{control.checkbox1.labelid5}" value="Acumatica Technical Support" />
+                            <label id="{control.checkbox1.labelid5}" for="{control.checkbox1.id5}">Acumatica Technical Support</label>
+                        </div>
+                        <div class="field">
+                            <input type="checkbox" class="is-checkradio is-black" id="{control.checkbox1.id6}" name="{control.checkbox1.name}" aria-labelledby="{control.checkbox1.labelid6}" value="Acumatica KB" />
+                            <label id="{control.checkbox1.labelid6}" for="{control.checkbox1.id6}">Acumatica KB</label>
+                        </div>
+                        <!-- {foreach option end} -->
+                    </div>
+                    <!-- Checkbox input component HTML (end cut here) -->
+                    <!-- Text input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.text1.labelid}" for="{control.text1.id}">Other (please specify)</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="" id="{control.text1.id}" aria-labelledby="{control.text1.labelid}" />
+                        </div>
+                    </div>
+                    <!-- Text input component HTML (end cut here) -->
+                    <!-- Textarea input component HTML (start cut here) -->
+                    <div class="field mb-5">
+                        <label class="label" id="{control.area3.labelid}" for="{control.area3.id}">7. If you have other comments or feedback, please include them below:</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="" rows="3" id="{control.area3.id}" aria-labelledby="{control.area3.labelid}"></textarea>
+                        </div>
+                    </div>
+                    <!-- Textarea input component HTML (end cut here) -->
+
+                    <!-- {end foreach question} All question components should live inside above section-->
+                    <div class="content has-text-centered">
+                        <!-- {if page > 1 show back button} -->
+                        <button type="submit" class="button is-dark is-medium" name="action" value="back">Back</button>
+                        <!-- {endif} -->
+                        
+                        <button type="submit" class="button is-info is-medium" name="action" value="next">Next</button>
+                    </div>
+                    <hr class="mt-1" />
+                    <div class="content level has-text-centered mt-4">
+                        <div class="level-item has-text-centered">
+                            <p class="heading">Powered by</p>
+                            <p class="title ml-2">
+                                <a target="_blank" href="https://www.acumatica.com"><img src="https://cdn.acumatica.com/content/themes/acumatica/assets/img/svg/logo-dark.svg" alt="Acumatica" class="mt-1" style="width: 100px" /></a>
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer HTML content ends here -->
+                <!-- INNER CONTENT ENDS HERE -->
+            </form>
+        </section>
+    </body>
+</html>

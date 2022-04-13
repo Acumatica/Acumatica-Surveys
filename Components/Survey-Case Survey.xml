@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="Survey" file-name="Survey-(SurveyID)">
+    <link from="SurveyDetail (SurveyID)" to="Survey (SurveyID)" />
+    <link from="SurveyUser (SurveyID)" to="Survey (SurveyID)" />
+    <link from="Survey (NoteID)" to="Note (NoteID)" type="Note" />
+    <link from="SurveyDetail (NoteID)" to="Note (NoteID)" type="Note" />
+    <link from="SurveyUser (NoteID)" to="Note (NoteID)" type="Note" />
+  </relations>
+  <layout>
+    <table name="Survey">
+      <table name="SurveyDetail" uplink="(SurveyID) = (SurveyID)">
+        <table name="Note" uplink="(NoteID) = (NoteID)" />
+      </table>
+      <table name="SurveyUser" uplink="(SurveyID) = (SurveyID)">
+        <table name="Note" uplink="(NoteID) = (NoteID)" />
+      </table>
+      <table name="Note" uplink="(NoteID) = (NoteID)" />
+    </table>
+  </layout>
+  <data>
+    <Survey>
+      <row SurveyID="000011" Title="Acumatica Case Support Satisfaction Survey" TemplateID="SUMAIN" WebHookID="9d2fd3bc-aae4-4b34-ab66-f40879be1be2" FormName="SurveyForm" Target="E" AllowAnonymous="0" KeepAnswersAnonymous="1" EntityType="PX.Objects.CR.CRCase" Layout="M" Status="S" NotificationID="1024" RemindNotificationID="1025">
+        <SurveyDetail LineNbr="34" SortOrder="20" Active="1" PageNbr="1" ComponentType="PF" ComponentID="SUPREVNEXT" ReverseOrder="0" />
+        <SurveyDetail LineNbr="33" SortOrder="28" Active="1" PageNbr="4" ComponentType="QU" ComponentID="SUTABLEHEAD" QuestionNbr="0" Description="In this interaction with agent, on a 5-point scale how satisfied you are with" AttributeID="SUSATISFAC" Required="1" ReverseOrder="0" />
+        <SurveyDetail LineNbr="32" SortOrder="42" Active="1" PageNbr="9999" ComponentType="FO" ComponentID="SUTHANKYOU" Description="Thank you!  Your feedback is very important to us." />
+        <SurveyDetail LineNbr="31" SortOrder="41" Active="1" PageNbr="6" ComponentType="PF" ComponentID="SUPREVNEXT" />
+        <SurveyDetail LineNbr="30" SortOrder="40" Active="1" PageNbr="6" ComponentType="CM" ComponentID="SUTEXTAREA" QuestionNbr="10" Description="If you have other comments or feedback, please include them below:" AttributeID="SUCOMMENT" NbrOfRows="5" MaxLength="200" />
+        <SurveyDetail LineNbr="27" SortOrder="39" Active="1" PageNbr="6" ComponentType="QU" ComponentID="SUCHECKBOXES" QuestionNbr="9" Description="Which of the following resources do you use when you have a problem with Acumatica ERP (optional):" AttributeID="SUHELPRES" Required="1" />
+        <SurveyDetail LineNbr="26" SortOrder="38" Active="1" PageNbr="6" ComponentType="PH" ComponentID="SUPROGRESS" />
+        <SurveyDetail LineNbr="25" SortOrder="37" Active="1" PageNbr="5" ComponentType="PF" ComponentID="SUPREVNEXT" />
+        <SurveyDetail LineNbr="24" SortOrder="36" Active="1" PageNbr="5" ComponentType="CM" ComponentID="SUTEXTAREA" QuestionNbr="8" Description="Optional comments on ease of contacting Acumatica Support:" AttributeID="SUCOMMENT" NbrOfRows="3" MaxLength="200" />
+        <SurveyDetail LineNbr="21" SortOrder="35" Active="1" PageNbr="5" ComponentType="QU" ComponentID="SURADIOBUTTONS" QuestionNbr="7" Description="Please rate how easy or difficult it was for you to contact Acumatica Support on a 5-point scale (that includes website, email, chat or phone system experience):" AttributeID="SUEASYNESS" Required="1" />
+        <SurveyDetail LineNbr="20" SortOrder="34" Active="1" PageNbr="5" ComponentType="PH" ComponentID="SUPROGRESS" />
+        <SurveyDetail LineNbr="19" SortOrder="33" Active="1" PageNbr="4" ComponentType="PF" ComponentID="SUPREVNEXT" />
+        <SurveyDetail LineNbr="18" SortOrder="32" Active="1" PageNbr="4" ComponentType="CM" ComponentID="SUTEXTAREA" QuestionNbr="6" Description="Optional comments on agent's professionalism:" AttributeID="SUCOMMENT" NbrOfRows="3" MaxLength="200" />
+        <SurveyDetail LineNbr="15" SortOrder="31" Active="1" PageNbr="4" ComponentType="QU" ComponentID="SUTABLEBODYRB" QuestionNbr="5" Description="Agent's understanding of your question or issue" AttributeID="SUSATISFAC" Required="1" />
+        <SurveyDetail LineNbr="12" SortOrder="30" Active="1" PageNbr="4" ComponentType="QU" ComponentID="SUTABLEBODYRB" QuestionNbr="4" Description="Agent's knowledge of the product and any other factors that were needed to assist you" AttributeID="SUSATISFAC" Required="1" />
+        <SurveyDetail LineNbr="9" SortOrder="29" Active="1" PageNbr="4" ComponentType="QU" ComponentID="SUTABLEBODYRB" QuestionNbr="3" Description="Agent's ability to communicate with you in a clear and understandable manner" AttributeID="SUSATISFAC" Required="1" />
+        <SurveyDetail LineNbr="8" SortOrder="27" Active="1" PageNbr="4" ComponentType="PH" ComponentID="SUPROGRESS" />
+        <SurveyDetail LineNbr="7" SortOrder="25" Active="1" PageNbr="3" ComponentType="QU" ComponentID="SURADIOBUTTONS" QuestionNbr="2" Description="Do you consider this issue to be resolved?" AttributeID="SURESOLVE" Required="1" />
+        <SurveyDetail LineNbr="6" SortOrder="10" Active="1" PageNbr="1" ComponentType="HE" ComponentID="SUWELCOME" Description="Welcome to the new Survey Module demo v3.0" />
+        <SurveyDetail LineNbr="5" SortOrder="26" Active="1" PageNbr="3" ComponentType="PF" ComponentID="SUPREVNEXT" />
+        <SurveyDetail LineNbr="4" SortOrder="24" Active="1" PageNbr="3" ComponentType="PH" ComponentID="SUPROGRESS" />
+        <SurveyDetail LineNbr="3" SortOrder="23" Active="1" PageNbr="2" ComponentType="PF" ComponentID="SUPREVNEXT" />
+        <SurveyDetail LineNbr="2" SortOrder="22" Active="1" PageNbr="2" ComponentType="QU" ComponentID="SURADIOBUTTONS" QuestionNbr="1" Description="Considering everything about your most recent interaction with Acumatica Support, please rate your overall satisfaction with the service you received on a 5-point scale:" AttributeID="SUSATISFAC" Required="1" />
+        <SurveyDetail LineNbr="1" SortOrder="21" Active="1" PageNbr="2" ComponentType="PH" ComponentID="SUPROGRESS" />
+      </row>
+    </Survey>
+  </data>
+</data-set>

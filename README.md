@@ -1,4 +1,4 @@
-# Acumatica Surveys README
+# PX.Survey.Ext
 
 *This README document will serve as an index or table of contents for the reader to more easily navigate the various documenation that has been created as well as point to the versions of the customization package built for different versions of Acumatica to download - which at present is versions 2019R2 and 2020R1.  Future versions will be listed as well as they become available.*
 
