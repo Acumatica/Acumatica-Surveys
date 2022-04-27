@@ -24,8 +24,8 @@ namespace PX.Survey.Ext {
         }
 
         protected override void AddActions(PXGraph graph) {
-            this.AddAction(graph, PasteLineCommand, Messages.Command.SetupPasteLine, new PXButtonDelegate(PasteLine));
-            this.AddAction(graph, ResetOrderCommand, Messages.Command.SetupResetOrder, new PXButtonDelegate(ResetOrder));
+            AddAction(graph, PasteLineCommand, Messages.Command.SetupPasteLine, new PXButtonDelegate(PasteLine));
+            AddAction(graph, ResetOrderCommand, Messages.Command.SetupResetOrder, new PXButtonDelegate(ResetOrder));
         }
     }
 }

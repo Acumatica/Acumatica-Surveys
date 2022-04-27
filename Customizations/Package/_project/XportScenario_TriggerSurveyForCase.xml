@@ -1,0 +1,127 @@
+﻿<XportScenario>
+    <data-set>
+        <relations format-version="3" relations-version="20160101" main-table="SYMapping" file-name="(ScreenID)-(Name)">
+            <link from="SYMapping (ProviderID, NoteID)" to="SYProvider (ProviderID, NoteID)" type="ToMaster" updateable="False" />
+            <link from="SYMapping (NoteID)" to="Note (NoteID)" type="ToMaster" updateable="False" />
+            <link from="SYProvider (NoteID)" to="Note (NoteID)" type="ToMaster" updateable="False" />
+            <link from="SYProviderField (ProviderID)" to="SYProvider (ProviderID)" />
+            <link from="SYProviderField (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYProviderObject (ProviderID)" to="SYProvider (ProviderID)" />
+            <link from="SYProviderObject (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYProviderParameter (ProviderID)" to="SYProvider (ProviderID)" />
+            <link from="SYProviderParameter (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYMappingCondition (MappingID)" to="SYMapping (MappingID)" />
+            <link from="SYMappingCondition (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYMappingField (MappingID)" to="SYMapping (MappingID)" />
+            <link from="SYMappingField (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYImportCondition (MappingID)" to="SYMapping (MappingID)" />
+            <link from="SYImportCondition (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="NoteDoc (NoteID)" to="SYProvider (NoteID)" />
+            <link from="UploadFile (FileID)" to="NoteDoc (FileID)" />
+            <link from="UploadFile (FileID, LastRevisionID)" to="UploadFileRevision (FileID, FileRevisionID)" type="LastRevision" />
+        </relations>
+        <layout>
+            <table name="SYMapping">
+                <table name="SYMappingCondition" uplink="(MappingID) = (MappingID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYMappingField" uplink="(MappingID) = (MappingID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYImportCondition" uplink="(MappingID) = (MappingID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+            </table>
+            <table name="SYProvider">
+                <table name="SYProviderField" uplink="(ProviderID) = (ProviderID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYProviderObject" uplink="(ProviderID) = (ProviderID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYProviderParameter" uplink="(ProviderID) = (ProviderID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="NoteDoc" uplink="(NoteID) = (NoteID)">
+                    <table name="UploadFile" uplink="(FileID) = (FileID)">
+                        <table name="UploadFileRevision" uplink="(FileID, LastRevisionID) = (FileID, FileRevisionID)" />
+                    </table>
+                </table>
+            </table>
+            <table name="Note" />
+        </layout>
+        <data>
+            <SYMapping>
+                <row MappingID="7413fc02-4ff0-45d1-ba7c-62aee705e371" Name="TriggerSurveyForCase" IsActive="1" ScreenID="CR306000" MappingType="I" GraphName="PX.Objects.CR.CRCaseMaint" ViewName="Case" GridViewName="Answers" ProviderID="66012c49-0c59-4a39-b6d0-f53892f6c015" ProviderObject="Results" SyncType="F" Status="N" FieldCntr="287" FieldOrderCntr="0" ImportConditionCntr="0" ConditionCntr="0" DataCntr="0" NbrRecords="0" DiscardResult="0" NoteID="0105f2b5-fcca-eb11-a38e-3c6aa7cb36ca" IsExportOnlyMappingFields="0" RepeatingData="0" ProcessInParallel="0" BreakOnError="1" BreakOnTarget="1" SkipHeaders="0">
+                    <SYMappingField LineNbr="287" OrderNumber="4" IsActive="1" IsVisible="1" ObjectName="Case" FieldName="&lt;RequestSurvey&gt;" NeedCommit="1" IgnoreError="0" />
+                    <SYMappingField LineNbr="255" OrderNumber="2" IsActive="1" IsVisible="0" ParentLineNbr="191" ObjectName="Case" FieldName="&lt;Cancel&gt;" NeedCommit="0" IgnoreError="0" />
+                    <SYMappingField LineNbr="223" OrderNumber="1" IsActive="1" IsVisible="0" ParentLineNbr="191" ObjectName="Case" FieldName="@@CaseCD" Value="=[Case.CaseCD]" NeedCommit="0" IgnoreError="0" />
+                    <SYMappingField LineNbr="191" OrderNumber="3" IsActive="1" IsVisible="1" ObjectName="Case" FieldName="CaseCD" Value="CRCase_caseCD" NeedCommit="1" IgnoreError="0" />
+                </row>
+            </SYMapping>
+            <SYProvider>
+                <row ProviderID="66012c49-0c59-4a39-b6d0-f53892f6c015" Name="TriggerSurveyForCase" IsActive="1" ProviderType="PX.DataSync.BusinessProcessSYProvider" ObjectCntr="2" ParameterCntr="1" NoteID="0105f2b5-fcca-eb11-a38e-3c6aa7cb36ca">
+                    <SYProviderField ObjectName="Results" LineNbr="13" IsActive="1" Name="CREmployee_userID" DisplayName="CREmployee_userID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="14" IsActive="1" Name="CREmployee_acctName" DisplayName="Owner Name" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="25" IsActive="1" Name="CRCase_workgroupID" DisplayName="CRCase_workgroupID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="15" IsActive="1" Name="CRCase_timeEstimated" DisplayName="CRCase_timeEstimated" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="26" IsActive="1" Name="CRCase_timeBillable" DisplayName="CRCase_timeBillable" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="2" IsActive="1" Name="CRCase_subject" DisplayName="CRCase_subject" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="24" IsActive="1" Name="CRCase_statusDate" DisplayName="Status Changed Date" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="3" IsActive="1" Name="CRCase_status" DisplayName="CRCase_status" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="23" IsActive="1" Name="CRCase_sLAETA" DisplayName="CRCase_sLAETA" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="5" IsActive="1" Name="CRCase_severity" DisplayName="CRCase_severity" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="22" IsActive="1" Name="CRCase_resolutionDate" DisplayName="CRCase_resolutionDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="4" IsActive="1" Name="CRCase_resolution" DisplayName="CRCase_resolution" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="6" IsActive="1" Name="CRCase_priority" DisplayName="CRCase_priority" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="16" IsActive="1" Name="CRCase_locationID" DisplayName="CRCase_locationID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="27" IsActive="1" Name="CRCase_lastModifiedDateTime" DisplayName="CRCase_lastModifiedDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="21" IsActive="1" Name="CRCase_isBillable" DisplayName="CRCase_isBillable" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="17" IsActive="1" Name="CRCase_initResponse" DisplayName="CRCase_initResponse" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="28" IsActive="1" Name="CRCase_description" DisplayName="CRCase_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="11" IsActive="1" Name="CRCase_createdDateTime" DisplayName="CRCase_createdDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="19" IsActive="1" Name="CRCase_contractID" DisplayName="CRCase_contractID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="12" IsActive="1" Name="CRCase_caseClassID" DisplayName="CRCase_caseClassID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="1" IsActive="1" Name="CRCase_caseCD" DisplayName="CRCase_caseCD" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="18" IsActive="1" Name="CRCase_assignDate" DisplayName="CRCase_assignDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="10" IsActive="1" Name="CRActivityStatistics_lastOutgoingActivityDate" DisplayName="CRActivityStatistics_lastOutgoingActivityDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="9" IsActive="1" Name="CRActivityStatistics_lastIncomingActivityDate" DisplayName="CRActivityStatistics_lastIncomingActivityDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="20" IsActive="1" Name="Contact_displayName" DisplayName="Contact Name" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="8" IsActive="1" Name="BAccount_acctName" DisplayName="BAccount_acctName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="7" IsActive="1" Name="BAccount_acctCD" DisplayName="BAccount_acctCD" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="40" IsActive="1" Name="CREmployee_userID" DisplayName="CREmployee_userID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="41" IsActive="1" Name="CREmployee_acctName" DisplayName="Owner Name" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="52" IsActive="1" Name="CRCase_workgroupID" DisplayName="CRCase_workgroupID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="42" IsActive="1" Name="CRCase_timeEstimated" DisplayName="CRCase_timeEstimated" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="53" IsActive="1" Name="CRCase_timeBillable" DisplayName="CRCase_timeBillable" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="29" IsActive="1" Name="CRCase_subject" DisplayName="CRCase_subject" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="51" IsActive="1" Name="CRCase_statusDate" DisplayName="Status Changed Date" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="30" IsActive="1" Name="CRCase_status" DisplayName="CRCase_status" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="50" IsActive="1" Name="CRCase_sLAETA" DisplayName="CRCase_sLAETA" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="32" IsActive="1" Name="CRCase_severity" DisplayName="CRCase_severity" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="49" IsActive="1" Name="CRCase_resolutionDate" DisplayName="CRCase_resolutionDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="31" IsActive="1" Name="CRCase_resolution" DisplayName="CRCase_resolution" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="33" IsActive="1" Name="CRCase_priority" DisplayName="CRCase_priority" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="43" IsActive="1" Name="CRCase_locationID" DisplayName="CRCase_locationID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="54" IsActive="1" Name="CRCase_lastModifiedDateTime" DisplayName="CRCase_lastModifiedDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="48" IsActive="1" Name="CRCase_isBillable" DisplayName="CRCase_isBillable" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="44" IsActive="1" Name="CRCase_initResponse" DisplayName="CRCase_initResponse" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="55" IsActive="1" Name="CRCase_description" DisplayName="CRCase_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="38" IsActive="1" Name="CRCase_createdDateTime" DisplayName="CRCase_createdDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="46" IsActive="1" Name="CRCase_contractID" DisplayName="CRCase_contractID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="39" IsActive="1" Name="CRCase_caseClassID" DisplayName="CRCase_caseClassID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="28" IsActive="1" Name="CRCase_caseCD" DisplayName="CRCase_caseCD" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="45" IsActive="1" Name="CRCase_assignDate" DisplayName="CRCase_assignDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="37" IsActive="1" Name="CRActivityStatistics_lastOutgoingActivityDate" DisplayName="CRActivityStatistics_lastOutgoingActivityDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="36" IsActive="1" Name="CRActivityStatistics_lastIncomingActivityDate" DisplayName="CRActivityStatistics_lastIncomingActivityDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="47" IsActive="1" Name="Contact_displayName" DisplayName="Contact Name" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="35" IsActive="1" Name="BAccount_acctName" DisplayName="BAccount_acctName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="34" IsActive="1" Name="BAccount_acctCD" DisplayName="BAccount_acctCD" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderObject LineNbr="2" IsActive="1" Name="PreviousResults" FieldCntr="55" IsCustom="0" />
+                    <SYProviderObject LineNbr="1" IsActive="1" Name="Results" FieldCntr="28" IsCustom="0" />
+                    <SYProviderParameter LineNbr="1" Name="ScreenID" DisplayName="Screen ID" Value="GI000027" IsEncrypted="0" />
+                </row>
+            </SYProvider>
+        </data>
+    </data-set>
+</XportScenario>
