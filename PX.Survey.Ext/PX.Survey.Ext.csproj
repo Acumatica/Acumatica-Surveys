@@ -37,13 +37,16 @@
       <HintPath>..\lib\PX.Common.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="PX.Common.Std">
+      <HintPath>..\lib\PX.Common.Std.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="PX.CS.Contracts">
       <HintPath>..\lib\PX.CS.Contracts.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="PX.Data">
       <HintPath>..\lib\PX.Data.dll</HintPath>
-      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
       <HintPath>..\lib\PX.Data.BQL.Fluent.dll</HintPath>
@@ -54,7 +57,6 @@
     </Reference>
     <Reference Include="PX.Objects">
       <HintPath>..\lib\PX.Objects.dll</HintPath>
-      <Private>false</Private>
     </Reference>
     <Reference Include="PX.Objects.FS">
       <HintPath>..\lib\PX.Objects.FS.dll</HintPath>

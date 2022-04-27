@@ -1,0 +1,30 @@
+﻿<ScreenWithRights>
+    <data-set>
+        <relations format-version="3" relations-version="20190730" main-table="SiteMap">
+            <link from="RolesInCache (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="RolesInGraph (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="RolesInMember (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="Roles (Rolename, ApplicationName)" to="RolesInCache (Rolename, ApplicationName)" type="FromMaster" updateable="False" />
+            <link from="Roles (Rolename, ApplicationName)" to="RolesInGraph (Rolename, ApplicationName)" type="FromMaster" updateable="False" />
+            <link from="Roles (Rolename, ApplicationName)" to="RolesInMember (Rolename, ApplicationName)" type="FromMaster" updateable="False" />
+        </relations>
+        <layout>
+            <table name="SiteMap">
+                <table name="RolesInCache" uplink="(ScreenID) = (ScreenID)" />
+                <table name="RolesInGraph" uplink="(ScreenID) = (ScreenID)" />
+                <table name="RolesInMember" uplink="(ScreenID) = (ScreenID)" />
+            </table>
+            <table name="Roles" />
+        </layout>
+        <data>
+            <SiteMap>
+                <row Title="Survey Response View" Url="~/genericinquiry/genericinquiry.aspx?id=55b448c0-adb5-4fb1-ac6d-bcf195f04721" ScreenID="SU401000" NodeID="068daf48-426d-4283-93f9-c7cbf0486c3c" ParentID="00000000-0000-0000-0000-000000000000">
+                    <RolesInGraph Rolename="Administrator" ApplicationName="/" Accessrights="4" />
+                </row>
+            </SiteMap>
+            <Roles>
+                <row Rolename="Administrator" ApplicationName="/" Descr="System Administrator" Guest="0" />
+            </Roles>
+        </data>
+    </data-set>
+</ScreenWithRights>

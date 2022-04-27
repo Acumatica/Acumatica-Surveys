@@ -1,0 +1,54 @@
+﻿<BpEvent>
+    <data-set>
+        <relations format-version="3" relations-version="20200713" main-table="BPEvent">
+            <link from="BPEventSubscriber (EventID)" to="BPEvent (EventID)" />
+            <link from="BPEventTriggerCondition (EventID)" to="BPEvent (EventID)" />
+            <link from="BPEventSchedule (EventID)" to="BPEvent (EventID)" />
+            <link from="BPInquiryParameter (EventID)" to="BPEvent (EventID)" />
+            <link from="FilterHeader (FilterID)" to="BPEvent (FilterID)" />
+            <link from="AUSchedule (ScheduleID)" to="BPEventSchedule (ScheduleID)" />
+            <link from="Notification (NoteID)" to="BPEventSubscriber (HandlerID)" />
+            <link from="SYMapping (MappingID)" to="BPEventSubscriber (HandlerID)" />
+            <link from="MobileNotification (NoteID)" to="BPEventSubscriber (HandlerID)" />
+            <link from="AUScheduleFilter (ScheduleID)" to="AUSchedule (ScheduleID)" />
+            <link from="AUScheduleFill (ScheduleID)" to="AUSchedule (ScheduleID)" />
+            <link from="NotificationReport (NotificationID)" to="Notification (NotificationID)" />
+            <link from="NotificationReportParameter (ReportID)" to="NotificationReport (ReportID)" />
+            <link from="FilterHeader (NoteID)" to="FilterHeaderKvExt (RecordID)" type="RowKvExt" />
+        </relations>
+        <layout>
+            <table name="BPEvent">
+                <table name="BPEventSubscriber" uplink="(EventID) = (EventID)">
+                    <table name="Notification" uplink="(HandlerID) = (NoteID)">
+                        <table name="NotificationReport" uplink="(NotificationID) = (NotificationID)">
+                            <table name="NotificationReportParameter" uplink="(ReportID) = (ReportID)" />
+                        </table>
+                    </table>
+                    <table name="SYMapping" uplink="(HandlerID) = (MappingID)" />
+                    <table name="MobileNotification" uplink="(HandlerID) = (NoteID)" />
+                </table>
+                <table name="BPEventTriggerCondition" uplink="(EventID) = (EventID)" />
+                <table name="BPEventSchedule" uplink="(EventID) = (EventID)">
+                    <table name="AUSchedule" uplink="(ScheduleID) = (ScheduleID)">
+                        <table name="AUScheduleFilter" uplink="(ScheduleID) = (ScheduleID)" />
+                        <table name="AUScheduleFill" uplink="(ScheduleID) = (ScheduleID)" />
+                    </table>
+                </table>
+                <table name="BPInquiryParameter" uplink="(EventID) = (EventID)" />
+                <table name="FilterHeader" uplink="(FilterID) = (FilterID)">
+                    <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                </table>
+            </table>
+        </layout>
+        <data>
+            <BPEvent>
+                <row EventID="77e98931-3e17-426f-b548-eb9d6359ae39" Name="Create Survey" Description="Insert Survey Collector on Case closed" ScreenID="GI000027" ViewName="Results" Active="1" Type="0" RowProcessingType="1" IsGroupByNew="1">
+                    <BPEventSubscriber HandlerID="7413fc02-4ff0-45d1-ba7c-62aee705e371" Active="1" OrderNbr="32" Type="IMPT" StopOnError="0" IsProcessSingleLine="0">
+                        <SYMapping Name="TriggerSurveyForCase" IsActive="1" ScreenID="CR306000" MappingType="I" GraphName="PX.Objects.CR.CRCaseMaint" ViewName="Case" GridViewName="Answers" ProviderID="66012c49-0c59-4a39-b6d0-f53892f6c015" ProviderObject="Results" SyncType="F" Status="N" FieldCntr="287" FieldOrderCntr="0" ImportConditionCntr="0" ConditionCntr="0" DataCntr="0" NbrRecords="0" DiscardResult="0" NoteID="0105f2b5-fcca-eb11-a38e-3c6aa7cb36ca" IsExportOnlyMappingFields="0" RepeatingData="0" ProcessInParallel="0" BreakOnError="1" BreakOnTarget="1" SkipHeaders="0" />
+                    </BPEventSubscriber>
+                    <BPEventTriggerCondition OrderNbr="32" TableName="CRCase" Operation="4" Active="1" OpenBrackets="0" FieldName="status" Condition="0" Value="C" CloseBrackets="0" Operator="0" DataType="18" />
+                </row>
+            </BPEvent>
+        </data>
+    </data-set>
+</BpEvent>
