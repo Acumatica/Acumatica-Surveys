@@ -20,7 +20,7 @@ namespace PX.Survey.Ext
             return context;
         }
         
-        public void ImportFilesFromDirrectory(string directory, string graphName)
+        public void ImportFilesFromDirectory(string directory, string graphName)
         {
             var xmlFiles = Directory.GetFiles(directory).Where(p => p.EndsWith(".xml"));
             foreach (var xmlFile in xmlFiles)
@@ -81,7 +81,7 @@ namespace PX.Survey.Ext
                 
                 foreach (var item in nameOfGraphs)
                 {
-                    ImportFilesFromDirrectory(item.Item3, item.Item2);
+                    ImportFilesFromDirectory(item.Item3, item.Item2);
                 }
                 
             }

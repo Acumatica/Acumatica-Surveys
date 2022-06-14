@@ -20,55 +20,55 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\21R2\Bin\CommonServiceLocator.dll</HintPath>
+      <HintPath>..\lib\CommonServiceLocator.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Api.Mobile">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Api.Mobile.dll</HintPath>
+      <HintPath>..\lib\PX.Api.Mobile.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Api.Webhooks">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Api.Webhooks.dll</HintPath>
+      <HintPath>..\lib\PX.Api.Webhooks.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Common.dll</HintPath>
+      <HintPath>..\lib\PX.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Common.Std">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Common.Std.dll</HintPath>
+      <HintPath>..\lib\PX.Common.Std.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.CS.Contracts.dll</HintPath>
+      <HintPath>..\lib\PX.CS.Contracts.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Data.dll</HintPath>
+      <HintPath>..\lib\PX.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>..\lib\PX.Data.BQL.Fluent.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.DbServices">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.DbServices.dll</HintPath>
+      <HintPath>..\lib\PX.DbServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Objects.dll</HintPath>
+      <HintPath>..\lib\PX.Objects.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects.FS">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Objects.FS.dll</HintPath>
+      <HintPath>..\lib\PX.Objects.FS.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects.PJ">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Objects.PJ.dll</HintPath>
+      <HintPath>..\lib\PX.Objects.PJ.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Web.Customization">
-      <HintPath>..\..\..\..\..\Instances\21.211.0033\Surve21R2\Bin\PX.Web.Customization.dll</HintPath>
+      <HintPath>..\lib\PX.Web.Customization.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Configuration">
