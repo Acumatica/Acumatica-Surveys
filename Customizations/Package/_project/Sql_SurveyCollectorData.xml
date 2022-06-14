@@ -1,0 +1,34 @@
+﻿<Sql TableName="SurveyCollectorData" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="SurveyCollectorData">
+  <col name="CompanyID" type="Int" default="Zero" />
+  <col name="CollectorDataID" type="Int" identity="true" />
+  <col name="Token" type="NVarChar(255)" />
+  <col name="Uri" type="NVarChar(MAX)" nullable="true" />
+  <col name="Payload" type="NVarChar(MAX)" nullable="true" />
+  <col name="PageNbr" type="Int" nullable="true" />
+  <col name="CollectorID" type="Int" nullable="true" />
+  <col name="SurveyID" type="NVarChar(15)" nullable="true" />
+  <col name="NoteID" type="UniqueIdentifier" />
+  <col name="CreatedByID" type="UniqueIdentifier" />
+  <col name="CreatedByScreenID" type="Char(8)" />
+  <col name="CreatedDateTime" type="DateTime" />
+  <col name="LastModifiedByID" type="UniqueIdentifier" />
+  <col name="LastModifiedByScreenID" type="Char(8)" />
+  <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="tstamp" type="Timestamp" />
+  <col name="Message" type="NVarChar(MAX)" nullable="true" />
+  <col name="Status" type="Char(1)" nullable="true" />
+  <index name="SurveyCollectorData_NoteID" unique="true">
+    <col name="NoteID" />
+    <col name="CompanyID" />
+  </index>
+  <index name="SurveyCollectorData_PK" clustered="true" primary="true" unique="true">
+    <col name="CompanyID" />
+    <col name="CollectorDataID" />
+  </index>
+  <index name="SurveyCollectorData_Token">
+    <col name="CompanyID" />
+    <col name="Token" />
+  </index>
+</table>]]></CDATA>
+</Sql>

@@ -22,9 +22,9 @@
             <px:PXDSCallbackCommand Name="ReProcessAnswers" Visible="False" />
             <px:PXDSCallbackCommand Name="ViewComponent" Visible="False" />
             <px:PXDSCallbackCommand Name="ViewAttribute" Visible="False" />
-            <%--<px:PXDSCallbackCommand Name="LoadCollectors" Visible="False" />--%>
+            <px:PXDSCallbackCommand Name="SendNewNotification" Visible="False" />
             <px:PXDSCallbackCommand Name="RedirectToSurvey" Visible="False" />
-            <%--<px:PXDSCallbackCommand Name="RedirectToAnonymousSurvey" Visible="False" />--%>
+            <px:PXDSCallbackCommand Name="SendReminder" Visible="False" />
 			<px:PXDSCallbackCommand Name="AddAction" Visible="False" />
 			<px:PXDSCallbackCommand Name="DeleteAction" Visible="False" />
 			<px:PXDSCallbackCommand Name="LinkToContact" Visible="False" />
@@ -255,6 +255,7 @@
                                             <px:PXGridColumn DataField="SurveyUser__Phone2" Width="160px" />
                                             <px:PXGridColumn DataField="SurveyUser__Email" Width="180px" />
                                             <px:PXGridColumn DataField="Status" Type="DropDownList" Width="120px" />
+                                            <px:PXGridColumn DataField="IsTest" Type="CheckBox" TextAlign="Center" Width="80px" />
                                             <px:PXGridColumn DataField="SentOn" Width="120px" />
                                             <px:PXGridColumn DataField="ExpirationDate" Width="120px" />
                                             <px:PXGridColumn DataField="LastModifiedDateTime" Width="120px" />
@@ -273,6 +274,12 @@
                                         </px:PXToolBarButton>
                                         <px:PXToolBarButton Key="RedirectToSurvey">
                                             <AutoCallBack Command="RedirectToSurvey" Target="ds" />
+                                        </px:PXToolBarButton>
+                                        <px:PXToolBarButton Key="SendNewNotification">
+                                            <AutoCallBack Command="SendNewNotification" Target="ds" />
+                                        </px:PXToolBarButton>
+                                        <px:PXToolBarButton Key="SendReminder">
+                                            <AutoCallBack Command="SendReminder" Target="ds" />
                                         </px:PXToolBarButton>
                                         <%--<px:PXToolBarButton Key="RedirectToAnonymousSurvey">
                                             <AutoCallBack Command="RedirectToAnonymousSurvey" Target="ds" />
@@ -403,7 +410,7 @@
                     <px:PXFormView ID="Setup" runat="server" DataMember="CurrentSurvey" RenderStyle="Simple" SkinID="Transparent">
                         <Template>
                             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" />
-                            <px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />
+                            <%--<px:PXSelector runat="server" ID="edWebHookID" DataField="WebHookID" AllowEdit="True" CommitChanges="true" />--%>
                             <px:PXTextEdit runat="server" ID="edFormName" DataField="FormName" Width="100px" CommitChanges="true" />
                             <px:PXLinkEdit runat="server" ID="edBaseURL" DataField="BaseURL" Width="800px" Enabled="false"/>
                             <px:PXLinkEdit runat="server" ID="edAnonURL" DataField="AnonURL" Width="800px" Enabled="false"/>

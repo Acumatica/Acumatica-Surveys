@@ -1,0 +1,276 @@
+﻿<GenericInquiryScreen>
+    <data-set>
+        <relations format-version="3" relations-version="20201014" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+            <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIMassUpdateField (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GINavigationScreen (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GINavigationParameter (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
+            <link from="GIOn (DesignID, RelationNbr)" to="GIRelation (DesignID, LineNbr)" />
+            <link from="GIRecordDefault (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIRelation (DesignID, ParentTable)" to="GITable (DesignID, Alias)" />
+            <link from="GIRelation (DesignID, ChildTable)" to="GITable (DesignID, Alias)" />
+            <link from="GIResult (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIResult (ObjectName, DesignID)" to="GITable (Alias, DesignID)" />
+            <link from="GISort (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GITable (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIWhere (DesignID)" to="GIDesign (DesignID)" />
+            <link from="SiteMap (Url)" to="GIDesign (DesignID)" type="WeakByUrl" linkname="toDesignById" baseurl="~/GenericInquiry/GenericInquiry.aspx" paramnames="id" />
+            <link from="SiteMap (Url)" to="GIDesign (Name)" type="WeakByUrl" linkname="toDesignByName" baseurl="~/GenericInquiry/GenericInquiry.aspx" />
+            <link from="ListEntryPoint (ListScreenID)" to="SiteMap (ScreenID)" />
+            <link from="SiteMap (ScreenID)" to="GIDesign (PrimaryScreenIDNew)" linkname="to1Screen" />
+            <link from="FilterHeader (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="FilterRow (FilterID)" to="FilterHeader (FilterID)" />
+            <link from="PivotTable (NoteID)" to="FilterHeader (RefNoteID)" />
+            <link from="PivotField (ScreenID, PivotTableID)" to="PivotTable (ScreenID, PivotTableID)" />
+            <link from="MUIScreen (NodeID)" to="SiteMap (NodeID)" />
+            <link from="MUIWorkspace (WorkspaceID)" to="MUIScreen (WorkspaceID)" type="FromMaster" linkname="workspaceToScreen" split-location="yes" updateable="True" />
+            <link from="MUISubcategory (SubcategoryID)" to="MUIScreen (SubcategoryID)" type="FromMaster" updateable="True" />
+            <link from="MUITile (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="MUIWorkspace (WorkspaceID)" to="MUITile (WorkspaceID)" type="FromMaster" linkname="workspaceToTile" split-location="yes" updateable="True" />
+            <link from="MUIArea (AreaID)" to="MUIWorkspace (AreaID)" type="FromMaster" updateable="True" />
+            <link from="MUIPinnedScreen (NodeID, WorkspaceID)" to="MUIScreen (NodeID, WorkspaceID)" type="WeakIfEmpty" isEmpty="Username" />
+            <link from="MUIFavoriteWorkspace (WorkspaceID)" to="MUIWorkspace (WorkspaceID)" type="WeakIfEmpty" isEmpty="Username" />
+            <link from="GIDesign (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIFilter (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIFilter (NoteID)" to="GIFilterKvExt (RecordID)" type="RowKvExt" />
+            <link from="GIGroupBy (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIOn (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIRelation (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIResult (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIResult (NoteID)" to="GIResultKvExt (RecordID)" type="RowKvExt" />
+            <link from="GISort (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GITable (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIWhere (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="FilterHeader (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="FilterHeader (NoteID)" to="FilterHeaderKvExt (RecordID)" type="RowKvExt" />
+        </relations>
+        <layout>
+            <table name="GIDesign">
+                <table name="GIFilter" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                    <table name="GIFilterKvExt" uplink="(NoteID) = (RecordID)" />
+                </table>
+                <table name="GIGroupBy" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="GIMassAction" uplink="(DesignID) = (DesignID)" />
+                <table name="GIMassUpdateField" uplink="(DesignID) = (DesignID)" />
+                <table name="GINavigationScreen" uplink="(DesignID) = (DesignID)">
+                    <table name="GINavigationParameter" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
+                </table>
+                <table name="GIRecordDefault" uplink="(DesignID) = (DesignID)" />
+                <table name="GISort" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="GITable" uplink="(DesignID) = (DesignID)">
+                    <table name="GIRelation" uplink="(DesignID, Alias) = (DesignID, ParentTable)">
+                        <table name="GIOn" uplink="(DesignID, LineNbr) = (DesignID, RelationNbr)">
+                            <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                    </table>
+                    <table name="GIResult" uplink="(Alias, DesignID) = (ObjectName, DesignID)">
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="GIResultKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="GIWhere" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SiteMap" uplink="(DesignID) = (Url)" linkname="toDesignById">
+                    <table name="ListEntryPoint" uplink="(ScreenID) = (ListScreenID)" />
+                    <table name="FilterHeader" uplink="(ScreenID) = (ScreenID)">
+                        <table name="FilterRow" uplink="(FilterID) = (FilterID)" />
+                        <table name="PivotTable" uplink="(RefNoteID) = (NoteID)">
+                            <table name="PivotField" uplink="(ScreenID, PivotTableID) = (ScreenID, PivotTableID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+                <table name="SiteMap" uplink="(Name) = (Url)" linkname="toDesignByName">
+                    <table name="ListEntryPoint" uplink="(ScreenID) = (ListScreenID)" />
+                    <table name="FilterHeader" uplink="(ScreenID) = (ScreenID)">
+                        <table name="FilterRow" uplink="(FilterID) = (FilterID)" />
+                        <table name="PivotTable" uplink="(RefNoteID) = (NoteID)">
+                            <table name="PivotField" uplink="(ScreenID, PivotTableID) = (ScreenID, PivotTableID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+                <table name="SiteMap" uplink="(PrimaryScreenIDNew) = (ScreenID)" linkname="to1Screen">
+                    <table name="ListEntryPoint" uplink="(ScreenID) = (ListScreenID)" />
+                    <table name="FilterHeader" uplink="(ScreenID) = (ScreenID)">
+                        <table name="FilterRow" uplink="(FilterID) = (FilterID)" />
+                        <table name="PivotTable" uplink="(RefNoteID) = (NoteID)">
+                            <table name="PivotField" uplink="(ScreenID, PivotTableID) = (ScreenID, PivotTableID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+                <table name="Note" uplink="(NoteID) = (NoteID)" />
+            </table>
+            <table name="MUIWorkspace">
+                <table name="MUIFavoriteWorkspace" uplink="(WorkspaceID) = (WorkspaceID)" />
+            </table>
+            <table name="MUISubcategory" />
+            <table name="MUIArea" />
+        </layout>
+        <data>
+            <GIDesign>
+                <row DesignID="dcf01c9e-ec2e-4b9c-9c20-ae577f644c19" Name="DB-Cases" FilterColCount="3" PageSize="0" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
+                    <GINavigationScreen ScreenID="CR306000" LineNbr="2" WindowMode="L" Icon="work">
+                        <GINavigationParameter LineNbr="1" FieldName="CaseCD" ParameterName="CRCase.caseCD" IsExpression="0" />
+                    </GINavigationScreen>
+                    <GINavigationScreen ScreenID="CR303000" LineNbr="1" WindowMode="L" Icon="business">
+                        <GINavigationParameter LineNbr="1" FieldName="AcctCD" ParameterName="BAccount.acctCD" IsExpression="0" />
+                    </GINavigationScreen>
+                    <GISort LineNbr="1" IsActive="1" DataFieldName="CRCase.caseCD" SortOrder="D" />
+                    <GITable Alias="CREmployee" Name="PX.Objects.CR.CREmployee">
+                        <GIResult LineNbr="14" SortOrder="14" IsActive="1" Field="acctName" Caption="Owner Name" Width="150" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="7174bd8a-578f-e711-944a-12d4d93f21e4">
+                            <GIResultKvExt FieldName="CaptionEN" ValueText="Owner Name" />
+                        </GIResult>
+                        <GIResult LineNbr="13" SortOrder="13" IsActive="1" Field="userID" Width="110" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="a074bd8a-578f-e711-944a-12d4d93f21e4" />
+                    </GITable>
+                    <GITable Alias="CRCase" Name="PX.Objects.CR.CRCase">
+                        <GIRelation LineNbr="4" ChildTable="CREmployee" IsActive="1" JoinType="L">
+                            <GIOn LineNbr="4" ParentField="ownerID" Condition="E " ChildField="defContactID" Operation="A" />
+                        </GIRelation>
+                        <GIRelation LineNbr="3" ChildTable="Contact" IsActive="1" JoinType="L">
+                            <GIOn LineNbr="3" ParentField="contactID" Condition="E " ChildField="contactID" Operation="A" />
+                        </GIRelation>
+                        <GIRelation LineNbr="2" ChildTable="BAccount" IsActive="1" JoinType="L">
+                            <GIOn LineNbr="2" ParentField="customerID" Condition="E " ChildField="bAccountID" Operation="A" />
+                        </GIRelation>
+                        <GIRelation LineNbr="1" ChildTable="CRActivityStatistics" IsActive="1" JoinType="L">
+                            <GIOn LineNbr="1" ParentField="noteID" Condition="E " ChildField="noteID" Operation="A" />
+                        </GIRelation>
+                        <GIResult LineNbr="37" SortOrder="37" IsActive="1" Field="description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="2fa44bb9-60e2-4fd8-9e59-7f73641f5546" />
+                        <GIResult LineNbr="36" SortOrder="36" IsActive="1" Field="lastModifiedDateTime" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="9f74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="34" SortOrder="34" IsActive="0" Field="timeResolution" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9e74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="33" SortOrder="33" IsActive="1" Field="timeEstimated" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9d74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="32" SortOrder="32" IsActive="1" Field="timeBillable" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9c74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="31" SortOrder="31" IsActive="1" Field="workgroupID" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9b74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="30" SortOrder="30" IsActive="1" Field="statusDate" Caption="Status Changed Date" Width="90" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="7074bd8a-578f-e711-944a-12d4d93f21e4">
+                            <GIResultKvExt FieldName="CaptionEN" ValueText="Status Changed Date" />
+                        </GIResult>
+                        <GIResult LineNbr="29" SortOrder="29" IsActive="1" Field="sLAETA" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9a74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="28" SortOrder="28" IsActive="1" Field="resolutionDate" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="9974bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="27" SortOrder="27" IsActive="1" Field="priority" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9874bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="26" SortOrder="26" IsActive="1" Field="isBillable" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9774bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="24" SortOrder="24" IsActive="1" Field="contractID" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9674bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="23" SortOrder="23" IsActive="1" Field="assignDate" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="9574bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="22" SortOrder="22" IsActive="1" Field="initResponse" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9474bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="21" SortOrder="21" IsActive="1" Field="locationID" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9374bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="20" SortOrder="20" IsActive="0" Field="lastActivityAge" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9274bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="19" SortOrder="19" IsActive="0" Field="lastActivity" Width="140" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9174bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="18" SortOrder="18" IsActive="0" Field="age" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9074bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="17" SortOrder="17" IsActive="0" Field="remaininingDate" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="8f74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="16" SortOrder="16" IsActive="1" Field="timeEstimated" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8e74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="15" SortOrder="15" IsActive="0" Field="eTA" Width="90" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8d74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="12" SortOrder="12" IsActive="1" Field="caseClassID" Width="120" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8c74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="11" SortOrder="11" IsActive="1" Field="createdDateTime" Width="140" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="8b74bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="6" SortOrder="6" IsActive="1" Field="priority" Width="90" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8974bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="5" SortOrder="5" IsActive="1" Field="severity" Width="90" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8874bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="4" SortOrder="4" IsActive="1" Field="resolution" StyleFormula="=IIf( [CRCase.Resolution] = 'ES', 'red20', 'default')" Width="90" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8774bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="3" SortOrder="3" IsActive="1" Field="status" Width="90" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8674bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="2" SortOrder="2" IsActive="1" Field="subject" Width="200" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8574bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="1" SortOrder="1" IsActive="1" Field="caseCD" Width="90" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8474bd8a-578f-e711-944a-12d4d93f21e4" />
+                    </GITable>
+                    <GITable Alias="CRActivityStatistics" Name="PX.Objects.CR.CRActivityStatistics">
+                        <GIResult LineNbr="10" SortOrder="10" IsActive="1" Field="lastOutgoingActivityDate" StyleFormula="=IIf( [CRCase.Status] = 'O', IIf( IsNull([CRActivityStatistics.LastOutgoingActivityDate],DateAdd( Today(), 'd', -30) ) &lt; DateAdd( Today(), 'd', -7 ), 'bad', 'default'), 'default')" Width="120" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="8374bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="9" SortOrder="9" IsActive="1" Field="lastIncomingActivityDate" Width="120" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="8274bd8a-578f-e711-944a-12d4d93f21e4" />
+                    </GITable>
+                    <GITable Alias="Contact" Name="PX.Objects.CR.Contact">
+                        <GIResult LineNbr="25" SortOrder="25" IsActive="1" Field="displayName" Caption="Contact Name" Width="200" IsVisible="0" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="6f74bd8a-578f-e711-944a-12d4d93f21e4">
+                            <GIResultKvExt FieldName="CaptionEN" ValueText="Contact Name" />
+                        </GIResult>
+                    </GITable>
+                    <GITable Alias="BAccount" Name="PX.Objects.CR.BAccount">
+                        <GIResult LineNbr="8" SortOrder="8" IsActive="1" Field="acctName" Width="200" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8174bd8a-578f-e711-944a-12d4d93f21e4" />
+                        <GIResult LineNbr="7" SortOrder="7" IsActive="1" Field="acctCD" Width="150" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8a74bd8a-578f-e711-944a-12d4d93f21e4" />
+                    </GITable>
+                    <SiteMap linkname="toDesignById">
+                        <row Position="23" Title="DB Cases" Url="~/GenericInquiry/GenericInquiry.aspx?id=dcf01c9e-ec2e-4b9c-9c20-ae577f644c19" ScreenID="GI000027" NodeID="b23b2ef2-e43b-4b23-9251-a46e030586d0" ParentID="25876864-94f2-4238-9411-3c26c7ca6d93">
+                            <FilterHeader FilterID="00000bde-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open Overdue (me)" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="3038">
+                                <FilterRow FilterRowNbr="4" OpenBrackets="0" DataField="CREmployee_userID" Condition="0" ValueSt="@me" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_sLAETA" Condition="14" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="O" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="00000bd6-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open Cases (me)" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="3030">
+                                <FilterRow FilterRowNbr="4" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="P" ValueSt2="" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="O" ValueSt2="" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="N" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="0" DataField="CREmployee_userID" Condition="0" ValueSt="@me" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="000001b4-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open Assigned" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="436">
+                                <FilterRow FilterRowNbr="4" OpenBrackets="0" DataField="CRCase_ownerID" Condition="12" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="P" ValueSt2="" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" ValueSt2="" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="O" ValueSt2="" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="000001b3-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Awaiting Info" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="435">
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_resolution" Condition="0" ValueSt="MI" ValueSt2="" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="P" ValueSt2="" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="000001b1-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Closed" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="433">
+                                <FilterRow FilterRowNbr="1" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="C" ValueSt2="" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="000001b0-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="432">
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="P" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="O" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="000001af-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="New" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="431">
+                                <FilterRow FilterRowNbr="1" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" ValueSt2="" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="00001483-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Unassigned" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="5251">
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="1" ValueSt="C" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="0" DataField="CREmployee_acctName" Condition="11" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="00000c32-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open High Priority" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="3122">
+                                <FilterRow FilterRowNbr="5" OpenBrackets="0" DataField="CRCase_priority" Condition="0" ValueSt="H" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="4" OpenBrackets="1" DataField="CRCase_severity" Condition="0" ValueSt="H" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="P" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="O" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="00000c31-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open High Priority (me)" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="3121">
+                                <FilterRow FilterRowNbr="6" OpenBrackets="0" DataField="CREmployee_userID" Condition="0" ValueSt="@me" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="5" OpenBrackets="0" DataField="CRCase_priority" Condition="0" ValueSt="H" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="4" OpenBrackets="1" DataField="CRCase_severity" Condition="0" ValueSt="H" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="P" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="O" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <FilterHeader FilterID="00000c2e-0000-0000-0000-000000000000" UserName="admin" ViewName="Results" FilterName="Open Overdue" IsDefault="0" IsShared="1" IsShortcut="0" IsSystem="0" IsHidden="0" FilterOrder="3118">
+                                <FilterRow FilterRowNbr="3" OpenBrackets="0" DataField="CRCase_sLAETA" Condition="14" CloseBrackets="0" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="2" OpenBrackets="0" DataField="CRCase_status" Condition="0" ValueSt="N" ValueSt2="" CloseBrackets="1" Operator="0" IsUsed="1" FilterType="0" />
+                                <FilterRow FilterRowNbr="1" OpenBrackets="1" DataField="CRCase_status" Condition="0" ValueSt="O" ValueSt2="" CloseBrackets="0" Operator="1" IsUsed="1" FilterType="0" />
+                            </FilterHeader>
+                            <MUIScreen IsPortal="0" WorkspaceID="00000000-0000-0000-0000-000000000000" Order="50" SubcategoryID="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" />
+                        </row>
+                    </SiteMap>
+                </row>
+            </GIDesign>
+        </data>
+    </data-set>
+</GenericInquiryScreen>

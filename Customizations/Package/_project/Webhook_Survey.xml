@@ -1,0 +1,13 @@
+﻿<Webhook>
+    <data-set>
+        <relations format-version="3" relations-version="20160101" main-table="WebHook" />
+        <layout>
+            <table name="WebHook" />
+        </layout>
+        <data>
+            <WebHook>
+                <row WebHookID="9d2fd3bc-aae4-4b34-ab66-f40879be1be2" Name="Survey" Handler="PX.Survey.Ext.WebHook.SurveyWebhookServerHandler" IsActive="1" IsSystem="0" RequestLogLevel="2" RequestRetainCount="100" NoteID="1e65df80-63bf-eb11-a38b-3c6aa7cb36ca" />
+            </WebHook>
+        </data>
+    </data-set>
+</Webhook>
