@@ -47,11 +47,11 @@
         </layout>
         <data>
             <BPEvent>
-                <row EventID="77e98931-3e17-426f-b548-eb9d6359ae39" Name="SU Create Survey" Description="Insert Survey Collector on Case closed" ScreenID="GI000027" ViewName="Results" Active="1" Type="0" RowProcessingType="1" IsGroupByNew="1" NoteID="54d98381-57f2-ec11-9012-44ed5700092a">
-                    <BPEventSubscriber HandlerID="7413fc02-4ff0-45d1-ba7c-62aee705e371" Active="1" OrderNbr="32" Type="IMPT" StopOnError="0" IsProcessSingleLine="0">
-                        <SYMapping Name="SU TriggerSurveyForCase" IsActive="1" ScreenID="CR306000" MappingType="I" GraphName="PX.Objects.CR.CRCaseMaint" ViewName="Case" GridViewName="Answers" ProviderID="450ce877-127f-42f4-bf2e-f6615e8dc9fe" ProviderObject="Results" SyncType="F" Status="N" FieldCntr="287" FieldOrderCntr="0" ImportConditionCntr="0" ConditionCntr="0" DataCntr="0" NbrRecords="0" DiscardResult="0" NoteID="862b91f0-fdf7-ec11-9013-408d5cb11534" IsExportOnlyMappingFields="0" RepeatingData="0" ProcessInParallel="0" BreakOnError="1" BreakOnTarget="1" SkipHeaders="0" />
+                <row EventID="0e249138-9041-4e70-aa66-1e1beaa00826" Name="SU Process New Survey Collector" Description="Processes new collectors to send initial notification email" ScreenID="GI640090" ViewName="Results" Active="1" Type="0" RowProcessingType="1" IsGroupByNew="1" NoteID="ec7df4f6-fbf7-ec11-9013-408d5cb11534">
+                    <BPEventSubscriber HandlerID="0f2fd0f8-e712-40db-b55a-8dd04aa031d8" Active="1" OrderNbr="32" Type="IMPT" StopOnError="0" IsProcessSingleLine="0">
+                        <SYMapping Name="SU TriggerCollectorNotification" IsActive="1" ScreenID="SU301000" MappingType="I" GraphName="PX.Survey.Ext.SurveyCollectorMaint" ViewName="Collector" GridViewName="CollectedAnswers" ProviderID="d32ac6c8-a6fb-459d-8322-55e979d6bb82" ProviderObject="Results" SyncType="F" Status="N" FieldCntr="728" FieldOrderCntr="0" ImportConditionCntr="0" ConditionCntr="0" DataCntr="0" NbrRecords="0" DiscardResult="0" NoteID="464141aa-fef7-ec11-9013-408d5cb11534" IsExportOnlyMappingFields="0" RepeatingData="0" ProcessInParallel="0" BreakOnError="1" BreakOnTarget="1" SkipHeaders="0" />
                     </BPEventSubscriber>
-                    <BPEventTriggerCondition OrderNbr="32" TableName="CRCase" Operation="4" Active="1" OpenBrackets="0" FieldName="status" Condition="0" Value="C" CloseBrackets="0" Operator="0" DataType="18" />
+                    <BPEventTriggerCondition OrderNbr="32" TableName="Collector" Operation="4" Active="1" OpenBrackets="0" FieldName="status" Condition="0" Value="N" CloseBrackets="0" Operator="1" DataType="18" />
                 </row>
             </BPEvent>
         </data>

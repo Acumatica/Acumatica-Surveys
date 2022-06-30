@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="CSAttribute">
+    <link from="CSScreenAttribute (AttributeID)" to="CSAttribute (AttributeID)" />
+    <link from="CSAttributeDetail (AttributeID)" to="CSAttribute (AttributeID)" />
+    <link from="CSAttribute (NoteID)" to="CSAttributeKvExt (RecordID)" type="RowKvExt" />
+    <link from="CSAttributeDetail (NoteID)" to="CSAttributeDetailKvExt (RecordID)" type="RowKvExt" />
+  </relations>
+  <layout>
+    <table name="CSAttribute">
+      <table name="CSScreenAttribute" uplink="(AttributeID) = (AttributeID)" />
+      <table name="CSAttributeDetail" uplink="(AttributeID) = (AttributeID)">
+        <table name="CSAttributeDetailKvExt" uplink="(NoteID) = (RecordID)" />
+      </table>
+      <table name="CSAttributeKvExt" uplink="(NoteID) = (RecordID)" />
+    </table>
+  </layout>
+  <data>
+    <CSAttribute>
+      <row AttributeID="SUMARKTEST" Description="Mark Satisfaction" ControlType="2" List="5&#x0;Very Satisfied	4&#x0;Satisfied	3&#x0;Neutral (Neither Satisfied Nor Dissatisfied)	6&#x0;*No So Satisfied	2&#x0;Dissatisfied	1&#x0;Very Dissatisfied" IsInternal="0" ContainsPersonalData="0" NoteID="05cb26da-dde4-eb11-817a-d09cea870bd9">
+        <CSAttributeDetail ValueID="6" Description="*No So Satisfied" SortOrder="4" Disabled="0" NoteID="0f9cd7b6-dee4-eb11-817a-d09cea870bd9" />
+        <CSAttributeDetail ValueID="5" Description="Very Satisfied" SortOrder="1" Disabled="0" NoteID="4877b8e2-dde4-eb11-817a-d09cea870bd9" />
+        <CSAttributeDetail ValueID="4" Description="Satisfied" SortOrder="2" Disabled="0" NoteID="4a77b8e2-dde4-eb11-817a-d09cea870bd9" />
+        <CSAttributeDetail ValueID="3" Description="Neutral (Neither Satisfied Nor Dissatisfied)" SortOrder="3" Disabled="0" NoteID="4c77b8e2-dde4-eb11-817a-d09cea870bd9" />
+        <CSAttributeDetail ValueID="2" Description="Dissatisfied" SortOrder="5" Disabled="0" NoteID="4e77b8e2-dde4-eb11-817a-d09cea870bd9" />
+        <CSAttributeDetail ValueID="1" Description="Very Dissatisfied" SortOrder="6" Disabled="0" NoteID="5077b8e2-dde4-eb11-817a-d09cea870bd9" />
+      </row>
+    </CSAttribute>
+  </data>
+</data-set>

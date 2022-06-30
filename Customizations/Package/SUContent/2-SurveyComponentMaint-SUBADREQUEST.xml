@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(ComponentID)" />
+  <layout>
+    <table name="SurveyComponent" />
+  </layout>
+  <data>
+    <SurveyComponent>
+      <row ComponentID="SUBADREQUEST" ComponentType="BR" Active="1" Description="Bad Request" Body="&lt;div class=&quot;px-5&quot;&gt;&#xA;    &lt;h1 class=&quot;title has-text-centered is-2&quot;&gt;{{Message}}&lt;/h1&gt;&#xA;&lt;/div&gt;&#xA;&lt;footer class=&quot;footer has-background-white&quot;&gt;&#xA;    &lt;div class=&quot;content has-text-centered&quot;&gt;&#xA;        &lt;button type=&quot;submit&quot; class=&quot;button is-info is-medium&quot; name=&quot;action&quot; value=&quot;start&quot;&gt;Start Over&lt;/button&gt;&#xA;    &lt;/div&gt;&#xA;&lt;/footer&gt;" NoteID="ce90e734-d4b2-eb11-a389-3c6aa7cb36ca" />
+    </SurveyComponent>
+  </data>
+</data-set>

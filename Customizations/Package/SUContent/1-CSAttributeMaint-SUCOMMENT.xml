@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="CSAttribute">
+    <link from="CSScreenAttribute (AttributeID)" to="CSAttribute (AttributeID)" />
+    <link from="CSAttributeDetail (AttributeID)" to="CSAttribute (AttributeID)" />
+    <link from="CSAttribute (NoteID)" to="CSAttributeKvExt (RecordID)" type="RowKvExt" />
+    <link from="CSAttributeDetail (NoteID)" to="CSAttributeDetailKvExt (RecordID)" type="RowKvExt" />
+  </relations>
+  <layout>
+    <table name="CSAttribute">
+      <table name="CSScreenAttribute" uplink="(AttributeID) = (AttributeID)" />
+      <table name="CSAttributeDetail" uplink="(AttributeID) = (AttributeID)">
+        <table name="CSAttributeDetailKvExt" uplink="(NoteID) = (RecordID)" />
+      </table>
+      <table name="CSAttributeKvExt" uplink="(NoteID) = (RecordID)" />
+    </table>
+  </layout>
+  <data>
+    <CSAttribute>
+      <row AttributeID="SUCOMMENT" Description="Comment" ControlType="1" IsInternal="0" ContainsPersonalData="0" NoteID="1046eda4-4dc2-eb11-a38b-3c6aa7cb36ca" />
+    </CSAttribute>
+  </data>
+</data-set>
