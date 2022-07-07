@@ -140,7 +140,7 @@
                 <row DesignID="5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" Name="SU-Survey Response" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="1" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
                     <GIFilter LineNbr="2" IsActive="1" Name="STATUS" FieldName="SurveyCollector.status" DataType="string" IsExpression="1" ColSpan="1" Required="0" />
                     <GIFilter LineNbr="1" IsActive="1" Name="SURVEYID" FieldName="SurveyCollector.surveyID" DataType="string" IsExpression="1" ColSpan="1" Required="0" />
-                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="I" IsActive="1">
+                    <GINavigationScreen Link="SU301000" LineNbr="1" SortOrder="1" WindowMode="I" IsActive="1">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GITable Alias="SurveyUser" Name="PX.Survey.Ext.SurveyUser">

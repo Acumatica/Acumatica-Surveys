@@ -26,7 +26,7 @@
         <data>
             <SiteMap>
                 <row Title="Surveys" Url="~/GenericInquiry/GenericInquiry.aspx?id=4a0944e9-3ccb-4048-ae6a-6f3070f96baa" ScreenID="SU2010PL" NodeID="36f8b229-e837-4339-8bca-0cf6bd644773" ParentID="00000000-0000-0000-0000-000000000000">
-                    <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="20" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
+                    <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="30" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6">
                         <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                     </MUIScreen>
                 </row>
@@ -35,8 +35,7 @@
                 <row IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="865" Title="Surveys" Icon="check_circle" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" IsSystem="0" />
             </MUIWorkspace>
             <MUISubcategory>
-                <row IsPortal="1" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
-                <row IsPortal="0" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
+                <row IsPortal="0" SubcategoryID="38d13a6e-3076-42fb-9fce-62fa33897da6" Order="64" Name="Transactions" Icon="" IsSystem="0" />
             </MUISubcategory>
             <MUIArea>
                 <row IsPortal="0" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" Order="30" Name="Configuration" />

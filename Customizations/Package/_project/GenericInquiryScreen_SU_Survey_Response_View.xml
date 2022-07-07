@@ -139,13 +139,13 @@
             <GIDesign>
                 <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="SU-Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
                     <GIFilter LineNbr="1" IsActive="1" Name="SurveyID" FieldName="SurveyCollector.surveyID" DataType="string" DisplayName="Survey ID" IsExpression="1" ColSpan="1" Required="0" />
-                    <GINavigationScreen Link="" LineNbr="3" SortOrder="3" WindowMode="L" IsActive="1" Icon="arrow_forward">
+                    <GINavigationScreen Link="SU301000" LineNbr="3" SortOrder="3" WindowMode="L" IsActive="1" Icon="arrow_forward">
                         <GINavigationParameter LineNbr="3" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen Link="" LineNbr="2" SortOrder="2" WindowMode="S" IsActive="1">
+                    <GINavigationScreen Link="SU301000" LineNbr="2" SortOrder="2" WindowMode="S" IsActive="1">
                         <GINavigationParameter LineNbr="2" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="S" IsActive="1">
+                    <GINavigationScreen Link="SU301000" LineNbr="1" SortOrder="1" WindowMode="S" IsActive="1">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.CollectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GISort LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.createdDateTime" SortOrder="D" />

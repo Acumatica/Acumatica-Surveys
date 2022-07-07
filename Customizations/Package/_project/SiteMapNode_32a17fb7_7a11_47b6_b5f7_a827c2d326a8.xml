@@ -26,7 +26,7 @@
         <data>
             <SiteMap>
                 <row Title="Survey Components" Url="~/GenericInquiry/GenericInquiry.aspx?id=e3f48ff1-66d5-4c0c-bbf8-0d73dfc48623" ScreenID="SU2040PL" NodeID="32a17fb7-7a11-47b6-b5f7-a827c2d326a8" ParentID="00000000-0000-0000-0000-000000000000">
-                    <MUIScreen IsPortal="0" WorkspaceID="bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" Order="640122" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
+                    <MUIScreen IsPortal="0" WorkspaceID="bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" Order="10" SubcategoryID="8a93637d-b507-4667-a739-adaf6fb5f7ea">
                         <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                     </MUIScreen>
                 </row>
@@ -40,8 +40,7 @@
                 </row>
             </MUIWorkspace>
             <MUISubcategory>
-                <row IsPortal="1" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
-                <row IsPortal="0" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
+                <row IsPortal="0" SubcategoryID="8a93637d-b507-4667-a739-adaf6fb5f7ea" Order="1391.813" Name="Preferences" Icon="" IsSystem="0" />
             </MUISubcategory>
         </data>
     </data-set>

@@ -142,10 +142,10 @@
                     <GIGroupBy LineNbr="4" IsActive="1" DataFieldName="SurveyAnswer.value" />
                     <GIGroupBy LineNbr="2" IsActive="1" DataFieldName="SurveyDetail.questionNbr" />
                     <GIGroupBy LineNbr="1" IsActive="1" DataFieldName="SurveyAnswer.surveyID" />
-                    <GINavigationScreen Link="" LineNbr="4" SortOrder="4" WindowMode="L" IsActive="1" Icon="arrow_forward">
+                    <GINavigationScreen Link="SU301000" LineNbr="4" SortOrder="4" WindowMode="L" IsActive="1" Icon="arrow_forward">
                         <GINavigationParameter LineNbr="4" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="S" IsActive="1">
+                    <GINavigationScreen Link="SU301000" LineNbr="1" SortOrder="1" WindowMode="S" IsActive="1">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.CollectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GISort LineNbr="3" IsActive="1" DataFieldName="SurveyAnswer.value" SortOrder="A" />
