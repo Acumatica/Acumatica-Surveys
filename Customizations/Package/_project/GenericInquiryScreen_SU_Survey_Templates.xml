@@ -138,7 +138,7 @@
         <data>
             <GIDesign>
                 <row DesignID="e3f48ff1-66d5-4c0c-bbf8-0d73dfc48623" Name="SU-Survey Templates" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU204003" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
-                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="I" IsActive="1">
+                    <GINavigationScreen Link="SU204003" LineNbr="1" SortOrder="1" WindowMode="I" IsActive="1">
                         <GINavigationParameter LineNbr="1" FieldName="ComponentID" ParameterName="SurveyComponent.componentID" IsExpression="0" />
                     </GINavigationScreen>
                     <GITable Alias="SurveyComponent" Name="PX.Survey.Ext.SurveyComponent">
@@ -152,7 +152,7 @@
                     <SiteMap linkname="toDesignById">
                         <row Title="Survey Components" Url="~/GenericInquiry/GenericInquiry.aspx?id=e3f48ff1-66d5-4c0c-bbf8-0d73dfc48623" ScreenID="SU2040PL" NodeID="32a17fb7-7a11-47b6-b5f7-a827c2d326a8" ParentID="00000000-0000-0000-0000-000000000000">
                             <ListEntryPoint EntryScreenID="SU204003" IsActive="1" />
-                            <MUIScreen IsPortal="0" WorkspaceID="bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" Order="640122" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
+                            <MUIScreen IsPortal="0" WorkspaceID="bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" Order="10" SubcategoryID="8a93637d-b507-4667-a739-adaf6fb5f7ea">
                                 <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                             </MUIScreen>
                         </row>
@@ -176,8 +176,6 @@
                 <row IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="865" Title="Surveys" Icon="check_circle" AreaID="3635ea7d-0975-48ff-b4ac-a870f7e1e8b5" IsSystem="0" />
             </MUIWorkspace>
             <MUISubcategory>
-                <row IsPortal="1" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
-                <row IsPortal="0" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4" Order="896" Name="Inquiries" Icon="" IsSystem="1" />
                 <row IsPortal="0" SubcategoryID="8a93637d-b507-4667-a739-adaf6fb5f7ea" Order="1391.813" Name="Preferences" Icon="" IsSystem="0" />
             </MUISubcategory>
             <MUIArea>

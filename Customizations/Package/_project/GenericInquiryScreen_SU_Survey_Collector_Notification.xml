@@ -138,10 +138,10 @@
         <data>
             <GIDesign>
                 <row DesignID="dd454765-1723-4ba4-aab5-b82f45192aad" Name="SU-Survey Collector Notification" FilterColCount="3" PageSize="0" ExportTop="0" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
-                    <GINavigationScreen Link="" LineNbr="2" SortOrder="2" WindowMode="L" IsActive="1" Icon="receipt">
+                    <GINavigationScreen Link="SU301000" LineNbr="2" SortOrder="2" WindowMode="L" IsActive="1" Icon="receipt">
                         <GINavigationParameter LineNbr="1" FieldName="SurveyID" ParameterName="Collector.surveyID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="L" IsActive="1" Icon="menu">
+                    <GINavigationScreen Link="SU301000" LineNbr="1" SortOrder="1" WindowMode="L" IsActive="1" Icon="menu">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="Collector.CollectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GISort LineNbr="1" IsActive="1" DataFieldName="Collector.createdDateTime" SortOrder="A" />
