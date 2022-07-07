@@ -1,12 +1,13 @@
 ﻿<GenericInquiryScreen>
     <data-set>
-        <relations format-version="3" relations-version="20201014" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+        <relations format-version="3" relations-version="20210225" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
             <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassUpdateField (DesignID)" to="GIDesign (DesignID)" />
             <link from="GINavigationScreen (DesignID)" to="GIDesign (DesignID)" />
             <link from="GINavigationParameter (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
+            <link from="GINavigationCondition (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
             <link from="GIOn (DesignID, RelationNbr)" to="GIRelation (DesignID, LineNbr)" />
             <link from="GIRecordDefault (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIRelation (DesignID, ParentTable)" to="GITable (DesignID, Alias)" />
@@ -59,6 +60,7 @@
                 <table name="GIMassUpdateField" uplink="(DesignID) = (DesignID)" />
                 <table name="GINavigationScreen" uplink="(DesignID) = (DesignID)">
                     <table name="GINavigationParameter" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
+                    <table name="GINavigationCondition" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
                 </table>
                 <table name="GIRecordDefault" uplink="(DesignID) = (DesignID)" />
                 <table name="GISort" uplink="(DesignID) = (DesignID)">
@@ -135,15 +137,15 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
+                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="SU-Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
                     <GIFilter LineNbr="1" IsActive="1" Name="SurveyID" FieldName="SurveyCollector.surveyID" DataType="string" DisplayName="Survey ID" IsExpression="1" ColSpan="1" Required="0" />
-                    <GINavigationScreen ScreenID="SU301000" LineNbr="3" WindowMode="L" Icon="arrow_forward">
+                    <GINavigationScreen Link="" LineNbr="3" SortOrder="3" WindowMode="L" IsActive="1" Icon="arrow_forward">
                         <GINavigationParameter LineNbr="3" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen ScreenID="SU301000" LineNbr="2" WindowMode="S">
+                    <GINavigationScreen Link="" LineNbr="2" SortOrder="2" WindowMode="S" IsActive="1">
                         <GINavigationParameter LineNbr="2" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen ScreenID="SU301000" LineNbr="1" WindowMode="S">
+                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="S" IsActive="1">
                         <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.CollectorID" IsExpression="0" />
                     </GINavigationScreen>
                     <GISort LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.createdDateTime" SortOrder="D" />

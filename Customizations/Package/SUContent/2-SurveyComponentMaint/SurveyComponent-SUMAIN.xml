@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(ComponentID)" />
+  <layout>
+    <table name="SurveyComponent" />
+  </layout>
+  <data>
+    <SurveyComponent>
+      <row ComponentID="SUMAIN" ComponentType="SU" Active="1" Description="SurveyMainTemplate" Body="&lt;!DOCTYPE html&gt;&#xA;&lt;html&gt;&#xA;    &lt;head&gt;&#xA;        &lt;meta charset=&quot;utf-8&quot; /&gt;&#xA;        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;&#xA;        &lt;title&gt;{{Survey.Title}}&lt;/title&gt;&#xA;        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css&quot; /&gt;&#xA;        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://gitcdn.link/cdn/Wikiki/bulma-checkradio/38c95578f465f4c3805f578490925f337b87404d/dist/css/bulma-checkradio.min.css&quot; /&gt;&#xA;        &lt;style&gt;&lt;/style&gt;&#xA;    &lt;/head&gt;&#xA;    &lt;body class=&quot;has-background-light&quot; style=&quot;height: 100%; min-height: 100vh&quot;&gt;&#xA;        &lt;section class=&quot;section container is-max-desktop py-5&quot;&gt;&#xA;            &lt;form class=&quot;is-max-desktop has-background-white px-0 py-5 container is-fluid&quot; name=&quot;{{Survey.FormName}}&quot; action=&quot;{{SurveyURL}}&quot; method=&quot;post&quot; enctype=&quot;application/x-www-form-urlencoded&quot;&gt;&#xA;                {{InnerContent}}&#xA;            &lt;/form&gt;&#xA;        &lt;/section&gt;&#xA;    &lt;/body&gt;&#xA;&lt;/html&gt;" NoteID="43076712-5abf-eb11-a38b-3c6aa7cb36ca" />
+    </SurveyComponent>
+  </data>
+</data-set>

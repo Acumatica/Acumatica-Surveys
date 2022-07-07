@@ -1,0 +1,317 @@
+﻿<XportScenario>
+    <data-set>
+        <relations format-version="3" relations-version="20160101" main-table="SYMapping" file-name="(ScreenID)-(Name)">
+            <link from="SYMapping (ProviderID, NoteID)" to="SYProvider (ProviderID, NoteID)" type="ToMaster" updateable="False" />
+            <link from="SYMapping (NoteID)" to="Note (NoteID)" type="ToMaster" updateable="False" />
+            <link from="SYProvider (NoteID)" to="Note (NoteID)" type="ToMaster" updateable="False" />
+            <link from="SYProviderField (ProviderID)" to="SYProvider (ProviderID)" />
+            <link from="SYProviderField (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYProviderObject (ProviderID)" to="SYProvider (ProviderID)" />
+            <link from="SYProviderObject (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYProviderParameter (ProviderID)" to="SYProvider (ProviderID)" />
+            <link from="SYProviderParameter (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYMappingCondition (MappingID)" to="SYMapping (MappingID)" />
+            <link from="SYMappingCondition (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYMappingField (MappingID)" to="SYMapping (MappingID)" />
+            <link from="SYMappingField (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="SYImportCondition (MappingID)" to="SYMapping (MappingID)" />
+            <link from="SYImportCondition (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="NoteDoc (NoteID)" to="SYProvider (NoteID)" />
+            <link from="UploadFile (FileID)" to="NoteDoc (FileID)" />
+            <link from="UploadFile (FileID, LastRevisionID)" to="UploadFileRevision (FileID, FileRevisionID)" type="LastRevision" />
+        </relations>
+        <layout>
+            <table name="SYMapping">
+                <table name="SYMappingCondition" uplink="(MappingID) = (MappingID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYMappingField" uplink="(MappingID) = (MappingID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYImportCondition" uplink="(MappingID) = (MappingID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+            </table>
+            <table name="SYProvider">
+                <table name="SYProviderField" uplink="(ProviderID) = (ProviderID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYProviderObject" uplink="(ProviderID) = (ProviderID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SYProviderParameter" uplink="(ProviderID) = (ProviderID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="NoteDoc" uplink="(NoteID) = (NoteID)">
+                    <table name="UploadFile" uplink="(FileID) = (FileID)">
+                        <table name="UploadFileRevision" uplink="(FileID, LastRevisionID) = (FileID, FileRevisionID)" />
+                    </table>
+                </table>
+            </table>
+            <table name="Note" />
+        </layout>
+        <data>
+            <SYMapping>
+                <row MappingID="0f2fd0f8-e712-40db-b55a-8dd04aa031d8" Name="SU TriggerCollectorNotification" IsActive="1" ScreenID="SU301000" MappingType="I" GraphName="PX.Survey.Ext.SurveyCollectorMaint" ViewName="Collector" GridViewName="CollectedAnswers" ProviderID="d32ac6c8-a6fb-459d-8322-55e979d6bb82" ProviderObject="Results" SyncType="F" Status="N" FieldCntr="728" FieldOrderCntr="0" ImportConditionCntr="0" ConditionCntr="0" DataCntr="0" NbrRecords="0" DiscardResult="0" NoteID="464141aa-fef7-ec11-9013-408d5cb11534" IsExportOnlyMappingFields="0" RepeatingData="0" ProcessInParallel="0" BreakOnError="1" BreakOnTarget="1" SkipHeaders="0">
+                    <SYMappingField LineNbr="728" OrderNumber="4" IsActive="1" IsVisible="1" ObjectName="Collector" FieldName="&lt;SendNewNotification&gt;" NeedCommit="1" IgnoreError="0" />
+                    <SYMappingField LineNbr="696" OrderNumber="2" IsActive="1" IsVisible="0" ParentLineNbr="632" ObjectName="Collector" FieldName="&lt;Cancel&gt;" NeedCommit="0" IgnoreError="0" />
+                    <SYMappingField LineNbr="664" OrderNumber="1" IsActive="1" IsVisible="0" ParentLineNbr="632" ObjectName="Collector" FieldName="@@CollectorID" Value="=[Collector.CollectorID]" NeedCommit="0" IgnoreError="0" />
+                    <SYMappingField LineNbr="632" OrderNumber="3" IsActive="1" IsVisible="1" ObjectName="Collector" FieldName="CollectorID" Value="Collector_collectorID" NeedCommit="1" IgnoreError="0" />
+                </row>
+            </SYMapping>
+            <SYProvider>
+                <row ProviderID="d32ac6c8-a6fb-459d-8322-55e979d6bb82" Name="SU TriggerCollectorNotification" IsActive="1" ProviderType="PX.DataSync.BusinessProcessSYProvider" ObjectCntr="2" ParameterCntr="1" NoteID="464141aa-fef7-ec11-9013-408d5cb11534">
+                    <SYProviderField ObjectName="Results" LineNbr="123" IsActive="1" Name="Contact_workgroupID_description" DisplayName="Contact_workgroupID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="122" IsActive="1" Name="Contact_workgroupID" DisplayName="Contact_workgroupID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="121" IsActive="1" Name="Contact_webSite" DisplayName="Contact_webSite" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="120" IsActive="1" Name="Contact_usrUsingMobileApp" DisplayName="Contact_usrUsingMobileApp" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="119" IsActive="1" Name="Contact_usrMobileAppDeviceOS" DisplayName="Contact_usrMobileAppDeviceOS" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="118" IsActive="1" Name="Contact_userID" DisplayName="Contact_userID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="117" IsActive="1" Name="Contact_title" DisplayName="Contact_title" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="116" IsActive="1" Name="Contact_synchronize" DisplayName="Contact_synchronize" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="115" IsActive="1" Name="Contact_status" DisplayName="Contact_status" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="114" IsActive="1" Name="Contact_spouse" DisplayName="Contact_spouse" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="113" IsActive="1" Name="Contact_source" DisplayName="Contact_source" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="112" IsActive="1" Name="Contact_selected" DisplayName="Contact_selected" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="111" IsActive="1" Name="Contact_searchSuggestion" DisplayName="Contact_searchSuggestion" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="110" IsActive="1" Name="Contact_salutation" DisplayName="Contact_salutation" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="109" IsActive="1" Name="Contact_revisionID" DisplayName="Contact_revisionID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="108" IsActive="1" Name="Contact_resolution" DisplayName="Contact_resolution" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="107" IsActive="1" Name="Contact_pseudonymizationStatus" DisplayName="Contact_pseudonymizationStatus" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="106" IsActive="1" Name="Contact_PRODREQ_Attributes" DisplayName="Contact_PRODREQ_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="105" IsActive="1" Name="Contact_POSITION_Attributes" DisplayName="Contact_POSITION_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="104" IsActive="1" Name="Contact_phone3Type" DisplayName="Contact_phone3Type" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="103" IsActive="1" Name="Contact_phone3" DisplayName="Contact_phone3" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="102" IsActive="1" Name="Contact_phone2Type" DisplayName="Contact_phone2Type" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="101" IsActive="1" Name="Contact_phone2" DisplayName="Contact_phone2" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="100" IsActive="1" Name="Contact_phone1Type" DisplayName="Contact_phone1Type" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="99" IsActive="1" Name="Contact_phone1" DisplayName="Contact_phone1" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="98" IsActive="1" Name="Contact_parentBAccountID_description" DisplayName="Contact_parentBAccountID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="97" IsActive="1" Name="Contact_parentBAccountID" DisplayName="Contact_parentBAccountID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="96" IsActive="1" Name="Contact_ownerID_description" DisplayName="Contact_ownerID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="95" IsActive="1" Name="Contact_ownerID" DisplayName="Contact_ownerID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="94" IsActive="1" Name="Contact_overrideAddress" DisplayName="Contact_overrideAddress" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="93" IsActive="1" Name="Contact_noteID" DisplayName="Contact_noteID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="92" IsActive="1" Name="Contact_noMassMail" DisplayName="Contact_noMassMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="91" IsActive="1" Name="Contact_noMarketing" DisplayName="Contact_noMarketing" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="90" IsActive="1" Name="Contact_noMail" DisplayName="Contact_noMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="89" IsActive="1" Name="Contact_noFax" DisplayName="Contact_noFax" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="88" IsActive="1" Name="Contact_noEMail" DisplayName="Contact_noEMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="87" IsActive="1" Name="Contact_noCall" DisplayName="Contact_noCall" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="86" IsActive="1" Name="Contact_midName" DisplayName="Contact_midName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="85" IsActive="1" Name="Contact_method" DisplayName="Contact_method" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="84" IsActive="1" Name="Contact_memberName" DisplayName="Contact_memberName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="83" IsActive="1" Name="Contact_maritalStatus" DisplayName="Contact_maritalStatus" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="82" IsActive="1" Name="Contact_LOCATION_Attributes" DisplayName="Contact_LOCATION_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="81" IsActive="1" Name="Contact_lastName" DisplayName="Contact_lastName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="80" IsActive="1" Name="Contact_lastModifiedDateTime" DisplayName="Contact_lastModifiedDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="79" IsActive="1" Name="Contact_lastModifiedByScreenID" DisplayName="Contact_lastModifiedByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="78" IsActive="1" Name="Contact_lastModifiedByID_description" DisplayName="Contact_lastModifiedByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="77" IsActive="1" Name="Contact_lastModifiedByID" DisplayName="Contact_lastModifiedByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="76" IsActive="1" Name="Contact_languageID_description" DisplayName="Contact_languageID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="75" IsActive="1" Name="Contact_languageID" DisplayName="Contact_languageID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="74" IsActive="1" Name="Contact_isPrimary" DisplayName="Contact_isPrimary" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="73" IsActive="1" Name="Contact_isNotEmployee" DisplayName="Contact_isNotEmployee" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="72" IsActive="1" Name="Contact_isMeaningfull" DisplayName="Contact_isMeaningfull" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="71" IsActive="1" Name="Contact_isConvertable" DisplayName="Contact_isConvertable" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="70" IsActive="1" Name="Contact_isAddressSameAsMain" DisplayName="Contact_isAddressSameAsMain" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="69" IsActive="1" Name="Contact_isActive" DisplayName="Contact_isActive" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="68" IsActive="1" Name="Contact_INDUSTRY_Attributes" DisplayName="Contact_INDUSTRY_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="67" IsActive="1" Name="Contact_img" DisplayName="Contact_img" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="66" IsActive="1" Name="Contact_grammValidationDateTime" DisplayName="Contact_grammValidationDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="65" IsActive="1" Name="Contact_gender" DisplayName="Contact_gender" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="64" IsActive="1" Name="Contact_fullName" DisplayName="Contact_fullName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="63" IsActive="1" Name="Contact_firstName" DisplayName="Contact_firstName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="62" IsActive="1" Name="Contact_faxType" DisplayName="Contact_faxType" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="61" IsActive="1" Name="Contact_fax" DisplayName="Contact_fax" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="60" IsActive="1" Name="Contact_extRefNbr" DisplayName="Contact_extRefNbr" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="59" IsActive="1" Name="Contact_eMail" DisplayName="Contact_eMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="58" IsActive="1" Name="Contact_duplicateStatus" DisplayName="Contact_duplicateStatus" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="57" IsActive="1" Name="Contact_duplicateFound" DisplayName="Contact_duplicateFound" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="56" IsActive="1" Name="Contact_displayName" DisplayName="Contact_displayName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="55" IsActive="1" Name="Contact_deletedDatabaseRecord" DisplayName="Contact_deletedDatabaseRecord" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="54" IsActive="1" Name="Contact_defAddressID" DisplayName="Contact_defAddressID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="53" IsActive="1" Name="Contact_dateOfBirth" DisplayName="Contact_dateOfBirth" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="52" IsActive="1" Name="Contact_createdDateTime" DisplayName="Contact_createdDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="51" IsActive="1" Name="Contact_createdByScreenID" DisplayName="Contact_createdByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="50" IsActive="1" Name="Contact_createdByID_description" DisplayName="Contact_createdByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="49" IsActive="1" Name="Contact_createdByID" DisplayName="Contact_createdByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="48" IsActive="1" Name="Contact_contactType" DisplayName="Contact_contactType" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="47" IsActive="1" Name="Contact_contactPriority" DisplayName="Contact_contactPriority" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="46" IsActive="1" Name="Contact_contactID" DisplayName="Contact_contactID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="45" IsActive="1" Name="Contact_consentExpirationDate" DisplayName="Contact_consentExpirationDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="44" IsActive="1" Name="Contact_consentDate" DisplayName="Contact_consentDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="43" IsActive="1" Name="Contact_consentAgreement" DisplayName="Contact_consentAgreement" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="42" IsActive="1" Name="Contact_COMPSIZE_Attributes" DisplayName="Contact_COMPSIZE_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="41" IsActive="1" Name="Contact_COMPREV_Attributes" DisplayName="Contact_COMPREV_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="40" IsActive="1" Name="Contact_classID_description" DisplayName="Contact_classID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="39" IsActive="1" Name="Contact_classID" DisplayName="Contact_classID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="38" IsActive="1" Name="Contact_canBeMadePrimary" DisplayName="Contact_canBeMadePrimary" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="37" IsActive="1" Name="Contact_campaignID_description" DisplayName="Contact_campaignID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="36" IsActive="1" Name="Contact_campaignID" DisplayName="Contact_campaignID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="35" IsActive="1" Name="Contact_bAccountID_description" DisplayName="Contact_bAccountID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="34" IsActive="1" Name="Contact_bAccountID" DisplayName="Contact_bAccountID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="33" IsActive="1" Name="Contact_attributes" DisplayName="Contact_attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="32" IsActive="1" Name="Contact_attention" DisplayName="Contact_attention" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="31" IsActive="1" Name="Contact_assignDate" DisplayName="Contact_assignDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="30" IsActive="1" Name="Contact_anniversary" DisplayName="Contact_anniversary" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="29" IsActive="1" Name="Collector_userLineNbr" DisplayName="Collector_userLineNbr" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="28" IsActive="1" Name="Collector_userID" DisplayName="Collector_userID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="27" IsActive="1" Name="Collector_token" DisplayName="Collector_token" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="26" IsActive="1" Name="Collector_surveyID_description" DisplayName="Collector_surveyID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="25" IsActive="1" Name="Collector_surveyID" DisplayName="Collector_surveyID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="24" IsActive="1" Name="Collector_status" DisplayName="Collector_status" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="23" IsActive="1" Name="Collector_source" DisplayName="Collector_source" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="22" IsActive="1" Name="Collector_sentOn" DisplayName="Collector_sentOn" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="21" IsActive="1" Name="Collector_selected" DisplayName="Collector_selected" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="20" IsActive="1" Name="Collector_refNoteID" DisplayName="Collector_refNoteID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="19" IsActive="1" Name="Collector_noteID" DisplayName="Collector_noteID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="18" IsActive="1" Name="Collector_message" DisplayName="Collector_message" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="17" IsActive="1" Name="Collector_lastName" DisplayName="Collector_lastName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="16" IsActive="1" Name="Collector_lastModifiedDateTime" DisplayName="Collector_lastModifiedDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="15" IsActive="1" Name="Collector_lastModifiedByScreenID" DisplayName="Collector_lastModifiedByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="14" IsActive="1" Name="Collector_lastModifiedByID_description" DisplayName="Collector_lastModifiedByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="13" IsActive="1" Name="Collector_lastModifiedByID" DisplayName="Collector_lastModifiedByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="12" IsActive="1" Name="Collector_firstName" DisplayName="Collector_firstName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="11" IsActive="1" Name="Collector_expirationDate" DisplayName="Collector_expirationDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="10" IsActive="1" Name="Collector_displayName" DisplayName="Collector_displayName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="9" IsActive="1" Name="Collector_createdDateTime" DisplayName="Collector_createdDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="8" IsActive="1" Name="Collector_createdByScreenID" DisplayName="Collector_createdByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="7" IsActive="1" Name="Collector_createdByID_description" DisplayName="Collector_createdByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="6" IsActive="1" Name="Collector_createdByID" DisplayName="Collector_createdByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="5" IsActive="1" Name="Collector_contactID_description" DisplayName="Collector_contactID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="4" IsActive="1" Name="Collector_contactID" DisplayName="Collector_contactID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="3" IsActive="1" Name="Collector_collectorID" DisplayName="Collector_collectorID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="2" IsActive="1" Name="Collector_anonymous" DisplayName="Collector_anonymous" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="Results" LineNbr="1" IsActive="1" Name="Collector_anonCollectorID" DisplayName="Collector_anonCollectorID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="123" IsActive="1" Name="Contact_workgroupID_description" DisplayName="Contact_workgroupID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="122" IsActive="1" Name="Contact_workgroupID" DisplayName="Contact_workgroupID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="121" IsActive="1" Name="Contact_webSite" DisplayName="Contact_webSite" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="120" IsActive="1" Name="Contact_usrUsingMobileApp" DisplayName="Contact_usrUsingMobileApp" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="119" IsActive="1" Name="Contact_usrMobileAppDeviceOS" DisplayName="Contact_usrMobileAppDeviceOS" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="118" IsActive="1" Name="Contact_userID" DisplayName="Contact_userID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="117" IsActive="1" Name="Contact_title" DisplayName="Contact_title" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="116" IsActive="1" Name="Contact_synchronize" DisplayName="Contact_synchronize" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="115" IsActive="1" Name="Contact_status" DisplayName="Contact_status" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="114" IsActive="1" Name="Contact_spouse" DisplayName="Contact_spouse" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="113" IsActive="1" Name="Contact_source" DisplayName="Contact_source" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="112" IsActive="1" Name="Contact_selected" DisplayName="Contact_selected" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="111" IsActive="1" Name="Contact_searchSuggestion" DisplayName="Contact_searchSuggestion" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="110" IsActive="1" Name="Contact_salutation" DisplayName="Contact_salutation" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="109" IsActive="1" Name="Contact_revisionID" DisplayName="Contact_revisionID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="108" IsActive="1" Name="Contact_resolution" DisplayName="Contact_resolution" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="107" IsActive="1" Name="Contact_pseudonymizationStatus" DisplayName="Contact_pseudonymizationStatus" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="106" IsActive="1" Name="Contact_PRODREQ_Attributes" DisplayName="Contact_PRODREQ_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="105" IsActive="1" Name="Contact_POSITION_Attributes" DisplayName="Contact_POSITION_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="104" IsActive="1" Name="Contact_phone3Type" DisplayName="Contact_phone3Type" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="103" IsActive="1" Name="Contact_phone3" DisplayName="Contact_phone3" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="102" IsActive="1" Name="Contact_phone2Type" DisplayName="Contact_phone2Type" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="101" IsActive="1" Name="Contact_phone2" DisplayName="Contact_phone2" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="100" IsActive="1" Name="Contact_phone1Type" DisplayName="Contact_phone1Type" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="99" IsActive="1" Name="Contact_phone1" DisplayName="Contact_phone1" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="98" IsActive="1" Name="Contact_parentBAccountID_description" DisplayName="Contact_parentBAccountID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="97" IsActive="1" Name="Contact_parentBAccountID" DisplayName="Contact_parentBAccountID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="96" IsActive="1" Name="Contact_ownerID_description" DisplayName="Contact_ownerID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="95" IsActive="1" Name="Contact_ownerID" DisplayName="Contact_ownerID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="94" IsActive="1" Name="Contact_overrideAddress" DisplayName="Contact_overrideAddress" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="93" IsActive="1" Name="Contact_noteID" DisplayName="Contact_noteID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="92" IsActive="1" Name="Contact_noMassMail" DisplayName="Contact_noMassMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="91" IsActive="1" Name="Contact_noMarketing" DisplayName="Contact_noMarketing" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="90" IsActive="1" Name="Contact_noMail" DisplayName="Contact_noMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="89" IsActive="1" Name="Contact_noFax" DisplayName="Contact_noFax" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="88" IsActive="1" Name="Contact_noEMail" DisplayName="Contact_noEMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="87" IsActive="1" Name="Contact_noCall" DisplayName="Contact_noCall" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="86" IsActive="1" Name="Contact_midName" DisplayName="Contact_midName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="85" IsActive="1" Name="Contact_method" DisplayName="Contact_method" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="84" IsActive="1" Name="Contact_memberName" DisplayName="Contact_memberName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="83" IsActive="1" Name="Contact_maritalStatus" DisplayName="Contact_maritalStatus" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="82" IsActive="1" Name="Contact_LOCATION_Attributes" DisplayName="Contact_LOCATION_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="81" IsActive="1" Name="Contact_lastName" DisplayName="Contact_lastName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="80" IsActive="1" Name="Contact_lastModifiedDateTime" DisplayName="Contact_lastModifiedDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="79" IsActive="1" Name="Contact_lastModifiedByScreenID" DisplayName="Contact_lastModifiedByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="78" IsActive="1" Name="Contact_lastModifiedByID_description" DisplayName="Contact_lastModifiedByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="77" IsActive="1" Name="Contact_lastModifiedByID" DisplayName="Contact_lastModifiedByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="76" IsActive="1" Name="Contact_languageID_description" DisplayName="Contact_languageID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="75" IsActive="1" Name="Contact_languageID" DisplayName="Contact_languageID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="74" IsActive="1" Name="Contact_isPrimary" DisplayName="Contact_isPrimary" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="73" IsActive="1" Name="Contact_isNotEmployee" DisplayName="Contact_isNotEmployee" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="72" IsActive="1" Name="Contact_isMeaningfull" DisplayName="Contact_isMeaningfull" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="71" IsActive="1" Name="Contact_isConvertable" DisplayName="Contact_isConvertable" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="70" IsActive="1" Name="Contact_isAddressSameAsMain" DisplayName="Contact_isAddressSameAsMain" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="69" IsActive="1" Name="Contact_isActive" DisplayName="Contact_isActive" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="68" IsActive="1" Name="Contact_INDUSTRY_Attributes" DisplayName="Contact_INDUSTRY_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="67" IsActive="1" Name="Contact_img" DisplayName="Contact_img" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="66" IsActive="1" Name="Contact_grammValidationDateTime" DisplayName="Contact_grammValidationDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="65" IsActive="1" Name="Contact_gender" DisplayName="Contact_gender" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="64" IsActive="1" Name="Contact_fullName" DisplayName="Contact_fullName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="63" IsActive="1" Name="Contact_firstName" DisplayName="Contact_firstName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="62" IsActive="1" Name="Contact_faxType" DisplayName="Contact_faxType" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="61" IsActive="1" Name="Contact_fax" DisplayName="Contact_fax" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="60" IsActive="1" Name="Contact_extRefNbr" DisplayName="Contact_extRefNbr" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="59" IsActive="1" Name="Contact_eMail" DisplayName="Contact_eMail" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="58" IsActive="1" Name="Contact_duplicateStatus" DisplayName="Contact_duplicateStatus" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="57" IsActive="1" Name="Contact_duplicateFound" DisplayName="Contact_duplicateFound" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="56" IsActive="1" Name="Contact_displayName" DisplayName="Contact_displayName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="55" IsActive="1" Name="Contact_deletedDatabaseRecord" DisplayName="Contact_deletedDatabaseRecord" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="54" IsActive="1" Name="Contact_defAddressID" DisplayName="Contact_defAddressID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="53" IsActive="1" Name="Contact_dateOfBirth" DisplayName="Contact_dateOfBirth" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="52" IsActive="1" Name="Contact_createdDateTime" DisplayName="Contact_createdDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="51" IsActive="1" Name="Contact_createdByScreenID" DisplayName="Contact_createdByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="50" IsActive="1" Name="Contact_createdByID_description" DisplayName="Contact_createdByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="49" IsActive="1" Name="Contact_createdByID" DisplayName="Contact_createdByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="48" IsActive="1" Name="Contact_contactType" DisplayName="Contact_contactType" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="47" IsActive="1" Name="Contact_contactPriority" DisplayName="Contact_contactPriority" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="46" IsActive="1" Name="Contact_contactID" DisplayName="Contact_contactID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="45" IsActive="1" Name="Contact_consentExpirationDate" DisplayName="Contact_consentExpirationDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="44" IsActive="1" Name="Contact_consentDate" DisplayName="Contact_consentDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="43" IsActive="1" Name="Contact_consentAgreement" DisplayName="Contact_consentAgreement" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="42" IsActive="1" Name="Contact_COMPSIZE_Attributes" DisplayName="Contact_COMPSIZE_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="41" IsActive="1" Name="Contact_COMPREV_Attributes" DisplayName="Contact_COMPREV_Attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="40" IsActive="1" Name="Contact_classID_description" DisplayName="Contact_classID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="39" IsActive="1" Name="Contact_classID" DisplayName="Contact_classID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="38" IsActive="1" Name="Contact_canBeMadePrimary" DisplayName="Contact_canBeMadePrimary" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="37" IsActive="1" Name="Contact_campaignID_description" DisplayName="Contact_campaignID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="36" IsActive="1" Name="Contact_campaignID" DisplayName="Contact_campaignID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="35" IsActive="1" Name="Contact_bAccountID_description" DisplayName="Contact_bAccountID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="34" IsActive="1" Name="Contact_bAccountID" DisplayName="Contact_bAccountID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="33" IsActive="1" Name="Contact_attributes" DisplayName="Contact_attributes" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="32" IsActive="1" Name="Contact_attention" DisplayName="Contact_attention" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="31" IsActive="1" Name="Contact_assignDate" DisplayName="Contact_assignDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="30" IsActive="1" Name="Contact_anniversary" DisplayName="Contact_anniversary" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="29" IsActive="1" Name="Collector_userLineNbr" DisplayName="Collector_userLineNbr" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="28" IsActive="1" Name="Collector_userID" DisplayName="Collector_userID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="27" IsActive="1" Name="Collector_token" DisplayName="Collector_token" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="26" IsActive="1" Name="Collector_surveyID_description" DisplayName="Collector_surveyID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="25" IsActive="1" Name="Collector_surveyID" DisplayName="Collector_surveyID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="24" IsActive="1" Name="Collector_status" DisplayName="Collector_status" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="23" IsActive="1" Name="Collector_source" DisplayName="Collector_source" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="22" IsActive="1" Name="Collector_sentOn" DisplayName="Collector_sentOn" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="21" IsActive="1" Name="Collector_selected" DisplayName="Collector_selected" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="20" IsActive="1" Name="Collector_refNoteID" DisplayName="Collector_refNoteID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="19" IsActive="1" Name="Collector_noteID" DisplayName="Collector_noteID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="18" IsActive="1" Name="Collector_message" DisplayName="Collector_message" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="17" IsActive="1" Name="Collector_lastName" DisplayName="Collector_lastName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="16" IsActive="1" Name="Collector_lastModifiedDateTime" DisplayName="Collector_lastModifiedDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="15" IsActive="1" Name="Collector_lastModifiedByScreenID" DisplayName="Collector_lastModifiedByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="14" IsActive="1" Name="Collector_lastModifiedByID_description" DisplayName="Collector_lastModifiedByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="13" IsActive="1" Name="Collector_lastModifiedByID" DisplayName="Collector_lastModifiedByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="12" IsActive="1" Name="Collector_firstName" DisplayName="Collector_firstName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="11" IsActive="1" Name="Collector_expirationDate" DisplayName="Collector_expirationDate" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="10" IsActive="1" Name="Collector_displayName" DisplayName="Collector_displayName" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="9" IsActive="1" Name="Collector_createdDateTime" DisplayName="Collector_createdDateTime" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="8" IsActive="1" Name="Collector_createdByScreenID" DisplayName="Collector_createdByScreenID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="7" IsActive="1" Name="Collector_createdByID_description" DisplayName="Collector_createdByID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="6" IsActive="1" Name="Collector_createdByID" DisplayName="Collector_createdByID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="5" IsActive="1" Name="Collector_contactID_description" DisplayName="Collector_contactID_description" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="4" IsActive="1" Name="Collector_contactID" DisplayName="Collector_contactID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="3" IsActive="1" Name="Collector_collectorID" DisplayName="Collector_collectorID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="2" IsActive="1" Name="Collector_anonymous" DisplayName="Collector_anonymous" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderField ObjectName="PreviousResults" LineNbr="1" IsActive="1" Name="Collector_anonCollectorID" DisplayName="Collector_anonCollectorID" IsKey="0" DataType="System.String" DataLength="-1" IsCustom="0" />
+                    <SYProviderObject LineNbr="2" IsActive="1" Name="PreviousResults" FieldCntr="123" IsCustom="0" />
+                    <SYProviderObject LineNbr="1" IsActive="1" Name="Results" FieldCntr="123" IsCustom="0" />
+                    <SYProviderParameter LineNbr="1" Name="ScreenID" DisplayName="Screen ID" Value="GI640090" IsEncrypted="0" />
+                </row>
+            </SYProvider>
+        </data>
+    </data-set>
+</XportScenario>

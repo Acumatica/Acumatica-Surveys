@@ -1,6 +1,6 @@
 ﻿<GenericInquiryScreen>
     <data-set>
-        <relations format-version="3" relations-version="20201014" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+        <relations format-version="3" relations-version="20210225" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
             <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
@@ -136,10 +136,10 @@
         <data>
             <GIDesign>
                 <row DesignID="dcf01c9e-ec2e-4b9c-9c20-ae577f644c19" Name="DB-Cases" FilterColCount="3" PageSize="0" NewRecordCreationEnabled="1" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
-                    <GINavigationScreen ScreenID="CR306000" LineNbr="2" WindowMode="L" Icon="work">
+                    <GINavigationScreen Link="" LineNbr="2" SortOrder="2" WindowMode="L" IsActive="1" Icon="work">
                         <GINavigationParameter LineNbr="1" FieldName="CaseCD" ParameterName="CRCase.caseCD" IsExpression="0" />
                     </GINavigationScreen>
-                    <GINavigationScreen ScreenID="CR303000" LineNbr="1" WindowMode="L" Icon="business">
+                    <GINavigationScreen Link="" LineNbr="1" SortOrder="1" WindowMode="L" IsActive="1" Icon="business">
                         <GINavigationParameter LineNbr="1" FieldName="AcctCD" ParameterName="BAccount.acctCD" IsExpression="0" />
                     </GINavigationScreen>
                     <GISort LineNbr="1" IsActive="1" DataFieldName="CRCase.caseCD" SortOrder="D" />
