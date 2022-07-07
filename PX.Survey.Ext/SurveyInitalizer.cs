@@ -26,6 +26,7 @@ namespace PX.Survey.Ext
             foreach (var xmlFile in xmlFiles)
             {
                 ImportFilesAtName(xmlFile, graphName);
+                this.WriteLog($"Imported {Path.GetFileName(xmlFile)} into {graphName}");
             }
         }
         public void ImportFilesAtName(string fileName, string graphName)
@@ -73,7 +74,7 @@ namespace PX.Survey.Ext
         }
         public override void UpdateDatabase()
         {
-            this.WriteLog("Start of import");
+            this.WriteLog("Starting XML import");
             try
             {
                 string folderName = $"{AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\')}\\SUContent\\";
