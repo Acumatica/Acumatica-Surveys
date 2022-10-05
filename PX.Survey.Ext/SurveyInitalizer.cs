@@ -19,13 +19,14 @@ namespace PX.Survey.Ext
             var context = File.ReadAllBytes(fileName);
             return context;
         }
-        
+
         public void ImportFilesFromDirectory(string directory, string graphName)
         {
             var xmlFiles = Directory.GetFiles(directory).Where(p => p.EndsWith(".xml"));
             foreach (var xmlFile in xmlFiles)
             {
                 ImportFilesAtName(xmlFile, graphName);
+                this.WriteLog($"Imported {Path.GetFileName(xmlFile)} into {graphName}");
             }
         }
         public void ImportFilesAtName(string fileName, string graphName)
@@ -41,9 +42,10 @@ namespace PX.Survey.Ext
             var directories = Directory.GetDirectories(currentDirectory);
             foreach (var folder in directories)
             {
-                dictionary.Add(Tuple.Create(Convert.ToInt32(folder.Split('\\').LastOrDefault().Split('-')[0]), folder.Split('-')[1], folder));
+                dictionary.Add(Tuple.Create(Convert.ToInt32(folder.Split('\\').LastOrDefault().Split('-')[0]),
+                    folder.Split('\\').LastOrDefault().Split('-').LastOrDefault(), folder));
             }
-           
+
             return dictionary;
         }
         private static IEnumerable<string> TryEnumerate(Func<IEnumerable<string>> action)
@@ -60,30 +62,38 @@ namespace PX.Survey.Ext
         }
         private static Type ByName(string name)
         {
-            return
-                AppDomain.CurrentDomain.GetAssemblies()
-                    .Reverse()
-                    .Select(assembly => assembly.GetType(name))
-                    .FirstOrDefault(t => t != null)
-                ??
-                AppDomain.CurrentDomain.GetAssemblies()
-                    .Reverse()
-                    .SelectMany(assembly => assembly.GetTypes())
-                    .FirstOrDefault(t => t.Name.Contains(name));
+            foreach (var lib in AppDomain.CurrentDomain.GetAssemblies().Reverse())
+            {
+                try
+                {
+                    foreach (var type in lib.GetTypes())
+                    {
+                        if (type.Name == name)
+                            return type;
+                    }
+                }
+                catch // TODO find more efficient workaround. Didn't figure out how to bypass some reflection errors.
+                {
+                    continue;
+                }
+            }
+            return null;
         }
         public override void UpdateDatabase()
         {
-            this.WriteLog("Start of import");
+            this.WriteLog("Starting XML import");
             try
             {
                 string folderName = $"{AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\')}\\SUContent\\";
+                this.WriteLog(folderName);
                 var nameOfGraphs = TakeDictionaryGraphs(folderName).OrderBy(p => p.Item1);
-                
+
                 foreach (var item in nameOfGraphs)
                 {
+                    this.WriteLog(item.Item2 + item.Item3);
                     ImportFilesFromDirectory(item.Item3, item.Item2);
                 }
-                
+
             }
             catch (Exception e)
             {

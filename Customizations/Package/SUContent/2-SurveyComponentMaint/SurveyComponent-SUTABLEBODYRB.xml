@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="SurveyComponent" file-name="SurveyComponent-(ComponentID)" />
+  <layout>
+    <table name="SurveyComponent" />
+  </layout>
+  <data>
+    <SurveyComponent>
+      <row ComponentID="SUTABLEBODYRB" ComponentType="QU" Active="1" Description="SurveyTableTBodyRadioButtons" NoteID="61e1ae8b-17c3-eb11-a38b-3c6aa7cb36ca">
+        <column name="Body"><![CDATA[{{ PNbr = SurveyDetail.PageNbr }}
+{{ QNbr = SurveyDetail.QuestionNbr }}
+{{ LNbr = SurveyDetail.LineNbr }}
+<div class="field mb-5">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td class="is-size-7 is-vcentered is-2" style="max-width: 100px; width: 15%"><label class="radio" id="control.radio.label.{{UniqueID}}" for="control.radio.{{UniqueID}}">{{QNbr}}. {{SurveyDetail.Description}}</label></td>
+{{ for QDet in Question.Details }}
+    {{ IDNbr = QDet.ValueID }}
+    {{ UniqueID = PNbr + '.' + QNbr + '.' + LNbr + '.' + IDNbr }}
+                                    <td class="has-text-centered is-vcentered is-2" style="width: 17%"><input class="radio" type="radio" id="control.radio.{{UniqueID}}" name="{{PNbr}}.{{QNbr}}.{{LNbr}}" aria-labelledby="control.radio.label.{{UniqueID}}" value="{{IDNbr}}" {{ if SurveyDetail.Required }}{{~ required="required" ~}}{{ end }}/></td>
+{{ end # for }}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>]]></column>
+      </row>
+    </SurveyComponent>
+  </data>
+</data-set>

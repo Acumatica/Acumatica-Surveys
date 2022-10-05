@@ -1,0 +1,293 @@
+﻿<GenericInquiryScreen>
+    <data-set>
+        <relations format-version="3" relations-version="20210225" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+            <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIMassUpdateField (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GINavigationScreen (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GINavigationParameter (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
+            <link from="GINavigationCondition (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
+            <link from="GIOn (DesignID, RelationNbr)" to="GIRelation (DesignID, LineNbr)" />
+            <link from="GIRecordDefault (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIRelation (DesignID, ParentTable)" to="GITable (DesignID, Alias)" />
+            <link from="GIRelation (DesignID, ChildTable)" to="GITable (DesignID, Alias)" />
+            <link from="GIResult (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIResult (ObjectName, DesignID)" to="GITable (Alias, DesignID)" />
+            <link from="GISort (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GITable (DesignID)" to="GIDesign (DesignID)" />
+            <link from="GIWhere (DesignID)" to="GIDesign (DesignID)" />
+            <link from="SiteMap (Url)" to="GIDesign (DesignID)" type="WeakByUrl" linkname="toDesignById" baseurl="~/GenericInquiry/GenericInquiry.aspx" paramnames="id" />
+            <link from="SiteMap (Url)" to="GIDesign (Name)" type="WeakByUrl" linkname="toDesignByName" baseurl="~/GenericInquiry/GenericInquiry.aspx" />
+            <link from="ListEntryPoint (ListScreenID)" to="SiteMap (ScreenID)" />
+            <link from="SiteMap (ScreenID)" to="GIDesign (PrimaryScreenIDNew)" linkname="to1Screen" />
+            <link from="FilterHeader (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="FilterRow (FilterID)" to="FilterHeader (FilterID)" />
+            <link from="PivotTable (NoteID)" to="FilterHeader (RefNoteID)" />
+            <link from="PivotField (ScreenID, PivotTableID)" to="PivotTable (ScreenID, PivotTableID)" />
+            <link from="MUIScreen (NodeID)" to="SiteMap (NodeID)" />
+            <link from="MUIWorkspace (WorkspaceID)" to="MUIScreen (WorkspaceID)" type="FromMaster" linkname="workspaceToScreen" split-location="yes" updateable="True" />
+            <link from="MUISubcategory (SubcategoryID)" to="MUIScreen (SubcategoryID)" type="FromMaster" updateable="True" />
+            <link from="MUITile (ScreenID)" to="SiteMap (ScreenID)" />
+            <link from="MUIWorkspace (WorkspaceID)" to="MUITile (WorkspaceID)" type="FromMaster" linkname="workspaceToTile" split-location="yes" updateable="True" />
+            <link from="MUIArea (AreaID)" to="MUIWorkspace (AreaID)" type="FromMaster" updateable="True" />
+            <link from="MUIPinnedScreen (NodeID, WorkspaceID)" to="MUIScreen (NodeID, WorkspaceID)" type="WeakIfEmpty" isEmpty="Username" />
+            <link from="MUIFavoriteWorkspace (WorkspaceID)" to="MUIWorkspace (WorkspaceID)" type="WeakIfEmpty" isEmpty="Username" />
+            <link from="GIDesign (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIFilter (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIFilter (NoteID)" to="GIFilterKvExt (RecordID)" type="RowKvExt" />
+            <link from="GIGroupBy (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIOn (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIRelation (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIResult (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIResult (NoteID)" to="GIResultKvExt (RecordID)" type="RowKvExt" />
+            <link from="GISort (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GITable (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="GIWhere (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="FilterHeader (NoteID)" to="Note (NoteID)" type="Note" />
+            <link from="FilterHeader (NoteID)" to="FilterHeaderKvExt (RecordID)" type="RowKvExt" />
+        </relations>
+        <layout>
+            <table name="GIDesign">
+                <table name="GIFilter" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                    <table name="GIFilterKvExt" uplink="(NoteID) = (RecordID)" />
+                </table>
+                <table name="GIGroupBy" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="GIMassAction" uplink="(DesignID) = (DesignID)" />
+                <table name="GIMassUpdateField" uplink="(DesignID) = (DesignID)" />
+                <table name="GINavigationScreen" uplink="(DesignID) = (DesignID)">
+                    <table name="GINavigationParameter" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
+                    <table name="GINavigationCondition" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
+                </table>
+                <table name="GIRecordDefault" uplink="(DesignID) = (DesignID)" />
+                <table name="GISort" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="GITable" uplink="(DesignID) = (DesignID)">
+                    <table name="GIRelation" uplink="(DesignID, Alias) = (DesignID, ParentTable)">
+                        <table name="GIOn" uplink="(DesignID, LineNbr) = (DesignID, RelationNbr)">
+                            <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                    </table>
+                    <table name="GIResult" uplink="(Alias, DesignID) = (ObjectName, DesignID)">
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="GIResultKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="GIWhere" uplink="(DesignID) = (DesignID)">
+                    <table name="Note" uplink="(NoteID) = (NoteID)" />
+                </table>
+                <table name="SiteMap" uplink="(DesignID) = (Url)" linkname="toDesignById">
+                    <table name="ListEntryPoint" uplink="(ScreenID) = (ListScreenID)" />
+                    <table name="FilterHeader" uplink="(ScreenID) = (ScreenID)">
+                        <table name="FilterRow" uplink="(FilterID) = (FilterID)" />
+                        <table name="PivotTable" uplink="(RefNoteID) = (NoteID)">
+                            <table name="PivotField" uplink="(ScreenID, PivotTableID) = (ScreenID, PivotTableID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+                <table name="SiteMap" uplink="(Name) = (Url)" linkname="toDesignByName">
+                    <table name="ListEntryPoint" uplink="(ScreenID) = (ListScreenID)" />
+                    <table name="FilterHeader" uplink="(ScreenID) = (ScreenID)">
+                        <table name="FilterRow" uplink="(FilterID) = (FilterID)" />
+                        <table name="PivotTable" uplink="(RefNoteID) = (NoteID)">
+                            <table name="PivotField" uplink="(ScreenID, PivotTableID) = (ScreenID, PivotTableID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+                <table name="SiteMap" uplink="(PrimaryScreenIDNew) = (ScreenID)" linkname="to1Screen">
+                    <table name="ListEntryPoint" uplink="(ScreenID) = (ListScreenID)" />
+                    <table name="FilterHeader" uplink="(ScreenID) = (ScreenID)">
+                        <table name="FilterRow" uplink="(FilterID) = (FilterID)" />
+                        <table name="PivotTable" uplink="(RefNoteID) = (NoteID)">
+                            <table name="PivotField" uplink="(ScreenID, PivotTableID) = (ScreenID, PivotTableID)" />
+                        </table>
+                        <table name="Note" uplink="(NoteID) = (NoteID)" />
+                        <table name="FilterHeaderKvExt" uplink="(NoteID) = (RecordID)" />
+                    </table>
+                    <table name="MUIScreen" uplink="(NodeID) = (NodeID)">
+                        <table name="MUIPinnedScreen" uplink="(NodeID, WorkspaceID) = (NodeID, WorkspaceID)" />
+                    </table>
+                    <table name="MUITile" uplink="(ScreenID) = (ScreenID)" />
+                </table>
+                <table name="Note" uplink="(NoteID) = (NoteID)" />
+            </table>
+            <table name="MUIWorkspace">
+                <table name="MUIFavoriteWorkspace" uplink="(WorkspaceID) = (WorkspaceID)" />
+            </table>
+            <table name="MUISubcategory" />
+            <table name="MUIArea" />
+        </layout>
+        <data>
+            <GIDesign>
+                <row DesignID="dd454765-1723-4ba4-aab5-b82f45192aad" Name="SU-Survey Collector Notification" FilterColCount="3" PageSize="0" ExportTop="0" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
+                    <GINavigationScreen Link="SU301000" LineNbr="2" SortOrder="2" WindowMode="L" IsActive="1" Icon="receipt">
+                        <GINavigationParameter LineNbr="1" FieldName="SurveyID" ParameterName="Collector.surveyID" IsExpression="0" />
+                    </GINavigationScreen>
+                    <GINavigationScreen Link="SU301000" LineNbr="1" SortOrder="1" WindowMode="L" IsActive="1" Icon="menu">
+                        <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="Collector.CollectorID" IsExpression="0" />
+                    </GINavigationScreen>
+                    <GISort LineNbr="1" IsActive="1" DataFieldName="Collector.createdDateTime" SortOrder="A" />
+                    <GITable Alias="SurveyUser" Name="PX.Survey.Ext.SurveyUser">
+                        <GIRelation LineNbr="2" ChildTable="Contact" IsActive="1" JoinType="I">
+                            <GIOn LineNbr="2" ParentField="contactID" Condition="E " ChildField="contactID" Operation="A" />
+                        </GIRelation>
+                    </GITable>
+                    <GITable Alias="Contact" Name="PX.Objects.CR.Contact">
+                        <GIResult LineNbr="125" SortOrder="124" IsActive="1" Field="workgroupID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9e32cef1-f4f9-4fd0-bcf2-38a2c51366ac" />
+                        <GIResult LineNbr="124" SortOrder="123" IsActive="1" Field="workgroupID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="6e297b6b-9581-489f-ba02-c6f3f1602fc5" />
+                        <GIResult LineNbr="123" SortOrder="122" IsActive="1" Field="webSite" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8c6a0c61-02b0-4c73-ba87-1fadbc4da55e" />
+                        <GIResult LineNbr="122" SortOrder="121" IsActive="1" Field="usrUsingMobileApp" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="38710727-bc29-4712-8e69-fd3340dd2e1e" />
+                        <GIResult LineNbr="121" SortOrder="120" IsActive="1" Field="usrMobileAppDeviceOS" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="f21411a1-cdfd-475d-8ea3-7348cfc03144" />
+                        <GIResult LineNbr="120" SortOrder="119" IsActive="1" Field="userID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="1ea0be2f-bc0c-46a6-bd78-d12f9e1dba3f" />
+                        <GIResult LineNbr="119" SortOrder="118" IsActive="1" Field="title" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="afff917b-198f-4b78-85a1-e7f819acef71" />
+                        <GIResult LineNbr="118" SortOrder="117" IsActive="1" Field="synchronize" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5b8c18de-bf78-4b75-9cec-47fc182547a2" />
+                        <GIResult LineNbr="117" SortOrder="116" IsActive="1" Field="status" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="7c1e4bf9-be5c-48be-ba9f-2bb7518f7a48" />
+                        <GIResult LineNbr="116" SortOrder="115" IsActive="1" Field="spouse" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5cb0043b-dd59-4834-a49d-f0220bfed22d" />
+                        <GIResult LineNbr="115" SortOrder="114" IsActive="1" Field="source" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8fd2cea9-278b-4863-adb8-0bf219f65d50" />
+                        <GIResult LineNbr="114" SortOrder="113" IsActive="1" Field="selected" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="81080a77-2a8a-4009-bb54-93c8f83f8226" />
+                        <GIResult LineNbr="113" SortOrder="112" IsActive="1" Field="searchSuggestion" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="2ece2ab7-6c84-4b33-b951-a04e94ad2d1f" />
+                        <GIResult LineNbr="112" SortOrder="111" IsActive="1" Field="salutation" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="cad9a6bf-e809-4d5a-854c-e100bb30636e" />
+                        <GIResult LineNbr="111" SortOrder="110" IsActive="1" Field="revisionID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="f96d48c3-034a-4b1b-843d-dca31c8f02d6" />
+                        <GIResult LineNbr="110" SortOrder="109" IsActive="1" Field="resolution" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="398a7049-89c2-4be3-b0f4-445a2ad7dc79" />
+                        <GIResult LineNbr="109" SortOrder="108" IsActive="1" Field="pseudonymizationStatus" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5268f364-3271-43bf-a1ba-87eb87d7aa4a" />
+                        <GIResult LineNbr="108" SortOrder="107" IsActive="1" Field="PRODREQ_Attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8075ea44-cd0a-4a52-9158-a1772154b8ad" />
+                        <GIResult LineNbr="107" SortOrder="106" IsActive="1" Field="POSITION_Attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9d1a66a2-2a9b-47b2-b944-ed4b31249c28" />
+                        <GIResult LineNbr="106" SortOrder="105" IsActive="1" Field="phone3Type" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="3c5b3897-be01-4ddb-8382-9db1f21d6132" />
+                        <GIResult LineNbr="105" SortOrder="104" IsActive="1" Field="phone3" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="377189cd-3688-4d9e-bb85-f691ff717e8e" />
+                        <GIResult LineNbr="104" SortOrder="103" IsActive="1" Field="phone2Type" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="be9e6357-da08-426a-ab0c-c1fc09a509b7" />
+                        <GIResult LineNbr="103" SortOrder="102" IsActive="1" Field="phone2" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="94717900-8a09-482a-ae8c-960c6920e200" />
+                        <GIResult LineNbr="102" SortOrder="101" IsActive="1" Field="phone1Type" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8e6de19b-f094-435a-a267-0fce45d6760b" />
+                        <GIResult LineNbr="101" SortOrder="100" IsActive="1" Field="phone1" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="0c584c58-0597-45b7-baae-b5dd5ba35c38" />
+                        <GIResult LineNbr="100" SortOrder="99" IsActive="1" Field="parentBAccountID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="087f449a-e604-410a-9b18-afcf06914b9b" />
+                        <GIResult LineNbr="99" SortOrder="98" IsActive="1" Field="parentBAccountID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="a44e548a-0448-4e73-b1e7-f5403c1ab1b1" />
+                        <GIResult LineNbr="98" SortOrder="97" IsActive="1" Field="ownerID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5d2b031a-eb52-4c0f-9088-b425c4ba6b94" />
+                        <GIResult LineNbr="97" SortOrder="96" IsActive="1" Field="ownerID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="7933dd06-2fb2-4ce9-a595-675ddcfcef93" />
+                        <GIResult LineNbr="96" SortOrder="95" IsActive="1" Field="overrideAddress" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="2e6cdba3-daf6-4518-9513-a8c064249a83" />
+                        <GIResult LineNbr="95" SortOrder="94" IsActive="1" Field="noteID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="bd983fc4-8e6a-4ece-8710-7adc5d5f9f8d" />
+                        <GIResult LineNbr="94" SortOrder="93" IsActive="1" Field="noMassMail" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="f0716322-88eb-402e-ad21-d36bf06e2bcc" />
+                        <GIResult LineNbr="93" SortOrder="92" IsActive="1" Field="noMarketing" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="3f151eb0-39c8-4211-b2b8-f1291a58b69d" />
+                        <GIResult LineNbr="92" SortOrder="91" IsActive="1" Field="noMail" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="82b21224-d9cc-4f7e-944a-c340ad584e59" />
+                        <GIResult LineNbr="91" SortOrder="90" IsActive="1" Field="noFax" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="a5c10c12-9f89-4744-bba5-38768e5dbab5" />
+                        <GIResult LineNbr="90" SortOrder="89" IsActive="1" Field="noEMail" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="82da6a22-11d2-47a5-ae7c-8f2eea6a109c" />
+                        <GIResult LineNbr="89" SortOrder="88" IsActive="1" Field="noCall" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="bc66a79b-d76c-4018-aea1-d579ec0b25ba" />
+                        <GIResult LineNbr="88" SortOrder="87" IsActive="1" Field="midName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="137ae9cc-c042-4357-8833-77afcd44e05b" />
+                        <GIResult LineNbr="87" SortOrder="86" IsActive="1" Field="method" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="25cf2f46-1fae-430b-b13d-48b1fb9ddd59" />
+                        <GIResult LineNbr="86" SortOrder="85" IsActive="1" Field="memberName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="c6d7b09d-7fe2-4ede-928f-7b13d546ff67" />
+                        <GIResult LineNbr="85" SortOrder="84" IsActive="1" Field="maritalStatus" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="e8e7782b-993c-46f7-a295-a05afde9e80d" />
+                        <GIResult LineNbr="84" SortOrder="83" IsActive="1" Field="LOCATION_Attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="ca22cf16-b1b0-438b-b512-7b9142a1cd36" />
+                        <GIResult LineNbr="83" SortOrder="82" IsActive="1" Field="lastName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="f75067b6-d898-4e2c-b762-0bc1b6006288" />
+                        <GIResult LineNbr="82" SortOrder="81" IsActive="1" Field="lastModifiedDateTime" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="401e931b-ed17-45c2-a760-9a9f21bca51e" />
+                        <GIResult LineNbr="81" SortOrder="80" IsActive="1" Field="lastModifiedByScreenID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="bf4460bc-2c4a-442b-abe5-ecae58d77d84" />
+                        <GIResult LineNbr="80" SortOrder="79" IsActive="1" Field="lastModifiedByID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="fd569d8c-3df2-42c9-a04c-c27e11b62aa0" />
+                        <GIResult LineNbr="79" SortOrder="78" IsActive="1" Field="lastModifiedByID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="1c80b61e-3463-4689-8bef-578147d979db" />
+                        <GIResult LineNbr="78" SortOrder="77" IsActive="1" Field="languageID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="36760d26-178b-446e-98e9-7dc5ac8fd12e" />
+                        <GIResult LineNbr="77" SortOrder="76" IsActive="1" Field="languageID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="bdad041a-6c8c-46c2-bdd9-bf07cf56206d" />
+                        <GIResult LineNbr="76" SortOrder="75" IsActive="1" Field="isPrimary" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="c0c1f031-0151-4d3f-b996-ee0ba33b0c0c" />
+                        <GIResult LineNbr="75" SortOrder="74" IsActive="1" Field="isNotEmployee" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="6ffd43c5-7104-4263-95bc-0aaf9a6a1a9e" />
+                        <GIResult LineNbr="74" SortOrder="73" IsActive="1" Field="isMeaningfull" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="d67cc270-7562-4d33-80b2-fa5a9d28efdc" />
+                        <GIResult LineNbr="73" SortOrder="72" IsActive="1" Field="isConvertable" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="b8e1581d-6f40-4ad6-94e4-232fd70cdfe7" />
+                        <GIResult LineNbr="72" SortOrder="71" IsActive="1" Field="isAddressSameAsMain" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="81acac14-3792-4e69-8961-f26c63beadc4" />
+                        <GIResult LineNbr="71" SortOrder="70" IsActive="1" Field="isActive" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="fbc2e234-aea1-4f14-a8e2-2cd9e8c6337f" />
+                        <GIResult LineNbr="70" SortOrder="69" IsActive="1" Field="INDUSTRY_Attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="1d9038a6-a706-4d9e-9c1a-07c017ab2658" />
+                        <GIResult LineNbr="69" SortOrder="68" IsActive="1" Field="img" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="04f55900-8085-4fc3-985a-623c302a4734" />
+                        <GIResult LineNbr="68" SortOrder="67" IsActive="1" Field="grammValidationDateTime" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="b0cfd201-9e89-4330-8f79-6e50c502a1a3" />
+                        <GIResult LineNbr="67" SortOrder="66" IsActive="1" Field="gender" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="7356db47-e848-4e37-828f-6d2ed3f7c5a8" />
+                        <GIResult LineNbr="66" SortOrder="65" IsActive="1" Field="fullName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9697f4ea-71d3-4960-8fbd-3df6aa89a709" />
+                        <GIResult LineNbr="65" SortOrder="64" IsActive="1" Field="firstName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="6aa2ba1e-114e-4d62-92ac-613c6fc1395a" />
+                        <GIResult LineNbr="64" SortOrder="63" IsActive="1" Field="faxType" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="ceb6c9bf-da55-47e7-b20c-6b094afc4786" />
+                        <GIResult LineNbr="63" SortOrder="62" IsActive="1" Field="fax" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="48464d35-ebc5-4877-b15e-9500ceb0af40" />
+                        <GIResult LineNbr="62" SortOrder="61" IsActive="1" Field="extRefNbr" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="cf6bb678-b1d0-468b-b645-170787b495c0" />
+                        <GIResult LineNbr="61" SortOrder="60" IsActive="1" Field="eMail" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="4a494545-d20e-40b9-8556-b144a73dd182" />
+                        <GIResult LineNbr="60" SortOrder="59" IsActive="1" Field="duplicateStatus" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="92eb3f82-f6d0-4082-96b2-250fee8fe3fd" />
+                        <GIResult LineNbr="59" SortOrder="58" IsActive="1" Field="duplicateFound" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="cfd88215-dd17-42c6-9e55-e266afc29c1d" />
+                        <GIResult LineNbr="58" SortOrder="57" IsActive="1" Field="displayName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5429a512-6386-4b96-988c-be8caf57437e" />
+                        <GIResult LineNbr="57" SortOrder="56" IsActive="1" Field="deletedDatabaseRecord" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="62a09c07-d5a5-4c81-b06b-cabaebcf3a24" />
+                        <GIResult LineNbr="56" SortOrder="55" IsActive="1" Field="defAddressID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="217592c3-0bcb-4503-ba83-aa8e9054fba1" />
+                        <GIResult LineNbr="55" SortOrder="54" IsActive="1" Field="dateOfBirth" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="a0e1c783-f12c-47af-a1dc-e93ad5a05f6f" />
+                        <GIResult LineNbr="54" SortOrder="53" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="a18251c1-7173-43e2-939e-dcb3b3e43567" />
+                        <GIResult LineNbr="53" SortOrder="52" IsActive="1" Field="createdByScreenID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="0097a802-3b59-4521-b862-1d33119da3c8" />
+                        <GIResult LineNbr="52" SortOrder="51" IsActive="1" Field="createdByID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="d4b5e84c-fac1-44eb-bcf3-98260b80e2b8" />
+                        <GIResult LineNbr="51" SortOrder="50" IsActive="1" Field="createdByID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="67f03515-1409-496a-a974-8d9bf6bad6d6" />
+                        <GIResult LineNbr="50" SortOrder="49" IsActive="1" Field="contactType" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="f1d97053-e559-4391-9ee1-52644cf8f3fa" />
+                        <GIResult LineNbr="49" SortOrder="48" IsActive="1" Field="contactPriority" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="543eb0b9-6829-4c8f-9659-de0ab43b9937" />
+                        <GIResult LineNbr="48" SortOrder="47" IsActive="1" Field="contactID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="6fe71bd9-189d-4989-8db2-bc66c270da72" />
+                        <GIResult LineNbr="47" SortOrder="46" IsActive="1" Field="consentExpirationDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="5b2c6015-c144-4c00-9d8d-57ae53219c05" />
+                        <GIResult LineNbr="46" SortOrder="45" IsActive="1" Field="consentDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="c99d22fc-1664-4d0c-9709-aa5fdf0c8a57" />
+                        <GIResult LineNbr="45" SortOrder="44" IsActive="1" Field="consentAgreement" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="142dffdc-3b1d-487c-ac55-ae3fccd22549" />
+                        <GIResult LineNbr="44" SortOrder="43" IsActive="1" Field="COMPSIZE_Attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="a94b3c8f-f9b6-401c-bfd6-a00f2c84fe3b" />
+                        <GIResult LineNbr="43" SortOrder="42" IsActive="1" Field="COMPREV_Attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="bd29e7ed-8283-4c1f-974f-069de03e866c" />
+                        <GIResult LineNbr="42" SortOrder="41" IsActive="1" Field="classID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="13ddbafd-afa9-4908-b4f3-8e691f68b15a" />
+                        <GIResult LineNbr="41" SortOrder="40" IsActive="1" Field="classID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="edb72057-14df-4b5d-9659-9cc8a1518623" />
+                        <GIResult LineNbr="40" SortOrder="39" IsActive="1" Field="canBeMadePrimary" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="0174c8fc-1f45-481e-8c1e-33d62f1ed2c3" />
+                        <GIResult LineNbr="39" SortOrder="38" IsActive="1" Field="campaignID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="0b29e9de-0839-4721-907b-686bb9e80aa2" />
+                        <GIResult LineNbr="38" SortOrder="37" IsActive="1" Field="campaignID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="180ffac6-75d3-44db-bd16-e81a984afc0a" />
+                        <GIResult LineNbr="37" SortOrder="36" IsActive="1" Field="bAccountID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="aef7e883-7e03-42a9-a8d2-b990f4b9db06" />
+                        <GIResult LineNbr="36" SortOrder="35" IsActive="1" Field="bAccountID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="f17b7afb-eacc-4588-a8fc-3221d613e6c3" />
+                        <GIResult LineNbr="35" SortOrder="34" IsActive="1" Field="attributes" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8725a2e2-e07d-4044-9ab2-3d12fbb57bd9" />
+                        <GIResult LineNbr="34" SortOrder="33" IsActive="1" Field="attention" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="bc4f539a-b281-458e-ad06-77c5c8a0678e" />
+                        <GIResult LineNbr="33" SortOrder="32" IsActive="1" Field="assignDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="02c892da-4a11-4d71-a29a-1dcdbc8dea11" />
+                        <GIResult LineNbr="32" SortOrder="31" IsActive="1" Field="anniversary" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="c60605b4-9548-40a0-94b4-5f3fbe6c2d5c" />
+                    </GITable>
+                    <GITable Alias="Collector" Name="PX.Survey.Ext.SurveyCollector">
+                        <GIRelation LineNbr="1" ChildTable="SurveyUser" IsActive="1" JoinType="I">
+                            <GIOn LineNbr="3" ParentField="userLineNbr" Condition="E " ChildField="lineNbr" Operation="A" />
+                            <GIOn LineNbr="1" ParentField="surveyID" Condition="E " ChildField="surveyID" Operation="A" />
+                        </GIRelation>
+                        <GIResult LineNbr="30" SortOrder="29" IsActive="1" Field="userLineNbr" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="1b9c8473-16dd-4da0-935a-c3d5989b4443" />
+                        <GIResult LineNbr="29" SortOrder="28" IsActive="1" Field="userID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="d1e8fbfa-3cfc-41aa-8890-033747e8baaf" />
+                        <GIResult LineNbr="28" SortOrder="27" IsActive="1" Field="token" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="1528ef31-b300-458c-bdcf-603994495330" />
+                        <GIResult LineNbr="27" SortOrder="26" IsActive="1" Field="surveyID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="4ce785b6-dc33-43e2-af75-9da3fcd82aa8" />
+                        <GIResult LineNbr="26" SortOrder="25" IsActive="1" Field="surveyID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="22720d61-66b2-409e-97e9-1812a774161d" />
+                        <GIResult LineNbr="25" SortOrder="24" IsActive="1" Field="status" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="c75d33d3-12b8-4592-ace1-81cd2e7d71df" />
+                        <GIResult LineNbr="24" SortOrder="23" IsActive="1" Field="source" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="5baa7d26-73cc-4ab5-b327-41a9556458c2" />
+                        <GIResult LineNbr="23" SortOrder="22" IsActive="1" Field="sentOn" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="70e0966a-70cd-4dc8-9c64-0637df8abe9a" />
+                        <GIResult LineNbr="22" SortOrder="21" IsActive="1" Field="selected" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="29a550d8-8ea0-4d95-b984-956d3005a113" />
+                        <GIResult LineNbr="21" SortOrder="20" IsActive="1" Field="refNoteID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="31bc7382-54ea-4527-830f-dc1f6b591dcd" />
+                        <GIResult LineNbr="20" SortOrder="19" IsActive="1" Field="noteID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="87ec9bea-cf0d-41f9-8b94-b42f57d51549" />
+                        <GIResult LineNbr="19" SortOrder="18" IsActive="1" Field="message" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="3e8fa3e5-f439-4688-ae47-e439218fa788" />
+                        <GIResult LineNbr="18" SortOrder="17" IsActive="1" Field="lastName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="1781cb7c-2cd1-4ae4-96d8-87d0de0cc243" />
+                        <GIResult LineNbr="17" SortOrder="16" IsActive="1" Field="lastModifiedDateTime" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="8444dc35-004b-4c39-ba0b-16480d1d17ba" />
+                        <GIResult LineNbr="16" SortOrder="15" IsActive="1" Field="lastModifiedByScreenID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="5b0c8ede-b26e-43b3-a233-2e1a2c1282d2" />
+                        <GIResult LineNbr="15" SortOrder="14" IsActive="1" Field="lastModifiedByID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="056a39ac-68e1-42a1-a5b7-0db04295709e" />
+                        <GIResult LineNbr="14" SortOrder="13" IsActive="1" Field="lastModifiedByID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="1f13fe3b-ef97-4e96-828f-833ed565b697" />
+                        <GIResult LineNbr="13" SortOrder="12" IsActive="1" Field="firstName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="face461b-da5b-4977-a56d-521f3ecfdb38" />
+                        <GIResult LineNbr="12" SortOrder="11" IsActive="1" Field="expirationDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="f2e71046-7b9e-4bb7-a2a4-b0d49d1e362b" />
+                        <GIResult LineNbr="11" SortOrder="10" IsActive="1" Field="displayName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="772cab75-f199-4d92-a375-1810e581874c" />
+                        <GIResult LineNbr="10" SortOrder="9" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="521dda9f-548e-42bf-bda2-d73407166974" />
+                        <GIResult LineNbr="9" SortOrder="8" IsActive="1" Field="createdByScreenID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="267ebf50-c399-4fee-90c8-64a8f9ca4848" />
+                        <GIResult LineNbr="8" SortOrder="7" IsActive="1" Field="createdByID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="8134ec92-7fa1-49d0-b346-af9e681f57bf" />
+                        <GIResult LineNbr="7" SortOrder="6" IsActive="1" Field="createdByID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="db1adc7b-6732-45bb-989e-f997b2190e27" />
+                        <GIResult LineNbr="6" SortOrder="5" IsActive="1" Field="contactID_description" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="9802acae-2ec1-44ae-8e8a-a642bc0d82de" />
+                        <GIResult LineNbr="5" SortOrder="4" IsActive="1" Field="contactID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="51887afa-ea5c-4423-a1d5-7b1fe3fb2ddf" />
+                        <GIResult LineNbr="4" SortOrder="3" IsActive="1" Field="collectorID" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="d7d29536-763a-4f87-8eb0-d1a54dde97fe" />
+                        <GIResult LineNbr="3" SortOrder="2" IsActive="1" Field="anonymous" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="7c86e530-4168-423d-8856-3d2883d0c638" />
+                        <GIResult LineNbr="2" SortOrder="1" IsActive="1" Field="anonCollectorID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="fa84b611-5562-48fc-a8ca-025764bd9f97" />
+                    </GITable>
+                    <SiteMap linkname="toDesignById">
+                        <row Title="Survey Collector Notification" Url="~/genericinquiry/genericinquiry.aspx?id=dd454765-1723-4ba4-aab5-b82f45192aad" ScreenID="GI640090" NodeID="24b4147b-62e0-4daf-bee1-c922dcf15895" ParentID="00000000-0000-0000-0000-000000000000">
+                            <MUIScreen IsPortal="0" WorkspaceID="00000000-0000-0000-0000-000000000000" Order="642032" SubcategoryID="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" />
+                        </row>
+                    </SiteMap>
+                </row>
+            </GIDesign>
+        </data>
+    </data-set>
+</GenericInquiryScreen>

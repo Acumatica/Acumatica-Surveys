@@ -1,12 +1,13 @@
 ﻿<GenericInquiryScreen>
     <data-set>
-        <relations format-version="3" relations-version="20201014" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
+        <relations format-version="3" relations-version="20210225" main-table="GIDesign" stable-sharing="True" file-name="(Name)">
             <link from="GIFilter (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIGroupBy (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassAction (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIMassUpdateField (DesignID)" to="GIDesign (DesignID)" />
             <link from="GINavigationScreen (DesignID)" to="GIDesign (DesignID)" />
             <link from="GINavigationParameter (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
+            <link from="GINavigationCondition (DesignID, NavigationScreenLineNbr)" to="GINavigationScreen (DesignID, LineNbr)" />
             <link from="GIOn (DesignID, RelationNbr)" to="GIRelation (DesignID, LineNbr)" />
             <link from="GIRecordDefault (DesignID)" to="GIDesign (DesignID)" />
             <link from="GIRelation (DesignID, ParentTable)" to="GITable (DesignID, Alias)" />
@@ -59,6 +60,7 @@
                 <table name="GIMassUpdateField" uplink="(DesignID) = (DesignID)" />
                 <table name="GINavigationScreen" uplink="(DesignID) = (DesignID)">
                     <table name="GINavigationParameter" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
+                    <table name="GINavigationCondition" uplink="(DesignID, LineNbr) = (DesignID, NavigationScreenLineNbr)" />
                 </table>
                 <table name="GIRecordDefault" uplink="(DesignID) = (DesignID)" />
                 <table name="GISort" uplink="(DesignID) = (DesignID)">
@@ -135,42 +137,54 @@
         </layout>
         <data>
             <GIDesign>
-                <row DesignID="5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" Name="Survey Response" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="1" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
-                    <GIFilter LineNbr="2" IsActive="1" Name="STATUS" FieldName="SurveyCollector.status" DataType="string" IsExpression="1" ColSpan="1" Required="0" />
-                    <GIFilter LineNbr="1" IsActive="1" Name="SURVEYID" FieldName="SurveyCollector.surveyID" DataType="string" IsExpression="1" ColSpan="1" Required="0" />
-                    <GINavigationScreen ScreenID="SU301000" LineNbr="1" WindowMode="I">
-                        <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
+                <row DesignID="55b448c0-adb5-4fb1-ac6d-bcf195f04721" Name="SU-Survey Response View" FilterColCount="3" PageSize="0" ExportTop="0" PrimaryScreenIDNew="SU301000" NewRecordCreationEnabled="0" MassDeleteEnabled="0" AutoConfirmDelete="0" MassRecordsUpdateEnabled="0" MassActionsOnRecordsEnabled="0" ExposeViaOData="0" ExposeViaMobile="0" ShowDeletedRecords="0">
+                    <GIFilter LineNbr="1" IsActive="1" Name="SurveyID" FieldName="SurveyCollector.surveyID" DataType="string" DisplayName="Survey ID" IsExpression="1" ColSpan="1" Required="0" />
+                    <GINavigationScreen Link="SU301000" LineNbr="3" SortOrder="3" WindowMode="L" IsActive="1" Icon="arrow_forward">
+                        <GINavigationParameter LineNbr="3" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
                     </GINavigationScreen>
+                    <GINavigationScreen Link="SU301000" LineNbr="2" SortOrder="2" WindowMode="S" IsActive="1">
+                        <GINavigationParameter LineNbr="2" FieldName="CollectorID" ParameterName="SurveyCollector.collectorID" IsExpression="0" />
+                    </GINavigationScreen>
+                    <GINavigationScreen Link="SU301000" LineNbr="1" SortOrder="1" WindowMode="S" IsActive="1">
+                        <GINavigationParameter LineNbr="1" FieldName="CollectorID" ParameterName="SurveyCollector.CollectorID" IsExpression="0" />
+                    </GINavigationScreen>
+                    <GISort LineNbr="1" IsActive="1" DataFieldName="SurveyCollector.createdDateTime" SortOrder="D" />
                     <GITable Alias="SurveyUser" Name="PX.Survey.Ext.SurveyUser">
-                        <GIRelation LineNbr="2" ChildTable="Contact" IsActive="1" JoinType="I">
-                            <GIOn LineNbr="3" ParentField="contactID" Condition="E " ChildField="contactID" Operation="A" />
-                        </GIRelation>
+                        <GIResult LineNbr="37" SortOrder="8" IsActive="1" Field="contactID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="cad8f622-24dd-46d6-a223-f572b3332286" />
+                        <GIResult LineNbr="35" SortOrder="16" IsActive="1" Field="recipientType" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="9d9d4113-b1af-4328-9c7c-930d0ba8c76a" />
+                        <GIResult LineNbr="34" SortOrder="15" IsActive="1" Field="phone2Type" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="22c00db8-574a-494d-b5cd-59b4f3779706" />
+                        <GIResult LineNbr="33" SortOrder="14" IsActive="1" Field="phone2" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="c4fb503c-f600-48ac-9111-8541132c1b22" />
+                        <GIResult LineNbr="32" SortOrder="13" IsActive="1" Field="phone1Type" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="b07d608b-228c-45f0-b588-f12159b50d7d" />
+                        <GIResult LineNbr="31" SortOrder="12" IsActive="1" Field="phone1" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="b2367ef9-a806-46b3-9992-f2561828c894" />
+                        <GIResult LineNbr="29" SortOrder="18" IsActive="1" Field="mobileDeviceOS" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="92c5bf17-0f67-4459-b7b2-bd09235acea3" />
+                        <GIResult LineNbr="13" SortOrder="11" IsActive="1" Field="active" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="9b7c0903-d955-4760-a76a-ad6070e8155b" />
+                        <GIResult LineNbr="11" SortOrder="17" IsActive="1" Field="usingMobileApp" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="05744f35-61a3-46d0-b834-e06e55f2737f" />
+                        <GIResult LineNbr="10" SortOrder="10" IsActive="1" Field="email" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="600623e3-7fa9-4bc7-93fe-d4c6295b8bbe" />
+                        <GIResult LineNbr="4" SortOrder="9" IsActive="1" Field="displayName" Caption="Recipient" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="60ba764f-8f4e-4a2b-af57-0313dac7f9b1" />
                     </GITable>
                     <GITable Alias="SurveyCollector" Name="PX.Survey.Ext.SurveyCollector">
-                        <GIRelation LineNbr="1" ChildTable="SurveyUser" IsActive="1" JoinType="I">
-                            <GIOn LineNbr="2" ParentField="userLineNbr" Condition="E " ChildField="lineNbr" Operation="A" />
+                        <GIRelation LineNbr="2" ChildTable="SurveyUser" IsActive="1" JoinType="I">
+                            <GIOn LineNbr="3" ParentField="userLineNbr" Condition="E " ChildField="lineNbr" Operation="A" />
+                            <GIOn LineNbr="2" ParentField="surveyID" Condition="E " ChildField="surveyID" Operation="A" />
+                        </GIRelation>
+                        <GIRelation LineNbr="1" ChildTable="Survey" IsActive="1" JoinType="I">
                             <GIOn LineNbr="1" ParentField="surveyID" Condition="E " ChildField="surveyID" Operation="A" />
                         </GIRelation>
-                        <GIResult LineNbr="10" SortOrder="1" IsActive="1" Field="token" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="e8ffb459-1c32-42f4-acfe-06768c7de0c0" />
-                        <GIResult LineNbr="9" SortOrder="3" IsActive="1" Field="surveyID" Width="80" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="58762ef0-98e1-4a2b-a86e-aaa54bc2c334" />
-                        <GIResult LineNbr="8" SortOrder="9" IsActive="1" Field="refNoteID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="0adb62a9-4af0-4497-92c4-2de6a2d5517e" />
-                        <GIResult LineNbr="7" SortOrder="8" IsActive="1" Field="status" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="7f4bfbdc-522d-45d1-9f2a-e5d02a26e37e" />
-                        <GIResult LineNbr="6" SortOrder="7" IsActive="1" Field="lastModifiedDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="ce6d1bed-798f-41cd-bdb3-340f8cc68396" />
-                        <GIResult LineNbr="5" SortOrder="6" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="9d66c86a-effe-450d-afe4-b83c9124829a" />
-                        <GIResult LineNbr="4" SortOrder="5" IsActive="1" Field="displayName" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="6996ceff-0cc7-4792-992b-998d7b6da3e1" />
-                        <GIResult LineNbr="3" SortOrder="4" IsActive="1" Field="surveyID_description" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="be5dc7e5-d6af-4bb3-b972-0eb30810abeb" />
-                        <GIResult LineNbr="1" SortOrder="2" IsActive="1" Field="collectorID" Width="80" IsVisible="1" DefaultNav="0" NavigationNbr="1" QuickFilter="0" FastFilter="1" RowID="5358f5d1-7932-4bf6-a148-b12f53d391d6" />
+                        <GIResult LineNbr="9" SortOrder="7" IsActive="1" Field="expirationDate" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="0" RowID="cae3aff8-218d-4c26-8757-26ac10d09433" />
+                        <GIResult LineNbr="7" SortOrder="6" IsActive="1" Field="status" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="1" RowID="782d1d9a-7aaa-4c7f-9613-45e6eec64681" />
+                        <GIResult LineNbr="6" SortOrder="5" IsActive="1" Field="lastModifiedDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="2f6a97c8-f4be-41fa-8336-9957569dcc4a" />
+                        <GIResult LineNbr="5" SortOrder="4" IsActive="1" Field="createdDateTime" IsVisible="1" DefaultNav="0" QuickFilter="0" FastFilter="0" RowID="3363021e-95d5-4993-a1ce-0b0a83f7638e" />
+                        <GIResult LineNbr="1" SortOrder="1" IsActive="1" Field="collectorID" IsVisible="0" DefaultNav="0" NavigationNbr="1" QuickFilter="0" FastFilter="1" RowID="73aacd61-4f10-45c4-9dea-cd80620ecaf1" />
                     </GITable>
-                    <GITable Alias="Contact" Name="PX.Objects.CR.Contact" />
-                    <GIWhere LineNbr="4" IsActive="1" DataFieldName="SurveyCollector.status" Condition="E " IsExpression="0" Value1="[STATUS]" CloseBrackets=")        " Operation="A" />
-                    <GIWhere LineNbr="3" IsActive="1" OpenBrackets="(        " DataFieldName="[STATUS]" Condition="NU" IsExpression="0" Operation="O" />
-                    <GIWhere LineNbr="2" IsActive="1" DataFieldName="SurveyUser.surveyID" Condition="E " IsExpression="0" Value1="[SURVEYID]" CloseBrackets=")        " Operation="A" />
-                    <GIWhere LineNbr="1" IsActive="1" OpenBrackets="(        " DataFieldName="[SURVEYID]" Condition="NU" IsExpression="0" Operation="O" />
+                    <GITable Alias="Survey" Name="PX.Survey.Ext.Survey">
+                        <GIResult LineNbr="36" SortOrder="3" IsActive="1" Field="title" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="6ba7078d-c7d7-4706-a6cb-528c82b5e70d" />
+                        <GIResult LineNbr="3" SortOrder="2" IsActive="1" Field="surveyID" IsVisible="1" DefaultNav="1" QuickFilter="0" FastFilter="1" RowID="80b487be-1827-42a8-94f9-c4195a876a32" />
+                    </GITable>
+                    <GIWhere LineNbr="2" IsActive="1" DataFieldName="SurveyCollector.surveyID" Condition="E " IsExpression="0" Value1="[SurveyID]" CloseBrackets=")        " Operation="A" />
+                    <GIWhere LineNbr="1" IsActive="1" OpenBrackets="(        " DataFieldName="[SurveyID]" Condition="NU" IsExpression="0" Operation="O" />
                     <SiteMap linkname="toDesignById">
-                        <row Title="Survey Collectors" Url="~/GenericInquiry/GenericInquiry.aspx?id=5bec58a4-674e-4ebe-b3e2-3cdc4dbeba92" ScreenID="SU3010PL" NodeID="919c7f9d-1b38-402c-ab12-410873432a5a" ParentID="00000000-0000-0000-0000-000000000000">
-                            <ListEntryPoint EntryScreenID="SU301010" IsActive="1" />
-                            <ListEntryPoint EntryScreenID="SU301000" IsActive="1" />
-                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="10" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
+                        <row Title="Survey Response View" Url="~/genericinquiry/genericinquiry.aspx?id=55b448c0-adb5-4fb1-ac6d-bcf195f04721" ScreenID="SU401000" NodeID="068daf48-426d-4283-93f9-c7cbf0486c3c" ParentID="00000000-0000-0000-0000-000000000000">
+                            <MUIScreen IsPortal="0" WorkspaceID="1dc1ae6b-e3fb-47d4-a6a1-2671837d80b0" Order="40" SubcategoryID="98e86774-69e3-41ea-b94f-eb2c7a8426d4">
                                 <MUIPinnedScreen IsPortal="0" Username="" IsPinned="1" />
                             </MUIScreen>
                         </row>
