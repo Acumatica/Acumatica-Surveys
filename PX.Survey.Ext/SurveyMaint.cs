@@ -413,6 +413,7 @@ namespace PX.Survey.Ext {
         }
 
         public SurveyCollector DoUpsertCollector(Survey survey, SurveyUser user, Guid? refNoteID, bool saveNow, bool isTest) {
+            Survey.Current = survey;
             var collector = new SurveyCollector {
                 SurveyID = survey.SurveyID,
                 UserLineNbr = user.LineNbr,
@@ -1134,13 +1135,13 @@ namespace PX.Survey.Ext {
             var showRefNote = !string.IsNullOrEmpty(survey?.EntityType);
             var row = e.Row;
             if (row == null) { return; }
-            var isClosed = survey.Status == SurveyStatus.Closed;
+            var isClosed = survey?.Status == SurveyStatus.Closed;
             var notifSent = row.SentOn.HasValue;
             sendNewNotification.SetEnabled(!notifSent && !isClosed);
             sendReminder.SetEnabled(notifSent && !isClosed);
             PXUIFieldAttribute.SetVisible<SurveyCollector.refNoteID>(e.Cache, e.Row, showRefNote);
             PXUIFieldAttribute.SetVisible<SurveyCollector.source>(e.Cache, e.Row, showRefNote);
-            var hasPages = HasDetailRecords();
+            var hasPages = survey != null && HasDetailRecords();
             redirectToSurvey.SetEnabled(e.Row != null && hasPages);
         }
 
@@ -1295,6 +1296,9 @@ namespace PX.Survey.Ext {
         [PXCacheName("CreateSurveyFilter")]
         [Serializable]
         public class CreateSurveyFilter : IBqlTable {
+            private PXBqlTableSystemData _bqlTableSystemData;
+
+            ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
             #region NbQuestions
             public abstract class nbQuestions : BqlInt.Field<nbQuestions> { }

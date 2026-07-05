@@ -16,6 +16,9 @@ namespace PX.Survey.Ext {
     [PXPrimaryGraph(typeof(SurveyMaint))]
     [PXCacheName(Messages.CacheNames.Survey)]
     public class Survey : IBqlTable, INotable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Keys
         public class PK : PrimaryKeyOf<Survey>.By<surveyID> {

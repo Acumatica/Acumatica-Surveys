@@ -4,26 +4,26 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PX.Survey.Ext", "PX.Survey.Ext\PX.Survey.Ext.csproj", "{E80F8BC3-3F0F-4D59-942A-668A21B2D602}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "21R2", "http://localhost/21R2", "{019EDF49-1A19-4959-A458-CAD5EC645291}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SurveyProject", "http://localhost/SurveyProject", "{019EDF49-1A19-4959-A458-CAD5EC645291}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		ProjectReferences = "{e80f8bc3-3f0f-4d59-942a-668a21b2d602}|PX.Survey.Ext.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/21R2"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\21R2\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\21R2\"
+		Debug.AspNetCompiler.VirtualPath = "/SurveyProject"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\Instances2\26.100.0175\SurveyProject\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\SurveyProject\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/21R2"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\21R2\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\21R2\"
+		Release.AspNetCompiler.VirtualPath = "/SurveyProject"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\Instances2\26.100.0175\SurveyProject\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\SurveyProject\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\..\21R2\"
+		SlnRelativePath = "..\..\..\Instances2\26.100.0175\SurveyProject\"
 	EndProjectSection
 EndProject
 Global

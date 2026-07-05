@@ -25,14 +25,31 @@ namespace PX.Survey.Ext
             var xmlFiles = Directory.GetFiles(directory).Where(p => p.EndsWith(".xml"));
             foreach (var xmlFile in xmlFiles)
             {
-                ImportFilesAtName(xmlFile, graphName);
-                this.WriteLog($"Imported {Path.GetFileName(xmlFile)} into {graphName}");
+                try
+                {
+                    if (new FileInfo(xmlFile).Length == 0)
+                    {
+                        this.WriteLog($"Skipped empty {Path.GetFileName(xmlFile)} in {graphName}");
+                        continue;
+                    }
+
+                    ImportFilesAtName(xmlFile, graphName);
+                    this.WriteLog($"Imported {Path.GetFileName(xmlFile)} into {graphName}");
+                }
+                catch (Exception ex)
+                {
+                    this.WriteLog($"Failed to import {Path.GetFileName(xmlFile)} into {graphName}: {ex.Message}");
+                }
             }
         }
         public void ImportFilesAtName(string fileName, string graphName)
         {
             var content = ReadFromFile(fileName);
             Type type = ByName(graphName);
+            if (type == null)
+            {
+                throw new InvalidOperationException($"Graph {graphName} was not found.");
+            }
             var graph = PXGraph.CreateInstance(type);
             var item = graph.ImportEntitiesFromXml(content, RecordImportMode.Replace, out var dataUploader);
         }

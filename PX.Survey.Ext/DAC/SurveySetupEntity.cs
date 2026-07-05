@@ -10,6 +10,9 @@ namespace PX.Survey.Ext {
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveySetupEntity)]
     public partial class SurveySetupEntity : IBqlTable, ISortOrder, INotable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region GraphType
         public abstract class graphType : BqlString.Field<graphType> { }

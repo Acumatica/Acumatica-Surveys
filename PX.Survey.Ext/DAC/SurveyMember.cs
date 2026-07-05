@@ -11,6 +11,9 @@ namespace PX.Survey.Ext {
     [PXEMailSource]
     [Serializable]
     public class SurveyMember : IBqlTable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         public class PK : PrimaryKeyOf<SurveyMember>.By<surveyID, contactID> {
 

@@ -7,6 +7,9 @@ namespace PX.Survey.Ext {
     [Serializable]
     [PXHidden]
     public class SelectorRecord : IBqlTable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Name
         public abstract class name : BqlString.Field<name> { }

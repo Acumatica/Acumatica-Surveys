@@ -13,6 +13,9 @@ namespace PX.Survey.Ext {
     [PXCacheName("SurveyAnswer")]
     [PXPossibleRowsList(typeof(CSAttribute.description), typeof(attributeID), typeof(value))]
     public partial class SurveyAnswer : IBqlTable, ISortOrder, INotable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Keys
         public class PK : PrimaryKeyOf<SurveyAnswer>.By<surveyID, lineNbr> {

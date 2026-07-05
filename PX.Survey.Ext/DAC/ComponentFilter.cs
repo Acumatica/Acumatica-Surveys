@@ -5,6 +5,9 @@ namespace PX.Survey.Ext {
 
     [PXCacheName("ComponentFilter")]
     public class ComponentFilter : IBqlTable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region ComponentType
         public abstract class componentType : BqlString.Field<componentType> { }

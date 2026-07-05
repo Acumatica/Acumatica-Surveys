@@ -15,6 +15,9 @@ namespace PX.Survey.Ext {
             Or<Contact.contactType, Equal<CurrentValue<RecipientFilter.contactType>>>>>>>>,
         OrderBy<Asc<Contact.displayName>>>))]
     public class RecipientSelected : IBqlTable, IPXSelectable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Selected
         public abstract class selected : BqlType<IBqlBool, bool>.Field<selected> { }

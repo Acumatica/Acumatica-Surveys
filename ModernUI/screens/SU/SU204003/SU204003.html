@@ -1,0 +1,16 @@
+<template>
+    <qp-template id="Component_form" name="1-1" class="label-size-xm">
+        <div slot="A">
+            <qp-fieldset id="Component_General" view.bind="SUComponent" caption="Component">
+                <field name="ComponentID"></field>
+                <field name="Description"></field>
+                <field name="ComponentType"></field>
+                <field name="Active"></field>
+            </qp-fieldset>
+        </div>
+    </qp-template>
+    <qp-rich-text-editor id="edBody"
+                         state.bind="SUComponent.Body"
+                         wg-field
+                         class="stretch"></qp-rich-text-editor>
+</template>

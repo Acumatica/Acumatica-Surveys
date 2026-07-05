@@ -6,6 +6,9 @@ namespace PX.Survey.Ext {
 
     [PXCacheName("RecipientFilter")]
     public class RecipientFilter : IBqlTable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region ContactType
         public abstract class contactType : BqlString.Field<contactType> { }

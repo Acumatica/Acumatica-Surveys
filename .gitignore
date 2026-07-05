@@ -4,3 +4,13 @@ PX.Survey.Ext/bin/
 PX.Survey.Ext/obj/
 *.user
 packages
+
+# Auto-generated customization package sources (regenerated from ModernUI\)
+Customizations/Package/screens/
+Customizations/DemoPackage/
+
+# Curl/HTTP testing scratch files
+login.*.html
+login.*.txt
+login.cookies.txt
+*.bad.html

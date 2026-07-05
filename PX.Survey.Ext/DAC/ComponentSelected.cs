@@ -14,6 +14,9 @@ namespace PX.Survey.Ext {
             Or<SurveyComponent.componentType, Equal<CurrentValue<ComponentFilter.componentType>>>>>>>>,
         OrderBy<Asc< SurveyComponent.description>>>))]
     public class ComponentSelected : IBqlTable, IPXSelectable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Selected
         public abstract class selected : BqlBool.Field<selected> { }

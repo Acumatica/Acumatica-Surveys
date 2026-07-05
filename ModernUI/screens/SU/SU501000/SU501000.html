@@ -1,0 +1,11 @@
+<template>
+    <qp-template id="Filter_form" name="1" class="label-size-xm">
+        <qp-fieldset slot="A" id="Filter_Selection" view.bind="Filter" caption="Selection">
+            <field name="Action"></field>
+            <field name="SurveyID" config-allow-edit.bind="true"></field>
+            <field name="DurationTimeSpan"></field>
+            <field name="ShowClosed"></field>
+        </qp-fieldset>
+    </qp-template>
+    <qp-grid id="gridDocuments" view.bind="Documents"></qp-grid>
+</template>

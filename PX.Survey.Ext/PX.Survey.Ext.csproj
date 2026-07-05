@@ -6,6 +6,7 @@
     <Product>Acumatica Surveys Extension</Product>
     <AssemblyVersion>1.2021.0701.0</AssemblyVersion>
     <FileVersion>1.2021.0701.0</FileVersion>
+    <AcumaticaBinPath>e:\Instances2\26.100.0175\SurveyProject\Bin</AcumaticaBinPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -15,60 +16,69 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\**" />
+    <Compile Remove="SurveyMembersList.cs" />
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator">
-      <HintPath>..\lib\CommonServiceLocator.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\CommonServiceLocator.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Api.Mobile">
-      <HintPath>..\lib\PX.Api.Mobile.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Api.Mobile.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Api.Webhooks">
-      <HintPath>..\lib\PX.Api.Webhooks.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Api.Webhooks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PX.Api.Webhooks.Abstractions">
+      <HintPath>$(AcumaticaBinPath)\PX.Api.Webhooks.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Common">
-      <HintPath>..\lib\PX.Common.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Common.Std">
-      <HintPath>..\lib\PX.Common.Std.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Common.Std.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.CS.Contracts">
-      <HintPath>..\lib\PX.CS.Contracts.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.CS.Contracts.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Data">
-      <HintPath>..\lib\PX.Data.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Data.BQL.Fluent">
-      <HintPath>..\lib\PX.Data.BQL.Fluent.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Data.BQL.Fluent.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.DbServices">
-      <HintPath>..\lib\PX.DbServices.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.DbServices.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects">
-      <HintPath>..\lib\PX.Objects.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Objects.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects.FS">
-      <HintPath>..\lib\PX.Objects.FS.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Objects.FS.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Objects.PJ">
-      <HintPath>..\lib\PX.Objects.PJ.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Objects.PJ.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="PX.Web.Customization">
-      <HintPath>..\lib\PX.Web.Customization.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\PX.Web.Customization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives">
+      <HintPath>$(AcumaticaBinPath)\Microsoft.Extensions.Primitives.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Configuration">
@@ -78,7 +88,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\lib\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\System.Net.Http.Formatting.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.ServiceModel">
@@ -91,7 +101,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Web.Http">
-      <HintPath>..\lib\System.Web.Http.dll</HintPath>
+      <HintPath>$(AcumaticaBinPath)\System.Web.Http.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

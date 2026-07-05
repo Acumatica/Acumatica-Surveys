@@ -13,6 +13,9 @@ namespace PX.Survey.Ext {
     [Serializable]
     [PXCacheName("Survey Component")]
     public class SurveyComponent : IBqlTable, INotable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         public class PK : PrimaryKeyOf<SurveyComponent>.By<componentID> {
             public static SurveyComponent Find(PXGraph graph, string componentID) => FindBy(graph, componentID);

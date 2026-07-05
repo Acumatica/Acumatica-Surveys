@@ -3,8 +3,8 @@ using PX.Data.BQL;
 using PX.Objects.CS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,8 +33,23 @@ namespace PX.Survey.Ext {
             public surveyScreen() : base("SU301000") { }
         }
 
-        public static int GetNextOrPrevPageNbr(HttpRequestMessage request, int pageNbr) {
-            var body = request.Content.ReadAsStringAsync().Result;
+        public static string ReadRequestBody(Stream body) {
+            if (body == null) {
+                return string.Empty;
+            }
+            if (body.CanSeek) {
+                body.Position = 0;
+            }
+            using (var reader = new StreamReader(body, Encoding.UTF8, true, 1024, true)) {
+                var payload = reader.ReadToEnd();
+                if (body.CanSeek) {
+                    body.Position = 0;
+                }
+                return payload;
+            }
+        }
+
+        public static int GetNextOrPrevPageNbr(string body, int pageNbr) {
             if (string.IsNullOrEmpty(body)) {
                 return 1;
             }
@@ -70,17 +85,16 @@ namespace PX.Survey.Ext {
             return pages;
         }
 
-        public static void SubmitSurvey(string collectorToken, HttpRequestMessage request, int? pageNbr) {
-            var body = request.Content.ReadAsStringAsync().Result;
-            var uri = request.RequestUri;
-            var props = request.Properties;
-            SaveSurveySubmission(collectorToken, body, uri, props, pageNbr);
+        public static void SubmitSurvey(string collectorToken, string body, Uri uri, int? pageNbr) {
+            SaveSurveySubmission(collectorToken, body, uri, pageNbr);
         }
 
 
-        private static void SaveSurveySubmission(string token, string payload, Uri uri, IDictionary<string, object> props, int? pageNbr) {
+        private static void SaveSurveySubmission(string token, string payload, Uri uri, int? pageNbr) {
             var graph = PXGraph.CreateInstance<SurveyMaint>();
             var (survey, _, answerCollector, userCollector) = GetSurveyAndUser(graph, token);
+            graph.Survey.Current = survey;
+            graph.Collectors.Current = answerCollector;
             if (survey.Status == SurveyStatus.Preparing && answerCollector.IsTest != true) {
                 throw new Exception($"The survey is not opened yet, come back later.");
             }
@@ -97,7 +111,7 @@ namespace PX.Survey.Ext {
             if (data == null) {
                 data = new SurveyCollectorData {
                     Token = token,
-                    Uri = uri.ToString(),
+                    Uri = uri?.ToString() ?? string.Empty,
                     Payload = payload,
                     SurveyID = survey?.SurveyID,
                     CollectorID = answerCollector.CollectorID,
@@ -124,11 +138,14 @@ namespace PX.Survey.Ext {
                 userCollector.Status = answerCollector.Status;
                 graph.Collectors.Update(userCollector);
             }
-            if (survey.Status == SurveyStatus.Started) {
-                survey.Status = SurveyStatus.InProgress;
-                graph.Survey.Update(survey);
-            }
             graph.Actions.PressSave();
+            if (survey.Status == SurveyStatus.Started) {
+                PXDatabase.Update<Survey>(
+                    new PXDataFieldAssign<Survey.status>(SurveyStatus.InProgress),
+                    new PXDataFieldRestrict<Survey.surveyID>(survey.SurveyID),
+                    new PXDataFieldRestrict<Survey.status>(SurveyStatus.Started));
+                survey.Status = SurveyStatus.InProgress;
+            }
         }
 
         private static SurveyCollectorData FindCollectorData(SurveyMaint graph, SurveyCollector collector, int? pageNbr) {

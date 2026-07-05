@@ -1,0 +1,41 @@
+<template>
+    <qp-tabbar id="mainTab">
+        <qp-tab id="tabGeneral" caption="General Settings">
+            <qp-template id="SurveySetup_form" name="1-1" class="label-size-xm">
+                <div slot="A">
+                    <qp-fieldset id="SurveySetup_Numbering" view.bind="surveySetup" caption="Numbering Sequences">
+                        <field name="SurveyNumberingID" config-allow-edit.bind="true"></field>
+                        <field name="BadRequestID" config-allow-edit.bind="true"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="SurveySetup_Templates" view.bind="surveySetup" caption="Default Components">
+                        <field name="TemplateID" config-allow-edit.bind="true"></field>
+                        <field name="DefHeaderID" config-allow-edit.bind="true"></field>
+                        <field name="DefPageHeaderID" config-allow-edit.bind="true"></field>
+                        <field name="DefQuestionID" config-allow-edit.bind="true"></field>
+                        <field name="DefQuestAttrID" config-allow-edit.bind="true"></field>
+                        <field name="DefCommentID" config-allow-edit.bind="true"></field>
+                        <field name="DefCommAttrID" config-allow-edit.bind="true"></field>
+                        <field name="DefPageFooterID" config-allow-edit.bind="true"></field>
+                        <field name="DefFooterID" config-allow-edit.bind="true"></field>
+                    </qp-fieldset>
+                </div>
+                <div slot="B">
+                    <qp-fieldset id="SurveySetup_Defaults" view.bind="surveySetup" caption="Default Field Sizes">
+                        <field name="DefNbrOfRows"></field>
+                        <field name="DefMaxLength"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="SurveySetup_Notifications" view.bind="surveySetup" caption="Notifications">
+                        <field name="WebHookID" config-allow-edit.bind="true"></field>
+                        <field name="NotificationID" config-allow-edit.bind="true"></field>
+                        <field name="RemindNotificationID" config-allow-edit.bind="true"></field>
+                        <field name="ContactID" config-allow-edit.bind="true"></field>
+                        <field name="AnonContactID" config-allow-edit.bind="true"></field>
+                    </qp-fieldset>
+                </div>
+            </qp-template>
+        </qp-tab>
+        <qp-tab id="tabSurveyIntegration" caption="Survey Integration">
+            <qp-grid id="gridDefaultSurveys" view.bind="DefaultSurveys"></qp-grid>
+        </qp-tab>
+    </qp-tabbar>
+</template>

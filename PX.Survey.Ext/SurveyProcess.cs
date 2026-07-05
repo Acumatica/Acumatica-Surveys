@@ -162,6 +162,9 @@ namespace PX.Survey.Ext {
     [Serializable]
     [PXCacheName(Messages.CacheNames.SurveyFilter)]
     public class SurveyFilter : IBqlTable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Action
         public abstract class action : BqlString.Field<action> { }

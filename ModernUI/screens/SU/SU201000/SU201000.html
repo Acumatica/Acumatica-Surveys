@@ -1,0 +1,40 @@
+<template>
+    <qp-template id="Survey_form" name="1-1" class="label-size-xm">
+        <div slot="A">
+            <qp-fieldset id="Survey_Header" view.bind="Survey" caption="Survey Header">
+                <field name="SurveyID" config-allow-edit.bind="true"></field>
+                <field name="Status"></field>
+                <field name="Target"></field>
+                <field name="Layout"></field>
+                <field name="Title"></field>
+                <field name="TemplateID" config-allow-edit.bind="true"></field>
+                <field name="EntityType"></field>
+            </qp-fieldset>
+            <qp-fieldset id="Survey_Flags" view.bind="Survey" caption="Options">
+                <field name="AllowAnonymous"></field>
+                <field name="KeepAnswersAnonymous"></field>
+                <field name="AllowDuplicate"></field>
+            </qp-fieldset>
+        </div>
+        <div slot="B">
+            <qp-fieldset id="Survey_Notifications" view.bind="Survey" caption="Notifications">
+                <field name="NotificationID" config-allow-edit.bind="true"></field>
+                <field name="RemindNotificationID" config-allow-edit.bind="true"></field>
+            </qp-fieldset>
+        </div>
+    </qp-template>
+    <qp-tabbar id="mainTab">
+        <qp-tab id="tabDetails" caption="Details">
+            <qp-grid id="gridDetails" view.bind="Details"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabRecipients" caption="Recipients">
+            <qp-grid id="gridUsers" view.bind="Users"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabCollectors" caption="Collectors">
+            <qp-grid id="gridCollectors" view.bind="Collectors"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabAnswers" caption="Answers">
+            <qp-grid id="gridAnswers" view.bind="Answers"></qp-grid>
+        </qp-tab>
+    </qp-tabbar>
+</template>

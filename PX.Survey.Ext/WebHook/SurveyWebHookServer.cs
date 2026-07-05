@@ -1,14 +1,9 @@
-﻿using PX.Data;
-using PX.Data.Webhooks;
+﻿using PX.Api.Webhooks;
+using PX.Data;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
 
 namespace PX.Survey.Ext.WebHook {
     public class SurveyWebhookServerHandler : IWebhookHandler {
@@ -17,31 +12,32 @@ namespace PX.Survey.Ext.WebHook {
         public const string PAGE_PARAM = "PageNbr";
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        async Task<IHttpActionResult> IWebhookHandler.ProcessRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellationToken) {
             using (var scope = GetUserScope()) {
                 string collectorToken = "NO_TOKEN";
                 try {
-                    var _queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query);
-                    collectorToken = _queryParameters.Get(TOKEN_PARAM);
+                    var request = context.Request;
+                    collectorToken = GetQueryValue(request, TOKEN_PARAM);
                     if (string.IsNullOrEmpty(collectorToken)) {
                         throw new Exception($"The {TOKEN_PARAM} Parameter was not specified in the Query String");
                     }
-                    var pageNbrStr = _queryParameters.Get(PAGE_PARAM);
+                    var pageNbrStr = GetQueryValue(request, PAGE_PARAM);
                     var pageNbr = SurveyUtils.GetPageNumber(pageNbrStr);
-                    if (pageNbrStr != null && request.Method == HttpMethod.Post) {
-                        SurveyUtils.SubmitSurvey(collectorToken, request, pageNbr);
-                        pageNbr = SurveyUtils.GetNextOrPrevPageNbr(request, pageNbr);
+                    var requestBody = SurveyUtils.ReadRequestBody(request.Body);
+                    if (pageNbrStr != null && string.Equals(request.Method, "POST", StringComparison.OrdinalIgnoreCase)) {
+                        SurveyUtils.SubmitSurvey(collectorToken, requestBody, BuildRequestUri(request), pageNbr);
+                        pageNbr = SurveyUtils.GetNextOrPrevPageNbr(requestBody, pageNbr);
                     }
                     var (content, newToken) = GetSurveyPage(collectorToken, pageNbr);
                     if (newToken != null && newToken != collectorToken) {
-                        return new RedirectResult(request.RequestUri, newToken, "Was anonymous");
+                        WriteRedirectResponse(context.Response, BuildRedirectLocation(request, newToken));
                     } else {
-                        return new HtmlActionResult(content, HttpStatusCode.OK);
+                        WriteHtmlResponse(context.Response, content, 200);
                     }
                 } catch (Exception ex) {
                     PXTrace.WriteError(ex);
                     var content = GetBadRequestPage(collectorToken, $"{ex.Message}:\n{ex.StackTrace}");
-                    return new HtmlActionResult(content, HttpStatusCode.BadRequest);
+                    WriteHtmlResponse(context.Response, content, 400);
                 }
             }
         }
@@ -77,45 +73,66 @@ namespace PX.Survey.Ext.WebHook {
             return new PXLoginScope(userName);
         }
 
-
-        public class HtmlActionResult : IHttpActionResult {
-
-            private readonly string _message;
-            private readonly HttpStatusCode _status;
-
-            public HtmlActionResult(string message, HttpStatusCode status) {
-                _message = message;
-                _status = status;
+        private static string GetQueryValue(WebhookRequest request, string key) {
+            if (request?.Query != null && request.Query.TryGetValue(key, out var value)) {
+                return value.ToString();
             }
+            return null;
+        }
 
-            public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
-                var response = new HttpResponseMessage(_status);
-                response.Content = new StringContent(_message);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-                return Task.FromResult(response);
+        private static string GetHeaderValue(WebhookRequest request, string key) {
+            if (request?.Headers != null && request.Headers.TryGetValue(key, out var value)) {
+                return value.ToString();
+            }
+            return null;
+        }
+
+        private static Uri BuildRequestUri(WebhookRequest request) {
+            var scheme = GetHeaderValue(request, "X-Forwarded-Proto")
+                ?? GetHeaderValue(request, "X-Forwarded-Scheme")
+                ?? "http";
+            var host = GetHeaderValue(request, "X-Forwarded-Host")
+                ?? GetHeaderValue(request, "Host")
+                ?? "localhost";
+            var path = GetHeaderValue(request, "X-Original-Path")
+                ?? GetHeaderValue(request, "X-Rewrite-Url")
+                ?? "/";
+
+            var ub = new UriBuilder(scheme, host) {
+                Path = string.IsNullOrEmpty(path) ? "/" : path,
+                Query = BuildQueryString(request)
+            };
+            return ub.Uri;
+        }
+
+        private static string BuildRedirectLocation(WebhookRequest request, string newToken) {
+            var query = HttpUtility.ParseQueryString(BuildQueryString(request));
+            query.Set(TOKEN_PARAM, newToken);
+            return "?" + query;
+        }
+
+        private static string BuildQueryString(WebhookRequest request) {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            if (request?.Query != null) {
+                foreach (var pair in request.Query) {
+                    query[pair.Key] = pair.Value.ToString();
+                }
+            }
+            return query.ToString();
+        }
+
+        private static void WriteHtmlResponse(WebhookResponse response, string content, int statusCode) {
+            response.StatusCode = statusCode;
+            using (var writer = response.CreateTextWriter("text/html")) {
+                writer.Write(content ?? string.Empty);
+                writer.Flush();
             }
         }
 
-        public class RedirectResult : IHttpActionResult {
-
-            private readonly Uri _location;
-            private readonly string _reason;
-
-            public RedirectResult(Uri uri, string newToken, string reason) {
-                var ub = new UriBuilder(uri);
-                var qs = HttpUtility.ParseQueryString(ub.Query);
-                qs.Set(TOKEN_PARAM, newToken);
-                ub.Query = qs.ToString();
-                _location = ub.Uri;
-                _reason = reason;
-            }
-
-            public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken) {
-                var redirect = new HttpResponseMessage(HttpStatusCode.Redirect);
-                redirect.Headers.Location = _location;
-                redirect.ReasonPhrase = _reason;
-                return Task.FromResult(redirect);
-            }
+        private static void WriteRedirectResponse(WebhookResponse response, string location) {
+            response.StatusCode = 302;
+            response.Headers["Location"] = location;
+            response.ContentLength = 0;
         }
     }
 }

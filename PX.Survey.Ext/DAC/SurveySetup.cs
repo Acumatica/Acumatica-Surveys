@@ -10,6 +10,9 @@ namespace PX.Survey.Ext {
     [PXPrimaryGraph(typeof(SurveySetupMaint))]
     [PXCacheName(Messages.CacheNames.SurveySetup)]
     public class SurveySetup : IBqlTable, INotable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region SurveyNumberingID
         public abstract class surveyNumberingID : BqlString.Field<surveyNumberingID> { }

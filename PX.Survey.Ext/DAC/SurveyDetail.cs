@@ -12,6 +12,9 @@ namespace PX.Survey.Ext {
     [Serializable]
     [PXCacheName("SurveyDetail")]
     public partial class SurveyDetail : IBqlTable, ISortOrder, INotable {
+        private PXBqlTableSystemData _bqlTableSystemData;
+
+        ref PXBqlTableSystemData IBqlTableSystemDataStorage.GetBqlTableSystemData() => ref _bqlTableSystemData;
 
         #region Keys
         public class PK : PrimaryKeyOf<SurveyDetail>.By<surveyID, lineNbr> {

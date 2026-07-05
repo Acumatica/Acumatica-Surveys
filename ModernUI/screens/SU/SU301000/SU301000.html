@@ -1,0 +1,34 @@
+<template>
+    <qp-template id="Collector_form" name="1-1" class="label-size-xm">
+        <div slot="A">
+            <qp-fieldset id="Collector_Header" view.bind="Collector" caption="Collector">
+                <field name="CollectorID"></field>
+                <field name="SurveyID" config-allow-edit.bind="true"></field>
+                <field name="Status"></field>
+                <field name="SentOn"></field>
+                <field name="ExpirationDate"></field>
+            </qp-fieldset>
+            <qp-fieldset id="Collector_Flags" view.bind="Collector" caption="Options">
+                <field name="Anonymous"></field>
+                <field name="IsTest"></field>
+            </qp-fieldset>
+        </div>
+        <div slot="B">
+            <qp-fieldset id="Collector_Recipient" view.bind="Collector" caption="Recipient">
+                <field name="ContactID" config-allow-edit.bind="true"></field>
+                <field name="FirstName"></field>
+                <field name="LastName"></field>
+                <field name="DisplayName"></field>
+                <field name="Source"></field>
+            </qp-fieldset>
+            <qp-fieldset id="Collector_Processing" view.bind="Collector" caption="Processing">
+                <field name="Message"></field>
+            </qp-fieldset>
+        </div>
+    </qp-template>
+    <qp-tabbar id="mainTab">
+        <qp-tab id="tabAnswers" caption="Collected Answers">
+            <qp-grid id="gridCollectedAnswers" view.bind="CollectedAnswers"></qp-grid>
+        </qp-tab>
+    </qp-tabbar>
+</template>
